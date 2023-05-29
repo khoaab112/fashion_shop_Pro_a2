@@ -20,6 +20,7 @@ Laravel,Bootstrap-vue,vue-chartjs,highchart,Javascript, HTML, CSS,PostgreSQL,...
  ## open files
  - ide open with software Xmind
  - diagram  copy and paste web dbdiagram.io
- 
-
-
+  demo diagram db
+ ```javascript
+https://dbdiagram.io/d/646fb0e47764f72fcfdba864
+```
