@@ -1,5 +1,3 @@
 <template>
-    <div>
-        ádasdasdas
-    </div>
+   <router-view></router-view>
 </template>
