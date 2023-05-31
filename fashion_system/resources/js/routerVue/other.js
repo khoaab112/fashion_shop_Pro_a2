@@ -3,9 +3,9 @@ const error404 = [{
     component: () =>
         import ('../viewsVue/other/error404.vue'),
 }];
-const home = [{
-    path: '/',
-    component: () =>
-        import ('../Home.vue'),
-}];
-export { error404, home };
+// const home = [{
+//     path: '/',
+//     component: () =>
+//         import ('../Home.vue'),
+// }];
+export default error404;

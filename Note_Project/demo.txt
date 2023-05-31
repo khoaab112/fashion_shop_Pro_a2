@@ -1,0 +1,3 @@
+https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-3/dashboards/ecommerce
+https://demos.pixinvent.com/vuexy-vuejs-admin-template/landing/
+https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-5/dashboards/analytics
