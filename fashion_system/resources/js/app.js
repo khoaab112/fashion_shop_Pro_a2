@@ -17,7 +17,7 @@ app.use(Radio);
 
 // app.use(radio);
 app.mount("#app");
-app.config.globalProperties.$message = message;
+// app.config.globalProperties.$message = message;
 
 // export const bus = new Vue()
 // new Vue({

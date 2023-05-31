@@ -1,14 +1,14 @@
-const admin = [{
-    path: '/admin',
-    name: 'admin',
+const customer = [{
+    path: '/',
+    name: 'home',
     component: () =>
-        import ('../layout/admin.vue'),
+        import ('../layout/header.vue'),
     children: [{
         path: "user",
-        name: "admin-user",
+        name: "home-user",
         component: () =>
             import ('../viewsVue/admin/index.vue'),
     }]
 
 }]
-export default admin;
+export default customer;
