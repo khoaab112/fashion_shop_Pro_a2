@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Type_ticket;
+use App\Models\TypeTicket;
 
 class TypeTicketController extends Controller
 {
@@ -13,8 +13,7 @@ class TypeTicketController extends Controller
     public function Text()
     {
         // $users = DB::table('type_ticket')->get();
-        $this->query = Type_ticket::query()->get();
-        dd($this->query);
+        $this->query = TypeTicket::query()->get();
        return $this->query;
     }
 }

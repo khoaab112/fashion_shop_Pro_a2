@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TypeTicketController;
-
+use App\Http\Controllers\Admin\TypeTicketController;
+use App\Http\Controllers\Test;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,7 +14,11 @@ use App\Http\Controllers\TypeTicketController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/test', [TypeTicketController::class, 'Text']);
+
+// Route::get('/test', [TypeTicketController::class, 'Text']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/test', [Test::class, 'index']);
+
