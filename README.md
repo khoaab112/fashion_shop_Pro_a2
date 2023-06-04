@@ -22,5 +22,5 @@ Laravel,Bootstrap-vue,vue-chartjs,highchart,Javascript, HTML, CSS,PostgreSQL,...
  - diagram  copy and paste web dbdiagram.io
   demo diagram db
  ```javascript
-https://dbdiagram.io/d/646fb0e47764f72fcfdba864
+https://dbdiagram.io/d/647a31d2722eb774944d2b4f
 ```
