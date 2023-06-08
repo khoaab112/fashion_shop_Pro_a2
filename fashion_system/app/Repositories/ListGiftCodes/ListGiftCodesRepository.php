@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\ListGiftCodes;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\ListGiftcodes;
+use App\Repositories\ListGiftCodes\ListGiftCodesRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class ListGiftCodesRepository extends BaseRepositories implements ListGiftCodesRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected ListGiftcodes $listGiftcodes;
+    public function __construct(ListGiftcodes $listGiftcodes)
     { 
-        parent::__construct($staff);
+        parent::__construct($listGiftcodes);
     }
 
 

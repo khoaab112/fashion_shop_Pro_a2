@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\Branch;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\Branch;
+use App\Repositories\Branch\BranchRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class BranchRepository extends BaseRepositories implements BranchRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected Branch $branch;
+    public function __construct(Branch $branch)
     { 
-        parent::__construct($staff);
+        parent::__construct($branch);
     }
 
 

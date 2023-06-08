@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\LogDeletes;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\LogDeletes;
+use App\Repositories\LogDeletes\LogDeletesRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class LogDeletesRepository extends BaseRepositories implements LogDeletesRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected LogDeletes $logDeletes;
+    public function __construct(LogDeletes $logDeletes)
     { 
-        parent::__construct($staff);
+        parent::__construct($logDeletes);
     }
 
 

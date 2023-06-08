@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\ListCodesReceived;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\ListCodesReceived;
+use App\Repositories\ListCodesReceived\ListCodesReceivedRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class ListCodesReceivedRepository extends BaseRepositories implements ListCodesReceivedRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected ListCodesReceived $listCodesReceived;
+    public function __construct(ListCodesReceived $listCodesReceived)
     { 
-        parent::__construct($staff);
+        parent::__construct($listCodesReceived);
     }
 
 

@@ -1,9 +1,9 @@
 <?php
-namespace app\Repositories\UserStaff;
+namespace app\Repositories\ListProductsByBill;
 
 use App\Repositories\RepositoryInterface;
 
-interface UserStaffRepositoryInterface extends RepositoryInterface{
+interface ListProductsByBillRepositoryInterface extends RepositoryInterface{
 
 
 }

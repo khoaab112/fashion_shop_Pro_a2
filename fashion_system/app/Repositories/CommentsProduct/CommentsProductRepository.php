@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\CommentsProduct;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\CommentsProduct;
+use App\Repositories\CommentsProduct\CommentsProductRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class CommentsProductRepository extends BaseRepositories implements CommentsProductRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected CommentsProduct $commentsProduct;
+    public function __construct(CommentsProduct $commentsProduct)
     { 
-        parent::__construct($staff);
+        parent::__construct($commentsProduct);
     }
 
 

@@ -1,9 +1,9 @@
 <?php
-namespace app\Repositories\UserStaff;
+namespace app\Repositories\TypeReport;
 
 use App\Repositories\RepositoryInterface;
 
-interface UserStaffRepositoryInterface extends RepositoryInterface{
+interface TypeReportRepositoryInterface extends RepositoryInterface{
 
 
 }

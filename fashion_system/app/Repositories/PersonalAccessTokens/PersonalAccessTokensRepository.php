@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\PersonalAccessTokens;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\PersonalAccessTokens;
+use App\Repositories\PersonalAccessTokens\PersonalAccessTokensRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class PersonalAccessTokensRepository extends BaseRepositories implements PersonalAccessTokensRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected PersonalAccessTokens $personalAccessTokens;
+    public function __construct(PersonalAccessTokens $personalAccessTokens)
     { 
-        parent::__construct($staff);
+        parent::__construct($personalAccessTokens);
     }
 
 

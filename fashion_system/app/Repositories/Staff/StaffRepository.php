@@ -1,12 +1,12 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\Staff;
 
 use App\Repositories\BaseRepositories;
 use App\Models\Staff;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Repositories\Staff\StaffRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class StaffRepository extends BaseRepositories implements StaffRepositoryInterface{
 
     protected Staff $staff;
     public function __construct(Staff $staff)

@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\EventAds;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\EventAds;
+use App\Repositories\EventAds\EventAdsRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class EventAdsRepository extends BaseRepositories implements EventAdsRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected EventAds $eventAds;
+    public function __construct(EventAds $eventAds)
     { 
-        parent::__construct($staff);
+        parent::__construct($eventAds);
     }
 
 

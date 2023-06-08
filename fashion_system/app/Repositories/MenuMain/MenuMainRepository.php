@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\MenuMain;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\MenuMain;
+use App\Repositories\MenuMain\MenuMainRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class MenuMainRepository extends BaseRepositories implements MenuMainRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected MenuMain $menuMain;
+    public function __construct(MenuMain $menuMain)
     { 
-        parent::__construct($staff);
+        parent::__construct($menuMain);
     }
 
 

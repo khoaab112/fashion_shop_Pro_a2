@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\FailedJobs;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\FailedJobs;
+use App\Repositories\FailedJobs\FailedJobsRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class FailedJobsRepository extends BaseRepositories implements FailedJobsRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected FailedJobs $failedJobs;
+    public function __construct(FailedJobs $failedJobs)
     { 
-        parent::__construct($staff);
+        parent::__construct($failedJobs);
     }
 
 

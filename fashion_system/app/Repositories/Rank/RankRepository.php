@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\Rank;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\Rank;
+use App\Repositories\Rank\RankRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class RankRepository extends BaseRepositories implements RankRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected Rank $rank;
+    public function __construct(Rank $rank)
     { 
-        parent::__construct($staff);
+        parent::__construct($rank);
     }
 
 

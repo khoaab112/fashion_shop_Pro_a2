@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\PaymentMethods;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\PaymentMethods;
+use App\Repositories\PaymentMethods\PaymentMethodsRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class PaymentMethodsRepository extends BaseRepositories implements PaymentMethodsRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected PaymentMethods $paymentMethods;
+    public function __construct(PaymentMethods $paymentMethods)
     { 
-        parent::__construct($staff);
+        parent::__construct($paymentMethods);
     }
 
 

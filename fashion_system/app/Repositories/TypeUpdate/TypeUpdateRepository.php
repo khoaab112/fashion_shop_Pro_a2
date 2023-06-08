@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\TypeUpdate;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\TypeUpdate;
+use App\Repositories\TypeUpdate\TypeUpdateRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class TypeUpdateRepository extends BaseRepositories implements TypeUpdateRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected TypeUpdate $typeUpdate;
+    public function __construct(TypeUpdate $typeUpdate)
     { 
-        parent::__construct($staff);
+        parent::__construct($typeUpdate);
     }
 
 

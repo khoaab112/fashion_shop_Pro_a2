@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\ReportSource;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\ReportSource;
+use App\Repositories\ReportSource\ReportSourceRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class ReportSourceRepository extends BaseRepositories implements ReportSourceRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected ReportSource $reportSource;
+    public function __construct(ReportSource $reportSource)
     { 
-        parent::__construct($staff);
+        parent::__construct($reportSource);
     }
 
 

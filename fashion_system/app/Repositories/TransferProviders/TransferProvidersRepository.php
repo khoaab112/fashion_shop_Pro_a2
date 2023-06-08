@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\TransferProviders;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\TransferProviders;
+use App\Repositories\TransferProviders\TransferProvidersRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class TransferProvidersRepository extends BaseRepositories implements TransferProvidersRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected TransferProviders $transferProviders;
+    public function __construct(TransferProviders $transferProviders)
     { 
-        parent::__construct($staff);
+        parent::__construct($transferProviders);
     }
 
 

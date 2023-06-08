@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\DepotTicket;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\DepotTicket;
+use App\Repositories\DepotTicket\DepotTicketRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class DepotTicketRepository extends BaseRepositories implements DepotTicketRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected DepotTicket $depotTicket;
+    public function __construct(DepotTicket $depotTicket)
     { 
-        parent::__construct($staff);
+        parent::__construct($depotTicket);
     }
 
 

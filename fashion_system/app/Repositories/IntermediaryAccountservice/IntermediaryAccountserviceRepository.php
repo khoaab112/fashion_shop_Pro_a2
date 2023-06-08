@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\IntermediaryAccountservice;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\IntermediaryAcountService;
+use App\Repositories\IntermediaryAccountservice\IntermediaryAccountserviceRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class IntermediaryAccountserviceRepository extends BaseRepositories implements IntermediaryAccountserviceRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected IntermediaryAcountService $staintermediaryAcountServiceff;
+    public function __construct(IntermediaryAcountService $intermediaryAcountService)
     { 
-        parent::__construct($staff);
+        parent::__construct($intermediaryAcountService);
     }
 
 

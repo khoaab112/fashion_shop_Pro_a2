@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\AccountAdminAction;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\AccountAdminAction;
+use App\Repositories\AccountAdminAction\AccountAdminActionReposotpryIntaface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class UserStaffRepository extends BaseRepositories implements AccountAdminActionReposotpryIntaface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected AccountAdminAction $action;
+    public function __construct(AccountAdminAction $action)
     { 
-        parent::__construct($staff);
+        parent::__construct($action);
     }
 
 

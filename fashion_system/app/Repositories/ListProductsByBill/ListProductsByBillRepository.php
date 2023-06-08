@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\ListProductsByBill;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\ListProductsByBill;
+use App\Repositories\ListProductsByBill\ListProductsByBillRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class ListProductsByBillRepository extends BaseRepositories implements ListProductsByBillRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected ListProductsByBill $listProductsByBill;
+    public function __construct(ListProductsByBill $listProductsByBill)
     { 
-        parent::__construct($staff);
+        parent::__construct($listProductsByBill);
     }
 
 

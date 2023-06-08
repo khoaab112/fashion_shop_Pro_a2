@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\AccountCustomer;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\AccountCustomers;
+use App\Repositories\AccountCustomer\AccountCustomerRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class AccountCustomersRepository extends BaseRepositories implements AccountCustomerRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected AccountCustomers $accountCustomers;
+    public function __construct(AccountCustomers $accountCustomers)
     { 
-        parent::__construct($staff);
+        parent::__construct($accountCustomers);
     }
 
 

@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\ActionAdmin;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\Action;
+use App\Repositories\ActionAdmin\ActionAdminRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class ActionRepository extends BaseRepositories implements ActionAdminRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected Action $action;
+    public function __construct(Action $action)
     { 
-        parent::__construct($staff);
+        parent::__construct($action);
     }
 
 

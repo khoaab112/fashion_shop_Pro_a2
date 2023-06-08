@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\TypePromotion;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\TypePromotion;
+use App\Repositories\TypePromotion\TypePromotionRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class TypePromotionRepository extends BaseRepositories implements TypePromotionRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected TypePromotion $typePromotion;
+    public function __construct(TypePromotion $typePromotion)
     { 
-        parent::__construct($staff);
+        parent::__construct($typePromotion);
     }
 
 

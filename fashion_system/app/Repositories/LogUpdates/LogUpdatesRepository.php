@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\LogUpdates;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\LogUpdate;
+use App\Repositories\LogUpdates\LogUpdatesRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class LogUpdatesRepository extends BaseRepositories implements LogUpdatesRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected LogUpdate $logUpdate;
+    public function __construct(LogUpdate $logUpdate)
     { 
-        parent::__construct($staff);
+        parent::__construct($logUpdate);
     }
 
 

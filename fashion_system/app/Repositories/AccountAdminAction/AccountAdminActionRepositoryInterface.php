@@ -1,9 +1,9 @@
 <?php
-namespace app\Repositories\UserStaff;
+namespace App\Repositories\AccountAdminAction;
 
 use App\Repositories\RepositoryInterface;
 
-interface UserStaffRepositoryInterface extends RepositoryInterface{
+interface AccountAdminActionReposotpryIntaface extends RepositoryInterface{
 
 
 }

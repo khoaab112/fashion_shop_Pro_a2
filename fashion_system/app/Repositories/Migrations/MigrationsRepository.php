@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\Migrations;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\Migrations;
+use App\Repositories\Migrations\MigrationsRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class MigrationsRepository extends BaseRepositories implements MigrationsRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected Migrations $migrations;
+    public function __construct(Migrations $migrations)
     { 
-        parent::__construct($staff);
+        parent::__construct($migrations);
     }
 
 

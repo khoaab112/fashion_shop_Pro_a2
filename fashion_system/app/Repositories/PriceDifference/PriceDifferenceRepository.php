@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\PriceDifference;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\PriceDifference;
+use App\Repositories\PriceDifference\PriceDifferenceRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class PriceDifferenceRepository extends BaseRepositories implements PriceDifferenceRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected PriceDifference $priceDifference;
+    public function __construct(PriceDifference $priceDifference)
     { 
-        parent::__construct($staff);
+        parent::__construct($priceDifference);
     }
 
 

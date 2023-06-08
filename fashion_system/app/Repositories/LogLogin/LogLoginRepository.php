@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\LogLogin;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\LogLogin;
+use App\Repositories\LogLogin\LogLoginRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class LogLoginRepository extends BaseRepositories implements LogLoginRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected LogLogin $logLogin;
+    public function __construct(LogLogin $logLogin)
     { 
-        parent::__construct($staff);
+        parent::__construct($logLogin);
     }
 
 

@@ -1,20 +1,16 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\PasswordResetTokens;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\PasswordResetTokens;
+use App\Repositories\PasswordResetTokens\PasswordResetTokensRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class PasswordResetTokensRepository extends BaseRepositories implements PasswordResetTokensRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected PasswordResetTokens $passwordResetTokens;
+    public function __construct(PasswordResetTokens $passwordResetTokens)
     { 
-        parent::__construct($staff);
+        parent::__construct($passwordResetTokens);
     }
-
-
- 
-
 }

@@ -1,17 +1,17 @@
 <?php
-namespace App\Repositories\UserStaff;
+namespace App\Repositories\ImgNews;
 
 use App\Repositories\BaseRepositories;
-use App\Models\TypeTicket;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Models\ImgNews;
+use App\Repositories\ImgNews\ImgNewsRepositoryInterface;
 
 
-class UserStaffRepository extends BaseRepositories implements UserStaffRepositoryInterface{
+class ImgNewsRepository extends BaseRepositories implements ImgNewsRepositoryInterface{
 
-    protected TypeTicket $staff;
-    public function __construct(TypeTicket $staff)
+    protected ImgNews $imgNews;
+    public function __construct(ImgNews $imgNews)
     { 
-        parent::__construct($staff);
+        parent::__construct($imgNews);
     }
 
 
