@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class TypeUpdate extends Model
 {
     use HasFactory;
+    protected $table = 'type_update';
+    protected $fillable = [
+        "name",
+        "note",
+        "status",
+    ];
+    protected $attributes = [
+        'status' => 'true',
+    ];
 }

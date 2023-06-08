@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Action extends Model
 {
     use HasFactory;
+    protected $table = 'action';
+    protected $fillable = [
+        "name",
+        "content",
+        "status",
+    ];
+    protected $attributes = [
+        'status' => 'true',
+    ];
 }

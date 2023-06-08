@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class MenuMain extends Model
 {
     use HasFactory;
+    protected $table = 'menu_main';
+    protected $fillable = [
+        "name",
+        "color",
+        "is_sub_menu",
+        "status",
+    ];
+    protected $attributes = [
+        'status' => 'true',
+    ];
 }

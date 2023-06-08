@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class TransferProviders extends Model
 {
     use HasFactory;
+    protected $table = 'transfer_providers';
+    protected $fillable = [
+        "name",
+        "status",
+    ];
+    protected $attributes = [
+        'status' => 'true',
+    ];
 }

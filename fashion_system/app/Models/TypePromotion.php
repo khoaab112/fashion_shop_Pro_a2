@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class TypePromotion extends Model
 {
     use HasFactory;
+    protected $table = 'type_promotion';
+    protected $fillable = [
+        "name",
+        "content",
+        "code_hide",
+        "status",
+    ];
+    protected $attributes = [
+        'status' => 'true',
+    ];
 }

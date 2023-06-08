@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Policy extends Model
 {
     use HasFactory;
+    protected $table = 'policy';
+    protected $fillable = [
+        "staff_id",
+        "name",
+        "img",
+        "content",
+        "status",
+    ];
+    protected $attributes = [
+        'status' => 'true',
+    ];
 }
