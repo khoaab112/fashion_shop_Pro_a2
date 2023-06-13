@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Staff;
-use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+// use App\Models\Staff;
+// use App\Repositories\UserStaff\UserStaffRepositoryInterface;
+use App\Repositories\TypeTicket\TypeTicketRepositoryInterface;
 
 class Test extends Controller
 {
     //
     protected $query;
-    public function __construct(UserStaffRepositoryInterface $query)
+    public function __construct(TypeTicketRepositoryInterface $query)
     {
         $this->query = $query;
     }
@@ -19,7 +20,6 @@ class Test extends Controller
     {
              
         $test = $this->query->getAll();
-           dd($test);
-        return $this->query;
+        return response()->json(['content' => $test]);
     }
 }

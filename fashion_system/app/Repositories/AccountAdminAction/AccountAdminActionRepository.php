@@ -6,7 +6,7 @@ use App\Models\AccountAdminAction;
 use App\Repositories\AccountAdminAction\AccountAdminActionReposotpryIntaface;
 
 
-class UserStaffRepository extends BaseRepositories implements AccountAdminActionReposotpryIntaface{
+class AccountAdminActionRepository extends BaseRepositories implements AccountAdminActionReposotpryIntaface{
 
     protected AccountAdminAction $action;
     public function __construct(AccountAdminAction $action)

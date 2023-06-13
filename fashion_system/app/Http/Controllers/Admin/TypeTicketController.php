@@ -14,6 +14,7 @@ class TypeTicketController extends Controller
     {
         // $users = DB::table('type_ticket')->get();
         $this->query = TypeTicket::query()->get();
-       return $this->query;
+    //    return $this->query;
+       return response()->json(['content' =>$this->query]);
     }
 }
