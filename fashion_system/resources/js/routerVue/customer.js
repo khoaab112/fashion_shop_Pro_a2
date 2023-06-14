@@ -7,7 +7,7 @@ const customer = [{
         path: "user",
         name: "home-user",
         component: () =>
-            import ('../viewsVue/admin/index.vue'),
+            import ('../viewsVue/client/index.vue'),
     }]
 
 }]

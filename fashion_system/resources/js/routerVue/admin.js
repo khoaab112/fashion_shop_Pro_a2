@@ -2,7 +2,7 @@ const admin = [{
     path: '/admin',
     name: 'admin',
     component: () =>
-        import ('../layout/admin.vue'),
+        import ('../layout/admin/sidebarMenu.vue'),
     children: [{
         path: "user",
         name: "admin-user",
