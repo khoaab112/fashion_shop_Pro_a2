@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypeTicketController;
+use App\Http\Controllers\Authentication\AuthnController;
+
 use App\Http\Controllers\Test;
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/test', [Test::class, 'index']);
+//login
+Route::post('/register', [AuthnController::class, 'register']);
+
+
 

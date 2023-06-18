@@ -13,6 +13,7 @@ class StaffAccountRepository extends BaseRepositories implements StaffAccountRep
     { 
         parent::__construct($staffAccount);
     }
+    
 
 
  
