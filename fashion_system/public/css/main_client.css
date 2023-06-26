@@ -27,7 +27,8 @@ html {
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #6e6b7b !important;
+    /* background-color: #6e6b7b !important; */
+    /* background-color: red !important; */
 }
 
 article,
@@ -43,10 +44,9 @@ section {
     display: block;
 }
 
-
-/* div {
-    font-family: "roboto-bold";
-} */
+div {
+    font-family: "roboto-bold", "banabo", "josefin-sans";
+}
 
 body {
     font-family: "roboto-bold";

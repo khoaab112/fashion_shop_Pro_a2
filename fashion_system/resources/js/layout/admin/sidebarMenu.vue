@@ -1,13 +1,13 @@
 <template >
-    <div class="row" id="admin-main">
-        <div class="col-md-3 col-sm-3">
+    <div class="" id="admin-main">
             <div id="sider-bar-admin">
                 <div class="flex-shrink-0 p-3 bg-white ">
-                    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                    <a href="/" class="d-flex align-items-center pb-4 mb-3 link-dark text-decoration-none border-bottom">
                         <svg class="bi me-2" width="30" height="24">
                             <use xlink:href="#bootstrap" />
                         </svg>
-                        <span class="fs-5 fw-semibold">Collapsible</span>
+                        <img src="" alt="logo_system">
+                        <span class="fs-5 fw-semibold">{{ webName }}</span>
                     </a>
                     <ul class="list-unstyled ps-0">
                         <li class="mb-1">
@@ -69,12 +69,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="col-md-9 col-sm-9 admin-right">
-            
-                <div id="content-admin"><div class="container"><router-view></router-view></div></div>
-            
-        </div>
 
     </div>
 </template>
@@ -95,7 +89,7 @@ export default {
     },
     data() {
         return {
-
+            webName:(import.meta.env.VITE_WEB_NAME),
         }
     },
     watch: {

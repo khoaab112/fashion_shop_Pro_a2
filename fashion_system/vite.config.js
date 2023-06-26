@@ -2,7 +2,8 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
-
+import dotenv from 'dotenv';
+import { envCompatible } from 'vite-plugin-env-compatible';
 
 export default defineConfig({
     plugins: [
@@ -17,6 +18,7 @@ export default defineConfig({
                 },
             },
         }),
+        envCompatible(),
     ],
     resolve: {
         alias: {
