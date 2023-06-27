@@ -3,8 +3,9 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import dotenv from 'dotenv';
-import { envCompatible } from 'vite-plugin-env-compatible';
-
+// import { envCompatible } from 'vite-plugin-env-compatible';
+// import pkg from 'vite-plugin-env-compatible/dist/index.js';
+// const { envCompatible } = pkg;
 export default defineConfig({
     plugins: [
         laravel(['resources/js/app.js']),
@@ -18,7 +19,7 @@ export default defineConfig({
                 },
             },
         }),
-        envCompatible(),
+        // envCompatible(),
     ],
     resolve: {
         alias: {

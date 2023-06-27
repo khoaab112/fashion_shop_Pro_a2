@@ -7,7 +7,7 @@
                             <use xlink:href="#bootstrap" />
                         </svg>
                         <img src="" alt="logo_system">
-                        <span class="fs-5 fw-semibold">{{ webName }}</span>
+                        <!-- <span class="fs-5 fw-semibold">{{ webName }}</span> -->
                     </a>
                     <ul class="list-unstyled ps-0">
                         <li class="mb-1">
@@ -89,7 +89,7 @@ export default {
     },
     data() {
         return {
-            webName:(import.meta.env.VITE_WEB_NAME),
+            // webName:(import.meta.env.VITE_WEB_NAME),
         }
     },
     watch: {
