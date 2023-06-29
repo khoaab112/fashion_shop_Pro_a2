@@ -6,7 +6,7 @@
                     <svg class="bi me-2" width="30" height="24">
                         <use xlink:href="#bootstrap" />
                     </svg>
-                    <img src="" alt="logo_system">
+                    <img :src=getImageUrl() alt="logo_system">
                     <span class="fs-5 fw-semibold">{{ webName }}</span>
                 </a>
                 <ul class="list-unstyled ps-0">
@@ -89,7 +89,7 @@ export default {
     },
     data() {
         return {
-            webName: ENV.SYSTEM_NAME
+            webName: ENV.SYSTEM_NAME,
         }
     },
     watch: {
@@ -102,7 +102,9 @@ export default {
         console.log(ENV.SYSTEM_NAME);
     },
     methods: {
-
+         getImageUrl() {
+            return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
+        }
     }
 }
 </script>
@@ -235,4 +237,5 @@ main {
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
     }
-}</style>
+}
+</style>
