@@ -1,5 +1,5 @@
 <template>
-  <div class="header-admin">
+  <!-- <div class="header-admin">
     <div class="info-staff">
     <el-avatar class="avatar-admin" :size="50" :src="circleUrl" />
     <span class="name-admin">Tên nhân viên</span>
@@ -13,7 +13,7 @@
     <div id="content-admin">
       <router-view></router-view>
     </div>
-  </main>
+  </main> -->
 </template>
   
 <script>
@@ -48,7 +48,7 @@ export default {
   
 <style>
 /* CSS cho component */
-.btn-header-admin {
+/* .btn-header-admin {
   border: none;
     font-size: 24px;
     float: right;
@@ -64,13 +64,9 @@ export default {
 .header-admin{
   position: relative;
 }
-/* .header-admin>div.info-staff>span{
-  position: absolute;
-
-} */
 span{
   position: absolute;
   margin-left: 4.8rem;
   margin-top: 0.4rem;
-}
+} */
 </style>

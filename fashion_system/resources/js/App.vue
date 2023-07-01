@@ -1,36 +1,35 @@
 <template>
-   <div class="row">
-      <div class="col-md-3 col-sm-3">
-         <div id="sidebar-admin">
-            <router-view name="sidebar" />
-         </div>
-      </div>      
-      <div class="col-md-9 col-sm-9 admin-right">
-         <header id="header">
-            <router-view name="header" />
-         </header>
-         <div>
-            <router-view>
-            </router-view>
-         </div>
-         <footer id="footer">
-            <router-view name="footer" />
-         </footer>
-      </div>
-   </div>
+   <router-view name="sidebar" />
+   <section class="home">
+      <div class="text">Dashboard Sidebar</div>
+   </section>
+   <!-- <router-view name="footer" /> -->
 </template>
 <script>
+export default {
+   data() {
+      return {
+         // Dữ liệu của component
+      };
+   },
+   created() {
+      // Logic khi component được khởi tạo
+   },
+   mounted() {
+      // Logic sau khi component được gắn kết (render) vào DOM
+   },
+   computed() {
+      // được sử dụng để định nghĩa các thuộc tính tính toán
+   },
+   updated() {
+
+   },
+   destroyed() {
+
+   },
+   methods: {
+      // Các phương thức xử lý sự kiện hoặc logic khác
+   },
+};
 </script>
-<style >
-.admin-right {
-   background-color: #dddddd;
-}
-#header{
-   background-color: white;
-    width: 98%;
-    height: 4rem;
-    margin-top: 13px;
-    margin-left: 8px;
-    border-radius: 9px;
-}
-</style>
+<style ></style>

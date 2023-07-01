@@ -1,4 +1,53 @@
 @font-face {
     font-family: "roboto-bold";
-    src: url("../../resources/font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("woff"), url("../../resources/font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("opentype"), url("../../resources/font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("truetype");
+    src: url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("woff"), url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("opentype"), url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("truetype");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "roboto-bold";
+}
+
+:root {
+    --title-menu-color: #2626116e;
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #1707c4;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #383838;
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
+}
+
+
+/* body {
+    min-height: 100vh;
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+} */
+
+
+/* body.dark {
+    --body-color: #18191a;
+    --sidebar-color: #242526;
+    --primary-color: #bbdbe5;
+    --primary-color-light: #3a3b3c;
+    --toggle-color: #bbdbe5;
+    --text-color: #ccc;
+    --title-menu-color: #fffdfb9c;
+} */
+
+
+/* ::selection {
+    background-color: var(--primary-color);
+    color: #fff;
+} */
+
+a {
+    text-decoration: none;
 }

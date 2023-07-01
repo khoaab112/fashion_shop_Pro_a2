@@ -1,241 +1,571 @@
-<template >
-    <div class="" id="admin-main">
-        <div id="sider-bar-admin">
-            <div class="flex-shrink-0 p-3 bg-white ">
-                <a href="/" class="d-flex align-items-center pb-4 mb-3 link-dark text-decoration-none border-bottom">
-                    <svg class="bi me-2" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                    <img :src=getImageUrl() alt="logo_system">
-                    <span class="fs-5 fw-semibold">{{ webName }}</span>
-                </a>
-                <ul class="list-unstyled ps-0">
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#home-collapse" aria-expanded="true">
-                            Home
-                        </button>
-                        <div class="collapse show" id="home-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">Overview</a></li>
-                                <li><a href="#" class="link-dark rounded">Updates</a></li>
-                                <li><a href="#" class="link-dark rounded">Reports</a></li>
-                            </ul>
+<template>
+    <nav :class="{ 'sidebar': true, 'close': !activeShowSidebar }">
+        <header>
+            <div class="image-text">
+                <span class="image-logo-sidebar">
+                    <img src="" alt="ssss">
+                </span>
+
+                <div class="text logo-text">
+                    <span class="admin-name">TomTom</span>
+                    <span class="profession">New Edge</span>
+                </div>
+            </div>
+            <hr>
+
+            <i class='bx bx-chevron-right toggle' id="toggle" @click=showSidebar></i>
+        </header>
+        <!--  -->
+        <div class="list-menu ">
+            <div class="menu_content ">
+                <ul class="menu_items" v-for="value in dataMenuSidebar">
+                    <!-- <div class="menu_title menu_dahsboard"></div> -->
+                    <h3 :class="{ 'menu-title-sidebar': true, 'show-titles': activeShowSidebar }"
+                        v-if="value.showLabel ? true : false">
+                        Dashboard
+                    </h3>
+                    <li class="item">
+                        <div href="#" class="nav_link submenu_item show_submenu">
+                            <span class="navlink_icon"> 
+                                <font-awesome-icon :icon="value.icon" />              
+                            </span>
+                            <span class="navlink">{{ value.title }}</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
                         </div>
+                        <ul class="menu_items submenu" v-if="value.children.length">                                        
+                            <a href="#" class="nav_link sublink" v-for="item in value.children"><font-awesome-icon :icon="item.icon" />  {{ item.title }}</a>
+                        </ul>
                     </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            Dashboard
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">Overview</a></li>
-                                <li><a href="#" class="link-dark rounded">Weekly</a></li>
-                                <li><a href="#" class="link-dark rounded">Monthly</a></li>
-                                <li><a href="#" class="link-dark rounded">Annually</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#orders-collapse" aria-expanded="false">
-                            Orders
-                        </button>
-                        <div class="collapse" id="orders-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">New</a></li>
-                                <li><a href="#" class="link-dark rounded">Processed</a></li>
-                                <li><a href="#" class="link-dark rounded">Shipped</a></li>
-                                <li><a href="#" class="link-dark rounded">Returned</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="border-top my-3"></li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#account-collapse" aria-expanded="false">
-                            Account
-                        </button>
-                        <div class="collapse" id="account-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">New...</a></li>
-                                <li><a href="#" class="link-dark rounded">Profile</a></li>
-                                <li><a href="#" class="link-dark rounded">Settings</a></li>
-                                <li><a href="#" class="link-dark rounded">Sign out</a></li>
-                            </ul>
-                        </div>
-                    </li>
+                </ul>
+                <ul class="menu_items">
+                    <li><button class="btn-dark">Dark mode</button></li>
                 </ul>
             </div>
         </div>
-
-    </div>
+    </nav>
 </template>
+  
 <script>
-import ENV from '@/js/generalSetting/filterEnv'
-// let timeout = null
-
+import dataSidebar from "@/js/generalSetting/adminCategoryMenu.js";
 export default {
-    name: 'admin',
-    components: {
-    },
-    setup() {
-        return {
-
-        }
-    },
-    directives: {
-    },
     data() {
         return {
-            webName: ENV.SYSTEM_NAME,
-        }
-    },
-    watch: {
+            activeShowSidebar: false,
+            dataMenuSidebar: dataSidebar,
+            // dataSidebar: dataSidebar
+            // Dữ liệu của component
+        };
     },
     created() {
-
+        console.log(dataSidebar);
+        // Logic khi component được khởi tạo
     },
     mounted() {
-        // console.log(this.$env.systemName);
-        console.log(ENV.SYSTEM_NAME);
+        // Logic sau khi component được gắn kết (render) vào DOM
+    },
+    computed() {
+        // được sử dụng để định nghĩa các thuộc tính tính toán
+    },
+    updated() {
+
+    },
+    destroyed() {
+
     },
     methods: {
-         getImageUrl() {
-            return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
+        // Các phương thức xử lý sự kiện hoặc logic khác
+        showSidebar() {
+            if (this.activeShowSidebar) this.activeShowSidebar = false;
+            else this.activeShowSidebar = true;
         }
-    }
-}
+    },
+};
 </script>
+  
 <style>
-#sider-bar-admin {
-    font-size: 1rem !important;
-    height: 100vh;
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;
 }
 
-#admin-main .admin-right {
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .1);
+.sidebar.close {
+    width: 88px;
 }
 
-#admin-main #content-admin {
-    height: 100vh;
-    background-color: white;
+.sidebar li {
+    height: 50px;
+    list-style: none;
+    display: initial;
+    align-items: center;
+    margin-top: 10px;
 }
 
-.bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
+.sidebar header .image-logo-sidebar,
+.sidebar .icon {
+    min-width: 60px;
+    border-radius: 6px;
+}
+
+.sidebar .icon {
+    min-width: 60px;
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.sidebar .text,
+.sidebar .icon {
+    color: var(--text-color);
+    transition: var(--tran-03);
+}
+
+.sidebar .text {
+    font-size: 17px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.sidebar.close .text {
+    opacity: 0;
+}
+
+.sidebar header {
+    position: relative;
+}
+
+.sidebar header .image-text {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar header .logo-text {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
     user-select: none;
 }
 
-body {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+header .image-text .admin-name {
+    margin-top: 2px;
+    font-size: 18px;
+    font-weight: 600;
 }
 
-html {
-    height: -webkit-fill-available;
+header .image-text .profession {
+    font-size: 16px;
+    margin-top: -2px;
+    display: block;
 }
 
-main {
+.sidebar header .image-logo-sidebar {
     display: flex;
-    flex-wrap: nowrap;
-    height: 100vh;
-    height: -webkit-fill-available;
-    max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
+    align-items: center;
+    justify-content: center;
 }
 
-/* .b-example-divider {
-  flex-shrink: 0;
-  width: 1.5rem;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, .1);
-  border: solid rgba(0, 0, 0, .15);
-  border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+.sidebar header .image-logo-sidebar img {
+    width: 40px;
+    border-radius: 6px;
+}
+
+.sidebar header .toggle {
+    position: absolute;
+    top: 50%;
+    right: -35px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 40px;
+    width: 40px;
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--tran-05);
+    z-index: 9999;
+}
+
+body.dark .sidebar header .toggle {
+    color: var(--text-color);
+}
+
+.sidebar.close .toggle {
+    transform: translateY(-50%) rotate(0deg);
+    z-index: 9999;
+}
+
+.sidebar .menu {
+    margin-top: 40px;
+}
+
+.sidebar li a {
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--tran-03);
+}
+
+.sidebar li a:hover {
+    background-color: rgb(163, 217, 225, 0.6)
+}
+
+.sidebar li .submenu_item:hover {
+    background-color: #98EECC;
+}
+
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text {
+    color: var(--sidebar-color);
+}
+
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text {
+    color: var(--text-color);
+}
+
+.menu-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.mode .sun-moon i {
+    position: absolute;
+}
+
+.mode .sun-moon i.sun {
+    opacity: 0;
+}
+
+body.dark .mode .sun-moon i.sun {
+    opacity: 1;
+}
+
+body.dark .mode .sun-moon i.moon {
+    opacity: 0;
+}
+
+.switch::before {
+    content: '';
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    background-color: var(--sidebar-color);
+    transition: var(--tran-04);
+}
+
+body.dark .switch::before {
+    left: 20px;
+}
+
+.home {
+    position: absolute;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+
+.home .text {
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 12px 60px;
+}
+
+.sidebar.close~.home {
+    left: 78px;
+    height: 100vh;
+    width: calc(100% - 78px);
+}
+
+body.dark .home .text {
+    color: var(--text-color);
+}
+
+
+/*  */
+
+.list-menu {
+    background-color: var(--white-color);
+    /* width: 260px; */
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 5px 20px;
+    z-index: 100;
+    overflow-y: scroll;
+    box-shadow: 0 0 1px var(--grey-color-light);
+    transition: all 0.5s ease;
+}
+
+.list-menu.close {
+    padding: 60px 0;
+    width: 80px;
+}
+
+.list-menu::-webkit-scrollbar {
+    display: none;
+}
+
+.menu_content {
+    position: relative;
+}
+
+.menu_dahsboard::before {
+    content: "Dashboard";
+}
+
+.menu_editor::before {
+    content: "Editor";
+}
+
+.menu_setting::before {
+    content: "Setting";
+}
+
+.menu_items {
+    padding: 0;
+    list-style: none;
+}
+
+.navlink_icon {
+    position: relative;
+    font-size: 22px;
+    min-width: 50px;
+    line-height: 40px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.navlink_icon::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: calc(100% + 100px);
+    left: -20px;
+}
+
+.navlink_icon:hover {
+    background: var(--blue-color);
+}
+
+.list-menu .menu_content ul li div span:hover {
+    /* background-color: red; */
+    color: var(--white-color);
+    background: var(--blue-color);
+}
+
+.list-menu .nav_link {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    padding: 10px 45px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+.list-menu.close .navlink {
+    display: none;
+}
+
+.nav_link:hover {
+    color: var(--white-color);
+    background: var(--blue-color);
+}
+
+.list-menu.close .nav_link:hover {
+    background: var(--white-color);
+}
+
+.submenu_item {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.submenu {
+    /* display: none;    */
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height 0ms 400ms, opacity 400ms 0ms;
+}
+
+
+/* .submenu.show{
+    opacity: 1;
 } */
 
-.bi {
-    vertical-align: -.125em;
-    pointer-events: none;
-    fill: currentColor;
+.submenu_item .arrow-left {
+    position: absolute;
+    right: 10px;
+    display: inline-block;
+    margin-right: auto;
 }
 
-.dropdown-toggle {
-    outline: 0;
+.list-menu.close .submenu {
+    display: none;
 }
 
-.nav-flush .nav-link {
-    border-radius: 0;
+.show_submenu~.submenu {
+    height: auto;
+    opacity: 1;
+    transition: height 0ms 0ms, opacity 600ms 0ms;
 }
 
-.btn-toggle {
-    display: inline-flex;
-    align-items: center;
-    padding: .25rem .5rem;
-    font-weight: 600;
-    color: rgba(0, 0, 0, .65);
-    background-color: transparent;
-    border: 0;
-}
-
-.btn-toggle:hover,
-.btn-toggle:focus {
-    color: rgba(0, 0, 0, .85);
-    background-color: #d2f4ea;
-}
-
-.btn-toggle::before {
-    width: 1.25em;
-    line-height: 0;
-    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-    transition: transform .35s ease;
-    transform-origin: .5em 50%;
-}
-
-.btn-toggle[aria-expanded="true"] {
-    color: rgba(0, 0, 0, .85);
-}
-
-.btn-toggle[aria-expanded="true"]::before {
+.show_submenu .arrow-left {
     transform: rotate(90deg);
 }
 
-.btn-toggle-nav a {
-    display: inline-flex;
-    padding: .1875rem .5rem;
-    margin-top: .125rem;
-    margin-left: 1.25rem;
-    text-decoration: none;
+.submenu .sublink {
+    padding: 7px 0px 7px 55px;
+    display: block;
+    font-size: 0.9em;
 }
 
-.btn-toggle-nav a:hover,
-.btn-toggle-nav a:focus {
-    background-color: #d2f4ea;
+.bottom_content {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    width: 260px;
+    cursor: pointer;
+    transition: all 0.5s ease;
 }
 
-.scrollarea {
-    overflow-y: auto;
+.bottom {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 0;
+    justify-content: space-around;
+    padding: 18px 0;
+    text-align: center;
+    width: 100%;
+    color: var(--grey-color);
+    border-top: 1px solid var(--grey-color-light);
+    background-color: var(--white-color);
 }
 
-.fw-semibold {
-    font-weight: 600;
+.bottom i {
+    font-size: 20px;
 }
 
-.lh-tight {
-    line-height: 1.25;
+.bottom span {
+    font-size: 18px;
+}
+
+.list-menu.close .bottom_content {
+    width: 50px;
+    left: 15px;
+}
+
+.list-menu.close .bottom span {
+    display: none;
+}
+
+.list-menu.hoverable .collapse_sidebars {
+    display: none;
+}
+
+.menu-title-sidebar {
+    color: var(--title-menu-color);
+    user-select: none;
+    text-decoration: underline;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height 46ms 400ms, opacity 400ms 17ms;
 }
 
 
-@media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-        font-size: 3.5rem;
+/* footer*/
+
+#back-to-top {
+    display: inline-block;
+    color: red;
+    background-color: #FAF0E4;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 80px;
+    right: 45px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    border: none !important;
+}
+
+#back-to-top::after {
+    content: "\f077";
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+}
+
+#back-to-top:hover {
+    cursor: pointer;
+    background-color: #9BCDD2;
+}
+
+#back-to-top:active {
+    background-color: #A2CDB0;
+}
+
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.show-titles {
+    height: auto;
+    opacity: 1;
+    transition: height 15ms 18ms, opacity 641ms 24ms;
+}
+
+
+/* sidebars */
+
+@media screen and (max-width: 768px) {
+    .sidebars.close {
+        left: -100%;
+    }
+
+    .sidebars.close .bottom_content {
+        left: -100%;
     }
 }
 </style>
