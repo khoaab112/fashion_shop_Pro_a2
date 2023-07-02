@@ -3,7 +3,7 @@
         <header>
             <div class="image-text">
                 <span class="image-logo-sidebar">
-                    <img src="https://i.pinimg.com/564x/1c/22/8c/1c228c1a2cdd6c55afb2a39636c467cb.jpg" alt="ssss">
+                    <img :src=checkImageAdmin() alt="logo_system">
                 </span>
 
                 <div class="text logo-text">
@@ -49,14 +49,12 @@
   
 <script>
 import dataSidebar from "@/js/generalSetting/adminCategoryMenu.js";
+import avatarAdminDefault from "@/images/admin/system/administrator.png";
 export default {
     data() {
         return {
             activeShowSidebar: false,
             dataMenuSidebar: null,
-
-            // dataSidebar: dataSidebar
-            // Dữ liệu của component
         };
     },
     created() {
@@ -99,8 +97,10 @@ export default {
             const value = this.dataMenuSidebar.find(item => item.code == name);
             value.active ? value.active = false : value.active = true;
         },
-
-
+        checkImageAdmin(){
+            // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
+            return new URL(avatarAdminDefault, import.meta.url).href
+        },
     },
 };
 </script>
@@ -152,6 +152,8 @@ export default {
 .sidebar header .image-text {
     display: flex;
     align-items: center;
+    padding-left: 10px;
+    padding-bottom: 1rem;
 }
 
 .sidebar header .logo-text {
@@ -192,7 +194,8 @@ header .image-text .profession {
     transform: translateY(-50%) rotate(180deg);
     height: 40px;
     width: 40px;
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
+    background-color: #f9cc88;
     color: var(--sidebar-color);
     border-radius: 3px;
     display: flex;
@@ -284,36 +287,6 @@ body.dark .mode .sun-moon i.moon {
 body.dark .switch::before {
     left: 20px;
 }
-
-.home {
-    position: absolute;
-    top: 0;
-    left: 250px;
-    height: 100vh;
-    width: calc(100% - 250px);
-    background-color: var(--body-color);
-    transition: var(--tran-05);
-}
-
-.home .text {
-    font-size: 30px;
-    font-weight: 500;
-    color: var(--text-color);
-    padding: 12px 60px;
-}
-
-.sidebar.close~.home {
-    left: 78px;
-    height: 100vh;
-    width: calc(100% - 78px);
-}
-
-body.dark .home .text {
-    color: var(--text-color);
-}
-
-
-/*  */
 
 .list-menu {
     background-color: var(--white-color);
@@ -518,49 +491,6 @@ body.dark .home .text {
     padding-right: 1rem;
 }
 
-/* footer*/
-
-#back-to-top {
-    display: inline-block;
-    color: red;
-    background-color: #FAF0E4;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    border-radius: 4px;
-    position: fixed;
-    bottom: 80px;
-    right: 45px;
-    transition: background-color .3s, opacity .5s, visibility .5s;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
-    border: none !important;
-}
-
-#back-to-top::after {
-    content: "\f077";
-    font-family: FontAwesome;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 2em;
-    line-height: 50px;
-    color: #fff;
-}
-
-#back-to-top:hover {
-    cursor: pointer;
-    background-color: #9BCDD2;
-}
-
-#back-to-top:active {
-    background-color: #A2CDB0;
-}
-
-#back-to-top.show {
-    opacity: 1;
-    visibility: visible;
-}
 
 .show-titles {
     height: auto;

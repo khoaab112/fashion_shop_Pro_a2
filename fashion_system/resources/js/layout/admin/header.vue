@@ -1,19 +1,17 @@
 <template>
-  <!-- <div class="header-admin">
-    <div class="info-staff">
-    <el-avatar class="avatar-admin" :size="50" :src="circleUrl" />
-    <span class="name-admin">Tên nhân viên</span>
-    <br>
-    <span class="level-admin">Level</span>
-  </div>
-    <button type="button" class="btn-sliders btn-header-admin"><font-awesome-icon :icon="['fas', 'sliders']" /></button>
-    <button type="button" class="btn-bell btn-header-admin"> <font-awesome-icon :icon="['far', 'bell']" /></button>
+  <div class="header-admin d-flex justify-content-end">
+    <div class="">
+      <button type="button" class="btn-set btn-header-admin"><font-awesome-icon icon="fa-solid fa-list-check" /></button>
+      <button type="button" class="btn-bell btn-header-admin"><font-awesome-icon icon="fa-regular fa-bell" /></button>
+      <button type="button" class="btn-bell-signal btn-header-admin"><font-awesome-icon icon="fa-regular fa-bell" beat-fade /></button>
+
+    </div>
   </div>
   <main>
     <div id="content-admin">
       <router-view></router-view>
     </div>
-  </main> -->
+  </main>
 </template>
   
 <script>
@@ -48,25 +46,37 @@ export default {
   
 <style>
 /* CSS cho component */
-/* .btn-header-admin {
+.btn-header-admin {
   border: none;
-    font-size: 24px;
-    float: right;
-    background: none;
-    margin-right: 2rem;
-    margin-top: -0.5rem;
+  font-size: 24px;
+  float: right;
+  background: none;
+  margin-right: 2rem;
 }
 
 .avatar-admin {
   margin-left: 0.5rem;
   margin-top: 0.3rem;
 }
-.header-admin{
+
+.header-admin {
   position: relative;
+  width: 96%;
+  background: #85b4d1;
+  margin: auto;
+  border-radius: 10px;
+  margin-top: 1rem;
+  display: flex;
+  height: 3rem;
+  align-items: center;
 }
-span{
-  position: absolute;
-  margin-left: 4.8rem;
-  margin-top: 0.4rem;
-} */
+.btn-bell{
+  color: white;
+}
+.btn-bell-signal{
+  color: yellow;;
+}
+.btn-set{
+  color: white;;
+}
 </style>

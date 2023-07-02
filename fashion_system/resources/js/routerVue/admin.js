@@ -25,7 +25,8 @@ const admin = [{
             import ('../layout/admin/header.vue'),
         sidebar: () =>
             import ('../layout/admin/sidebarMenu.vue'),
-        // footer: LayoutFooter
+        footer: () =>
+            import ('../layout/admin/footer.vue'),
     },
     children: [{
         path: "user",
