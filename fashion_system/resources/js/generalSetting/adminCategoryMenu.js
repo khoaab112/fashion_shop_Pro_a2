@@ -115,7 +115,7 @@ export default [{
                 code: 'DELIVERY-ORDER',
                 title: 'ĐƠN HÀNG',
                 component: '',
-                icon: 'a-solid fa-truck-ramp-box',
+                icon: 'fa-solid fa-box-open',
                 role: '',
                 router: '',
             },

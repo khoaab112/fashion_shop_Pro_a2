@@ -3,7 +3,7 @@
         <header>
             <div class="image-text">
                 <span class="image-logo-sidebar">
-                    <img src="" alt="ssss">
+                    <img src="https://i.pinimg.com/564x/1c/22/8c/1c228c1a2cdd6c55afb2a39636c467cb.jpg" alt="ssss">
                 </span>
 
                 <div class="text logo-text">
@@ -12,28 +12,30 @@
                 </div>
             </div>
             <hr>
-
-            <i class='bx bx-chevron-right toggle' id="toggle" @click=showSidebar></i>
+            <font-awesome-icon icon="fa-solid fa-angle-right"  id="toggle" @click=showSidebar class="toggle" />
         </header>
         <!--  -->
         <div class="list-menu ">
             <div class="menu_content ">
                 <ul class="menu_items" v-for="value in dataMenuSidebar">
-                    <!-- <div class="menu_title menu_dahsboard"></div> -->
                     <h3 :class="{ 'menu-title-sidebar': true, 'show-titles': activeShowSidebar }"
                         v-if="value.showLabel ? true : false">
-                        Dashboard
+                        NG.KHOA
                     </h3>
                     <li class="item">
-                        <div href="#" class="nav_link submenu_item show_submenu">
-                            <span class="navlink_icon"> 
-                                <font-awesome-icon :icon="value.icon" />              
+                        <div href="#" class="nav_link submenu_item show_submenu hover-icon-mainMenu"
+                            @click="changeActiveSubmenu(value.code)">
+                            <span class="navlink_icon">
+                                <font-awesome-icon :icon="value.icon" class="icon " />
                             </span>
-                            <span class="navlink">{{ value.title }}</span>
+                            <span class="navlink" v-bind:hidden="!activeShowSidebar">{{ value.title }}</span>
                             <i class="bx bx-chevron-right arrow-left"></i>
                         </div>
-                        <ul class="menu_items submenu" v-if="value.children.length">                                        
-                            <a href="#" class="nav_link sublink" v-for="item in value.children"><font-awesome-icon :icon="item.icon" />  {{ item.title }}</a>
+                        <ul class="menu_items submenu" v-if="value.children.length && value.active"
+                            v-bind:hidden="!activeShowSidebar">
+                            <a href="#" class="nav_link sublink hover-icon-subMenu"
+                                v-for="item in value.children"><font-awesome-icon :icon="item.icon" class="icon-submenu" />
+                                {{ item.title }}</a>
                         </ul>
                     </li>
                 </ul>
@@ -51,13 +53,15 @@ export default {
     data() {
         return {
             activeShowSidebar: false,
-            dataMenuSidebar: dataSidebar,
+            dataMenuSidebar: null,
+
             // dataSidebar: dataSidebar
             // Dữ liệu của component
         };
     },
     created() {
         console.log(dataSidebar);
+        this.dataMenuSidebar = this.addElementActiveToSidebar(dataSidebar);
         // Logic khi component được khởi tạo
     },
     mounted() {
@@ -75,9 +79,28 @@ export default {
     methods: {
         // Các phương thức xử lý sự kiện hoặc logic khác
         showSidebar() {
-            if (this.activeShowSidebar) this.activeShowSidebar = false;
-            else this.activeShowSidebar = true;
-        }
+            if (this.activeShowSidebar) {
+                this.activeShowSidebar = false;
+                this.dataMenuSidebar.forEach(element => {
+                    element.active = false;
+                });
+            }
+            else {
+                this.activeShowSidebar = true;
+            }
+        },
+        addElementActiveToSidebar(arr) {
+            arr.forEach(element => {
+                element.active = false;
+            });
+            return arr;
+        },
+        changeActiveSubmenu(name) {
+            const value = this.dataMenuSidebar.find(item => item.code == name);
+            value.active ? value.active = false : value.active = true;
+        },
+
+
     },
 };
 </script>
@@ -108,26 +131,8 @@ export default {
 }
 
 .sidebar header .image-logo-sidebar,
-.sidebar .icon {
-    min-width: 60px;
-    border-radius: 6px;
-}
-
-.sidebar .icon {
-    min-width: 60px;
-    border-radius: 6px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
 
 .sidebar .text,
-.sidebar .icon {
-    color: var(--text-color);
-    transition: var(--tran-03);
-}
 
 .sidebar .text {
     font-size: 17px;
@@ -153,6 +158,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
+    padding-left: 20px;
     user-select: none;
 }
 
@@ -355,7 +361,7 @@ body.dark .home .text {
 
 .navlink_icon {
     position: relative;
-    font-size: 22px;
+    font-size: 25px;
     min-width: 50px;
     line-height: 40px;
     display: inline-block;
@@ -373,23 +379,25 @@ body.dark .home .text {
 
 .navlink_icon:hover {
     background: var(--blue-color);
+
 }
 
 .list-menu .menu_content ul li div span:hover {
     /* background-color: red; */
     color: var(--white-color);
     background: var(--blue-color);
+
 }
 
 .list-menu .nav_link {
-    display: grid;
-    align-items: center;
+    display: flex !important;
+    /* align-items: center; */
     width: 100%;
-    padding: 10px 45px;
+    /* padding: 10px 45px; */
     border-radius: 8px;
     text-decoration: none;
     color: var(--text-color);
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 .list-menu.close .navlink {
@@ -408,11 +416,12 @@ body.dark .home .text {
 .submenu_item {
     cursor: pointer;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .submenu {
     /* display: none;    */
+    border-left: 2px solid #45CFDD !important;
     overflow: hidden;
     height: 0;
     opacity: 0;
@@ -446,9 +455,9 @@ body.dark .home .text {
 }
 
 .submenu .sublink {
-    padding: 7px 0px 7px 55px;
+    padding: 7px 0px 7px 16px;
     display: block;
-    font-size: 0.9em;
+    font-size: 1rem;
 }
 
 .bottom_content {
@@ -505,6 +514,9 @@ body.dark .home .text {
     transition: height 46ms 400ms, opacity 400ms 17ms;
 }
 
+.item .navlink_icon .icon {
+    padding-right: 1rem;
+}
 
 /* footer*/
 
@@ -556,6 +568,17 @@ body.dark .home .text {
     transition: height 15ms 18ms, opacity 641ms 24ms;
 }
 
+.icon-submenu {
+    padding-right: 1rem;
+}
+
+.hover-icon-mainMenu:hover {
+    color: #8290B3;
+}
+
+.hover-icon-subMenu:hover {
+    color: #45CFDD;
+}
 
 /* sidebars */
 
