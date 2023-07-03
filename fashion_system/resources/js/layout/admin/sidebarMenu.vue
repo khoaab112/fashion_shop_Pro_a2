@@ -29,6 +29,7 @@
                                 <font-awesome-icon :icon="value.icon" class="icon " />
                             </span>
                             <span class="navlink" v-bind:hidden="!activeShowSidebar">{{ value.title }}</span>
+                            <div class="ml-auto p-2 down"  v-if="value.children.length"><font-awesome-icon icon="fa-solid fa-chevron-down" class=""/></div>
                             <i class="bx bx-chevron-right arrow-left"></i>
                         </div>
                         <ul class="menu_items submenu" v-if="value.children.length && value.active"
@@ -338,7 +339,7 @@ body.dark .switch::before {
     min-width: 50px;
     line-height: 40px;
     display: inline-block;
-    text-align: center;
+    /* text-align: center; */
     border-radius: 6px;
 }
 
@@ -364,7 +365,7 @@ body.dark .switch::before {
 
 .list-menu .nav_link {
     display: flex !important;
-    /* align-items: center; */
+    align-items: center;
     width: 100%;
     /* padding: 10px 45px; */
     border-radius: 8px;
@@ -509,7 +510,9 @@ body.dark .switch::before {
 .hover-icon-subMenu:hover {
     color: #45CFDD;
 }
-
+div.down{
+    color: chocolate;
+}
 /* sidebars */
 
 @media screen and (max-width: 768px) {
