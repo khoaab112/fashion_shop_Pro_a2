@@ -2,7 +2,7 @@
    <router-view name="sidebar" />
    <section class="home">
       <!-- <div class="text">Dashboard Sidebar</div> -->
-      <router-view name="header" />"
+      <router-view name="header" />
    </section>
    <router-view name="footer" />
 </template>

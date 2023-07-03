@@ -4,12 +4,14 @@
       <button type="button" class="btn-set btn-header-admin"><font-awesome-icon icon="fa-solid fa-list-check" /></button>
       <button type="button" class="btn-bell btn-header-admin"><font-awesome-icon icon="fa-regular fa-bell" /></button>
       <button type="button" class="btn-bell-signal btn-header-admin"><font-awesome-icon icon="fa-regular fa-bell" beat-fade /></button>
-
     </div>
   </div>
   <main>
     <div id="content-admin">
-      <router-view></router-view>
+      <div class="container">
+        <router-view></router-view>
+      </div>
+      
     </div>
   </main>
 </template>

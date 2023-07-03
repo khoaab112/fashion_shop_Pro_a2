@@ -1,11 +1,14 @@
 <template>
-    <footer id="footer">
-<font-awesome-icon icon="fa-solid fa-circle-chevron-up" class="show" id="back-to-top" />
-    </footer>
+
+
 </template>
   
 <script>
+import CircleMenu from 'vue-circle-menu';
 export default {
+    components: {
+        CircleMenu,
+    },
     data() {
         return {
             // Dữ liệu của component
@@ -61,24 +64,27 @@ export default {
 #back-to-top:active {
     color: #A2CDB0;
 }
+
 #back-to-top:after {
-  content: "";
-  background: #90EE90;
-  display: block;
-  position: absolute;
-  padding-top: 300%;
-  padding-left: 350%;
-  margin-left: -20px!important;
-  margin-top: -120%;
-  opacity: 0;
-  transition: all 0.8s
+    content: "";
+    background: #90EE90;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
 }
+
 #back-to-top:active:after {
-  padding: 0;
-  margin: 0;
-  opacity: 1;
-  transition: 0s
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
 }
+
 #back-to-top.show {
     opacity: 1;
     visibility: visible;
@@ -88,5 +94,4 @@ export default {
     height: auto;
     opacity: 1;
     transition: height 15ms 18ms, opacity 641ms 24ms;
-}
-</style>
+}</style>
