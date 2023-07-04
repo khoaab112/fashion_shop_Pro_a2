@@ -301,6 +301,7 @@ body.dark .switch::before {
     overflow-y: scroll;
     box-shadow: 0 0 1px var(--grey-color-light);
     transition: all 0.5s ease;
+    user-select: none;
 }
 
 .list-menu.close {

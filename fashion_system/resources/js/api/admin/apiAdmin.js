@@ -1,4 +1,4 @@
-import index from '../index.js';
+import index from '..setupApi.js';
 
 export default {
     test() {
