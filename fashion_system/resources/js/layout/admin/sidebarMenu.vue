@@ -17,7 +17,7 @@
         <!--  -->
         <div class="list-menu ">
             <div class="menu_content ">
-                <ul class="menu_items" v-for="value in dataMenuSidebar">
+                <ul class="menu_items" v-for="value in dataMenuSidebar" :key="value.code">
                     <h3 :class="{ 'menu-title-sidebar': true, 'show-titles': activeShowSidebar }"
                         v-if="value.showLabel ? true : false">
                         NG.KHOA

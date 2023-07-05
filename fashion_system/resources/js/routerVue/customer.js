@@ -1,8 +1,10 @@
 const customer = [{
     path: '/',
     name: 'home',
-    component: () =>
-        import ('../layout/header.vue'),
+    components: {
+        home: () =>
+            import ('../viewsVue/client/index.vue'),
+    },
     children: [{
         path: "user",
         name: "home-user",

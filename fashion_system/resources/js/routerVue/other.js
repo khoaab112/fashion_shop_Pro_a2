@@ -1,7 +1,18 @@
 const error404 = [{
     path: '/:pathMatch(.*)*',
-    component: () =>
-        import ('../viewsVue/other/error404.vue'),
+    components: {
+        error: () =>
+            import ('../viewsVue/other/page404.vue'),
+    },
 }];
-
-export default error404;
+const error500 = [{
+    path: '/error500',
+    components: {
+        error: () =>
+            import ('../viewsVue/other/page500.vue'),
+    },
+}];
+export default {
+    error404,
+    error500,
+};

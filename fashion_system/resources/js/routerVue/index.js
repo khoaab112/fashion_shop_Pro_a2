@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import admin from "./admin";
 import customer from "./customer";
-import error404 from "./other";
+import other from "./other";
 
-const routes = [...admin, ...error404, ...customer];
-// const routes = [...customer];
-
+const routes = [...other.error404, ...other.error500, ...customer, ...admin];
 const router = createRouter({
     history: createWebHistory(),
     routes

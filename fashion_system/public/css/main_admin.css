@@ -3,6 +3,11 @@
     src: url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("woff"), url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("opentype"), url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: "banabo";
+    src: url("../font/banabo/Banabo.ttf") format("woff"), url("../font/banabo/Banabo.ttf") format("opentype"), url("../font/banabo/Banabo.ttf") format("truetype");
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -17,6 +22,7 @@
     --primary-color: #1707c4;
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDD;
+    --page-404-color: #24344c;
     --text-color: #383838;
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
