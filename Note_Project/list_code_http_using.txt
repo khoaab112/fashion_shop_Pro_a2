@@ -1,0 +1,43 @@
+HTTP_CONTINUE: 100 (Tiếp tục) - Yêu cầu thành công và yêu cầu tiếp tục gửi dữ liệu.
+HTTP_SWITCHING_PROTOCOLS: 101 (Chuyển đổi giao thức) - Máy chủ đồng ý chuyển đổi giao thức theo yêu cầu của khách hàng.
+HTTP_OK: 200 (OK) - Yêu cầu thành công và có dữ liệu phản hồi.
+HTTP_CREATED: 201 (Đã tạo) - Yêu cầu thành công và đã tạo thành công một tài nguyên mới.
+HTTP_ACCEPTED: 202 (Được chấp nhận) - Yêu cầu đã được chấp nhận, nhưng xử lý có thể được hoàn thành sau.
+HTTP_NON_AUTHORITATIVE_INFORMATION: 203 (Thông tin không có sự ủy quyền) - Thông tin phản hồi không chính xác hoặc không được ủy quyền.
+HTTP_NO_CONTENT: 204 (Không có nội dung) - Yêu cầu thành công, nhưng không có nội dung phản hồi.
+HTTP_RESET_CONTENT: 205 (Đặt lại nội dung) - Yêu cầu thành công, yêu cầu khách hàng đặt lại xem lại nội dung.
+HTTP_PARTIAL_CONTENT: 206 (Phần nội dung) - Yêu cầu thành công, chỉ trả về một phần nội dung.
+HTTP_MULTIPLE_CHOICES: 300 (Nhiều lựa chọn) - Có nhiều lựa chọn để xử lý yêu cầu, khách hàng cần chọn một trong số chúng.
+HTTP_MOVED_PERMANENTLY: 301 (Đã di chuyển vĩnh viễn) - Tài nguyên đã di chuyển vĩnh viễn sang một địa chỉ mới.
+HTTP_FOUND: 302 (Đã tìm thấy) - Tài nguyên được tìm thấy tạm thời tại một địa chỉ khác.
+HTTP_SEE_OTHER: 303 (Xem thêm) - Khách hàng được yêu cầu xem một địa chỉ khác.
+HTTP_NOT_MODIFIED: 304 (Không được sửa đổi) - Tài nguyên không được sửa đổi kể từ lần truy cập trước đó.
+HTTP_USE_PROXY: 305 (Sử dụng proxy) - Khách hàng cần sử dụng một proxy để truy cập tài nguyên.
+HTTP_TEMPORARY_REDIRECT: 307 (Chuyển hướng tạm thời) - Chuyển hướng tạm thời đến một địa chỉ khác.
+HTTP_PERMANENTLY_REDIRECT: 308 (Chuyển hướng vĩnh viễn) - Chuyển hướng vĩnh viễn đến một địa chỉ khác.
+HTTP_BAD_REQUEST: 400 (Yêu cầu không hợp lệ) - Yêu cầu không hợp lệ từ phía frontend, ví dụ như dữ liệu không hợp lệ hoặc thiếu thông tin bắt buộc.
+HTTP_UNAUTHORIZED: 401 (Không được ủy quyền) - Người dùng không có quyền truy cập hoặc yêu cầu yêu cầu xác thực.
+HTTP_PAYMENT_REQUIRED: 402 (Yêu cầu thanh toán) - Yêu cầu yêu cầu thanh toán trước khi tiếp tục.
+HTTP_FORBIDDEN: 403 (Bị cấm) - Người dùng không được phép truy cập vào tài nguyên hoặc thực hiện hành động cần quyền truy cập.
+HTTP_NOT_FOUND: 404 (Không tìm thấy) - Tài nguyên yêu cầu không tồn tại.
+HTTP_METHOD_NOT_ALLOWED: 405 (Phương thức không được cho phép) - Phương thức yêu cầu không được hỗ trợ bởi tài nguyên.
+HTTP_NOT_ACCEPTABLE: 406 (Không chấp nhận được) - Tài nguyên không thể sinh ra dữ liệu phù hợp với yêu cầu của khách hàng.
+HTTP_PROXY_AUTHENTICATION_REQUIRED: 407 (Yêu cầu xác thực proxy) - Proxy yêu cầu xác thực trước khi tiếp tục xử lý yêu cầu.
+HTTP_REQUEST_TIMEOUT: 408 (Hết thời gian chờ yêu cầu) - Yêu cầu đã vượt quá thời gian chờ của máy chủ.
+HTTP_CONFLICT: 409 (Xung đột) - Xảy ra xung đột trong quá trình xử lý yêu cầu.
+HTTP_GONE: 410 (Không còn tồn tại) - Tài nguyên yêu cầu không còn tồn tại.
+HTTP_LENGTH_REQUIRED: 411 (Yêu cầu độ dài) - Yêu cầu yêu cầu một trường "Content-Length" để xác định độ dài của nội dung.
+HTTP_PRECONDITION_FAILED: 412 (Điều kiện trước thất bại) - Các điều kiện tiên quyết của yêu cầu không được đáp ứng.
+HTTP_PAYLOAD_TOO_LARGE: 413 (Dữ liệu quá lớn) - Kích thước dữ liệu yêu cầu vượt quá giới hạn cho phép.
+HTTP_REQUESTURI_TOO_LONG: 414 (Yêu cầu URI quá dài) - Độ dài của URI yêu cầu vượt quá giới hạn cho phép.
+HTTP_UNSUPPORTED_MEDIA_TYPE: 415 (Loại phương tiện không được hỗ trợ) - Loại phương tiện trong yêu cầu không được hỗ trợ bởi máy chủ.
+HTTP_REQUESTED_RANGE_NOT_SATISFIABLE: 416 (Phạm vi yêu cầu không thỏa mãn) - Yêu cầu phạm vi không thỏa mãn hoặc không tồn tại.
+HTTP_EXPECTATION_FAILED: 417 (Yêu cầu không đáp ứng được) - Máy chủ không thể đáp ứng yêu cầu theo các tiêu chuẩn của trường Expect trong tiêu đề yêu cầu.
+HTTP_UNPROCESSABLE_ENTITY: 422 (Dữ liệu không xử lý được) - Dữ liệu trong yêu cầu không thể xử lý hoặc không hợp lệ.
+HTTP_TOO_MANY_REQUESTS: 429 (Quá nhiều yêu cầu) - Người dùng đã gửi quá nhiều yêu cầu trong một khoảng thời gian nhất định.
+HTTP_INTERNAL_SERVER_ERROR: 500 (Lỗi máy chủ nội bộ) - Lỗi xảy ra phía máy chủ, không thể hoàn thành yêu cầu do lỗi hệ thống.
+HTTP_NOT_IMPLEMENTED: 501 (Chưa được thực hiện) - Yêu cầu chưa được thực hiện hoặc không được hỗ trợ bởi máy chủ.
+HTTP_BAD_GATEWAY: 502 (Cổng không hợp lệ) - Lỗi xảy ra khi máy chủ trung gian không thể nhận được phản hồi hợp lệ từ máy chủ phía sau nó.
+HTTP_SERVICE_UNAVAILABLE: 503 (Dịch vụ không khả dụng) - Dịch vụ không khả dụng tạm thời, thường xảy ra khi máy chủ đang quá tải hoặc đang trong quá trình bảo trì.
+HTTP_GATEWAY_TIMEOUT: 504 (Thời gian chờ cổng) - Lỗi xảy ra khi máy chủ trung gian không nhận được phản hồi từ máy chủ phía sau nó trong khoảng thời gian chờ.
+HTTP_VERSION_NOT_SUPPORTED: 505 (Phiên bản HTTP không được hỗ trợ) - Phiên bản HTTP được yêu cầu không được hỗ trợ bởi máy chủ.

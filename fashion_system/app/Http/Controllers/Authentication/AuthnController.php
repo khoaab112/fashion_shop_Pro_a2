@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
-
+use App\Helpers\CodeHttpHelpers;
 
 
 class AuthnController extends Controller
@@ -33,15 +33,12 @@ class AuthnController extends Controller
             ];
 
             $validator = validator()->make($request->all(), $validationRules, $customMessages);
-
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
-                return response()->json(['code' => 400, 'message' => 'Lỗi', 'errors' => $errors]);
+                return CodeHttpHelpers::returnJson(200, false, $errors, 400);
             }
             $search = $this->query->searchUserName($request->post('user_name'));
-
-            return response()->json(['result-code' => 200, ,'message' => 'Success', 'results' => $search]);
-            if (!$search) 
+            if (!$search)   return   CodeHttpHelpers::returnJson(200, false,'tài khoản đã tồn tại', 400);
             $staffAccount = [
                 'staff_id' => $request->post('staff_id'),
                 'administration_id' => $request->post('administration_id'),
@@ -49,11 +46,9 @@ class AuthnController extends Controller
                 'password' => bcrypt($request->post('password')),
             ];
             $result = $this->query->create($staffAccount);
-
-            return response()->json(['code' => 200, 'message' => 'Success', 'results' => $result]);
+            return CodeHttpHelpers::returnJson(200, true, $result, 200);
         } catch (\Exception $error) {
-            // return response()->json(['code' => 500, 'message' => 'Lỗi', 'error' => $error->getMessage()]);
-            return response()->json(['code' => 500, 'message' => 'Lỗi bất thường', 'error' => $error]);
+            return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }
 }

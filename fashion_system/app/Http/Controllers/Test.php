@@ -20,6 +20,7 @@ class Test extends Controller
     {
              
         $test = $this->query->getAll();
-        return response()->json(['content' => $test]);
+        return response()->json(['resultcode' => 200 ,'message' => 'success', 'results' => $test]);
+
     }
 }

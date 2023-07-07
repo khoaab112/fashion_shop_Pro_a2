@@ -1,0 +1,13 @@
+200 OK: Yêu cầu thành công và có dữ liệu phản hồi.
+400 Bad Request: Yêu cầu không hợp lệ từ phía frontend, ví dụ như dữ liệu không hợp lệ hoặc thiếu thông tin bắt buộc.
+401 Unauthorized: Người dùng không có quyền truy cập hoặc yêu cầu yêu cầu xác thực.
+403 Forbidden: Người dùng không được phép truy cập vào tài nguyên hoặc thực hiện hành động cần quyền truy cập.
+404 Not Found: Tài nguyên yêu cầu không tồn tại.
+500 Internal Server Error: Lỗi phía server, không thể hoàn thành yêu cầu do lỗi hệ thống.
+502 Bad Gateway: Lỗi xảy ra khi server trung gian (gateway) không thể nhận được phản hồi hợp lệ từ server phía sau nó.
+503 Service Unavailable: Dịch vụ không khả dụng tạm thời. Thường được sử dụng khi server đang quá tải hoặc đang bảo trì.
+HTTP_FORBIDDEN: 403 (Bị cấm) - Người dùng không được phép truy cập vào tài nguyên hoặc thực hiện hành động cần quyền truy cập.
+HTTP_REQUEST_TIMEOUT: 408 (Hết thời gian chờ yêu cầu) - Yêu cầu đã vượt quá thời gian chờ của máy chủ.
+HTTP_PAYLOAD_TOO_LARGE: 413 (Dữ liệu quá lớn) - Kích thước dữ liệu yêu cầu vượt quá giới hạn cho phép.
+HTTP_TOO_MANY_REQUESTS: 429 (Quá nhiều yêu cầu) - Người dùng đã gửi quá nhiều yêu cầu trong một khoảng thời gian nhất định.
+HTTP_NOT_IMPLEMENTED: 501 (Chưa được thực hiện) - Yêu cầu chưa được thực hiện hoặc không được hỗ trợ bởi máy chủ.
