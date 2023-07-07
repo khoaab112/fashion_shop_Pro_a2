@@ -4,6 +4,7 @@
     <div class="denied__wrapper">
       <h1>404</h1>
       <h3>OH....Cỏ vẻ thứ bạn tìm nó không có ở đây rồi</h3>
+      <p class="text-center">😵‍💫😵‍💫😵‍💫</p>
       <img class="astronaut" :src="getImage(imgAstronaut)" />
       <img class="astronaut clone-astronaut" :src="getImage(imgAstronaut)" />
       <img id="planet" :src="getImage(imgPlanet)" />
@@ -146,6 +147,10 @@ export default {
   margin-top: 8vh;
 }
 
+.denied__wrapper p {
+  font-size: 2.5rem !important;
+}
+
 .permission_denied h1 {
   text-align: center;
   color: #fff;
@@ -157,11 +162,11 @@ export default {
 .permission_denied h3 {
   text-align: center;
   color: #fff;
-  font-size: 19px;
+  /* font-size: 19px;
   line-height: 23px;
   max-width: 330px;
   margin: 0px auto 30px auto;
-  font-weight: 400;
+  font-weight: 400; */
 }
 
 .permission_denied h3 span {
@@ -207,10 +212,13 @@ export default {
 .permission_denied .stars {
   animation: sparkle 1.6s infinite ease-in-out alternate;
 }
-.clone-astronaut{
- left: 0rem;
- margin-top: 9rem;
- animation: spin 5.5s infinite ease-in-out !important;}
+
+.clone-astronaut {
+  left: 0rem;
+  margin-top: 9rem;
+  animation: spin 5.5s infinite ease-in-out !important;
+}
+
 body {
   background-color: var(--page-404-color);
 }
@@ -272,6 +280,10 @@ body {
   animation: hover 2s infinite ease-in-out alternate;
 }
 
+a.link_404 {
+  color: burlywood;
+}
+
 @keyframes hover {
   0% {
     transform: translateY(3px);
@@ -280,5 +292,4 @@ body {
   100% {
     transform: translateY(-3px);
   }
-}
-</style>
+}</style>

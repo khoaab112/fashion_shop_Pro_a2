@@ -22,9 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', [Test::class, 'index']);
+Route::middleware('checkDB')->group(function () {
+
+    Route::get('/test', [Test::class, 'index']);
+    Route::post('/register', [AuthnController::class, 'register']);
+
+});
 //login
-Route::post('/register', [AuthnController::class, 'register']);
 
 
 

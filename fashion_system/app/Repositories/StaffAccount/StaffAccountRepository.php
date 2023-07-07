@@ -5,15 +5,21 @@ use App\Repositories\BaseRepositories;
 use App\Models\StaffAccount;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
 
-
 class StaffAccountRepository extends BaseRepositories implements StaffAccountRepositoryInterface{
 
     protected StaffAccount $staffAccount;
     public function __construct(StaffAccount $staffAccount)
     { 
+        $this->staffAccount = $staffAccount;
         parent::__construct($staffAccount);
     }
-    
+    public function searchUserName($name)
+    {
+        // dd(3);
+        return $this->staffAccount->where('user_name', $name)->first();
+        // return $this->staffAccount->all();
+
+    }
 
 
  
