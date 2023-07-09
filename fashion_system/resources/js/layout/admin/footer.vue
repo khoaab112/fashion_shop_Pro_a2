@@ -1,24 +1,23 @@
 <template>
-
-
+    <button id="back-to-top" :class="{show:btnOnTopVisible}"  @click="scrollToTop"><font-awesome-icon icon="fa-solid fa-chevron-up" style="color: #1a71ff;" /></button>
 </template>
   
 <script>
-import CircleMenu from 'vue-circle-menu';
+// import CircleMenu from 'vue-circle-menu';
 export default {
     components: {
-        CircleMenu,
+        // CircleMenu,
     },
     data() {
         return {
-            // Dữ liệu của component
+            btnOnTopVisible: true,
         };
     },
     created() {
         // Logic khi component được khởi tạo
     },
     mounted() {
-        // Logic sau khi component được gắn kết (render) vào DOM
+        window.addEventListener('scroll', this.scrollHandler);
     },
     computed() {
         // được sử dụng để định nghĩa các thuộc tính tính toán
@@ -30,8 +29,17 @@ export default {
 
     },
     methods: {
-        // Các phương thức xử lý sự kiện hoặc logic khác
+        scrollHandler() {
+            if (window.pageYOffset > 300) {
+                this.btnOnTopVisible = true;
+            } else {
+                this.btnOnTopVisible = false;
+            }
+        }
     },
+    scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 };
 </script>
   
@@ -39,12 +47,12 @@ export default {
 /* CSS cho component */
 #back-to-top {
     display: inline-block;
-    color: #10da32;
+    color: red;
+    background-color: #FAF0E4;
     width: 50px;
     height: 50px;
     text-align: center;
-    font-size: 16px;
-    /* border-radius: 4px; */
+    border-radius: 4px;
     position: fixed;
     bottom: 80px;
     right: 45px;
@@ -55,34 +63,23 @@ export default {
     border: none !important;
 }
 
+/* #back-to-top::after {
+    content: "\f077";
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+} */
 
 #back-to-top:hover {
     cursor: pointer;
-    color: #9BCDD2;
+    background-color: #9BCDD2;
 }
 
 #back-to-top:active {
-    color: #A2CDB0;
-}
-
-#back-to-top:after {
-    content: "";
-    background: #90EE90;
-    display: block;
-    position: absolute;
-    padding-top: 300%;
-    padding-left: 350%;
-    margin-left: -20px !important;
-    margin-top: -120%;
-    opacity: 0;
-    transition: all 0.8s
-}
-
-#back-to-top:active:after {
-    padding: 0;
-    margin: 0;
-    opacity: 1;
-    transition: 0s
+    background-color: #A2CDB0;
 }
 
 #back-to-top.show {
@@ -94,4 +91,5 @@ export default {
     height: auto;
     opacity: 1;
     transition: height 15ms 18ms, opacity 641ms 24ms;
-}</style>
+}
+</style>

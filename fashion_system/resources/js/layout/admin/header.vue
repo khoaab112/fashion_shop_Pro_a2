@@ -10,7 +10,7 @@
   </div>
   <main>
     <div id="content-admin">
-      <div class="container">
+      <div class="container bg-content">
         <router-view></router-view>
       </div>
       
@@ -110,4 +110,13 @@ export default {
 body.dark .home .text {
    color: var(--text-color);
 }
+/*  */
+#content-admin{
+  margin-top: 2.5rem;
+}
+.bg-content{
+  background-color: white;
+  min-height: 10rem;
+}
+
 </style>
