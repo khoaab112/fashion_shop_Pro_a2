@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
 use App\Helpers\CodeHttpHelpers;
+use App\Helpers\validationHelpers;
 
 
 class AuthnController extends Controller
@@ -24,15 +25,16 @@ class AuthnController extends Controller
                 'administration_id' => 'required',
                 'user_name' => 'required',
                 'password' => 'required|min:9',
-                // 'password_confirm' => 'required|min:9|same:password',
+
             ];
-            $customMessages = [
-                'required' => ':attribute không được bỏ trống.',
-                'min' => ':attribute phải có ít nhất :min ký tự.',
-                'same' => ':attribute không khớp với mật khẩu đã nhập.',
+            $attributeNames = [
+                'staff_id' => 'Mã nhân viên',
+                'administration_id' => 'Mã quyền administration',
+                'user_name' => 'tên người sử dụng',
+                'password' => 'Mật khẩu',
             ];
 
-            $validator = validator()->make($request->all(), $validationRules, $customMessages);
+            $validator = validationHelpers::validation($request->all(),$validationRules,$attributeNames);
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
                 return CodeHttpHelpers::returnJson(200, false, $errors, 400);
