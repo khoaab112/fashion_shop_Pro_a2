@@ -1,16 +1,23 @@
 <template>
-    <button id="back-to-top" :class="{show:btnOnTopVisible}"  @click="scrollToTop"><font-awesome-icon icon="fa-solid fa-chevron-up" style="color: #1a71ff;" /></button>
+    <footer>
+        <circle-Menu :circleMenu="circleMenuAdmin"></circle-Menu>
+        <button id="back-to-top" :class="{ show: btnOnTopVisible }" @click="scrollToTop"><font-awesome-icon
+                icon="fa-solid fa-chevron-up" style="color: #1a71ff;" /></button>
+    </footer>
 </template>
   
 <script>
-// import CircleMenu from 'vue-circle-menu';
+import circleMenuAdmin from "@/js/generalSetting/circleMenuAdmin.js";
+import circleMenu from "@/js/viewsVue/components/circleMenu.vue";
+
 export default {
     components: {
-        // CircleMenu,
+        circleMenu,
     },
     data() {
         return {
             btnOnTopVisible: true,
+            circleMenuAdmin: circleMenuAdmin.menu,
         };
     },
     created() {
@@ -38,8 +45,8 @@ export default {
         }
     },
     scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 };
 </script>
   

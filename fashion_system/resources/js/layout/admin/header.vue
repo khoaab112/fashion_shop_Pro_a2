@@ -67,7 +67,7 @@ export default {
 .header-admin {
   position: relative;
   width: 96%;
-  background: #85b4d1;
+  background: #a0c49d;
   margin: auto;
   border-radius: 10px;
   margin-top: 1rem;
