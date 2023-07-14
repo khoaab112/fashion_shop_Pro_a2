@@ -1,4 +1,4 @@
-const customer = [{
+const home = [{
     path: '/',
     name: 'home',
     components: {
@@ -13,4 +13,12 @@ const customer = [{
     }]
 
 }]
-export default customer;
+const test = [{
+    path: '/test',
+    name: 'test',
+    components: {
+        home: () =>
+            import ('../viewsVue/client/authentication/login.vue'),
+    },
+}];
+export default { home, test };
