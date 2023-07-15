@@ -24,7 +24,7 @@ class AuthnController extends Controller
                 'staff_id' => 'required',
                 'administration_id' => 'required',
                 'user_name' => 'required',
-                'password' => 'required|min:9',
+                'password' => 'required|min:1',
 
             ];
             $attributeNames = [
@@ -40,7 +40,7 @@ class AuthnController extends Controller
                 return CodeHttpHelpers::returnJson(200, false, $errors, 400);
             }
             $search = $this->query->searchUserName($request->post('user_name'));
-            if (!$search)   return   CodeHttpHelpers::returnJson(200, false,'tài khoản đã tồn tại', 400);
+            if ($search)   return   CodeHttpHelpers::returnJson(200, false,'tài khoản đã tồn tại', 400);
             $staffAccount = [
                 'staff_id' => $request->post('staff_id'),
                 'administration_id' => $request->post('administration_id'),
@@ -58,6 +58,8 @@ class AuthnController extends Controller
         // $setTable =app(config('auth.providers.users.model'));
         // $setTable->setTable('staff_account');
         // Auth::getProvider()->setTable('customers');
+        var_dump($request->email);
+        var_dump($request->password);
         if(Auth::guard('staff_account')->attempt(['user_name' =>$request->email, 'password' =>$request->password]))
         {
             dd('thành công')    ;

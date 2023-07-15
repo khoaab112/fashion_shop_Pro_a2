@@ -17,7 +17,7 @@ class CustomAuthServiceProvider extends AuthServiceProvider
         });
 
         Auth::extend('account_customers', function ($app, $name, array $config) {
-            return new \Illuminate\Auth\EloquentUserProvider($app['hash'], $config['staff_account']);
+            return new \Illuminate\Auth\EloquentUserProvider($app['hash'], $config['account_customers']);
         });
     }
 }

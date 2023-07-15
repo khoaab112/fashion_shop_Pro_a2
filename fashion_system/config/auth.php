@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'staff_account',
+        'passwords' => 'staff_account',
     ],
 
     /*
@@ -36,10 +36,10 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
         'staff_account' => [
             'driver' => 'session',
             'provider' => 'staff_account',
@@ -68,10 +68,10 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
+        // ],
         'staff_account' => [
             'driver' => 'eloquent',
             'model' => App\Models\StaffAccount::class,
@@ -105,7 +105,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
+            'provider' => 'staff_account',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
