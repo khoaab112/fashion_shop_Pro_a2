@@ -17,8 +17,8 @@
                                         required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password-field" :type=typeInputPassword class="form-control" placeholder="Mật khẩu"
-                                        autocomplete="off" required>
+                                    <input id="password-field" :type=typeInputPassword class="form-control"
+                                        placeholder="Mật khẩu" autocomplete="off" required>
 
                                     <span class="field-icon" @click="showPassWord()">
                                         <font-awesome-icon icon="fa-regular fa-eye" v-if="isShowPassWord" />
@@ -41,7 +41,7 @@
                             <div class=" text-decoration-underline set-end set-center">
                                 <a href="#" style="color: #fff">Chưa có tài khoản</a>
                             </div>
-                            <div class="text-center">
+                            <div class="text-center block-copy">
                                 <p class="pt-2">Hoặc</p>
                                 <p class="w-100 text-center">&mdash; Đăng nhập với cách khác &mdash;</p>
                             </div>
@@ -64,7 +64,7 @@
     
 <script>
 import backgroundLogin from "@/images/client/authentication/login/bg_login_client.gif";
-import logoGoogle from "@/images/client/authentication/logo/google.png";
+import logoGoogle from "@/images/client/logo/google.png";
 // import { DatePicker, Radio } from 'ant-design-vue';
 // import avatarAdminDefault from "@/images/client/authentication/login.js";
 
@@ -120,10 +120,8 @@ export default {
             return new URL(url, import.meta.url).href
         },
         showPassWord() {
-            this.isShowPassWord=!this.isShowPassWord;
-            this.isShowPassWord?this.typeInputPassword = 'text':this.typeInputPassword = 'password';
-                console.log(this.typeInputPassword);
-                console.log(this.isShowPassWord);
+            this.isShowPassWord = !this.isShowPassWord;
+            this.isShowPassWord ? this.typeInputPassword = 'text' : this.typeInputPassword = 'password';
         }
     },
 };
@@ -134,6 +132,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    height: unset;
 }
 
 .ftco-section {
@@ -449,6 +448,11 @@ img.img-service {
 
 button.btn-service:hover {
     transform: translateY(-10px);
+}
+
+.set-center,
+.block-copy {
+    user-select: none;
 }
 
 @media (max-width:800px) {

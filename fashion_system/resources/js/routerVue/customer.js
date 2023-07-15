@@ -18,7 +18,7 @@ const test = [{
     name: 'test',
     components: {
         home: () =>
-            import ('../viewsVue/client/authentication/login.vue'),
+            import ('../viewsVue/admin/authentication/register.vue'),
     },
 }];
 export default { home, test };

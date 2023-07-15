@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: "roboto-regular";
+    src: url("../font/Roboto_Slab/static/RobotoSlab-Regular.ttf") format("woff"), url("../font/Roboto_Slab/static/RobotoSlab-Regular.ttf") format("opentype"), url("../font/Roboto_Slab/static/RobotoSlab-Regular.ttf") format("truetype");
+}
+
+@font-face {
     font-family: "banabo";
     src: url("../font/banabo/Banabo.ttf") format("woff"), url("../font/banabo/Banabo.ttf") format("opentype"), url("../font/banabo/Banabo.ttf") format("truetype");
 }
@@ -12,7 +17,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "roboto-bold";
+    /* font-family: "roboto-bold"; */
 }
 
 :root {
@@ -28,10 +33,6 @@
     --tran-03: all 0.3s ease;
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
-}
-
-body {
-    overflow-y: hidden;
 }
 
 
@@ -53,4 +54,8 @@ body {
 
 a {
     text-decoration: none;
+}
+
+body {
+    font-family: "roboto-regular" !important;
 }
