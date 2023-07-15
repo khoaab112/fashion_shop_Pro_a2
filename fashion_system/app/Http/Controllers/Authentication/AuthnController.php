@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
 use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
-
+use Illuminate\Support\Facades\Auth;
 
 class AuthnController extends Controller
 {
@@ -52,5 +52,17 @@ class AuthnController extends Controller
         } catch (\Exception $error) {
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
+    }
+    public function login(Request $request){
+        //change table default on laravel
+        // $setTable =app(config('auth.providers.users.model'));
+        // $setTable->setTable('staff_account');
+        // Auth::getProvider()->setTable('customers');
+        if(Auth::guard('staff_account')->attempt(['user_name' =>$request->email, 'password' =>$request->password]))
+        {
+            dd('thành công')    ;
+        }
+        else
+        dd('thất bại');
     }
 }

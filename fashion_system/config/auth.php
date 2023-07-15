@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'staff_account' => [
+            'driver' => 'session',
+            'provider' => 'staff_account',
+        ],
+        'account_customers' => [
+            'driver' => 'session',
+            'provider' => 'account_customers',
+        ],
     ],
 
     /*
@@ -64,11 +72,16 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'staff_account' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\StaffAccount::class,
+            'table' => 'staff_account',
+        ],
+        'account_customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\AccountCustomers::class,
+            'table' => 'account_customers',
+        ],
     ],
 
     /*
@@ -97,6 +110,7 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
     ],
 
     /*

@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use App\Helpers\CodeHttpHelpers;
 
 class CheckDataBase
 {
@@ -22,10 +23,10 @@ class CheckDataBase
             if (DB::connection()->getDatabaseName()) {
                 return $next($request);
             } else {
-                return response()->json(['code' => 500, 'message' => null, 'error' => 'Tạm xác định lỗi Database'], Response::HTTP_INTERNAL_SERVER_ERROR);
+                return CodeHttpHelpers::returnJson(500, false, 'Database error || lost database connection', 500);
             }
         } catch (\Exception $e) {
-            return response()->json(['code' => 500, 'message' => null, 'error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return CodeHttpHelpers::returnJson(500, false, 'Undefinition', 500);
         }
     }
 }
