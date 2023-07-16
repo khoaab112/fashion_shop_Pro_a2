@@ -13,6 +13,18 @@ class AuthnController extends Controller
 {
     //xử lí cho nhân viên trước
     protected $query;
+    protected $validationRules = [
+        'staff_id' => 'required',
+        'administration_id' => 'required',
+        'user_name' => 'required',
+        'password' => 'required|min:9',
+    ];
+    protected   $attributeNames = [
+        'staff_id' => 'Mã nhân viên',
+        'administration_id' => 'Mã quyền administration',
+        'user_name' => 'tên người sử dụng',
+        'password' => 'Mật khẩu',
+    ];
     public function __construct(StaffAccountRepositoryInterface $staffAccountRepository)
     {
         $this->query = $staffAccountRepository;
@@ -20,27 +32,14 @@ class AuthnController extends Controller
     public function register(Request $request)
     {
         try {
-            $validationRules = [
-                'staff_id' => 'required',
-                'administration_id' => 'required',
-                'user_name' => 'required',
-                'password' => 'required|min:1',
 
-            ];
-            $attributeNames = [
-                'staff_id' => 'Mã nhân viên',
-                'administration_id' => 'Mã quyền administration',
-                'user_name' => 'tên người sử dụng',
-                'password' => 'Mật khẩu',
-            ];
-
-            $validator = validationHelpers::validation($request->all(),$validationRules,$attributeNames);
+            $validator = validationHelpers::validation($request->all(), $this->validationRules, $this->attributeNames);
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
                 return CodeHttpHelpers::returnJson(200, false, $errors, 400);
             }
             $search = $this->query->searchUserName($request->post('user_name'));
-            if ($search)   return   CodeHttpHelpers::returnJson(200, false,'tài khoản đã tồn tại', 400);
+            if ($search)   return   CodeHttpHelpers::returnJson(200, false, 'tài khoản đã tồn tại', 400);
             $staffAccount = [
                 'staff_id' => $request->post('staff_id'),
                 'administration_id' => $request->post('administration_id'),
@@ -53,18 +52,24 @@ class AuthnController extends Controller
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }
-    public function login(Request $request){
-        //change table default on laravel
-        // $setTable =app(config('auth.providers.users.model'));
-        // $setTable->setTable('staff_account');
-        // Auth::getProvider()->setTable('customers');
-        var_dump($request->email);
-        var_dump($request->password);
-        if(Auth::guard('staff_account')->attempt(['user_name' =>$request->email, 'password' =>$request->password]))
-        {
-            dd('thành công')    ;
+    public function login(Request $request)
+    {
+        // $validator = validationHelpers::validation($request->all(),$this->validationRules,$this->attributeNames);
+        // if ($validator) {
+        //     $errors = $validator->errors();
+        //     return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+        // }
+        try {
+            if (Auth::guard('staff_account')->attempt([
+                'user_name' => $request->email,
+                'status' => true,
+                'password' => $request->password
+            ])) {
+                dd('thành công');
+            } else
+                dd('thất bại');
+        } catch (\Exception $error) {
+            return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
-        else
-        dd('thất bại');
     }
 }

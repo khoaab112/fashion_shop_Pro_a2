@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 
-class AccountCustomers extends Model
+class AccountCustomers extends Model implements Authenticatable
 {
     use HasFactory;
     protected $table = 'account_customers';
@@ -19,4 +20,23 @@ class AccountCustomers extends Model
     protected $attributes = [
         'status' => 'true',
     ];
+        function getAuthIdentifierName()
+    {
+    }
+    function getAuthIdentifier()
+    {
+    }
+    function getAuthPassword()
+    {
+        return $this->password;
+    }
+    function getRememberToken()
+    {
+    }
+    function setRememberToken($value)
+    {
+    }
+    function getRememberTokenName()
+    {
+    }
 }
