@@ -21,6 +21,7 @@ class validationHelpers
             'url' => ':attribute không đúng định url.',
             'confirmed' => ':attribute không khớp với giá trị cần xác nhận.',
             'unique' => ':attribute đã được sử dụng',
+            'exists' => ':attribute không tồn tại',
             // 'unique' => ':attribute đã được sử dụng',
             //còn thiếu vài trường nữa , nhưng cảm thấy không cần thiết
         ];

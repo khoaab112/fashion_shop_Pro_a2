@@ -18,6 +18,10 @@ class StaffAccount extends Model implements Authenticatable
         "remember_token",
         "status",
     ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
     protected $attributes = [
         'status' => 'true',
     ];
