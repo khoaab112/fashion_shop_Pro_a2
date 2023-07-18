@@ -15,9 +15,9 @@ class AuthnController extends Controller
     protected $query;
     protected $validationRules = [
         'staff_id' => 'required|unique:staff_account,staff_id|exists:staff,id',
-        'administration_id' => 'required',
         'user_name' => 'required|string|unique:staff_account,user_name',
-        'password' => 'required|string|min:9',
+        'administration_id' => 'required',
+        'password' => 'required|min:9|string',
     ];
     protected   $attributeNames = [
         'staff_id' => 'Mã nhân viên',
@@ -35,7 +35,7 @@ class AuthnController extends Controller
 
             $validator = validationHelpers::validation($request->all(), $this->validationRules, $this->attributeNames);
             if ($validator->fails()) {
-                $errors = $validator->errors();               
+                $errors = $validator->errors();
                 return CodeHttpHelpers::returnJson(200, false, $errors, 400);
             }
             $search = $this->query->searchUserName($request->post('user_name'));
