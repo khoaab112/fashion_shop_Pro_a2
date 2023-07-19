@@ -72,4 +72,9 @@ class AuthnController extends Controller
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }
+    public function getAll(){
+        $result = $this->query->getAll();
+        // dd($result);
+        return CodeHttpHelpers::returnJson(200, true, $result, 200);
+    }
 }

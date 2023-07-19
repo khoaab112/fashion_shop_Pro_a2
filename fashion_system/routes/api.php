@@ -28,6 +28,10 @@ Route::middleware('checkDB')->group(function () {
     Route::post('/register', [AuthnController::class, 'register']);
     Route::get('/login', [AuthnController::class, 'login']);
 
+    //test
+    Route::get('/test', [Test::class, 'index']);
+    Route::get('/get-user', [AuthnController::class, 'getAll']);
+
 });
 //login
 
