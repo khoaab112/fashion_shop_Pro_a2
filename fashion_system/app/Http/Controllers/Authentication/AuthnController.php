@@ -27,6 +27,8 @@ class AuthnController extends Controller
     ];
     public function __construct(StaffAccountRepositoryInterface $staffAccountRepository)
     {
+        $this->middleware('auth:api', ['except' => ['test', 'register']]);
+        // $this->middleware('auth:api');
         $this->query = $staffAccountRepository;
     }
     public function register(Request $request)
@@ -76,5 +78,55 @@ class AuthnController extends Controller
         $result = $this->query->getAll();
         // dd($result);
         return CodeHttpHelpers::returnJson(200, true, $result, 200);
+    }
+    public function test(Request $request)
+    {
+        // $request->validate([
+        //     'email' => 'required|string|email',
+        //     'password' => 'required|string',
+        // ]);
+        $credentials = $request->only('user_name', 'password');
+        $addInfoUser = ['user_name' => '', 'rank' => 'bob'];
+        // $ta = JWTAuth::attempt($credentials);
+        $token = Auth::claims($addInfoUser)->attempt($credentials);
+        return response()->json([
+            'type' => 'bearer',
+            'token' => $token,
+            'token_refresh' => Auth::refresh(),
+        ]);
+
+        if (!$token) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $user = Auth::user();
+        return response()->json([
+            'user' => $user,
+            'authorization' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return response()->json([
+            'message' => 'Successfully logged out',
+        ]);
+    }
+
+    public function refresh()
+    {
+        return response()->json([
+            'user' => Auth::user(),
+            'authorisation' => [
+                'token' => Auth::refresh(),
+                'type' => 'bearer',
+            ]
+        ]);
     }
 }

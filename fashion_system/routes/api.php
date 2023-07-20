@@ -18,22 +18,22 @@ use App\Http\Controllers\Test;
 */
 
 // Route::get('/test', [TypeTicketController::class, 'Text']);
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::middleware('checkDB')->group(function () {
 
-    Route::get('/test', [Test::class, 'index']);
-    Route::post('/register', [AuthnController::class, 'register']);
-    Route::get('/login', [AuthnController::class, 'login']);
+    // Route::get('/test', [Test::class, 'index']);
+    Route::group([
+        'middleware' => 'api',
+        'prefix' => 'auth'
 
-    //test
-    Route::get('/test', [Test::class, 'index']);
-    Route::get('/get-user', [AuthnController::class, 'getAll']);
-
+    ], function () {
+        Route::post('/login-dashboard', [AuthnController::class, 'test'])->name('login-dashboard');
+        Route::get('/test', [Test::class, 'index'])->name('register');
+        Route::get('/get-user', [AuthnController::class, 'getAll']);
+    });
 });
 //login
-
-
-
+//Accept= application/json

@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'staff_account',
+        'guard' => 'api',
         'passwords' => 'staff_account',
     ],
 
@@ -40,6 +40,10 @@ return [
         //     'driver' => 'session',
         //     'provider' => 'users',
         // ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'staff_account',
+        ],
         'staff_account' => [
             'driver' => 'session',
             'provider' => 'staff_account',
@@ -104,7 +108,7 @@ return [
     */
 
     'passwords' => [
-        'users' => [
+        'staff_account' => [
             'provider' => 'staff_account',
             'table' => 'password_reset_tokens',
             'expire' => 60,
