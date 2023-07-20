@@ -93,8 +93,7 @@ class StaffAccount extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [
-            'iss'=>env('APP_URL')+'/admin',
-        ];
+        return [ ];
     }
+
 }

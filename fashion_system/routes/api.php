@@ -30,9 +30,10 @@ Route::middleware('checkDB')->group(function () {
         'prefix' => 'auth'
 
     ], function () {
-        Route::post('/login-dashboard', [AuthnController::class, 'test'])->name('login-dashboard');
+        Route::post('/login', [AuthnController::class, 'login'])->name('login-dashboard');
+        Route::post('/test-login', [AuthnController::class, 'test']);
         Route::get('/test', [Test::class, 'index'])->name('register');
-        Route::get('/get-user', [AuthnController::class, 'getAll']);
+        Route::get('/get-users', [AuthnController::class, 'getAll']);
     });
 });
 //login
