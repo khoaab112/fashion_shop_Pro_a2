@@ -20,6 +20,10 @@ class StaffAccountRepository extends BaseRepositories implements StaffAccountRep
         // return $this->staffAccount->all();
 
     }
+    public function removeRefreshToken($id)
+    {
+        return $this->staffAccount->where('id', $id)->update(['refresh_token'=>'','issued_at'=>'','expired_time'=>'']);
+    }
 
 
  

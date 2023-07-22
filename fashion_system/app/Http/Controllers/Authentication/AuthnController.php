@@ -31,7 +31,7 @@ class AuthnController extends Controller
     ];
     public function __construct(StaffAccountRepositoryInterface $staffAccountRepository)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register','test']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
         // $this->middleware('auth:api');
         $this->query = $staffAccountRepository;
     }
@@ -67,7 +67,7 @@ class AuthnController extends Controller
         if ($request->remember_password) {
             $cookieRefreshToken = $this->getCookie($request);
             $decodeJwtToken = $this->decodeJwtToken($cookieRefreshToken);
-            if ($decodeJwtToken) {
+            if ($decodeJwtToken['status']) {
                 return CodeHttpHelpers::returnJson(200, true, null, 200);
             }
             return CodeHttpHelpers::returnJson(401, true, "failure", 401);
@@ -104,6 +104,7 @@ class AuthnController extends Controller
     {
         return $request->cookie('cookie_refresh_token');
     }
+    //xóa refresh token and access token
     public function logout()
     {
         Auth::logout();
@@ -114,7 +115,6 @@ class AuthnController extends Controller
     //giải mã jwt login
     public function decodeJwtToken($token)
     {
-
 
         try {
             // Cấu hình đối tượng Key từ secret key
@@ -129,43 +129,37 @@ class AuthnController extends Controller
         }
     }
 
-    public function refreshToken($refreshToken)
+    public function tokenRefresh($token)
     {
-        return response()->json([
-            'user' => Auth::user(),
-            'authorisation' => [
-                'token' => Auth::refresh(),
-                'type' => 'bearer',
-            ]
-        ]);
+        $tokenRefresh =  Auth::refresh($token);
+        return CodeHttpHelpers::returnJson(
+            500,
+            false,
+            ['token_refresh' => $tokenRefresh],
+            500
+        );
     }
-    public function getAll()
+    public function createJWTRefreshToken($data)
     {
-        // dd('ádas');
-        $this->query->getAll();
-        return CodeHttpHelpers::returnJson(200, false, $this->query, 200);
-    }
-    function createJWTRefreshToken($data) {
-    
+
         $algorithm = 'HS256';
-         $expiration = env('LIVE_TIME_REFRESH_TOKEN');
+        $expiration = env('LIVE_TIME_REFRESH_TOKEN');
         $issuedAt = time();
-        $secretKey=env('JWT_SECRET');
+        $secretKey = env('JWT_SECRET');
         $expirationTime = $issuedAt + $expiration;
         $payload = [
-            'iss' => env('APP_URL'), 
-            'iat' => $issuedAt, 
-            'exp' => $expirationTime, 
-            'nbf'=>$issuedAt,
+            'iss' => env('APP_URL'),
+            'iat' => $issuedAt,
+            'exp' => $expirationTime,
+            'nbf' => $issuedAt,
             'user_name' => $data['user_name'],
             'rank' => $data['rank'],
-        ];    
+        ];
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
         return $jwt;
     }
-
-
-
-
-
+    public function removeRefreshToken($id){
+        
+         $this->query->removeRefreshToken($id);
+    }
 }

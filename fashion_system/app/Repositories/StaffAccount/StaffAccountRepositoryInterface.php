@@ -8,5 +8,6 @@ use App\Repositories\RepositoryInterface;
 interface StaffAccountRepositoryInterface extends RepositoryInterface
 {
     public function searchUserName($name);
+    public function removeRefreshToken($name);
 
 }
