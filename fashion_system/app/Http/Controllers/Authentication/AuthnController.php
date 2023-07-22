@@ -31,7 +31,7 @@ class AuthnController extends Controller
     ];
     public function __construct(StaffAccountRepositoryInterface $staffAccountRepository)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        // $this->middleware('auth:api', ['except' => ['login', 'register']]);
         // $this->middleware('auth:api');
         $this->query = $staffAccountRepository;
     }
@@ -161,5 +161,11 @@ class AuthnController extends Controller
     public function removeRefreshToken($id){
         
          $this->query->removeRefreshToken($id);
+    }
+    public function getAll()
+    {
+        // dd('aa');
+        return CodeHttpHelpers::returnJson(200, false, $this->query->getAll(), 200);
+
     }
 }

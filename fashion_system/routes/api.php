@@ -24,13 +24,13 @@ use App\Http\Controllers\Test;
 Route::middleware('checkURL')->group(function () {
     Route::middleware('checkDB')->group(function () {
         Route::group([
-            'middleware' => 'api',
+            // 'middleware' => 'api',
+            'middleware' => ['api', 'auth:api'],
             'prefix' => 'auth'
-
         ], function () {
-            Route::post('/login', [AuthnController::class, 'login'])->name('login-dashboard');
+            Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api']);
             Route::post('/test-login', [AuthnController::class, 'test']);
-            Route::get('/test', [Test::class, 'index'])->name('register');
+            Route::get('/test', [Test::class, 'index']);
             Route::get('/get-users', [AuthnController::class, 'getAll']);
         });
     });

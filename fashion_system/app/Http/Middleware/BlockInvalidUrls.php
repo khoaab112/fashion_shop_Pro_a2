@@ -20,12 +20,12 @@ class BlockInvalidUrls
         if (!$this->isValidUrl($request->url())) {     
             return CodeHttpHelpers::returnJson(401,false,'null',401);
         }
-        $definedRoutes = collect(Route::getRoutes())->map(function ($route) {
-            return $route->uri;
-        });
-        if (!$definedRoutes->contains($request->path())) {
-            return CodeHttpHelpers::returnJson(404,false,'url not found',404);
-        }
+        // $definedRoutes = collect(Route::getRoutes())->map(function ($route) {
+        //     return $route->uri;
+        // });
+        // if (!$definedRoutes->contains($request->path())) {
+        //     return CodeHttpHelpers::returnJson(404,false,'url not found',404);
+        // }
 
         return $next($request);
     }
