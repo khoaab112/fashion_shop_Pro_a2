@@ -30,7 +30,7 @@ Route::middleware('checkURL')->group(function () {
         ], function () {
             Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api']);
             Route::post('/test-login', [AuthnController::class, 'test']);
-            Route::get('/test', [Test::class, 'index']);
+            Route::get('/test', [Test::class, 'index'])->withoutMiddleware(['auth:api']);
             Route::get('/get-users', [AuthnController::class, 'getAll']);
         });
     });

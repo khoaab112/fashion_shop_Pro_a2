@@ -164,7 +164,7 @@ class AuthnController extends Controller
     }
     public function getAll()
     {
-        // dd('aa');
+        dd('aa');
         return CodeHttpHelpers::returnJson(200, false, $this->query->getAll(), 200);
 
     }

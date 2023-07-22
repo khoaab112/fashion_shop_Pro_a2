@@ -16,9 +16,10 @@ class Test extends Controller
     {
         $this->query = $query;
     }
-    public function index()
+    public function index(Request $request)
     {
-             
+
+            //  dd($request->cookie(env('VITE_KEY_REFRESH_TOKEN')));
         $test = $this->query->getAll();
         return response()->json(['resultcode' => 200 ,'message' => 'success', 'results' => $test]);
 

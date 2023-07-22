@@ -3,7 +3,7 @@ console.log("aass");
 
 export default {
     test() {
-        return index.post(`/login`);
+        return index.get(`/test`);
     },
 
 }

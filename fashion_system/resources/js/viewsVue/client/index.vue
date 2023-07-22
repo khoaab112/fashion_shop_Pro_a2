@@ -27,7 +27,7 @@ export default {
     methods: {
         fetchUser() {
             Test.test().then(response => {
-                console.log(response.data);
+                console.log(55,response);
                    this.examples = response.data.content[0]
             })
                 .catch(error => {
