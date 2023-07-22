@@ -1,8 +1,8 @@
 <template>
         <section id="page-401">
-        <div id="bg-page-401">
+        <div id="bg-page-401" :style="`background-image: url(${background})`">
             <div class="content-page-401">
-                <h1>KHÔNG CÓ QUYỀN</h1>
+                <h1>KHÔNG ĐƯỢC CẤP QUYỀN</h1>
             </div>
             <div class="button-home-401">
                 <button>HOME</button>
@@ -12,6 +12,7 @@
 </template>
     
 <script>
+import svgBG from '@/images/svg/page_401/bg_401.svg';
 export default {
     name: 'page401',
     components: {
@@ -22,11 +23,11 @@ export default {
     },
     data() {
         return {
-            // Dữ liệu của component
+            background :'',
         };
     },
     created() {
-        // Logic khi component được khởi tạo
+        this.background=svgBG
     },
     mounted() {
         // Logic sau khi component được gắn kết (render) vào DOM
@@ -57,8 +58,8 @@ export default {
 }
 
 #bg-page-401 {
-    background-image: url(bg_401.svg);
-    /* background-size: cover; */
+    background-image: var(--svgBG);
+    background-size: cover;
     background-size: 78%;
     background-repeat: no-repeat;
     width: 80%;
@@ -74,6 +75,7 @@ export default {
 }
 
 .content-page-401 h1 {
+    font-weight: bold;
     margin-top: 5rem;
     /* right: 0;
     left: 0;
@@ -99,7 +101,7 @@ export default {
     color: #fff;
 }
 
-.button-home-401 button:focus {
+.button-home-401 button:active {
     background-color: #0edf12de;
     color: black;
 }
