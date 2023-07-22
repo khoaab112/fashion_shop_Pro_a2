@@ -21,17 +21,18 @@ use App\Http\Controllers\Test;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::middleware('checkURL')->group(function () {
+    Route::middleware('checkDB')->group(function () {
+        Route::group([
+            'middleware' => 'api',
+            'prefix' => 'auth'
 
-Route::middleware('checkDB')->group(function () {
-    Route::group([
-        'middleware' => 'api',
-        'prefix' => 'auth'
-
-    ], function () {
-        Route::post('/login', [AuthnController::class, 'login'])->name('login-dashboard');
-        Route::post('/test-login', [AuthnController::class, 'test']);
-        Route::get('/test', [Test::class, 'index'])->name('register');
-        Route::get('/get-users', [AuthnController::class, 'getAll']);
+        ], function () {
+            Route::post('/login', [AuthnController::class, 'login'])->name('login-dashboard');
+            Route::post('/test-login', [AuthnController::class, 'test']);
+            Route::get('/test', [Test::class, 'index'])->name('register');
+            Route::get('/get-users', [AuthnController::class, 'getAll']);
+        });
     });
 });
 
