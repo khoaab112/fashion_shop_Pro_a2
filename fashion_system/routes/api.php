@@ -23,8 +23,6 @@ use App\Http\Controllers\Test;
 // });
 
 Route::middleware('checkDB')->group(function () {
-
-    // Route::get('/test', [Test::class, 'index']);
     Route::group([
         'middleware' => 'api',
         'prefix' => 'auth'
@@ -36,5 +34,6 @@ Route::middleware('checkDB')->group(function () {
         Route::get('/get-users', [AuthnController::class, 'getAll']);
     });
 });
+
 //login
 //Accept= application/json
