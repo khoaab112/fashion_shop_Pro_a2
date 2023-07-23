@@ -1,10 +1,10 @@
 <template>
+   <router-view name="auth" />
    <router-view name="sidebar" />
    <router-view name="header" />
    <router-view name="footer" />
    <router-view name="home"></router-view>
    <router-view name="error"></router-view>
-
 </template>
 <script>
 export default {

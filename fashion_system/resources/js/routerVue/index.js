@@ -4,12 +4,12 @@ import customer from "./customer";
 import other from "./other";
 
 const routes = [
-    ...other.error401,
+    ...other.error,
     ...other.error404,
-    ...other.error500,
     ...customer.home,
     ...customer.test,
-    ...admin
+    ...admin.admin,
+    ...admin.auth,
 ];
 const router = createRouter({
     history: createWebHistory(),

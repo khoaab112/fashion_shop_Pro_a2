@@ -1,11 +1,12 @@
 import axios from "axios";
 import localStorage from "@/js/auth/localStorage";
+import router from "@/js/routerVue/index.js";
+
+
 // sửa lại tên file là setting_api
 //localStorage => accessToken
 //cookie => refreshToken
 const accessToken = localStorage.getAccessToken();
-
-
 const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/auth', // Đặt URL gốc của API của bạn
     timeout: 5000, // Đặt thời gian chờ tối đa cho mỗi yêu cầu
@@ -21,24 +22,38 @@ apiClient.interceptors.response.use(
         const codeHttp = response.status;
         switch (codeHttp) {
             case 200:
+                // router.push({ path: "/error500" });
+                break;
+            case 302:
+                //logout
                 break;
             case 400:
+                router.push({ path: "/error404" });
                 break;
             case 401:
+                //login failed
+                if (response.data.result_code == 200) {
+
+                } else
+                    router.push({ path: "/error401" });
                 break;
             case 402:
                 break;
             case 403:
+                router.push({ path: "/error403" });
                 break;
             case 404:
+                router.push({ path: "/error404" });
                 break;
             case 413:
                 break;
             case 429:
                 break;
             case 500:
+                router.push({ path: "/error500" });
                 break;
             default:
+                router.push({ path: "/error500" });
                 //500
 
         };

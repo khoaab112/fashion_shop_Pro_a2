@@ -19,4 +19,30 @@ const admin = [{
     }]
 }]
 
-export default admin;
+const auth = [{
+    path: '/auth',
+    children: [{
+            path: 'login',
+            components: {
+                auth: () =>
+                    import ('../viewsVue/admin/authentication/login.vue'),
+            },
+        },
+        {
+            path: 'forgotPassword',
+            components: {
+                auth: () =>
+                    import ('../viewsVue/admin/authentication/forgotPassword.vue'),
+            },
+        },
+        {
+            path: 'register',
+            components: {
+                auth: () =>
+                    import ('../viewsVue/admin/authentication/register.vue'),
+            },
+        },
+    ]
+}]
+
+export default { admin, auth };

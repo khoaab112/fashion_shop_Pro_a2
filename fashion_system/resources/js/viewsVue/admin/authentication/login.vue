@@ -223,7 +223,7 @@ export default {
         },
         showPassword() {
         this.isShowPassword=!this.isShowPassword;
-        this.typePassword=this.isShowPassword?'password':'text';
+        this.typePassword=this.isShowPassword?'text':'password';
         },
     },
 };

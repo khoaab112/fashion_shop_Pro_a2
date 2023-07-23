@@ -21,7 +21,7 @@ class Test extends Controller
 
             //  dd($request->cookie(env('VITE_KEY_REFRESH_TOKEN')));
         $test = $this->query->getAll();
-        return response()->json(['resultcode' => 200 ,'message' => 'success', 'results' => $test]);
+        return response()->json(['result_code' => 200 ,'message' => 'success', 'results' => $test]);
 
     }
 }
