@@ -12,7 +12,7 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email" placeholder="Tài khoản">
+                        <input class="input100" type="text" name="email" placeholder="Tài khoản" v-model="username">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <font-awesome-icon icon="fa-regular fa-user" />
@@ -20,31 +20,34 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" :type=typePassword name="pass" placeholder="Mật khẩu" autocomplete="off">
+                        <input class="input100" :type=typePassword name="pass" placeholder="Mật khẩu" autocomplete="off" v-model="password">
                         <span class="focus-input100">
                         </span>
                         <span class="symbol-input100">
                             <font-awesome-icon icon="fa-solid fa-key" />
                         </span>
                         <span class="icon-eye" @click="showPassword()">
-                            <font-awesome-icon icon="fa-regular fa-eye-slash"  v-if="isShowPassword"/>
-                            <font-awesome-icon icon="fa-regular fa-eye" v-else/>                            
+                            <font-awesome-icon icon="fa-regular fa-eye-slash" v-if="isShowPassword" />
+                            <font-awesome-icon icon="fa-regular fa-eye" v-else />
                         </span>
                     </div>
 
                     <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">
+                        <button class="login100-form-btn" @click="clickLogin()">
                             Login
                         </button>
                     </div>
-                    <div class="text-center mt-4">
-                        <a class="txt2" href="#">
+                    <div class="check-remember-me mt-2">
+                        <el-checkbox v-model="remember" label="Nhớ mật khẩu" size="large" />
+                    </div>
+                    <div class="text-center mt-1">
+                        <a class="txt2" href="#" @click="clickForgotPassword()">
                             Quên thông tin đăng nhập ?
                         </a>
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="#">
+                        <a class="txt2" href="#" @click="clickRegister()">
                             Tạo tài khoản
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>
@@ -57,7 +60,11 @@
     
 <script>
 import imageAdmin from '@/images/admin/system/authentication/login_admin.svg';
+import methodDefine from '@/js/mixins/methodDefine.js';
+import paths from '@/js/mixins/getAddressFromRouter.js';
+
 export default {
+    mixins: [methodDefine],
     name: 'loginAdmin',
     components: {
     },
@@ -70,10 +77,14 @@ export default {
             imageAdmin: '',
             isShowPassword: false,
             typePassword: 'password',
+            username: '',
+            password: '',
+            remember: '',
         };
     },
     created() {
         this.imageAdmin = this.getImage(imageAdmin);
+        this.remember = false;
     },
     mounted() {
         const tiltElements = document.querySelectorAll('.js-tilt');
@@ -222,8 +233,23 @@ export default {
             return new URL(url, import.meta.url).href
         },
         showPassword() {
-        this.isShowPassword=!this.isShowPassword;
-        this.typePassword=this.isShowPassword?'text':'password';
+            this.isShowPassword = !this.isShowPassword;
+            this.typePassword = this.isShowPassword ? 'text' : 'password';
+        },
+        clickLogin() {
+         this.$router.push('forgotPassword');
+        //   window.location.reload();
+
+            // this.goToPage(paths.error401);
+        },
+        clickForgotPassword(){
+         this.$router.push('auth/forgotPassword');
+        //   window.location.reload();
+            // console.log(paths.forgotPassword);
+            // this.goToPage(paths.forgotPassword);
+        },
+        clickRegister() {
+            this.goToPage(paths.register);
         },
     },
 };
@@ -658,7 +684,7 @@ export default {
  }
 
  .p-t-136 {
-     padding-top: 40px;
+     padding-top: 15px;
  }
 
  .icon-eye {
@@ -671,9 +697,11 @@ export default {
      color: black;
  }
 
+
  @media (max-width: 992px) {
      .alert-validate::before {
          visibility: visible;
          opacity: 1;
      }
- }</style>
+ }
+</style>

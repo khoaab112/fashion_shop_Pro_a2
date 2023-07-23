@@ -9,6 +9,7 @@ try {
 }
 
 function decodePayload(payload) {
+    if (!payload) return false;
     const parts = payload.split('.');
     if (parts.length !== 3) {
         return false;
