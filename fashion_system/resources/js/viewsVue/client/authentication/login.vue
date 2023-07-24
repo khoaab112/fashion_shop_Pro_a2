@@ -3,7 +3,7 @@
         <source :src=mp3  type="audio/mpeg">
     </audio>
     <button @click="playAudio()" class="btn-active-intro">
-        <font-awesome-icon v-if="!isMuted" icon="fa-solid fa-volume-low" beat-fade style="color: #09f1ca;"/>
+        <font-awesome-icon v-if="!isMuted" icon="fa-solid fa-volume-low" beat-fade style="color: #40a9ff;"/>
         <font-awesome-icon v-if="isMuted" icon="fa-solid fa-volume-xmark" fade  style="color: #fe0606;"/>
     </button>
     <div id="login" class="img js-fullheight" :style="{ 'background-image': 'url(' + background + ')' }">
@@ -91,7 +91,7 @@ export default {
             logoGoogle: '',
             mp3: 'login_client.mp3',
             isShowPassWord: false,
-            typeInputPassword: 'text',
+            typeInputPassword: 'password',
             isMuted: true,
         };
     },
