@@ -18,7 +18,7 @@
                         <span class="symbol-input100">
                             <font-awesome-icon icon="fa-regular fa-user" />
                         </span>
-                        <span class="error-message">KHoa</span>
+                        <p class="error-message">{{ error.username.content }}</p>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
@@ -33,7 +33,7 @@
                             <font-awesome-icon icon="fa-regular fa-eye-slash" v-if="isShowPassword" />
                             <font-awesome-icon icon="fa-regular fa-eye" v-else />
                         </span>
-                        <span class="error-message">KHoa</span>
+                        <p class="error-message">{{ error.password.content }}</p>
                     </div>
 
                     <div class="container-login100-form-btn">
@@ -281,13 +281,24 @@ console.log('success')
         },
         defaultLogin() {
             this.error.username.err = false;
+            this.error.username.content = '';
             this.error.password.err = false;
+            this.error.password.content = '';
         },
     },
 };
 </script>
     
 <style scoped>
+p.error-message {
+    font-family: "roboto-italic";
+    margin: 0px 0px 0px 4rem;
+    color: red;
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    font-size: 80%;
+}
 #login-manager {
     /* font-family: "banabo" !important; */
 }
@@ -506,15 +517,7 @@ iframe {
     border-radius: 25px;
     padding: 0 30px 0 68px;
 }
-span.error-message {
-    margin: 0px 0px 0px 4rem;
-    font-size: italic;
-    font-size: 80%;
-    color: red;
-    position: absolute;
-    z-index: 999;
-    bottom: 0;
-}
+
 
 /*------------------------------------------------------------------
 [ Focus ]*/

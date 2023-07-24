@@ -36,7 +36,9 @@
                         </button>
                     </div>
                     <div class="p-t-12">
-                    <span class="note-create">*Thông tin được gửi tới email, hãy kiểm tra email</span>          
+                    <span class="note-create">*Thông tin được gửi tới email, hãy kiểm tra email</span>  
+                    <br>        
+                    <span class="note-create" style="color: blue !important;">*Lưu ý đây là bản thử nghiệm  gmail chưa được xác thực nên bạn hãy kiểm tra tin nhắn spam</span>          
                     </div>
                 </form>
             </div>
