@@ -11,12 +11,14 @@
                         QUẢN TRỊ
                     </span>
 
+
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email" placeholder="Tài khoản" v-model="username">
+                        <input class="input100" type="text" name="userName" placeholder="Tài khoản" v-model="username">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <font-awesome-icon icon="fa-regular fa-user" />
                         </span>
+                        <span class="error-message">KHoa</span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
@@ -31,6 +33,7 @@
                             <font-awesome-icon icon="fa-regular fa-eye-slash" v-if="isShowPassword" />
                             <font-awesome-icon icon="fa-regular fa-eye" v-else />
                         </span>
+                        <span class="error-message">KHoa</span>
                     </div>
 
                     <div class="container-login100-form-btn">
@@ -40,7 +43,7 @@
                         <!-- <router-link :to="{ path: '/auth/forgotPassword' }"><button>Login Test</button></router-link> -->
                     </div>
                     <div class="check-remember-me mt-2">
-                        <el-checkbox  v-model="remember" label="Nhớ mật khẩu" size="large"  />
+                        <el-checkbox v-model="remember" label="Nhớ mật khẩu" size="large" />
                     </div>
                     <div class="text-center mt-1">
                         <a class="txt2" href="#" @click.prevent="clickForgotPassword()">
@@ -82,6 +85,10 @@ export default {
             username: '',
             password: '',
             remember: '',
+            error: {
+                username: { err: false, content: '' },
+                password: { err: false, content: '' },
+            },
         };
     },
     created() {
@@ -239,13 +246,42 @@ export default {
             this.typePassword = this.isShowPassword ? 'text' : 'password';
         },
         clickLogin() {
-            this.goToPage(paths.error403);
+            this.defaultLogin();
+            if (isNaN(this.username)) {
+                this.error.username.err = true;
+                this.error.username.content = "Tài khoản phải là số điện thoại";
+                return
+            }
+            if (this.username.length < 10 || this.username.length > 10) {
+                this.error.username.err = true;
+                this.error.username.content = "Tài khoản không đúng địng dạng được quy định";
+                return
+            }
+            if (this.checkStrangeCharacters(this.password)) {
+                this.error.password.err = true;
+                this.error.password.content = "Chỉ chấp nhận các chữ thưởng, in hoa, số, một vài ký tự (@,!,#,$,_,-)";
+                return
+            }
+            if (this.password.length < 8) {
+                this.error.password.err = true;
+                this.error.password.content = "Mật khẩu tối thiểu phải có 8 kí tự";
+                return
+            }
+console.log('success')
+            console.log(this.username);
+            console.log(this.password);
+            console.log(this.remember);
+            // this.goToPage(paths.error403);
         },
         clickForgotPassword() {
             this.goToPage(paths.forgotPassword);
         },
         clickRegister() {
             this.goToPage(paths.register);
+        },
+        defaultLogin() {
+            this.error.username.err = false;
+            this.error.password.err = false;
         },
     },
 };
@@ -470,7 +506,15 @@ iframe {
     border-radius: 25px;
     padding: 0 30px 0 68px;
 }
-
+span.error-message {
+    margin: 0px 0px 0px 4rem;
+    font-size: italic;
+    font-size: 80%;
+    color: red;
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+}
 
 /*------------------------------------------------------------------
 [ Focus ]*/
@@ -695,4 +739,5 @@ iframe {
     .wrap-login100 {
         padding: 100px 15px 33px 15px;
     }
-}</style>
+}
+</style>
