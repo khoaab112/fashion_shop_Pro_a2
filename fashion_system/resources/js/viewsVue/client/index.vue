@@ -4,15 +4,22 @@
         <font-awesome-icon :icon="['fab', 'facebook']" />
         
     </div>
+    <loading-infinity>
+        
+    </loading-infinity>
     <!-- <div>{{ examples }}</div> -->
     <span>{{ examples }}</span>
 </template>
 
 <script>
 import Test from '@/js/api/admin/apiAdmin.js'
+import LoadingInfinity from '../components/LoadingInfinity.vue';
 // import Test from '../../../js/api/admin/apiAdmin.js';
 export default {
     name: 'appindex',
+    components: {
+        LoadingInfinity
+  },
     data() {
         return {
             examples: '',

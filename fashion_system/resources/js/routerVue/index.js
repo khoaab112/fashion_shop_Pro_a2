@@ -27,9 +27,9 @@ router.beforeEach((to, from, next) => {
         const expiryDate = jwt.expiryDate;
         //check token tồn tại , có nhớ mật khẩu , còn thời gian sử dụng
         if (existRefreshToken && isRememberMe && expiryDate) {
-            next();
+            return next();
         } else {
-            next("/auth/login");
+            return next("/auth/login");
         }
     }
     if (isClientRoute) {}

@@ -18,7 +18,6 @@
                         <span class="symbol-input100">
                             <font-awesome-icon icon="fa-regular fa-user" />
                         </span>
-                        <p class="error-message">{{ error.username.content }}</p>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
@@ -33,12 +32,15 @@
                             <font-awesome-icon icon="fa-regular fa-eye-slash" v-if="isShowPassword" />
                             <font-awesome-icon icon="fa-regular fa-eye" v-else />
                         </span>
-                        <p class="error-message">{{ error.password.content }}</p>
                     </div>
-
+                    <div>
+                        <span v-if="error.username.err" class="error-message">{{ error.username.content }}</span>                        
+                        <span v-if="error.password.err"  class="error-message">{{ error.password.content }}</span>
+                    </div>
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" @click.prevent="clickLogin()">
                             Login
+                            <loading-infinity></loading-infinity>
                         </button>
                         <!-- <router-link :to="{ path: '/auth/forgotPassword' }"><button>Login Test</button></router-link> -->
                     </div>
@@ -67,11 +69,13 @@
 import imageAdmin from '@/public/images/admin/system/authentication/login_admin.svg';
 import methodDefine from '@/js/mixins/methodDefine.js';
 import paths from '@/js/mixins/getAddressFromRouter.js';
+import LoadingInfinity from '../../components/LoadingInfinity.vue';
 
 export default {
     mixins: [methodDefine],
     name: 'loginAdmin',
     components: {
+        LoadingInfinity,
     },
     setup() {
     },
@@ -259,7 +263,7 @@ export default {
             }
             if (this.checkStrangeCharacters(this.password)) {
                 this.error.password.err = true;
-                this.error.password.content = "Chỉ chấp nhận các chữ thưởng, in hoa, số, một vài ký tự (@,!,#,$,_,-)";
+                this.error.password.content = "Chỉ chấp nhận mật khẩu chứa các chữ thưởng, in hoa, số, một vài ký tự (@,!,#,$,_,-)";
                 return
             }
             if (this.password.length < 8) {
@@ -267,7 +271,7 @@ export default {
                 this.error.password.content = "Mật khẩu tối thiểu phải có 8 kí tự";
                 return
             }
-console.log('success')
+            console.log('success')
             console.log(this.username);
             console.log(this.password);
             console.log(this.remember);
@@ -290,15 +294,15 @@ console.log('success')
 </script>
     
 <style scoped>
-p.error-message {
+span.error-message {
     font-family: "roboto-italic";
-    margin: 0px 0px 0px 4rem;
+    margin: 0px 0px 0px 1px;
     color: red;
-    position: absolute;
     z-index: 999;
     bottom: 0;
     font-size: 80%;
 }
+
 #login-manager {
     /* font-family: "banabo" !important; */
 }
