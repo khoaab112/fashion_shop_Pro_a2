@@ -12,7 +12,7 @@
 </template>
     
 <script>
-import svgBG from '@/images/svg/page_401/bg_401.svg';
+import svgBG from '@/public/images/svg/page_401/bg_401.svg';
 export default {
     name: 'page401',
     components: {

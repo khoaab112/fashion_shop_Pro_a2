@@ -1,4 +1,7 @@
 <template>
+      <audio id="startup-sound" autoplay>
+    <source src="path/to/your/sound-file.mp3" type="audio/mpeg">
+  </audio>
     <div id="login" class="img js-fullheight" :style="{ 'background-image': 'url(' + background + ')' }">
         <section class="ftco-section">
             <div class="container">
@@ -63,8 +66,8 @@
 </template>
     
 <script>
-import backgroundLogin from "@/images/client/authentication/login/bg_login_client.gif";
-import logoGoogle from "@/images/client/logo/google.png";
+import backgroundLogin from "@/public/images/client/authentication/login/bg_login_client.gif";
+import logoGoogle from "@/public/images/client/logo/google.png";
 // import { DatePicker, Radio } from 'ant-design-vue';
 // import avatarAdminDefault from "@/images/client/authentication/login.js";
 

@@ -32,7 +32,7 @@
 </template>
     
 <script>
-import backgroundForgotPassword from '@/images/client/authentication/forgotPassword/background.jpg';
+import backgroundForgotPassword from '@/public/images/client/authentication/forgotPassword/background.jpg';
 
 export default {
     name: 'HtpShiftDetail',

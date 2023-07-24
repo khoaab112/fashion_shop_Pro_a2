@@ -12,7 +12,7 @@
   </template>
     
   <script>
-import svgBG from '@/images/svg/page_403/bg_403.gif';
+import svgBG from '@/public/images/svg/page_403/bg_403.gif';
   export default {
     name: 'HtpShiftDetail',
     components: {

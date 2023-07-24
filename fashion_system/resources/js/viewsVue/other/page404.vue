@@ -14,8 +14,8 @@
 </template>
     
 <script>
-import astronaut from '@/images/svg/page_404/astronaut.svg';
-import planet from '@/images/svg/page_404/planet.svg';
+import astronaut from '@/public/images/svg/page_404/astronaut.svg';
+import planet from '@/public/images/svg/page_404/planet.svg';
 import { loadFull } from "tsparticles";
 export default {
   name: 'page404',

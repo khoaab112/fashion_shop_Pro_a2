@@ -8,6 +8,7 @@ const routes = [
     ...other.error,
     ...other.error404,
     ...customer.home,
+    ...customer.auth,
     ...customer.test,
     ...admin.admin,
     ...admin.auth,

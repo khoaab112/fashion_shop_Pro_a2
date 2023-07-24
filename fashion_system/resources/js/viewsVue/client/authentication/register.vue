@@ -74,8 +74,8 @@
 </template>
     
 <script>
-import backgroundRegisterAdmin from '@/images/client/authentication/register/background.jpg';
-import logoGoogle from "@/images/client/logo/google.png";
+import backgroundRegisterAdmin from '@/public/images/client/authentication/register/background.jpg';
+import logoGoogle from "@/public/images/client/logo/google.png";
 
 export default {
   name: 'registerClient',
