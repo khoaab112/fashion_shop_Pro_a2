@@ -1,7 +1,11 @@
 <template>
-      <audio id="startup-sound" autoplay>
-    <source src="path/to/your/sound-file.mp3" type="audio/mpeg">
-  </audio>
+    <audio id="intro-audio" loop >
+        <source :src=mp3  type="audio/mpeg">
+    </audio>
+    <button @click="playAudio()" class="btn-active-intro">
+        <font-awesome-icon v-if="!isMuted" icon="fa-solid fa-volume-low" beat-fade style="color: #09f1ca;"/>
+        <font-awesome-icon v-if="isMuted" icon="fa-solid fa-volume-xmark" fade  style="color: #fe0606;"/>
+    </button>
     <div id="login" class="img js-fullheight" :style="{ 'background-image': 'url(' + background + ')' }">
         <section class="ftco-section">
             <div class="container">
@@ -68,6 +72,7 @@
 <script>
 import backgroundLogin from "@/public/images/client/authentication/login/bg_login_client.gif";
 import logoGoogle from "@/public/images/client/logo/google.png";
+import introMp3 from "@/public/mp3/login_client.mp3";
 // import { DatePicker, Radio } from 'ant-design-vue';
 // import avatarAdminDefault from "@/images/client/authentication/login.js";
 
@@ -84,15 +89,16 @@ export default {
         return {
             background: '',
             logoGoogle: '',
+            mp3: 'login_client.mp3',
             isShowPassWord: false,
             typeInputPassword: 'text',
+            isMuted: true,
         };
     },
     created() {
         this.background = this.getBackGround(backgroundLogin);
         this.logoGoogle = this.getBackGround(logoGoogle);
-
-
+        this.mp3 = this.getBackGround(introMp3);
     },
     mounted() {
         const fullheightElements = document.querySelectorAll('.js-fullheight');
@@ -125,6 +131,12 @@ export default {
         showPassWord() {
             this.isShowPassWord = !this.isShowPassWord;
             this.isShowPassWord ? this.typeInputPassword = 'text' : this.typeInputPassword = 'password';
+        },
+        playAudio() {
+            // this.isMuted=!this.isMuted?audio.play():audio.pause();
+            this.isMuted=!this.isMuted
+            const audio = document.getElementById('intro-audio');
+            this.isMuted?audio.pause():audio.play();
         }
     },
 };
@@ -321,6 +333,18 @@ a {
     color: #007bff;
     text-decoration: none;
     background-color: transparent;
+}
+
+.btn-active-intro{
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    right: 0;
+    background: none;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    font-size: 30px;
 }
 
 .heading-section {
