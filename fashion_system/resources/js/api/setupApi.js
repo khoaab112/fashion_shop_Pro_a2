@@ -19,8 +19,10 @@ const apiClient = axios.create({
 //xử lý kết quả trước rồi mới trả về lơi gọi
 apiClient.interceptors.response.use(
     (response) => {
+        console.log(response);
         const codeHttp = response.status;
-        checkHttpResponse(codeHttp)
+        if (checkHttpResponse(codeHttp))
+            return response;
     },
     (error) => {
         checkHttpResponse(error.response.status);
@@ -32,7 +34,6 @@ apiClient.interceptors.response.use(
 function checkHttpResponse(codeHttp) {
     switch (codeHttp) {
         case 200:
-            // router.push({ path: "/error500" });
             break;
         case 302:
             //logout
@@ -67,5 +68,7 @@ function checkHttpResponse(codeHttp) {
             //500
 
     };
+    if (codeHttp == 200) return true;
+    return false;
 };
 export default apiClient;

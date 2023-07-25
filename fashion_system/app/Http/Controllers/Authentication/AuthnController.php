@@ -92,7 +92,7 @@ class AuthnController extends Controller
                 $data = [
                     "type" => "bearer",
                     "token" => $token,
-                    "refresh_token" => $this->createJWTRefreshToken($addInfoUser),
+                    "refresh_token" => $this->createJWTRefreshToken($addInfoUser,$request->remember_token),
                     "remember_token" => $request->remember_token
                 ];
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
@@ -142,7 +142,7 @@ class AuthnController extends Controller
             500
         );
     }
-    public function createJWTRefreshToken($data)
+    public function createJWTRefreshToken($data,$remember)
     {
 
         $algorithm = 'HS256';
@@ -157,6 +157,7 @@ class AuthnController extends Controller
             'nbf' => $issuedAt,
             'user_name' => $data['user_name'],
             'rank' => $data['rank'],
+            'remember' =>$remember,
         ];
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
         return $jwt;

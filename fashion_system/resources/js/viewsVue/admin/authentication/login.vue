@@ -34,12 +34,12 @@
                         </span>
                     </div>
                     <div>
-                        <span v-if="error.username.err" class="error-message">{{ error.username.content }}</span>                        
-                        <span v-if="error.password.err"  class="error-message">{{ error.password.content }}</span>
+                        <span v-if="error.username.err" class="error-message">{{ error.username.content }}</span>
+                        <span v-if="error.password.err" class="error-message">{{ error.password.content }}</span>
                     </div>
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" @click.prevent="clickLogin()">
-                          <span v-if="!isLogin">Login</span>  
+                            <span v-if="!isLogin">Login</span>
                             <loading-spinner v-else></loading-spinner>
                         </button>
                         <!-- <router-link :to="{ path: '/auth/forgotPassword' }"><button>Login Test</button></router-link> -->
@@ -71,9 +71,13 @@ import methodDefine from '@/js/mixins/methodDefine.js';
 import paths from '@/js/mixins/getAddressFromRouter.js';
 import LoadingSpinner from '../../components/loadingSpinner.vue';
 import API from '@/js/api/admin/apiAdmin.js'
+import loginSuccess from '@/js/auth/login.js'
 
 export default {
-    mixins: [methodDefine],
+    mixins: [
+        methodDefine,
+        loginSuccess,
+    ],
     name: 'loginAdmin',
     components: {
         LoadingSpinner,
@@ -273,23 +277,27 @@ export default {
                 this.error.password.err = true;
                 this.error.password.content = "Mật khẩu tối thiểu phải có 8 kí tự";
                 return
-            }            
-            try {      
+            }
+            try {
                 const user = {
-                    user_name : this.username,
+                    user_name: this.username,
                     password: this.password,
-                    remember_token : this.remember,
+                    remember_token: this.remember,
                 };
                 API.loginAdmin(user).then(response => {
+                    console.log(response);
+                    const results = response.data.results;
+                    const accessToken = results.token;
+                    const refreshToken = results.refresh_token;
+                    const remember = results.remember_token;
                     this.defaultLogin();
-                console.log(55,response);
-                //    this.examples = response.data.content[0]
-            })
-                .catch(error => {
-                    console.log(222,error);
-                });
+                   return this.loginSuccess(accessToken,refreshToken,remember);
+                })
+                    .catch(error => {
+                        console.log(222, error);
+                    });
             } catch (error) {
-                console.error(11,error);
+                console.error(11, error);
             }
 
         },
