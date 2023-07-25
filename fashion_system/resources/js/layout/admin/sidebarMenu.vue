@@ -50,7 +50,7 @@
   
 <script>
 import dataSidebar from "@/js/generalSetting/adminCategoryMenu.js";
-import avatarAdminDefault from "@/images/admin/system/administrator.png";
+import avatarAdminDefault from "@/public/images/admin/system/administrator.png";
 export default {
     data() {
         return {
