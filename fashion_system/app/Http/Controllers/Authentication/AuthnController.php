@@ -93,7 +93,7 @@ class AuthnController extends Controller
                     "type" => "bearer",
                     "token" => $token,
                     "refresh_token" => $this->createJWTRefreshToken($addInfoUser),
-                    "remember_token" => false
+                    "remember_token" => $request->remember_token
                 ];
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
             } else {
