@@ -257,7 +257,7 @@ export default {
         },
         clickLogin() {
             this.defaultLogin();
-            this.isLogin = true;
+            // this.isLogin = true;
             if (isNaN(this.username)) {
                 this.error.username.err = true;
                 this.error.username.content = "Tài khoản phải là số điện thoại";

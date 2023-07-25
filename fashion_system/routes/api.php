@@ -30,6 +30,7 @@ Route::middleware('checkURL')->group(function () {
         ], function () {
             Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api']);
             Route::post('/register', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api']);
+            Route::post('/decodeJwt', [AuthnController::class, 'decode'])->withoutMiddleware(['auth:api']);
 
 
             Route::post('/test-login', [AuthnController::class, 'test']);

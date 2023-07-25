@@ -14,12 +14,13 @@ const apiClient = axios.create({
         'Accept': 'application/json',
         'Content-Type': 'multipart/form-data',
         'Authorization': accessToken ? 'Bearer ' + accessToken : '',
+        // 'Authorization': 'qưeqweqweqwe',
+
     }
 });
 //xử lý kết quả trước rồi mới trả về lơi gọi
 apiClient.interceptors.response.use(
     (response) => {
-        console.log(response);
         const codeHttp = response.status;
         if (checkHttpResponse(codeHttp))
             return response;
@@ -32,6 +33,7 @@ apiClient.interceptors.response.use(
 
 
 function checkHttpResponse(codeHttp) {
+    console.log('truoc');
     switch (codeHttp) {
         case 200:
             break;
