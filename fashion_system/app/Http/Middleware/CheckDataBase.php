@@ -17,7 +17,6 @@ class CheckDataBase
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         try {
             DB::connection()->getPdo();
             if (DB::connection()->getDatabaseName()) {

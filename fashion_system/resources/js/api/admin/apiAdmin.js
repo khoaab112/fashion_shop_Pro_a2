@@ -1,9 +1,9 @@
 import index from '../setupApi.js';
-console.log("aass");
+
+// const authAdmin = '/api/auth/login';
 
 export default {
-    test() {
-        return index.get(`/test`);
+    loginAdmin() {
+        return index.post(`/login`);
     },
-
 }

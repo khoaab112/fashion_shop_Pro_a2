@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use \Firebase\JWT\Algorithm\HS256;
 
 class AuthnController extends Controller
 {
@@ -62,6 +63,7 @@ class AuthnController extends Controller
     //khi đăng nhập nếu trong cookie và giải mã cookie có giá trị là tru thì cho đằng nhập
     public function login(Request $request)
     {
+
         //check nhớ mất khẩu
         /*nếu có nhớ thì check , nếu hết hạn thì đăng nhập lại , nếu chưa hết hạn cho phép đăng nhập luôn */
         if ($request->remember_password) {
@@ -115,11 +117,11 @@ class AuthnController extends Controller
     //giải mã jwt login
     public function decodeJwtToken($token)
     {
-
+        $key = new Key(env('JWT_SECRET'), 'HS256');
         try {
             // Cấu hình đối tượng Key từ secret key
-            $key = new Key(env('JWT_SECRET'), 'HS256');
-            $decodedToken = JWT::decode($token, $key, ['HS256']);
+            // $key = new Key(env('JWT_SECRET'), 'HS256');            
+            $decodedToken = JWT::decode($token, $key);
 
             return ['status' => true, 'value' => $decodedToken];
         } catch (\Firebase\JWT\ExpiredException $e) {
@@ -158,14 +160,14 @@ class AuthnController extends Controller
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
         return $jwt;
     }
-    public function removeRefreshToken($id){
-        
-         $this->query->removeRefreshToken($id);
+    public function removeRefreshToken($id)
+    {
+
+        $this->query->removeRefreshToken($id);
     }
     public function getAll()
     {
         dd('aa');
         return CodeHttpHelpers::returnJson(200, false, $this->query->getAll(), 200);
-
     }
 }

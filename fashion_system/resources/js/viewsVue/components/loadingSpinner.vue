@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import sgvLoadingSpinner from "@/public/images/svg/loading/spinner.svg"
+import sgvLoadingInfinity from "@/public/images/svg/loading/spinner.svg"
 export default {
-    name: 'Loading-spinner',
+    name: 'Loading-infinity',
     components: {
     },
     setup() {
@@ -21,7 +21,7 @@ export default {
         };
     },
     created() {
-        this.svg = this.getImage(sgvLoadingSpinner);
+        this.svg = this.getImage(sgvLoadingInfinity);
     },
     mounted() {
         // Logic sau khi component được gắn kết (render) vào DOM
@@ -48,7 +48,7 @@ export default {
     background-size: cover;
     background-size: contain;
     background-repeat: no-repeat;
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
 }
 </style>

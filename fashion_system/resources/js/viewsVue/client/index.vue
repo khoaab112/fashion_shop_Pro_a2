@@ -7,6 +7,9 @@
     <loading-infinity>
         
     </loading-infinity>
+    <loading-spinner>
+        
+    </loading-spinner>
     <!-- <div>{{ examples }}</div> -->
     <span>{{ examples }}</span>
 </template>
@@ -14,11 +17,13 @@
 <script>
 import Test from '@/js/api/admin/apiAdmin.js'
 import LoadingInfinity from '../components/LoadingInfinity.vue';
+import loadingSpinner from '../components/loadingSpinner.vue';
 // import Test from '../../../js/api/admin/apiAdmin.js';
 export default {
     name: 'appindex',
     components: {
-        LoadingInfinity
+        LoadingInfinity,
+        loadingSpinner,
   },
     data() {
         return {

@@ -39,8 +39,8 @@
                     </div>
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" @click.prevent="clickLogin()">
-                            Login
-                            <loading-infinity></loading-infinity>
+                          <span v-if="!isLogin">Login</span>  
+                            <loading-spinner v-else></loading-spinner>
                         </button>
                         <!-- <router-link :to="{ path: '/auth/forgotPassword' }"><button>Login Test</button></router-link> -->
                     </div>
@@ -69,13 +69,14 @@
 import imageAdmin from '@/public/images/admin/system/authentication/login_admin.svg';
 import methodDefine from '@/js/mixins/methodDefine.js';
 import paths from '@/js/mixins/getAddressFromRouter.js';
-import LoadingInfinity from '../../components/LoadingInfinity.vue';
+import LoadingSpinner from '../../components/loadingSpinner.vue';
+import API from '@/js/api/admin/apiAdmin.js'
 
 export default {
     mixins: [methodDefine],
     name: 'loginAdmin',
     components: {
-        LoadingInfinity,
+        LoadingSpinner,
     },
     setup() {
     },
@@ -93,6 +94,7 @@ export default {
                 username: { err: false, content: '' },
                 password: { err: false, content: '' },
             },
+            isLogin: false,
         };
     },
     created() {
@@ -271,11 +273,19 @@ export default {
                 this.error.password.content = "Mật khẩu tối thiểu phải có 8 kí tự";
                 return
             }
-            console.log('success')
-            console.log(this.username);
-            console.log(this.password);
-            console.log(this.remember);
-            // this.goToPage(paths.error403);
+            try {
+                this.isLogin = true;
+                API.loginAdmin().then(response => {
+                console.log(55,response);
+                //    this.examples = response.data.content[0]
+            })
+                .catch(error => {
+                    console.log(222,error);
+                });
+            } catch (error) {
+                console.error(11,error);
+            }
+
         },
         clickForgotPassword() {
             this.goToPage(paths.forgotPassword);
@@ -288,6 +298,7 @@ export default {
             this.error.username.content = '';
             this.error.password.err = false;
             this.error.password.content = '';
+            this.isLogin = false;
         },
     },
 };
