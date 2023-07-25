@@ -3,8 +3,7 @@ import admin from "./admin";
 import customer from "./customer";
 import other from "./other";
 import jwt from '@/js/auth/jwt.js';
-
-
+import sessionStorage from "../auth/sessionStorage";
 
 const routes = [
     ...other.error,
@@ -27,10 +26,13 @@ router.beforeEach((to, from, next) => {
     const isLoginAdmin = to.path.startsWith("/auth/login");
     //check khi cố truy cập home admin
     if (isAdminRoute) {
-        console.log('khoarse c');
         const existRefreshToken = jwt.existRefreshToken;
         const isRememberMe = jwt.payload.remember;
         const expiryDate = jwt.expiryDate;
+        const isOnline = JSON.parse(sessionStorage.getSession());
+        if (existRefreshToken && isOnline && expiryDate) {
+            return next();
+        }
         //check token tồn tại , có nhớ mật khẩu , còn thời gian sử dụng
         if (existRefreshToken && isRememberMe == true && expiryDate) {
             return next();
@@ -40,8 +42,6 @@ router.beforeEach((to, from, next) => {
     }
     //truy cập ở trang admin
     if (isLoginAdmin) {
-        console.log('a');
-
         const existRefreshToken = jwt.existRefreshToken;
         const expiryDate = jwt.expiryDate;
         if (existRefreshToken && expiryDate) {

@@ -45,7 +45,7 @@
                         <!-- <router-link :to="{ path: '/auth/forgotPassword' }"><button>Login Test</button></router-link> -->
                     </div>
                     <div class="check-remember-me mt-2">
-                        <el-checkbox v-model="remember" label="Nhớ mật khẩu" size="large" />
+                        <el-checkbox v-model="remember" label="Tự động đăng nhập" size="large" />
                     </div>
                     <div class="text-center mt-1">
                         <a class="txt2" href="#" @click.prevent="clickForgotPassword()">
