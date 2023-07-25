@@ -29,6 +29,9 @@ Route::middleware('checkURL')->group(function () {
             'prefix' => 'auth'
         ], function () {
             Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api']);
+            Route::post('/register', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api']);
+
+
             Route::post('/test-login', [AuthnController::class, 'test']);
             Route::get('/test', [Test::class, 'index'])->withoutMiddleware(['auth:api']);
             Route::get('/get-users', [AuthnController::class, 'getAll']);

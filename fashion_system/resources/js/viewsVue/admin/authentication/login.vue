@@ -89,7 +89,7 @@ export default {
             typePassword: 'password',
             username: '',
             password: '',
-            remember: '',
+            remember: false,
             error: {
                 username: { err: false, content: '' },
                 password: { err: false, content: '' },
@@ -253,6 +253,7 @@ export default {
         },
         clickLogin() {
             this.defaultLogin();
+            this.isLogin = true;
             if (isNaN(this.username)) {
                 this.error.username.err = true;
                 this.error.username.content = "Tài khoản phải là số điện thoại";
@@ -272,10 +273,15 @@ export default {
                 this.error.password.err = true;
                 this.error.password.content = "Mật khẩu tối thiểu phải có 8 kí tự";
                 return
-            }
-            try {
-                this.isLogin = true;
-                API.loginAdmin().then(response => {
+            }            
+            try {      
+                const user = {
+                    user_name : this.username,
+                    password: this.password,
+                    remember_token : this.remember,
+                };
+                API.loginAdmin(user).then(response => {
+                    this.defaultLogin();
                 console.log(55,response);
                 //    this.examples = response.data.content[0]
             })

@@ -63,18 +63,18 @@ class AuthnController extends Controller
     //khi đăng nhập nếu trong cookie và giải mã cookie có giá trị là tru thì cho đằng nhập
     public function login(Request $request)
     {
-
         //check nhớ mất khẩu
         /*nếu có nhớ thì check , nếu hết hạn thì đăng nhập lại , nếu chưa hết hạn cho phép đăng nhập luôn */
-        if ($request->remember_password) {
+        if ($request->remember_token) {
             $cookieRefreshToken = $this->getCookie($request);
+            if($cookieRefreshToken) {
             $decodeJwtToken = $this->decodeJwtToken($cookieRefreshToken);
             if ($decodeJwtToken['status']) {
                 return CodeHttpHelpers::returnJson(200, true, null, 200);
             }
-            return CodeHttpHelpers::returnJson(401, true, "failure", 401);
+            return CodeHttpHelpers::returnJson(401, false, "failure", 401);
         }
-
+        }
         $validateLogin = [
             'user_name' => 'required|string',
             'password' => 'required|min:9|string',
@@ -83,20 +83,21 @@ class AuthnController extends Controller
         $validator = validationHelpers::validation($request->all(), $validateLogin, $this->attributeNames);
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+            return CodeHttpHelpers::returnJson(400, false, $errors, 200);
         }
         $addInfoUser = ['user_name' => $request->user_name, 'rank' => 'defined'];
         try {
-            if ($token = Auth::claims($addInfoUser)->attempt($request->all())) {
+            // if ($token = Auth::claims($addInfoUser)->attempt($request->all())) {
+            if ($token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
                 $data = [
                     "type" => "bearer",
                     "token" => $token,
                     "refresh_token" => $this->createJWTRefreshToken($addInfoUser),
-                    "remember password" => false
+                    "remember_token" => false
                 ];
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
             } else {
-                return CodeHttpHelpers::returnJson(401, true, "failure", 401);
+                return CodeHttpHelpers::returnJson(401, false, "Tài khoản hoặc mật khẩu không chính xác", 200);
             }
         } catch (\Exception $error) {
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
