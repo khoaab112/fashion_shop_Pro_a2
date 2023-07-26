@@ -62,19 +62,17 @@ class AuthnController extends Controller
 
     //khi đăng nhập nếu trong cookie và giải mã cookie có giá trị là tru thì cho đằng nhập
     public function login(Request $request)
-    {         
-        //    dd($this->getCookie($request));
+    {
         //check nhớ mất khẩu
         /*nếu có nhớ thì check , nếu hết hạn thì đăng nhập lại , nếu chưa hết hạn cho phép đăng nhập luôn */
-        if ($request->remember_token) {
-            $cookieRefreshToken = $request->cookie(env('VITE_KEY_REFRESH_TOKEN'));
-            if($cookieRefreshToken) {
-            $decodeJwtToken = $this->decodeJwtToken($cookieRefreshToken);
-            if ($decodeJwtToken['status']) {
+        $cookie = $request->cookie(env('VITE_KEY_REFRESH_TOKEN'));
+        if ($cookie) {
+            $decodeJwtToken = $this->decodeJwtToken($cookie);
+            $remember = $decodeJwtToken['value']->remember;
+            if ($remember && $decodeJwtToken['status']) {
                 return CodeHttpHelpers::returnJson(200, true, null, 200);
             }
             return CodeHttpHelpers::returnJson(200, false, "failure", 401);
-        }
         }
         $validateLogin = [
             'user_name' => 'required|string',
@@ -86,14 +84,14 @@ class AuthnController extends Controller
             $errors = $validator->errors();
             return CodeHttpHelpers::returnJson(400, false, $errors, 200);
         }
-        $addInfoUser = ['user_name' => $request->user_name, 'rank' => 'defined','reservation'=>true];
+        $addInfoUser = ['user_name' => $request->user_name, 'rank' => 'defined', 'reservation' => true];
         try {
             // if ($token = Auth::claims($addInfoUser)->attempt($request->all())) {
             if ($token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
                 $data = [
                     "type" => "bearer",
                     "token" => $token,
-                    "refresh_token" => $this->createJWTRefreshToken($addInfoUser,$request->remember_token),
+                    "refresh_token" => $this->createJWTRefreshToken($addInfoUser, $request->remember_token),
                     "remember_token" => $request->remember_token
                 ];
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
@@ -143,7 +141,7 @@ class AuthnController extends Controller
             500
         );
     }
-    public function createJWTRefreshToken($data,$remember)
+    public function createJWTRefreshToken($data, $remember)
     {
 
         $algorithm = 'HS256';
@@ -158,7 +156,7 @@ class AuthnController extends Controller
             'nbf' => $issuedAt,
             'user_name' => $data['user_name'],
             'rank' => $data['rank'],
-            'remember' =>$remember,
+            'remember' => $remember,
         ];
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
         return $jwt;
