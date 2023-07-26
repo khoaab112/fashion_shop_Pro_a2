@@ -24,8 +24,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const isAdminRoute = to.path.startsWith('/admin');
     const isLoginAdmin = to.path === "/auth/login";
-    console.log('bb');
-
     if (isAdminRoute) {
 
         const existRefreshToken = jwt.decodePayloadRefreshToken();
@@ -35,13 +33,10 @@ router.beforeEach((to, from, next) => {
         const reservation = jwt.decodePayloadAccessToken().reservation;
         // mã tồn tại / access token cho nhớ / còn time / còn time
         if (existRefreshToken && reservation && expiryDate && expiryDateAccessToken) {
-            console.log('aa');
             return next();
         }
         //check token tồn tại , có nhớ mật khẩu , còn thời gian sử dụng
         if (existRefreshToken && isRememberMe && expiryDate) {
-            console.log('bb');
-
             return next();
         } else {
             return next("/auth/login");

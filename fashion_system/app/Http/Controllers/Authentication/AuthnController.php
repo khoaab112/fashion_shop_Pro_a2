@@ -63,10 +63,12 @@ class AuthnController extends Controller
     //khi đăng nhập nếu trong cookie và giải mã cookie có giá trị là tru thì cho đằng nhập
     public function login(Request $request)
     {
+        $isLogin = $request->status;
         //check nhớ mất khẩu
         /*nếu có nhớ thì check , nếu hết hạn thì đăng nhập lại , nếu chưa hết hạn cho phép đăng nhập luôn */
         $cookie = $request->cookie(env('VITE_KEY_REFRESH_TOKEN'));
-        if ($cookie) {
+        if ($cookie && !$isLogin) {
+            dd($isLogin);
             $decodeJwtToken = $this->decodeJwtToken($cookie);
             $remember = $decodeJwtToken['value']->remember;
             if ($remember && $decodeJwtToken['status']) {

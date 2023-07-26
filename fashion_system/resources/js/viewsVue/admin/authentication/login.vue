@@ -10,8 +10,6 @@
                     <span class="login100-form-title h1">
                         QUẢN TRỊ
                     </span>
-
-
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                         <input class="input100" type="text" name="userName" placeholder="Tài khoản" v-model="username">
                         <span class="focus-input100"></span>
@@ -63,6 +61,7 @@
             </div>
         </div>
     </div>
+    <el-button plain> Error </el-button>
 </template>
     
 <script>
@@ -72,6 +71,7 @@ import paths from '@/js/mixins/getAddressFromRouter.js';
 import LoadingSpinner from '../../components/loadingSpinner.vue';
 import API from '@/js/api/admin/apiAdmin.js'
 import loginSuccess from '@/js/auth/login.js'
+import { ElNotification } from 'element-plus'
 
 export default {
     mixins: [
@@ -283,21 +283,45 @@ export default {
                     user_name: this.username,
                     password: this.password,
                     remember_token: this.remember,
+                    status: 'requires_login',
                 };
                 API.loginAdmin(user).then(response => {
-                    console.log(response);
-                    const results = response.data.results;
-                    const accessToken = results.token;
-                    const refreshToken = results.refresh_token;
-                    const remember = results.remember_token;
-                    this.defaultLogin();
-                   return this.loginSuccess(accessToken,refreshToken,remember);
+                    const resultsReturned = response.data;
+                    const results = resultsReturned.results;
+                    console.log(resultsReturned.result_code);
+                    if (resultsReturned.status == 'success' && resultsReturned.result_code == 200) {
+                        const accessToken = results.token;
+                        const refreshToken = results.refresh_token;
+                        const remember = results.remember_token;
+                        this.defaultLogin();
+                        
+                        return this.loginSuccess(accessToken, refreshToken, remember);
+                    }
+                    else if (resultsReturned.status == 'error' && resultsReturned.result_code == 401) {
+                        this.error.password.err = true;
+                        this.error.password.content = results;
+                    }
+                    // else if (resultsReturned.status == 'error' && resultsReturned.result_code == 400) {
+                    //     console.log(111,results);
+                    //     this.error.password.err = true;
+                    //     this.error.password.content = results.results;
+                    // }
+                    else
+                        ElNotification({
+                            title: 'Error',
+                            message: 'Có lỗi trong quá trình đăng nhập',
+                            type: 'error',
+                        });
                 })
                     .catch(error => {
                         console.log(222, error);
                     });
             } catch (error) {
-                console.error(11, error);
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi trong quá trình đăng nhập',
+                    type: 'error',
+                });
             }
 
         },
