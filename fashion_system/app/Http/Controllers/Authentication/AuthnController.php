@@ -56,7 +56,7 @@ class AuthnController extends Controller
             ];
             $result = $this->query->create($staffAccount);
             return CodeHttpHelpers::returnJson(200, true, $result, 200);
-        } catch (\Exception $error) {
+        } catch (\Exception $error) {            
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }
@@ -121,7 +121,6 @@ class AuthnController extends Controller
 
     public function logout(Request $request)
     {
-
         try {
             $IDUser = Auth::user()->id;
             $authorizationHeader = $request->header('Authorization');
@@ -131,8 +130,8 @@ class AuthnController extends Controller
             Auth::logout();
             $this->removeRefreshToken($IDUser);
             return CodeHttpHelpers::returnJson(200, true, 'Đăng xuất thành công', 200);
-        } catch (\Exception $e) {
-            return CodeHttpHelpers::returnJson(400, false, $e, 200);
+        } catch (\Exception $err) {
+            return CodeHttpHelpers::returnJson(400, false, $err, 200);
         }
     }
     //giải mã jwt login

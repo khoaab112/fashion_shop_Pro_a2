@@ -4,19 +4,22 @@ import localStorage from './localStorage';
 
 export default {
     methods: {
-        logoutAdmin() {
-            API.logout().then(response => {
-                    var result = true;
-                    if (response.data.result_code == 200) {
-                        result = true;
-                    } else result = false;
+        async logoutAdmin() {
+            try {
+                const response = await API.logout();
+                if (response.data.result_code === 200) {
                     cookie.deleteCookie();
                     localStorage.removeAccessToken();
-                    return result;
-                })
-                .catch(error => {
+                    return true;
+                } else {
+                    cookie.deleteCookie();
+                    localStorage.removeAccessToken();
                     return false;
-                });
-        }
+                }
+            } catch (error) {
+                console.error(error);
+                return false;
+            };
+        },
     },
 };

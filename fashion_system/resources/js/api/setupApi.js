@@ -8,17 +8,30 @@ import method from "../mixins/methodDefine";
 //cookie => refreshToken
 const accessToken = localStorage.getAccessToken();
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/auth', // Đặt URL gốc của API của bạn
+    baseURL: 'http://127.0.0.1:8000/api/auth', // Đặt URL gốc của API 
     timeout: 5000, // Đặt thời gian chờ tối đa cho mỗi yêu cầu
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'multipart/form-data',
-        'Authorization': accessToken ? 'Bearer ' + accessToken : '',
-        // 'Authorization': 'qưeqweqweqwe',
-
+        'Authorization': (accessToken ? 'Bearer ' + accessToken : ''),
     }
 });
-//xử lý kết quả trước rồi mới trả về lơi gọi
+
+// Interceptor trước khi gửi yêu cầu
+apiClient.interceptors.request.use(config => {
+    // Kiểm tra và thêm accessToken vào header (nếu có)
+    const accessToken = localStorage.getAccessToken();
+    if (accessToken) {
+        config.headers['Authorization'] = 'Bearer ' + accessToken;
+    }
+    return config;
+}, error => {
+    // Xử lý lỗi nếu có
+    return Promise.reject(error);
+});
+
+
+//xử lý kết quả trả về trước rồi mới trả về lơi gọi
 apiClient.interceptors.response.use(
     (response) => {
         const codeHttp = response.status;
@@ -33,7 +46,6 @@ apiClient.interceptors.response.use(
 
 
 function checkHttpResponse(codeHttp) {
-    console.log('truoc');
     switch (codeHttp) {
         case 200:
             break;

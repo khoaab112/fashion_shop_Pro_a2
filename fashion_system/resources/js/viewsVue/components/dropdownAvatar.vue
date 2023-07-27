@@ -16,6 +16,8 @@
 import listDropdown from '@/js/generalSetting/dropdownAvatarAdmin.js';
 import logout from '@/js/auth/logout';
 import { ElNotification } from 'element-plus'
+import methodDefine from '@/js/mixins/methodDefine.js';
+import paths from '@/js/mixins/getAddressFromRouter.js';
 
 export default {
   name: 'dropdownAvatar',
@@ -23,6 +25,7 @@ export default {
   },
   mixins: [
     logout,
+    methodDefine,
   ],
   props: ['avatar'],
   setup() {
@@ -49,26 +52,25 @@ export default {
 
   },
   methods: {
-    handleDropdownClick(key) {
+    async handleDropdownClick(key) {
 
       if (key == 'logout') {
-        const response = this.logoutAdmin();
-        if (11,response) {
-
-          console.log(response);
+        const response = await this.logoutAdmin();
+        if ( response) {
           ElNotification({
-            title: 'Error',
-            message: 'Có lỗi trong quá trình đăng nhập',
-            type: 'error',
+            title: 'Success',
+            message: 'Đăng xuất',
+            type: 'success',
           });
+          this.goToPage(paths.login);
         }
-        else
-        {
+        else {
           ElNotification({
             title: 'Error',
             message: 'Có lỗi trong quá trình đăng xuất',
             type: 'error',
           });
+          this.goToPage(paths.login);
         }
       }
     }
