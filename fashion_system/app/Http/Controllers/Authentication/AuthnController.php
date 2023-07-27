@@ -68,7 +68,6 @@ class AuthnController extends Controller
         /*nếu có nhớ thì check , nếu hết hạn thì đăng nhập lại , nếu chưa hết hạn cho phép đăng nhập luôn */
         $cookie = $request->cookie(env('VITE_KEY_REFRESH_TOKEN'));
         if ($cookie && !$isLogin) {
-            dd($isLogin);
             $decodeJwtToken = $this->decodeJwtToken($cookie);
             $remember = $decodeJwtToken['value']->remember;
             if ($remember && $decodeJwtToken['status']) {
@@ -90,12 +89,17 @@ class AuthnController extends Controller
         try {
             // if ($token = Auth::claims($addInfoUser)->attempt($request->all())) {
             if ($token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
+                $user = Auth::user();
+                if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
+                $addInfoUserRefreshToken = ['user_name' => $request->user_name, 'rank' => 'pending', 'id' => $user['id']];
+                $refreshToken =$this->createJWTRefreshToken($addInfoUserRefreshToken, $request->remember_token);
                 $data = [
                     "type" => "bearer",
                     "token" => $token,
-                    "refresh_token" => $this->createJWTRefreshToken($addInfoUser, $request->remember_token),
+                    "refresh_token" => $refreshToken,
                     "remember_token" => $request->remember_token
                 ];
+                $this->query->updateById(['refresh_token'=>$refreshToken],$user['id']);
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
             } else {
                 return CodeHttpHelpers::returnJson(401, false, "Tài khoản hoặc mật khẩu không chính xác", 200);
@@ -111,10 +115,12 @@ class AuthnController extends Controller
     //xóa refresh token and access token
     public function logout()
     {
-        Auth::logout();
-        return response()->json([
-            'message' => 'Successfully logged out',
-        ]);
+        try {
+            Auth::logout();
+            return CodeHttpHelpers::returnJson(200, true, 'Đăng xuất thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(400, false, $e, 200);
+        }
     }
     //giải mã jwt login
     public function decodeJwtToken($token)
@@ -158,6 +164,7 @@ class AuthnController extends Controller
             'nbf' => $issuedAt,
             'user_name' => $data['user_name'],
             'rank' => $data['rank'],
+            'id' => $data['id'],
             'remember' => $remember,
         ];
         $jwt = JWT::encode($payload, $secretKey, $algorithm);

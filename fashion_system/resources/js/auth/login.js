@@ -1,6 +1,5 @@
 import cookie from "./cookie";
 import localStorage from "./localStorage";
-import sessionStorage from "./sessionStorage";
 import mixins from "@/js/mixins/getAddressFromRouter.js";
 
 export default {

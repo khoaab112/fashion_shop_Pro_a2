@@ -66,6 +66,7 @@ class StaffAccount extends Authenticatable implements JWTSubject
         "user_name",
         "password",
         "remember_token",
+        "refresh_token",
         "issued_at",
         "expired_time",
         "status",
