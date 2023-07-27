@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
 use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -79,7 +80,7 @@ class AuthnController extends Controller
             'user_name' => 'required|string',
             'password' => 'required|min:9|string',
         ];
-//kiểm tra dữ liệu
+        //kiểm tra dữ liệu
         $validator = validationHelpers::validation($request->all(), $validateLogin, $this->attributeNames);
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -95,14 +96,15 @@ class AuthnController extends Controller
                 $user = Auth::user();
                 if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
                 $addInfoUserRefreshToken = ['user_name' => $request->user_name, 'rank' => 'pending', 'id' => $user['id']];
-                $refreshToken =$this->createJWTRefreshToken($addInfoUserRefreshToken, $request->remember_token);
+                $refreshToken = $this->createJWTRefreshToken($addInfoUserRefreshToken, $request->remember_token);
                 $data = [
                     "type" => "bearer",
                     "token" => $token,
                     "refresh_token" => $refreshToken,
                     "remember_token" => $request->remember_token
                 ];
-                $this->query->updateById(['refresh_token'=>$refreshToken],$user['id']);
+                $this->query->updateById(['refresh_token' => $refreshToken, 'issued_at' => Carbon::now(), 'expired_time' => $this->calculateLifeTimeOfToken()], $user['id']);
+                // ,'issued_at'=>''
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
             } else {
                 return CodeHttpHelpers::returnJson(401, false, "Tài khoản hoặc mật khẩu không chính xác", 200);
@@ -116,11 +118,18 @@ class AuthnController extends Controller
         return $request->cookie('cookie_refresh_token');
     }
     //xóa refresh token and access token
-    
-    public function logout()
+
+    public function logout(Request $request)
     {
+
         try {
-            Auth::logout();
+            $IDUser = Auth::user()->id;
+            $authorizationHeader = $request->header('Authorization');
+            $token = str_replace('Bearer ', '', $authorizationHeader);
+            //xóa access token 
+            Auth::setToken($token)->invalidate();
+            // Auth::logout();
+            // $this->removeRefreshToken($IDUser);
             return CodeHttpHelpers::returnJson(200, true, 'Đăng xuất thành công', 200);
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(400, false, $e, 200);
@@ -152,6 +161,13 @@ class AuthnController extends Controller
             ['token_refresh' => $tokenRefresh],
             500
         );
+    }
+    public function calculateLifeTimeOfToken()
+    {
+        $timeLiveRF = env('LIVE_TIME_REFRESH_TOKEN');
+        $carbon = Carbon::now();
+        $days = $carbon->diffInDays($carbon->copy()->addSeconds($timeLiveRF));
+        return $carbon->addDays($days);
     }
     public function createJWTRefreshToken($data, $remember)
     {
