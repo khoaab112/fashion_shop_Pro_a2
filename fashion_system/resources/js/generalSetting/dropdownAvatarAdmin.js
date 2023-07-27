@@ -20,6 +20,7 @@ export default [{
         'key': 'logout',
         'name': 'Đăng xuất',
         component: '',
-        'icon': "fa-solid fa-arrow-right-from-bracket"
+        'icon': "fa-solid fa-arrow-right-from-bracket",
+        'method': 'logoutAdmin',
     }
 ];

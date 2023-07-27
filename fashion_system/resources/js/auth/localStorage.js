@@ -13,8 +13,13 @@ function setAccessToken(value) {
 function clearStorage() {
     localStorage.clear();
 }
+
+function removeAccessToken() {
+    localStorage.removeItem(ENV.KEY_ACCESS_TOKEN);
+}
 export default {
     getAccessToken,
     setAccessToken,
     clearStorage,
+    removeAccessToken,
 }

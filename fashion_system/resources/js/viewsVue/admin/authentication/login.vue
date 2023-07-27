@@ -288,7 +288,6 @@ export default {
                 API.loginAdmin(user).then(response => {
                     const resultsReturned = response.data;
                     const results = resultsReturned.results;
-                    console.log(resultsReturned.result_code);
                     if (resultsReturned.status == 'success' && resultsReturned.result_code == 200) {
                         const accessToken = results.token;
                         const refreshToken = results.refresh_token;
