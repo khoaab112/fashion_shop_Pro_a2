@@ -128,8 +128,8 @@ class AuthnController extends Controller
             $token = str_replace('Bearer ', '', $authorizationHeader);
             //xóa access token 
             Auth::setToken($token)->invalidate();
-            // Auth::logout();
-            // $this->removeRefreshToken($IDUser);
+            Auth::logout();
+            $this->removeRefreshToken($IDUser);
             return CodeHttpHelpers::returnJson(200, true, 'Đăng xuất thành công', 200);
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(400, false, $e, 200);

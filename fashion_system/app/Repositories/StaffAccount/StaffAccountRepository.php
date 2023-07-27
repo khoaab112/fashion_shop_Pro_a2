@@ -22,7 +22,7 @@ class StaffAccountRepository extends BaseRepositories implements StaffAccountRep
     }
     public function removeRefreshToken($id)
     {
-        return $this->staffAccount->where('id', $id)->update(['refresh_token'=>'','issued_at'=>'','expired_time'=>'']);
+        return $this->staffAccount->where('id', $id)->update(['refresh_token'=>null,'issued_at'=>null,'expired_time'=>null]);
     }
 
 
