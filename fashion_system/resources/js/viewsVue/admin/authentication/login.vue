@@ -257,7 +257,6 @@ export default {
         },
         clickLogin() {
             this.defaultLogin();
-            // this.isLogin = true;
             if (isNaN(this.username)) {
                 this.error.username.err = true;
                 this.error.username.content = "Tài khoản phải là số điện thoại";
@@ -279,13 +278,15 @@ export default {
                 return
             }
             try {
+                this.isLogin = true;
                 const user = {
                     user_name: this.username,
                     password: this.password,
                     remember_token: this.remember,
                     status: 'requires_login',
                 };
-                API.loginAdmin(user).then(response => {
+                API.loginAdmin(user).then(response => {           
+
                     const resultsReturned = response.data;
                     const results = resultsReturned.results;
                     if (resultsReturned.status == 'success' && resultsReturned.result_code == 200) {

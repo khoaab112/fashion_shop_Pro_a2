@@ -22,6 +22,8 @@ const router = createRouter({
 
 //check login
 router.beforeEach((to, from, next) => {
+
+    console.log(11, next);
     const isAdminRoute = to.path.startsWith('/admin');
     const isLoginAdmin = to.path === "/auth/login";
     if (isAdminRoute) {
@@ -33,10 +35,16 @@ router.beforeEach((to, from, next) => {
         const reservation = jwt.decodePayloadAccessToken().reservation;
         // mã tồn tại / access token cho nhớ / còn time / còn time
         if (existRefreshToken && reservation && expiryDate && expiryDateAccessToken) {
+            if (to.fullPath == '/admin') {
+                return next("/admin/home");
+            }
             return next();
         }
         //check token tồn tại , có nhớ mật khẩu , còn thời gian sử dụng
         if (existRefreshToken && isRememberMe && expiryDate) {
+            if (to.fullPath == '/admin') {
+                return next("/admin/home");
+            }
             return next();
         } else {
             return next("/auth/login");
@@ -48,10 +56,10 @@ router.beforeEach((to, from, next) => {
         const isRememberMe = (jwt.decodePayloadRefreshToken().remember) === 'true';
         const expiryDateAccessToken = jwt.checkExpiryDateAccessToken();
         if (existRefreshToken && expiryDate && expiryDateAccessToken) {
-            return next('/admin');
+            return next('/admin/home');
         }
         if (existRefreshToken && expiryDate && isRememberMe) {
-            return next('/admin');
+            return next('/admin/home');
         }
     }
     return next();

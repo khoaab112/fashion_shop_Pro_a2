@@ -7,7 +7,7 @@ export default {
         loginSuccess(accessToken, refreshToken) {
             cookie.setCookie(refreshToken);
             localStorage.setAccessToken(accessToken);
-            return this.$router.push(mixins.admin);
+            return this.$router.push(mixins.home);
         },
     },
 };

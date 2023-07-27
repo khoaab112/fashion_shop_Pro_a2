@@ -2,8 +2,6 @@ const admin = [{
     path: '/admin',
     name: 'admin',
     components: {
-        // default: () =>
-        //     import ('../layout/admin/sidebarMenu.vue'),
         header: () =>
             import ('../layout/admin/header.vue'),
         sidebar: () =>
@@ -12,10 +10,10 @@ const admin = [{
             import ('../layout/admin/footer.vue'),
     },
     children: [{
-        path: "user",
-        name: "admin-user",
+        path: "home",
+        name: "home",
         component: () =>
-            import ('../viewsVue/admin/index.vue'),
+            import ('../viewsVue/admin/home/homeAdmin.vue'),
     }]
 }]
 

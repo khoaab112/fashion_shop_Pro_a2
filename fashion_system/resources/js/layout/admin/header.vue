@@ -11,9 +11,8 @@
   <main>
     <div id="content-admin">
       <div class="container bg-content">
-        <router-view></router-view>
+        <router-view ></router-view>
       </div>
-      
     </div>
   </main>
   </section>

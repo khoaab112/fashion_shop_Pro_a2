@@ -64,7 +64,6 @@ export default {
         };
     },
     created() {
-        console.log(dataSidebar);
         this.dataMenuSidebar = this.addElementActiveToSidebar(dataSidebar);
         // Logic khi component được khởi tạo
     },
