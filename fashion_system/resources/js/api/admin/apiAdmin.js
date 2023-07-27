@@ -8,5 +8,8 @@ export default {
     },
     checkToken(token) {
         return index.post(`/decodeJwt`, (token));
+    },
+    logout() {
+        return index.delete(`/logout`);
     }
 }

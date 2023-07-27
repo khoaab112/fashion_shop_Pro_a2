@@ -1,43 +1,37 @@
 <template>
     <div class="">
         quan ly nhan vien
-        <font-awesome-icon :icon="['fab', 'facebook']" />        
+        <font-awesome-icon :icon="['fab', 'facebook']" />
     </div>
-    <dropdown-avatar></dropdown-avatar>
-    <span>{{ examples }}</span>
+    <button @click="test()">logout</button>
 </template>
 
 <script>
-import Test from '@/js/api/admin/apiAdmin.js'
-import LoadingInfinity from '../components/LoadingInfinity.vue';
-import loadingSpinner from '../components/loadingSpinner.vue';
-import dropdownAvatar from '../components/dropdownAvatar.vue';
+import API from '@/js/api/admin/apiAdmin.js'
 // import Test from '../../../js/api/admin/apiAdmin.js';
 export default {
     name: 'appindex',
     components: {
-        LoadingInfinity,
-        loadingSpinner,
-        dropdownAvatar,
-  },
+    },
     data() {
         return {
             examples: '',
         }
     },
     created() {
-        this.fetchUser();
     },
     mounted() {
-        this.fetchUser();
     },
     methods: {
-        fetchUser() {
-   
+        test() {
+            API.logout().then(res => {
+                console.log(res);
+            }).catch(error => {
+                console.log(222, error);
+            });
         },
     }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

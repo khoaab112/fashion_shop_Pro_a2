@@ -79,15 +79,18 @@ class AuthnController extends Controller
             'user_name' => 'required|string',
             'password' => 'required|min:9|string',
         ];
-
+//kiểm tra dữ liệu
         $validator = validationHelpers::validation($request->all(), $validateLogin, $this->attributeNames);
         if ($validator->fails()) {
             $errors = $validator->errors();
             return CodeHttpHelpers::returnJson(400, false, $errors, 200);
         }
+        //thêm thông tin vào accessToken
+        //check thông tin với database
+        // check locked
+        //trả về token & refreshToken
         $addInfoUser = ['user_name' => $request->user_name, 'rank' => 'defined', 'reservation' => true];
         try {
-            // if ($token = Auth::claims($addInfoUser)->attempt($request->all())) {
             if ($token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
                 $user = Auth::user();
                 if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
@@ -113,6 +116,7 @@ class AuthnController extends Controller
         return $request->cookie('cookie_refresh_token');
     }
     //xóa refresh token and access token
+    
     public function logout()
     {
         try {
