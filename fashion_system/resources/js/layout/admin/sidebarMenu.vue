@@ -3,9 +3,8 @@
         <header>
             <div class="image-text">
                 <span class="image-logo-sidebar">
-                    <img :src=checkImageAdmin() alt="logo_system">
+                    <dropdown-avatar :avatar="checkImageAdmin()"></dropdown-avatar>
                 </span>
-
                 <div class="text logo-text">
                     <span class="admin-name">TomTom</span>
                     <span class="profession">New Edge</span>
@@ -51,8 +50,13 @@
 <script>
 import dataSidebar from "@/js/generalSetting/adminCategoryMenu.js";
 import avatarAdminDefault from "@/public/images/admin/system/administrator.png";
+import dropdownAvatar from "../../viewsVue/components/dropdownAvatar.vue";
 
 export default {
+    name:'sidebar',
+    components: {
+        dropdownAvatar,
+  },
     data() {
         return {
             activeShowSidebar: false,

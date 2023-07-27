@@ -1,16 +1,9 @@
 <template>
     <div class="">
         quan ly nhan vien
-        <font-awesome-icon :icon="['fab', 'facebook']" />
-        
+        <font-awesome-icon :icon="['fab', 'facebook']" />        
     </div>
-    <loading-infinity>
-        
-    </loading-infinity>
-    <loading-spinner>
-        
-    </loading-spinner>
-    <!-- <div>{{ examples }}</div> -->
+    <dropdown-avatar></dropdown-avatar>
     <span>{{ examples }}</span>
 </template>
 
@@ -18,12 +11,14 @@
 import Test from '@/js/api/admin/apiAdmin.js'
 import LoadingInfinity from '../components/LoadingInfinity.vue';
 import loadingSpinner from '../components/loadingSpinner.vue';
+import dropdownAvatar from '../components/dropdownAvatar.vue';
 // import Test from '../../../js/api/admin/apiAdmin.js';
 export default {
     name: 'appindex',
     components: {
         LoadingInfinity,
         loadingSpinner,
+        dropdownAvatar,
   },
     data() {
         return {
@@ -38,22 +33,11 @@ export default {
     },
     methods: {
         fetchUser() {
-            Test.test().then(response => {
-                console.log(55,response);
-                   this.examples = response.data.content[0]
-            })
-                .catch(error => {
-                    console.log(error);
-                });
-            //   UserService.getUser(1)
-            //     .then(response => {
-            //       this.user = response.data;
-            //     })
-            //     .catch(error => {
-            //       console.log(error);
-            //     });
+   
         },
     }
 };
 </script>
-<style></style>
+
+<style scoped>
+</style>
