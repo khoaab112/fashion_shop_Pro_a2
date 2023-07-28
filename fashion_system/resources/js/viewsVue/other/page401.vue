@@ -5,7 +5,7 @@
                 <h1>KHÔNG ĐƯỢC CẤP QUYỀN</h1>
             </div>
             <div class="button-home-401">
-                <button>HOME</button>
+               <router-link :to=pathHome class="style-tag-a"> <button>Home</button></router-link>
             </div>
         </div>
     </section>
@@ -13,6 +13,8 @@
     
 <script>
 import svgBG from '@/public/images/svg/page_401/bg_401.svg';
+import paths from '@/js/mixins/getAddressFromRouter.js';
+
 export default {
     name: 'page401',
     components: {
@@ -24,6 +26,7 @@ export default {
     data() {
         return {
             background :'',
+            pathHome: paths.homeClient,
         };
     },
     created() {
@@ -47,7 +50,7 @@ export default {
 };
 </script>
     
-<style>
+<style scoped>
 #page-401 {
     width: 100%;
     height: 100vh;
@@ -109,5 +112,8 @@ export default {
 .button-home-401 button:hover {
     background-color: #0edf12de;
     color: black;
+}
+a.style-tag-a{
+    color: white;
 }
 </style>

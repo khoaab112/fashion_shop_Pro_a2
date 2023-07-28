@@ -8,7 +8,7 @@
       <img class="astronaut" :src="getImage(imgAstronaut)" />
       <img class="astronaut clone-astronaut" :src="getImage(imgAstronaut)" />
       <img id="planet" :src="getImage(imgPlanet)" />
-      <a href="#"><button class="denied__link"><router-link class="link_404" to="/">HOME</router-link></button></a>
+      <a href="#"><button class="denied__link"><router-link class="link_404" :to=pathHome>HOME</router-link></button></a>
     </div>
   </div>
 </template>
@@ -17,6 +17,8 @@
 import astronaut from '@/public/images/svg/page_404/astronaut.svg';
 import planet from '@/public/images/svg/page_404/planet.svg';
 import { loadFull } from "tsparticles";
+import paths from '@/js/mixins/getAddressFromRouter.js';
+
 export default {
   name: 'page404',
   components: {
@@ -29,6 +31,7 @@ export default {
     return {
       imgAstronaut: astronaut,
       imgPlanet: planet,
+      pathHome: paths.homeClient,      
     };
   },
   created() {
@@ -113,7 +116,7 @@ export default {
 };
 </script>
     
-<style>
+<style >
 .particle-error,
 .permission_denied,
 #tsparticles {

@@ -24,12 +24,14 @@
       </div>
     </div>
     <div class="text-center mb-4">
-      <button class="btn-home"><router-link name="home" class="link_404" to="/">HOME</router-link></button>
+      <button class="btn-home"><router-link name="home" class="link_404" :to=pathHome>HOME</router-link></button>
     </div>
   </div>
 </template>
   
 <script>
+import paths from '@/js/mixins/getAddressFromRouter.js';
+
 export default {
   name: 'page500',
   components: {
@@ -41,6 +43,8 @@ export default {
   data() {
     return {
       isLoading: true,
+      pathHome: paths.homeClient,
+
     };
   },
   created() {
@@ -66,7 +70,7 @@ export default {
 };
 </script>
   
-<style>
+<style scoped>
 /**/
 
 :root {

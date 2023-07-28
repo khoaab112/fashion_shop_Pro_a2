@@ -57,8 +57,9 @@
     color: #fff;
 } */
 
-a {
+a.style-tag-a {
     text-decoration: none;
+    color: black;
 }
 
 body {

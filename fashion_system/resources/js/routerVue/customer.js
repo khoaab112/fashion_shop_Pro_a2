@@ -1,6 +1,6 @@
 const home = [{
     path: '/',
-    name: 'home',
+    name: 'homeClient',
     components: {
         home: () =>
             import ('../viewsVue/client/index.vue'),

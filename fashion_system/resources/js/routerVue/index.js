@@ -22,8 +22,6 @@ const router = createRouter({
 
 //check login
 router.beforeEach((to, from, next) => {
-
-    console.log(11, next);
     const isAdminRoute = to.path.startsWith('/admin');
     const isLoginAdmin = to.path === "/auth/login";
     if (isAdminRoute) {

@@ -5,7 +5,7 @@
                 <h1>TÀI KHOẢN ĐÃ BỊ KHÓA</h1>
             </div>
             <div class="button-home-403">
-                <button>HOME</button>
+               <router-link :to=pathHome class="style-tag-a"> <button>Home</button></router-link>
             </div>
         </div>
     </section>
@@ -13,6 +13,8 @@
     
   <script>
 import svgBG from '@/public/images/svg/page_403/bg_403.gif';
+import paths from '@/js/mixins/getAddressFromRouter.js';
+
   export default {
     name: 'HtpShiftDetail',
     components: {
@@ -24,6 +26,7 @@ import svgBG from '@/public/images/svg/page_403/bg_403.gif';
     data() {
       return {
         background :'',
+        pathHome: paths.homeClient,        
       };
     },
     created() {
