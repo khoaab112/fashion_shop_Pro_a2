@@ -12,36 +12,7 @@ const home = [{
             import ('../viewsVue/client/index.vue'),
     }]
 
-}]
-
-const auth = [{
-    path: '/customer/auth',
-    children: [{
-            path: 'login',
-            name: 'login-customer',
-            components: {
-                auth: () =>
-                    import ('../viewsVue/client/authentication/login.vue'),
-            },
-        },
-        {
-            path: 'forgotPassword',
-            name: 'forgotPassword-customer',
-            components: {
-                auth: () =>
-                    import ('../viewsVue/client/authentication/forgotPassword.vue'),
-            },
-        },
-        {
-            path: 'register',
-            name: 'register-customer',
-            components: {
-                auth: () =>
-                    import ('../viewsVue/client/authentication/register.vue'),
-            },
-        },
-    ]
-}]
+}];
 const test = [{
     path: '/test',
     name: 'test',
@@ -50,4 +21,4 @@ const test = [{
             import ('../viewsVue/admin/authentication/forgotPassword.vue'),
     },
 }];
-export default { home, test, auth };
+export default { home, test };
