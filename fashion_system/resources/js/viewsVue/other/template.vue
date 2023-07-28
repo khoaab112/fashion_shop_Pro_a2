@@ -1,7 +1,14 @@
 <template>
   <!-- Nội dung giao diện người dùng -->
+  <div>
+        <p class="text-center">Danh mục đang trong quá trình thi công</p>
+        <div class="text-center"><font-awesome-icon icon="fa-solid fa-person-digging" fade size="2xl"
+                style="color: #1dcd20;font-size: 10rem;" />
+        </div>
+        <div class="text-center">🤕🤕🤕🤕🤕</div>
+    </div>
 </template>
-  
+
 <script>
 export default {
   name: 'HtpShiftDetail',
@@ -36,7 +43,7 @@ export default {
   },
 };
 </script>
-  
+
 <style>
 /* CSS cho component */
 </style>

@@ -10,7 +10,7 @@
   </div>
   <main>
     <div id="content-admin">
-      <div class="container bg-content">
+      <div class="container-content bg-content">
         <router-view ></router-view>
       </div>
     </div>
@@ -48,7 +48,7 @@ export default {
 };
 </script>
   
-<style>
+<style scoped>
 /* CSS cho component */
 .btn-header-admin {
   border: none;
@@ -117,5 +117,15 @@ body.dark .home .text {
   background-color: white;
   min-height: 10rem;
 }
+.container-content{
+  width: 95%;
+  margin: 0 auto;
+}
+@media (max-width:580px) {
+  .container-content{
+  width: 90%;
+  margin: 0 auto;
+}
 
+}
 </style>

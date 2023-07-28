@@ -10,11 +10,31 @@ const admin = [{
             import ('../layout/admin/footer.vue'),
     },
     children: [{
-        path: "home",
-        name: "home",
-        component: () =>
-            import ('../viewsVue/admin/home/homeAdmin.vue'),
-    }]
+            path: "home",
+            name: "home",
+            component: () =>
+                import ('../viewsVue/admin/home/homeAdmin.vue'),
+        },
+        {
+            path: "profile",
+            name: "staffProfile",
+            component: () =>
+                import ('../viewsVue/admin/menuStaff/staffProfile.vue'),
+        },
+        {
+            path: "support",
+            name: "supportForEmployees",
+            component: () =>
+                import ('../viewsVue/admin/menuStaff/supportForEmployees.vue'),
+        },
+        {
+            path: "feedback",
+            name: "employeeFeedback",
+            component: () =>
+                import ('../viewsVue/admin/menuStaff/employeeFeedback.vue'),
+        }
+    ],
 }]
+
 
 export default { admin };

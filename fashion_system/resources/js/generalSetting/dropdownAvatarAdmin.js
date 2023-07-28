@@ -18,7 +18,7 @@ export default [{
     {
         'key': 'feedback',
         'name': 'Đóng góp ý kiến',
-        'path': '/admin/support',
+        'path': '/admin/feedback',
         component: '',
         'icon': "fa-regular fa-paper-plane"
     },
