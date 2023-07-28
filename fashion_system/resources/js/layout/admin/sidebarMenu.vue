@@ -24,7 +24,7 @@
                     <li class="item">
                         <div href="#" class="nav_link submenu_item show_submenu hover-icon-mainMenu"
                             @click="changeActiveSubmenu(value.name)">
-                            <router-link :to=value.path>
+                            <router-link :to=value.path class="style-tag-a">
                                 <span class="navlink_icon">
                                     <font-awesome-icon :icon="value.icon" class="icon " />
                                 </span>
@@ -37,7 +37,7 @@
                         <ul class="menu_items submenu" v-if="value.children.length && value.active"
                             v-bind:hidden="!activeShowSidebar">
                             <div class="nav_link sublink hover-icon-subMenu" v-for="item in value.children">
-                                <router-link :to=(value.path)+(item.path)>
+                                <router-link :to=(value.path)+(item.path) class="style-tag-a">
                                     <font-awesome-icon :icon="item.icon" class="icon-submenu" />
                                     {{ item.title }}
                                 </router-link>

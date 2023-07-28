@@ -4,8 +4,12 @@
       <el-avatar :src=srcAvatar />
       <template #dropdown>
         <el-dropdown-menu v-for="value in listDropdown " :key="value.key">
-          <el-dropdown-item @click="handleDropdownClick(value.key)"> <font-awesome-icon :icon="value.icon" />&ensp;{{
-            value.name }}</el-dropdown-item>
+          <el-dropdown-item >
+            <router-link :to=value.path class="style-tag-a" @click="handleDropdownClick(value.key)" >
+              <font-awesome-icon :icon="value.icon" />
+              &ensp;{{ value.name }}
+            </router-link>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -53,10 +57,9 @@ export default {
   },
   methods: {
     async handleDropdownClick(key) {
-
       if (key == 'logout') {
         const response = await this.logoutAdmin();
-        if ( response) {
+        if (response) {
           ElNotification({
             title: 'Success',
             message: 'Đăng xuất',

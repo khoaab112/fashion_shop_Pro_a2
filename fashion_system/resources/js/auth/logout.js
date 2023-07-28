@@ -17,6 +17,8 @@ export default {
                     return false;
                 }
             } catch (error) {
+                cookie.deleteCookie();
+                localStorage.removeAccessToken();
                 console.error(error);
                 return false;
             };
