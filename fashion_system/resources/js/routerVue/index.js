@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import admin from "./admin";
 import customer from "./customer";
+import auth from "./auth";
 import other from "./other";
 import jwt from '@/js/auth/jwt.js';
-import cookie from '@/js/auth/cookie';
 
 
 const routes = [
@@ -13,7 +13,7 @@ const routes = [
     ...customer.auth,
     ...customer.test,
     ...admin.admin,
-    ...admin.auth,
+    ...auth.authAdmin,
 ];
 const router = createRouter({
     history: createWebHistory(),

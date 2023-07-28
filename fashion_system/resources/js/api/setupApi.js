@@ -45,7 +45,6 @@ apiClient.interceptors.response.use(
 );
 
 function checkHttpResponse(codeHttp) {
-    console.log(22, codeHttp);
     switch (codeHttp) {
         case 200:
             break;
