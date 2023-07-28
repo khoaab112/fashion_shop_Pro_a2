@@ -11,7 +11,7 @@
                 </div>
             </div>
             <hr>
-            <font-awesome-icon icon="fa-solid fa-angle-right"  id="toggle" @click=showSidebar class="toggle" />
+            <font-awesome-icon icon="fa-solid fa-angle-right" id="toggle" @click=showSidebar class="toggle" />
         </header>
         <!--  -->
         <div class="list-menu ">
@@ -24,18 +24,24 @@
                     <li class="item">
                         <div href="#" class="nav_link submenu_item show_submenu hover-icon-mainMenu"
                             @click="changeActiveSubmenu(value.name)">
-                            <span class="navlink_icon">
-                                <font-awesome-icon :icon="value.icon" class="icon " />
-                            </span>
-                            <span class="navlink" v-bind:hidden="!activeShowSidebar">{{ value.title }}</span>
-                            <div class="ml-auto p-2 down"  v-if="value.children.length"><font-awesome-icon icon="fa-solid fa-chevron-down" class=""/></div>
-                            <i class="bx bx-chevron-right arrow-left"></i>
+                            <router-link :to=value.path>
+                                <span class="navlink_icon">
+                                    <font-awesome-icon :icon="value.icon" class="icon " />
+                                </span>
+                                <span class="navlink" v-bind:hidden="!activeShowSidebar">{{ value.title }}</span>
+                                <div class="ml-auto p-2 down" v-if="value.children.length"><font-awesome-icon
+                                        icon="fa-solid fa-chevron-down" class="" /></div>
+                                <!-- <i class="bx bx-chevron-right arrow-left"></i> -->
+                            </router-link>
                         </div>
                         <ul class="menu_items submenu" v-if="value.children.length && value.active"
                             v-bind:hidden="!activeShowSidebar">
-                            <a href="#" class="nav_link sublink hover-icon-subMenu"
-                                v-for="item in value.children"><font-awesome-icon :icon="item.icon" class="icon-submenu" />
-                                {{ item.title }}</a>
+                            <div class="nav_link sublink hover-icon-subMenu" v-for="item in value.children">
+                                <router-link :to=(value.path)+(item.path)>
+                                    <font-awesome-icon :icon="item.icon" class="icon-submenu" />
+                                    {{ item.title }}
+                                </router-link>
+                            </div>
                         </ul>
                     </li>
                 </ul>
@@ -53,10 +59,10 @@ import avatarAdminDefault from "@/public/images/admin/system/administrator.png";
 import dropdownAvatar from "../../viewsVue/components/dropdownAvatar.vue";
 
 export default {
-    name:'sidebar',
+    name: 'sidebar',
     components: {
         dropdownAvatar,
-  },
+    },
     data() {
         return {
             activeShowSidebar: false,
@@ -102,7 +108,7 @@ export default {
             const value = this.dataMenuSidebar.find(item => item.name == name);
             value.active ? value.active = false : value.active = true;
         },
-        checkImageAdmin(){
+        checkImageAdmin() {
             // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
             return new URL(avatarAdminDefault, import.meta.url).href
         },
@@ -515,9 +521,11 @@ body.dark .switch::before {
 .hover-icon-subMenu:hover {
     color: #45CFDD;
 }
-div.down{
+
+div.down {
     color: chocolate;
 }
+
 /* sidebars */
 
 @media screen and (max-width: 768px) {

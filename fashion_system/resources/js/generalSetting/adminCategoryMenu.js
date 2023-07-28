@@ -2,7 +2,7 @@
 //2 file có điểm tương đồng nhưng lười không cấu hình lại
 export default [{
         showLabel: true,
-        path: 'home',
+        path: '/admin/home',
         name: 'home',
         title: 'Home',
         component: '',
@@ -18,7 +18,7 @@ export default [{
         icon: 'fa-solid fa-list-check',
         role: '',
         children: [{
-                path: '',
+                path: 'khoa',
                 code: 'account-management',
                 title: 'Quản lý tài khoản',
                 component: '',
