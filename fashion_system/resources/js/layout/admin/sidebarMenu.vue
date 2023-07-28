@@ -16,14 +16,14 @@
         <!--  -->
         <div class="list-menu ">
             <div class="menu_content ">
-                <ul class="menu_items" v-for="value in dataMenuSidebar" :key="value.code">
+                <ul class="menu_items" v-for="value in dataMenuSidebar" :key="value.name">
                     <h3 :class="{ 'menu-title-sidebar': true, 'show-titles': activeShowSidebar }"
                         v-if="value.showLabel ? true : false">
                         NG.KHOA
                     </h3>
                     <li class="item">
                         <div href="#" class="nav_link submenu_item show_submenu hover-icon-mainMenu"
-                            @click="changeActiveSubmenu(value.code)">
+                            @click="changeActiveSubmenu(value.name)">
                             <span class="navlink_icon">
                                 <font-awesome-icon :icon="value.icon" class="icon " />
                             </span>
@@ -99,7 +99,7 @@ export default {
             return arr;
         },
         changeActiveSubmenu(name) {
-            const value = this.dataMenuSidebar.find(item => item.code == name);
+            const value = this.dataMenuSidebar.find(item => item.name == name);
             value.active ? value.active = false : value.active = true;
         },
         checkImageAdmin(){
