@@ -18,6 +18,6 @@
 
 <body>
     <div id="app"></div>
-</body>
 
+</body>
 </html>

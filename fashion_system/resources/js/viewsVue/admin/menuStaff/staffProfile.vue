@@ -1,8 +1,9 @@
 <template >
     <div id="profile-staff">
+        <button type="button" @click="UploadAvatar()">Khoa</button>
         <section id="background-info-staff"
             style="background-image: url('https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg');">
-            <avatar :src=src class="avatar-staff"></avatar>
+            <avatar :src=src class="avatar-staff" @click="UploadAvatar()"></avatar>
         </section>
         <section id="avatar-staff">
             <div class="basic-information">
@@ -19,7 +20,9 @@
                             Đổi mật khẩu
                         </div>
                         <hr class="line-action">
-                        <div class="action-change-info">Cập nhật thông tin</div>
+                        <div class="action-change-info" @click="showEdit()">{{ !isEdit ? 'Cập nhật thông tin' : 'Thông tin'
+                        }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,7 +30,7 @@
         <br>
         <hr class="line-hr">
         <br>
-        <section id="content-staff">
+        <section id="content-staff" v-show="!isEdit">
             <div class="container">
                 <div class="row info">
                     <div class="col-lg-6 col-sm-12 col-info-staff">
@@ -51,22 +54,23 @@
             </div>
         </section>
         <!-- box edit -->
-        <section class="edit-info">
+        <section class="edit-info container d-flex " v-if="isEdit">
             <div>
                 <strong>Giới tính</strong>
-                <el-radio-group class="ml-4">
-                    <el-radio size="large">Nam</el-radio>
-                    <el-radio size="large">Nữ</el-radio>
+                <el-radio-group v-model="sex" class="ml-4 justify-content-end">
+                    <el-radio label="1" size="large">Nam</el-radio>
+                    <el-radio label="0" size="large">Nữ</el-radio>
                 </el-radio-group>
             </div>
-            <div>
+            <div class="">
                 <strong>Ngày sinh</strong>
-                <el-date-picker v-model="value1" type="date" placeholder="Chọn" />
+                <el-date-picker v-model="birthDay" type="date" placeholder="Chọn" />
             </div>
             <div>
                 <strong>Địa chỉ</strong>
-                <input type="text" class="edit-address" placeholder="Địa chỉ" autocomplete="on">
+                <input v-model="address" type="text" class="edit-address" placeholder="Địa chỉ" autocomplete="on">
             </div>
+
         </section>
         <!-- dialog change password -->
         <el-dialog v-model="centerDialogVisible" title="Đổi mật khẩu" width="30%" align-center
@@ -98,18 +102,21 @@
             </template>
         </el-dialog>
     </div>
+
+    <upload-avatar :show=showUploadFile @hide-upload="emitUpload"></upload-avatar>
 </template>
 
 <script>
 import avatar from '../../components/avatar.vue';
 import 'animate.css';
-import { ref } from 'vue';
+import UploadAvatar from '../../components/popupUploadAvatar.vue';
 
 
 export default {
     name: 'staffProfile',
     components: {
         avatar,
+        UploadAvatar
     },
     setup() {
     },
@@ -119,9 +126,17 @@ export default {
         return {
             src: 'https://mdbcdn.b-cdn.net/img/new/avatars/1.webp',
             isShowAction: false,
-            centerDialogVisible: ref(false),
-            value1: ref(''),
+            centerDialogVisible: false,
+            value1: '',
+            isEdit: false,
+            birthDay: '',
+            sex: '1',
+            address: null,
+            showUploadFile: false,
+            // emitUpload:null,
         };
+    },
+    watch: {
     },
     created() {
         // Logic khi component được khởi tạo
@@ -140,9 +155,20 @@ export default {
     },
     methods: {
         showAction() {
-            console.log('asdas');
             this.isShowAction = !this.isShowAction
-        }
+        },
+        showEdit() {
+            this.isEdit = !this.isEdit
+        },
+        UploadAvatar() {
+            // this.showUploadFile = !this.showUploadFile
+            this.showUploadFile = !this.showUploadFile
+
+        },
+        //theo dõi sự kiện thoát upload file
+        emitUpload(value) {
+            this.showUploadFile=value;
+        },
     },
 };
 </script>
@@ -191,6 +217,10 @@ export default {
 
 .action-page .icon {
     font-size: 150%;
+}
+
+.action-page .icon:hover {
+    transform: translateY(-5px);
 }
 
 .line-hr {
@@ -260,6 +290,29 @@ export default {
 
 .group-change-password form input[type=password]:focus {
     border: 2px solid rgb(61, 244, 15);
+    padding: 4px 5px;
+}
+
+.edit-info strong {
+    padding-right: 3rem;
+
+}
+
+.edit-info {
+    justify-content: space-evenly;
+}
+
+.edit-address {
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.147);
+    padding: 2px 12px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.edit-address:hover {
+    border: 1px solid rgb(11, 237, 11);
 
 }
 
