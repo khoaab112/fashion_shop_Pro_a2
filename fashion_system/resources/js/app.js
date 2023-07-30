@@ -1,5 +1,7 @@
 import { createApp } from 'vue';
 import ElementPlus from 'element-plus';
+import VN from 'element-plus/dist/locale/vi.mjs';
+// import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import 'element-plus/dist/index.css';
 import { DatePicker, Radio } from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
@@ -20,11 +22,13 @@ library.add(fas, fab, far)
 
 const app = createApp(App);
 app.component('font-awesome-icon', FontAwesomeIcon)
-app.use(ElementPlus);
+    // app.use(ElementPlus);
 app.use(router);
 app.use(DatePicker);
 app.use(Radio);
-
+app.use(ElementPlus, {
+    locale: VN,
+});
 
 
 app.mount("#app");

@@ -17,7 +17,7 @@
   </main>
   </section>
 </template>
-  
+
 <script>
 
 export default {
@@ -47,7 +47,7 @@ export default {
   },
 };
 </script>
-  
+
 <style scoped>
 /* CSS cho component */
 .btn-header-admin {
@@ -112,6 +112,8 @@ body.dark .home .text {
 /*  */
 #content-admin{
   margin-top: 2.5rem;
+  height: 100vh;
+  background-color: #e4e9f7;
 }
 .bg-content{
   background-color: white;

@@ -1,11 +1,11 @@
 <template>
     <footer>
-        <circle-Menu :circleMenu="circleMenuAdmin"></circle-Menu>
+        <!-- <circle-Menu :circleMenu="circleMenuAdmin"></circle-Menu> -->
         <button id="back-to-top" :class="{ show: btnOnTopVisible }" @click="scrollToTop"><font-awesome-icon
                 icon="fa-solid fa-chevron-up" style="color: #1a71ff;" /></button>
     </footer>
 </template>
-  
+
 <script>
 import circleMenuAdmin from "@/js/generalSetting/circleMenuAdmin.js";
 import circleMenu from "@/js/viewsVue/components/circleMenu.vue";
@@ -49,7 +49,7 @@ export default {
     }
 };
 </script>
-  
+
 <style>
 /* CSS cho component */
 #back-to-top {
