@@ -21,7 +21,7 @@
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="hideUpLoad">Thoát</el-button>
-                <el-button type="primary" @click="showUploadFile = false">
+                <el-button type="primary" @click='upFile'>
                     Thay đổi
                 </el-button>
             </span>
@@ -38,6 +38,9 @@ export default {
         show: {
             type: Boolean,
             required: true,
+        },
+        type: {
+            type: String,
         },
     },
     watch: {
@@ -85,19 +88,22 @@ export default {
                 this.contentError = "Hãy xóa bớt file, chỉ chấp nhận một file"
                 return;
             }
-
-
-
         },
         hideUpLoad() {
             this.$emit('hide-upload', this.showUploadFile = false);
         },
-        removeFile(file, fileList)  {
+        removeFile(file, fileList) {
             if (fileList.length < 2) {
                 this.isErrorFile = false;
                 this.contentError = ""
                 return;
             };
+        },
+        upFile() {
+            if (this.type == 'AVT') {
+
+            }
+            if (this.type == 'BG') { }
         },
     },
 };

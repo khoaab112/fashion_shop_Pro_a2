@@ -1,9 +1,12 @@
 <template >
     <div id="profile-staff">
-        <button type="button" @click="UploadAvatar()">Khoa</button>
         <section id="background-info-staff"
             style="background-image: url('https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg');">
-            <avatar :src=src class="avatar-staff" @click="UploadAvatar()"></avatar>
+            <avatar :src=src class="avatar-staff" @click="UploadAvatar('AVT')"></avatar>
+            <div class="action-change-bg" @click="UploadAvatar('BG')" >
+                <font-awesome-icon icon="fa-solid fa-palette"  style="color: #ffffff;"
+                    />
+            </div>
         </section>
         <section id="avatar-staff">
             <div class="basic-information">
@@ -103,7 +106,7 @@
         </el-dialog>
     </div>
 
-    <upload-avatar :show=showUploadFile @hide-upload="emitUpload"></upload-avatar>
+    <upload-avatar :type="typeImg" :show=showUploadFile @hide-upload="emitUpload"></upload-avatar>
 </template>
 
 <script>
@@ -133,6 +136,7 @@ export default {
             sex: '1',
             address: null,
             showUploadFile: false,
+            typeImg: null,
             // emitUpload:null,
         };
     },
@@ -160,14 +164,15 @@ export default {
         showEdit() {
             this.isEdit = !this.isEdit
         },
-        UploadAvatar() {
+        UploadAvatar(value) {
             // this.showUploadFile = !this.showUploadFile
-            this.showUploadFile = !this.showUploadFile
+            this.showUploadFile = !this.showUploadFile;
+            this.typeImg = value;
 
         },
         //theo dõi sự kiện thoát upload file
         emitUpload(value) {
-            this.showUploadFile=value;
+            this.showUploadFile = value;
         },
     },
 };
@@ -193,7 +198,15 @@ export default {
     top: 170px;
     left: 3rem;
     border: 2px solid white;
+    transition: transform 0.5s ease;
 
+
+}
+
+.avatar-staff:hover {
+    transform: scale(1.1);
+    border: 1px rgb(6, 241, 108) solid;
+    transform-origin: center;
 }
 
 .basic-information {
@@ -316,9 +329,18 @@ export default {
 
 }
 
+.action-change-bg {
+    font-size: 20px;
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+}
+
 @media (max-width:990px) {
     .col-info-staff {
         border-right: none;
     }
+}
+@media (max-width:800px) {
 }
 </style>
