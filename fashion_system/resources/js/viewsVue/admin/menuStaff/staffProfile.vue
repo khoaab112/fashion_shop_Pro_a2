@@ -3,9 +3,8 @@
         <section id="background-info-staff"
             style="background-image: url('https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg');">
             <avatar :src=src class="avatar-staff" @click="UploadAvatar('AVT')"></avatar>
-            <div class="action-change-bg" @click="UploadAvatar('BG')" >
-                <font-awesome-icon icon="fa-solid fa-palette"  style="color: #ffffff;"
-                    />
+            <div class="action-change-bg" @click="UploadAvatar('BG')">
+                <font-awesome-icon icon="fa-solid fa-palette" style="color: #ffffff;" />
             </div>
         </section>
         <section id="avatar-staff">
@@ -78,7 +77,7 @@
         <!-- dialog change password -->
         <el-dialog v-model="centerDialogVisible" title="Đổi mật khẩu" width="30%" align-center
             class="group-change-password">
-            <form action="">
+            <form action="" class="from-change-password">
                 <p><strong>Tài khoản : </strong><span>Nguyễn Văn A</span></p>
                 <div>
                     <span>Mật khẩu cũ</span><input type="password" class="pass-old float-end" placeholder="Mật khẩu cũ"
@@ -299,11 +298,18 @@ export default {
 
 .group-change-password form input:hover {
     border: 2px solid rgb(61, 244, 15);
+    width: 70%;
+    padding: 0.5rem 1px 0.5rem 1rem;
+    outline: none;
+    box-sizing: border-box;
 }
 
 .group-change-password form input[type=password]:focus {
     border: 2px solid rgb(61, 244, 15);
-    padding: 4px 5px;
+    width: 70%;
+    padding: 0.5rem 1px 0.5rem 1rem;
+    outline: none;
+    box-sizing: border-box;
 }
 
 .edit-info strong {
@@ -341,6 +347,59 @@ export default {
         border-right: none;
     }
 }
+
 @media (max-width:800px) {
-}
-</style>
+    .avatar-staff {
+        /* width: 0px; */
+        /* position: absolute; */
+        /* top: 170px; */
+        left: 3rem;
+        border: 2px solid white;
+        transition: transform 0.5s ease;
+        left: 38%;
+        top: 69%;
+        position: absolute;
+    }
+
+    .basic-information {
+        text-align: center;
+        position: relative;
+    }
+
+    .staff-name {
+        padding-top: 6rem;
+        display: block;
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .action-page[data-v-e9f42f82] {
+        float: right;
+        margin: 0;
+        display: block;
+        margin-right: 0;
+        position: absolute;
+        top: 10px;
+        right: 8px;
+    }
+
+    .action-change-pass {
+        display: -webkit-box;
+    }
+
+    .from-change-password p {
+        display: grid;
+    }
+
+    .group-change-password form div {
+        display: grid;
+    }
+
+    .dialog-footer {
+        padding: 0;
+        padding-top: 0;
+       display: flex;
+        text-align: center;
+        padding-bottom: 1rem;
+    }
+}</style>
