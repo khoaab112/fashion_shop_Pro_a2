@@ -193,12 +193,7 @@ class AuthnController extends Controller
     }
     public function removeRefreshToken($id)
     {
-
         $this->query->removeRefreshToken($id);
-    }
-    public function getAll()
-    {
-        return CodeHttpHelpers::returnJson(200, false, $this->query->getAll(), 200);
     }
 
 }
