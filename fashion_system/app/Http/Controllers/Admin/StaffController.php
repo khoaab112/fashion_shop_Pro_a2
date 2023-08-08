@@ -17,6 +17,7 @@ class StaffController extends Controller
 
         $this->staff = $staff;
     }
+
     public function getInFoStaff(Request $request, $id)
     {
         $staffInfo = $this->staff->getById($id)->all();
