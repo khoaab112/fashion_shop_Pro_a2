@@ -92,12 +92,23 @@ class AuthnController extends Controller
         // check locked
         //trả về token & refreshToken
 
-        $addInfoUser = ['user_name' => $request->user_name, 'rank' => 'defined', 'reservation' => true];
         try {
-            if ($token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
+            if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
                 $user = Auth::user();
+                $addInfoUser = [
+                    'user_name' => $request->user_name,
+                    'rank' => 'defined',
+                    'reservation' => true,
+                    'staff_id' => $user['staff_id']
+                ];
+                $token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password]);
                 if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
-                $addInfoUserRefreshToken = ['user_name' => $request->user_name, 'rank' => 'pending', 'id' => $user['id']];
+                $addInfoUserRefreshToken = [
+                    'user_name' => $request->user_name,
+                    'rank' => 'pending',
+                    'id' => $user['id'],
+                    'staff_id' => $user['staff_id'],
+                ];
                 $refreshToken = $this->createJWTRefreshToken($addInfoUserRefreshToken, $request->remember_token);
                 $data = [
                     "type" => "bearer",
@@ -105,7 +116,14 @@ class AuthnController extends Controller
                     "refresh_token" => $refreshToken,
                     "remember_token" => $request->remember_token
                 ];
-                $this->query->updateById(['refresh_token' => $refreshToken, 'issued_at' => Carbon::now(), 'expired_time' => $this->calculateLifeTimeOfToken()], $user['id']);
+                $this->query->updateById(
+                    [
+                        'refresh_token' => $refreshToken,
+                        'issued_at' => Carbon::now(),
+                        'expired_time' => $this->calculateLifeTimeOfToken()
+                    ],
+                    $user['id']
+                );
                 // ,'issued_at'=>''
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
             } else {
@@ -186,6 +204,7 @@ class AuthnController extends Controller
             'user_name' => $data['user_name'],
             'rank' => $data['rank'],
             'id' => $data['id'],
+            'staff_id' => $data['staff_id'],
             'remember' => $remember,
         ];
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
@@ -195,5 +214,4 @@ class AuthnController extends Controller
     {
         $this->query->removeRefreshToken($id);
     }
-
 }

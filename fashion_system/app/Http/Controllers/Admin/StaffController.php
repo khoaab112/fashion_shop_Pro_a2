@@ -25,7 +25,7 @@ class StaffController extends Controller
         if (!$staffInfo) {
             return CodeHttpHelpers::returnJson(204,false,null,200);
         }
-        return CodeHttpHelpers::returnJson(200,false,$staffInfo,200);
+        return CodeHttpHelpers::returnJson(200,true,$staffInfo,200);
 
     }
 }

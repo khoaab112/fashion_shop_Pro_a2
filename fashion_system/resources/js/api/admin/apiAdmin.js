@@ -11,5 +11,9 @@ export default {
     },
     logout() {
         return index.delete(`/logout`);
+    },
+
+    getInfoStaff(id) {
+        return index.get(`/staff/${id}`);
     }
 }
