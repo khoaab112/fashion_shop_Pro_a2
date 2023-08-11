@@ -23,7 +23,7 @@ abstract class BaseRepositories implements RepositoryInterface
     }
     public function getById(int $id)
     {
-        return $this->model->where('id', $id)->all();
+        return $this->model->where('id', $id)->get();
     }
     public function create(array $array)
     {
@@ -57,7 +57,7 @@ abstract class BaseRepositories implements RepositoryInterface
     }
     public function search()
     {
-        
+
     }
     // abstract public function getModel();
 }

@@ -37,7 +37,7 @@
                         <ul class="menu_items submenu" v-if="value.children.length && value.active"
                             v-bind:hidden="!activeShowSidebar">
                             <div class="nav_link sublink hover-icon-subMenu" v-for="item in value.children">
-                                <router-link :to=(value.path)+(item.path) class="style-tag-a">
+                                <router-link :to=(value.path) + (item.path) class="style-tag-a">
                                     <font-awesome-icon :icon="item.icon" class="icon-submenu" />
                                     {{ item.title }}
                                 </router-link>
@@ -52,11 +52,16 @@
         </div>
     </nav>
 </template>
-  
+
 <script>
 import dataSidebar from "@/js/generalSetting/adminCategoryMenu.js";
 import avatarAdminDefault from "@/public/images/admin/system/administrator.png";
 import dropdownAvatar from "../../viewsVue/components/dropdownAvatar.vue";
+import apiAdmin from '@/js/api/admin/apiAdmin.js';
+// import localStorage from '@/js/auth/localStorage.js';
+import jwt from '@/js/auth/jwt.js';
+import globalVariable from '@/js/generalSetting/globalVariable.js';
+import { ElNotification } from 'element-plus'
 
 export default {
     name: 'sidebar',
@@ -67,17 +72,16 @@ export default {
         return {
             activeShowSidebar: false,
             dataMenuSidebar: null,
+            $infoAdmin:null,
         };
     },
     created() {
         this.dataMenuSidebar = this.addElementActiveToSidebar(dataSidebar);
+        this.setGlobalStaffInfo();
         // Logic khi component được khởi tạo
     },
     mounted() {
         // Logic sau khi component được gắn kết (render) vào DOM
-    },
-    computed() {
-        // được sử dụng để định nghĩa các thuộc tính tính toán
     },
     updated() {
 
@@ -112,10 +116,30 @@ export default {
             // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
             return new URL(avatarAdminDefault, import.meta.url).href
         },
+        async setGlobalStaffInfo() {
+            const staffID = await jwt.decodePayloadAccessToken().staff_id;
+            apiAdmin.getInfoStaff(staffID).then(res => {
+                var dataResponse = res.data;
+                console.log(dataResponse);
+                if (dataResponse.result_code == 200) {
+                    if (!globalVariable.setGlobalVariableInfoStaff(dataResponse.results[0])) {
+                        throw new Error('Lỗi bất thường');
+                    };
+                    this.$infoAdmin = globalVariable.getGlobalVariableInfoStaff();
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        },
     },
 };
 </script>
-  
+
 <style>
 .sidebar {
     position: fixed;

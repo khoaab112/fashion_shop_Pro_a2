@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\StaffController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypeTicketController;
@@ -28,15 +29,18 @@ Route::middleware('checkURL')->group(function () {
             'middleware' => ['api', 'auth:api'],
             'prefix' => 'auth'
         ], function () {
-            //authentication
+            //authentication administration
             Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api']);
             Route::post('/register', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api']);
             Route::post('/decodeJwt', [AuthnController::class, 'decode']);
-            Route::delete('logout',[AuthnController::class, 'logout'] );
-                
+            Route::delete('logout', [AuthnController::class, 'logout']);
+
+//test
             Route::post('/test-login', [AuthnController::class, 'test']);
             Route::get('/test', [Test::class, 'index'])->withoutMiddleware(['auth:api']);
-            Route::get('/get-users', [AuthnController::class, 'getAll']);
+
+            //staff
+            Route::get('/staff/{id}', [StaffController::class, 'getInFoStaff']);
         });
     });
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
+use App\Repositories\UserStaff\UserStaffRepository;
 use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
 use Carbon\Carbon;
@@ -56,7 +57,7 @@ class AuthnController extends Controller
             ];
             $result = $this->query->create($staffAccount);
             return CodeHttpHelpers::returnJson(200, true, $result, 200);
-        } catch (\Exception $error) {            
+        } catch (\Exception $error) {
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }
@@ -90,12 +91,24 @@ class AuthnController extends Controller
         //check thông tin với database
         // check locked
         //trả về token & refreshToken
-        $addInfoUser = ['user_name' => $request->user_name, 'rank' => 'defined', 'reservation' => true];
+
         try {
-            if ($token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
+            if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
                 $user = Auth::user();
+                $addInfoUser = [
+                    'user_name' => $request->user_name,
+                    'rank' => 'defined',
+                    'reservation' => true,
+                    'staff_id' => $user['staff_id']
+                ];
+                $token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password]);
                 if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
-                $addInfoUserRefreshToken = ['user_name' => $request->user_name, 'rank' => 'pending', 'id' => $user['id']];
+                $addInfoUserRefreshToken = [
+                    'user_name' => $request->user_name,
+                    'rank' => 'pending',
+                    'id' => $user['id'],
+                    'staff_id' => $user['staff_id'],
+                ];
                 $refreshToken = $this->createJWTRefreshToken($addInfoUserRefreshToken, $request->remember_token);
                 $data = [
                     "type" => "bearer",
@@ -103,7 +116,14 @@ class AuthnController extends Controller
                     "refresh_token" => $refreshToken,
                     "remember_token" => $request->remember_token
                 ];
-                $this->query->updateById(['refresh_token' => $refreshToken, 'issued_at' => Carbon::now(), 'expired_time' => $this->calculateLifeTimeOfToken()], $user['id']);
+                $this->query->updateById(
+                    [
+                        'refresh_token' => $refreshToken,
+                        'issued_at' => Carbon::now(),
+                        'expired_time' => $this->calculateLifeTimeOfToken()
+                    ],
+                    $user['id']
+                );
                 // ,'issued_at'=>''
                 return CodeHttpHelpers::returnJson(200, true, $data, 200);
             } else {
@@ -125,7 +145,7 @@ class AuthnController extends Controller
             $IDUser = Auth::user()->id;
             $authorizationHeader = $request->header('Authorization');
             $token = str_replace('Bearer ', '', $authorizationHeader);
-            //xóa access token 
+            //xóa access token
             Auth::setToken($token)->invalidate();
             Auth::logout();
             $this->removeRefreshToken($IDUser);
@@ -140,7 +160,7 @@ class AuthnController extends Controller
         $key = new Key(env('JWT_SECRET'), 'HS256');
         try {
             // Cấu hình đối tượng Key từ secret key
-            // $key = new Key(env('JWT_SECRET'), 'HS256');            
+            // $key = new Key(env('JWT_SECRET'), 'HS256');
             $decodedToken = JWT::decode($token, $key);
 
             return ['status' => true, 'value' => $decodedToken];
@@ -184,6 +204,7 @@ class AuthnController extends Controller
             'user_name' => $data['user_name'],
             'rank' => $data['rank'],
             'id' => $data['id'],
+            'staff_id' => $data['staff_id'],
             'remember' => $remember,
         ];
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
@@ -191,12 +212,6 @@ class AuthnController extends Controller
     }
     public function removeRefreshToken($id)
     {
-
         $this->query->removeRefreshToken($id);
-    }
-    public function getAll()
-    {
-        dd('aa');
-        return CodeHttpHelpers::returnJson(200, false, $this->query->getAll(), 200);
     }
 }
