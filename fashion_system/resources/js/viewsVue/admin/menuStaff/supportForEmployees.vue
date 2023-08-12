@@ -8,6 +8,7 @@
         <div class="content-support">
             <input class="form-control input-title" type="text" placeholder="Tiêu đề" aria-label="default input ">
         </div>
+        <mavon-editor v-model="value"/>
     </div>
 
     <pre>
@@ -30,7 +31,8 @@ export default {
     data() {
         return {
             nameSystem: ENV.SYSTEM_NAME,
-            versionSystem: ENV.VERSION
+            versionSystem: ENV.VERSION,
+            value:'',
             // Dữ liệu của component
         };
     },

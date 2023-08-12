@@ -19,6 +19,10 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+
 //app
 import App from './App.vue';
 import router from './routerVue/index.js';
@@ -36,6 +40,7 @@ app.use(Radio);
 app.use(ElementPlus, {
     locale: VN,
 });
+app.use(mavonEditor);
 
 
 app.mount("#app");
