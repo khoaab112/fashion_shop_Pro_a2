@@ -1,34 +1,33 @@
 <template>
-    <!-- Nội dung giao diện người dùng -->
-    feedback
     <div>
-        <p class="text-center">Danh mục đang trong quá trình thi công</p>
-        .tên `cho phiên bản thử nghiệm``
-        .content `hỗ trợ định dạng văn bản``
-        . submit
+        <div class="main-support">
+            <p>Tên phân mềm : <strong>{{ nameSystem }}</strong></p>
+            <p>Số phiên bản : <strong>{{ versionSystem }}</strong></p>
+            <hr />
+            <strong class="title-comments h3">Đóng góp ý kiến</strong>
+            <div class="content-support">
+                <input class="form-control input-title" type="text" placeholder="Tiêu đề" aria-label="default input " />
+                <div class="input-title">
+                    <QuillEditor theme="snow" toolbar="full" :contentType="contentType" :readOnly="readOnly"
+                        :placeholder="placeholder" />
+                </div>
+                <div class="text-end input-title">
+                    <button type="button" class="btn btn-primary ">Gửi<loadingSpinner></loadingSpinner></button>
 
-        <div class="text-center"><font-awesome-icon icon="fa-solid fa-person-digging" fade size="2xl"
-                style="color: #1dcd20;font-size: 10rem;" />
+                </div>
+            </div>
         </div>
-        <div>🤕🤕🤕🤕🤕</div>
+        <div class="lining"></div>
     </div>
-    <!-- .avartar
-    .mã định danh nhân viên
-    .chức vụ
-    .thuộc chi nhánh
-    .tên nhân viên
-    .địa chỉ
-    .email
-    .ngày sinh
-    .giới tính
-    .popup : sửa mật khẩu đăng nhập
-    .sidebar : sửa thông tin  , địa chỉ, ngày sinh , giới tính , ảnh -->
 </template>
 
 <script>
+import ENV from "@/js/generalSetting/filterEnv.js";
+import loadingSpinner from "../../components/loadingSpinner.vue";
 export default {
     name: 'employeeFeedback',
     components: {
+        loadingSpinner,
     },
     setup() {
     },
@@ -36,7 +35,11 @@ export default {
     },
     data() {
         return {
-            // Dữ liệu của component
+            nameSystem: ENV.SYSTEM_NAME,
+            versionSystem: ENV.VERSION,
+            contentType: 'html',
+            readOnly: false,
+            placeholder: 'Nội dung đóng góp...'
         };
     },
     created() {
@@ -61,5 +64,18 @@ export default {
 </script>
 
 <style>
-/* CSS cho component */
+.input-title {
+    width: 80%;
+    margin: 1rem;
+  }
+  .ql-container{
+      padding: 50px;
+  }
+  .lining {
+      width: 100%;
+      height: 1rem;
+  }
+  .main-support {
+      padding: 18px 2.3rem;
+  }
 </style>

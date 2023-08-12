@@ -1,10 +1,10 @@
 <template>
   <!-- Nội dung giao diện người dùng -->
-  <div class="ms-4 pt-2">
-    <p>Tên phân mềm : {{ nameSystem }}</p>
-    <p>Số phiên bản : {{ versionSystem }}</p>
+  <div class="main-support">
+    <p>Tên phân mềm : <strong>{{ nameSystem }}</strong></p>
+    <p>Số phiên bản : <strong>{{ versionSystem }}</strong></p>
     <hr />
-    <span>Phần đóng góp ý kiến hoặc phản hồi</span>
+    <strong class="title-comments h3">Phần đóng góp ý kiến hoặc phản hồi</strong>
     <div class="content-support">
       <input
         class="form-control input-title"
@@ -12,39 +12,39 @@
         placeholder="Tiêu đề"
         aria-label="default input "
       />
-      <!-- <mavon-editor
-        v-model="valueMavon"
-        :language="languageMavonEditor"
-        fontSize="15px"
-        :boxShadow="boxShadow"
-        :subfield="subfield"
+      <div class="input-title">
+        <QuillEditor theme="snow"   toolbar="full"
+        :contentType="contentType"
+        :readOnly="readOnly"
         :placeholder="placeholder"
-        :toolbarsFlag="toolbarsFlag"
-        :autofocus="autofocus"
-        :toolbars="toolbars"
-      /> -->
+        />
+      </div>
+      <div class="text-end input-title">
+        <button type="button" class="btn btn-primary ">Gửi<LoadingSpinner></LoadingSpinner></button>
+
+      </div>
     </div>
   </div>
-
-  <pre>
-        .tên `cho phiên bản thử nghiệm``
-        .content `hỗ trợ định dạng văn bản``
-        . submit
-    </pre
-  >
+<div class="lining"></div>
 </template>
 
 <script>
 import ENV from "@/js/generalSetting/filterEnv.js";
+import loadingSpinner from "../../components/loadingSpinner.vue";
 export default {
   name: "supportForEmployees",
-  components: {},
+  components: {
+    loadingSpinner,
+},
   setup() {},
   directives: {},
   data() {
     return {
       nameSystem: ENV.SYSTEM_NAME,
       versionSystem: ENV.VERSION,
+      contentType:'html',
+      readOnly:false,
+      placeholder:'Nội dung phản hồi ...'
       //config mavon
     //   valueMavon: "",
     //   languageMavonEditor: "en",
@@ -103,7 +103,9 @@ export default {
   updated() {},
   destroyed() {},
   methods: {
-    // Các phương thức xử lý sự kiện hoặc logic khác
+    submitRequest(){
+
+    }
   },
 };
 </script>
@@ -113,6 +115,15 @@ export default {
   width: 80%;
   margin: 1rem;
 }
-
+.ql-container{
+    padding: 50px;
+}
+.lining {
+    width: 100%;
+    height: 1rem;
+}
+.main-support {
+    padding: 18px 2.3rem;
+}
 /* CSS cho component */
 </style>

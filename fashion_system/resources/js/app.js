@@ -18,10 +18,12 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-
+//mavonEditor hiện tại không dùng tới
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
+//Vue-Quill
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 //app
 import App from './App.vue';
@@ -32,8 +34,9 @@ window.axios = axios;
 library.add(fas, fab, far)
 
 const app = createApp(App);
-app.component('font-awesome-icon', FontAwesomeIcon)
-    // app.use(ElementPlus);
+app.component('font-awesome-icon', FontAwesomeIcon);
+app.component('QuillEditor', QuillEditor);
+// app.use(ElementPlus);
 app.use(router);
 app.use(DatePicker);
 app.use(Radio);
