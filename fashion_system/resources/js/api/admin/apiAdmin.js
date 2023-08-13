@@ -13,6 +13,7 @@ export default {
         return index.delete(`/logout`);
     },
 
+
     getInfoStaff(id) {
         return index.get(`/staff/${id}`);
     }

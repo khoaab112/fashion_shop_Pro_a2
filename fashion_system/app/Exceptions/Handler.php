@@ -7,6 +7,7 @@ use Throwable;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Auth\AuthenticationException;
 use App\Helpers\CodeHttpHelpers;
+use App\Http\Controllers\Authentication\AuthnController;
 
 class Handler extends ExceptionHandler
 {
@@ -32,6 +33,9 @@ class Handler extends ExceptionHandler
     }
     public function unauthenticated($request, AuthenticationException $exception)
     {
-        return CodeHttpHelpers::returnJson(401,false,'Không có quyền',401);        
+        $result = AuthnController::reissueAccessToken($request);
+        if (!$result)
+            return CodeHttpHelpers::returnJson(401, false, 'Unauthorized', 401);
+            return CodeHttpHelpers::returnJson($result['code'], $result['status'], $result['results'],$result['http']);
     }
 }

@@ -1,5 +1,5 @@
 'use strict';
-let infoStaff = '';
+var infoStaff = '';
 
 const getGlobalVariableInfoStaff = () => infoStaff;
 const setGlobalVariableInfoStaff = (newValue) => {

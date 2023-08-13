@@ -72,7 +72,7 @@ export default {
         return {
             activeShowSidebar: false,
             dataMenuSidebar: null,
-            $infoAdmin:null,
+            infoAdmin:null,
         };
     },
     created() {
@@ -116,16 +116,19 @@ export default {
             // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
             return new URL(avatarAdminDefault, import.meta.url).href
         },
+        //lấy id người dùng từ localStorage
+        //gọi lên api
         async setGlobalStaffInfo() {
             const staffID = await jwt.decodePayloadAccessToken().staff_id;
             apiAdmin.getInfoStaff(staffID).then(res => {
+                console.log(res);
                 var dataResponse = res.data;
-                console.log(dataResponse);
                 if (dataResponse.result_code == 200) {
                     if (!globalVariable.setGlobalVariableInfoStaff(dataResponse.results[0])) {
                         throw new Error('Lỗi bất thường');
                     };
-                    this.$infoAdmin = globalVariable.getGlobalVariableInfoStaff();
+                    this.infoAdmin = globalVariable.getGlobalVariableInfoStaff();
+                    console.log(this.infoAdmin);
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {

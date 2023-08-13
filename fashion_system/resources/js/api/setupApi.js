@@ -1,15 +1,18 @@
 import axios from "axios";
 import localStorage from "@/js/auth/localStorage";
+import logout from "@/js/auth/logout.js";
+import jwt from "@/js/auth/jwt.js";
 import router from "@/js/routerVue/index.js";
-import method from "../mixins/methodDefine";
+
+
 
 // sửa lại tên file là setting_api
 //localStorage => accessToken
 //cookie => refreshToken
 const accessToken = localStorage.getAccessToken();
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/auth', // Đặt URL gốc của API 
-    timeout: 5000, // Đặt thời gian chờ tối đa cho mỗi yêu cầu
+    baseURL: 'http://127.0.0.1:8000/api/auth',
+    timeout: 5000, //  thời gian chờ tối đa cho mỗi yêu cầu
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'multipart/form-data',
@@ -34,17 +37,31 @@ apiClient.interceptors.request.use(config => {
 //xử lý kết quả trả về trước rồi mới trả về lơi gọi
 apiClient.interceptors.response.use(
     (response) => {
+        var numberRequest = 0;
         const codeHttp = response.status;
-        if (checkHttpResponse(codeHttp))
-            return response;
+        //trả về assetToken
+        if (codeHttp == 200 && response.data.result_code == 401 && response.data.status == 'success') {
+            const token = response.data.results;
+            numberRequest++;
+            if (numberRequest > 2) {
+                return Promise.reject(new Error('Lỗi bất thường từ người dùng'));
+            }
+            localStorage.clearStorage();
+            localStorage.setAccessToken(token);
+            return apiClient.request(response.config);
+        }
+        if (checkHttpResponse(codeHttp, response))
+            numberRequest = 0;
+        return response;
     },
     (error) => {
-        checkHttpResponse(error.response.status);
+        checkHttpResponse(error.response.status, error.response);
         return Promise.reject(error);
     }
 );
 
-function checkHttpResponse(codeHttp) {
+async function checkHttpResponse(codeHttp, response) {
+
     switch (codeHttp) {
         case 200:
             break;
@@ -55,11 +72,17 @@ function checkHttpResponse(codeHttp) {
             router.push({ path: "/error404" });
             break;
         case 401:
-            //login failed
-            if (response.data.result_code == 200) {
-
-            } else
-                router.push({ path: "/error401" });
+            //request failed
+            if (response.data.results == "CANCEL_SESSION" && response.data.status == 'error' && response.data.result_code == 401) {
+                await logout.logoutAdmin();
+                router.push({ path: "/auth/login" });
+                break;
+            }
+            if (response.data.results == "Unauthorized" && response.data.status == 'error' && response.data.result_code == 401) {
+                await logout.logoutAdmin();
+                router.push({ path: "/auth/login" });
+                break;
+            }
             break;
         case 402:
             break;

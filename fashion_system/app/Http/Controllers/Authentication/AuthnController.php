@@ -9,12 +9,16 @@ use App\Repositories\UserStaff\UserStaffRepository;
 use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
 use Carbon\Carbon;
+use Faker\Core\Number;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use \Firebase\JWT\Algorithm\HS256;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Type\Integer;
+use App\Models\StaffAccount;
 
 class AuthnController extends Controller
 {
@@ -62,7 +66,7 @@ class AuthnController extends Controller
         }
     }
 
-    //khi đăng nhập nếu trong cookie và giải mã cookie có giá trị là tru thì cho đằng nhập
+    //khi đăng nhập nếu trong cookie và giải mã cookie có giá trị là true thì cho đằng nhập
     public function login(Request $request)
     {
         $isLogin = $request->status;
@@ -135,10 +139,10 @@ class AuthnController extends Controller
     }
     public function getCookie($request)
     {
-        return $request->cookie('cookie_refresh_token');
+        return  $request->cookie(env('VITE_KEY_REFRESH_TOKEN'));
     }
-    //xóa refresh token and access token
 
+    //xóa refresh token and access token
     public function logout(Request $request)
     {
         try {
@@ -170,16 +174,18 @@ class AuthnController extends Controller
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }
-
-    public function tokenRefresh($token)
+    //làm mới access_Token
+    public function tokenRefresh($data)
     {
-        $tokenRefresh =  Auth::refresh($token);
-        return CodeHttpHelpers::returnJson(
-            500,
-            false,
-            ['token_refresh' => $tokenRefresh],
-            500
-        );
+        $addInfoUser = [
+            'user_name' => $data['user_name'],
+            'rank' => 'defined',
+            'reservation' => true,
+            'staff_id' => $data['staff_id'],
+        ];
+
+        return Auth::claims($addInfoUser)
+            ->attempt(['user_name' => $data['user_name']]);
     }
     public function calculateLifeTimeOfToken()
     {
@@ -213,5 +219,80 @@ class AuthnController extends Controller
     public function removeRefreshToken($id)
     {
         $this->query->removeRefreshToken($id);
+    }
+    //cấp lại access token
+    // public function reissueAccessToken(Request $request,  $idStaff)
+    // {
+    //     $cookie = $this->getCookie($request);
+    //     $decode = $this->decodeJwtToken($cookie);
+
+    //     $existRefreshToken = StaffAccount::where('staff_id', $idStaff)
+    //         ->where('refresh_token', $cookie)
+    //         ->whereRaw('EXTRACT(DAY FROM (expired_time-issued_at)) > 0')
+    //         ->first();
+    //     if (!$existRefreshToken) {
+    //         return CodeHttpHelpers::returnJson(401, false, 'CANCEL_SESSION', 401);
+    //     }
+
+    //     if (!$existRefreshToken['status'])
+    //         return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
+    //     //cấp lại access token
+    //     $addInfoUser = [
+    //         'user_name' => $existRefreshToken['user_name'],
+    //         'rank' => 'defined',
+    //         'reservation' => true,
+    //         'staff_id' => $existRefreshToken['staff_id']
+    //     ];
+    //     $reissueAccessToken = Auth::claims($addInfoUser)->fromUser($existRefreshToken);
+    //     return CodeHttpHelpers::returnJson(200, true,  $reissueAccessToken, 200);
+    // }
+
+
+
+    public static function reissueAccessToken(Request $request)
+    {
+        try {
+            $cookie = $request->cookie(env('VITE_KEY_REFRESH_TOKEN'));
+            $key = new Key(env('JWT_SECRET'), 'HS256');
+            $decode = JWT::decode($cookie, $key);
+            $idStaff = $decode->staff_id;
+            //kiểm tra tk có tồn tại , mã token đúng , còn hạn
+            $existRefreshToken = StaffAccount::where('staff_id', $idStaff)
+                ->where('refresh_token', $cookie)
+                ->whereRaw('EXTRACT(DAY FROM (expired_time-issued_at)) > 0')
+                ->first();
+            if (!$existRefreshToken) {
+                return [
+                    'code' => 401,
+                    'status' => false,
+                    'results' => 'CANCEL_SESSION',
+                    'http' => 401
+                ];
+            }
+
+            if (!$existRefreshToken['status'])
+                return [
+                    'code' => 403,
+                    'status' => false,
+                    'results' => 'account has been locked',
+                    'http' => 403
+                ];
+            //cấp lại access token
+            $addInfoUser = [
+                'user_name' => $existRefreshToken['user_name'],
+                'rank' => 'defined',
+                'reservation' => true,
+                'staff_id' => $existRefreshToken['staff_id']
+            ];
+            $reissueAccessToken = Auth::claims($addInfoUser)->fromUser($existRefreshToken);
+            return [
+                'code' => 401,
+                'status' => true,
+                'results' => $reissueAccessToken,
+                'http' => 200
+            ];
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
