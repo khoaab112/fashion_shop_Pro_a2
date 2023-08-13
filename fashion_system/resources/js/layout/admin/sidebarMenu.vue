@@ -6,8 +6,8 @@
                     <dropdown-avatar :avatar="checkImageAdmin()"></dropdown-avatar>
                 </span>
                 <div class="text logo-text">
-                    <span class="admin-name">TomTom</span>
-                    <span class="profession">New Edge</span>
+                    <span class="admin-name">{{ staffName }}</span>
+                    <span class="profession">Chức vụ</span>
                 </div>
             </div>
             <hr>
@@ -72,7 +72,9 @@ export default {
         return {
             activeShowSidebar: false,
             dataMenuSidebar: null,
-            infoAdmin:null,
+            infoAdmin: null,
+            staffName: null,
+            avatar: null,
         };
     },
     created() {
@@ -81,7 +83,7 @@ export default {
         // Logic khi component được khởi tạo
     },
     mounted() {
-        // Logic sau khi component được gắn kết (render) vào DOM
+        this.checkImageAdmin();
     },
     updated() {
 
@@ -113,6 +115,9 @@ export default {
             value.active ? value.active = false : value.active = true;
         },
         checkImageAdmin() {
+            if (this.avatar) {
+                return new URL(this.avatar, import.meta.url).href
+            }
             // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
             return new URL(avatarAdminDefault, import.meta.url).href
         },
@@ -121,14 +126,14 @@ export default {
         async setGlobalStaffInfo() {
             const staffID = await jwt.decodePayloadAccessToken().staff_id;
             apiAdmin.getInfoStaff(staffID).then(res => {
-                console.log(res);
                 var dataResponse = res.data;
                 if (dataResponse.result_code == 200) {
                     if (!globalVariable.setGlobalVariableInfoStaff(dataResponse.results[0])) {
                         throw new Error('Lỗi bất thường');
                     };
                     this.infoAdmin = globalVariable.getGlobalVariableInfoStaff();
-                    console.log(this.infoAdmin);
+                    this.staffName = this.infoAdmin.name;
+                    this.avatar = this.infoAdmin.img;
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
