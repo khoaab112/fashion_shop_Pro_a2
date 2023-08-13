@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypeTicketController;
 use App\Http\Controllers\Authentication\AuthnController;
-
+use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Test;
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +40,10 @@ Route::middleware('checkURL')->group(function () {
 
             //staff
             Route::get('/staff/{id}', [StaffController::class, 'getInFoStaff']);
+
+            //branch
+            Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
+
         });
     });
 });

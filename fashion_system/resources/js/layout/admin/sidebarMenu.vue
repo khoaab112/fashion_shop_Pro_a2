@@ -58,6 +58,7 @@ import dataSidebar from "@/js/generalSetting/adminCategoryMenu.js";
 import avatarAdminDefault from "@/public/images/admin/system/administrator.png";
 import dropdownAvatar from "../../viewsVue/components/dropdownAvatar.vue";
 import apiAdmin from '@/js/api/admin/apiAdmin.js';
+import apiStaff from '@/js/api/admin/apiStaff.js';
 // import localStorage from '@/js/auth/localStorage.js';
 import jwt from '@/js/auth/jwt.js';
 import globalVariable from '@/js/generalSetting/globalVariable.js';
@@ -125,7 +126,7 @@ export default {
         //gọi lên api
         async setGlobalStaffInfo() {
             const staffID = await jwt.decodePayloadAccessToken().staff_id;
-            apiAdmin.getInfoStaff(staffID).then(res => {
+            apiStaff.getInfoStaff(staffID).then(res => {
                 var dataResponse = res.data;
                 if (dataResponse.result_code == 200) {
                     if (!globalVariable.setGlobalVariableInfoStaff(dataResponse.results[0])) {

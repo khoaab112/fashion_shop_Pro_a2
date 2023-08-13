@@ -50,7 +50,7 @@
               Đổi mật khẩu
             </div>
             <hr class="line-action" />
-            <div class="action-change-info" @click="showEdit()">
+            <div class="action-change-info" :class="{ tick: isEdit }" @click="showEdit()">
               {{ !isEdit ? "Cập nhật thông tin" : "Thông tin" }}
             </div>
           </div>
@@ -86,9 +86,19 @@
           </div>
           <div class="col-lg-6 col-sm-12 col-info-position">
             <h4>Thông tin chức vụ</h4>
-            <p><strong>Chức vụ:</strong><span>{{position_id}}</span></p>
-            <p><strong>Thuộc chi nhánh:</strong><span>123123</span></p>
-            <p><strong>Thời gian vào làm:</strong><span>123123</span></p>
+            <p>
+              <strong>Chức vụ:</strong><span>{{ position_id }}</span>
+            </p>
+            <p>
+              <strong>Thuộc chi nhánh:</strong
+              ><span
+                >{{ branch.name }}&ensp;
+                <font-awesome-icon icon="fa-solid fa-location-dot" style="color: #6caddd"
+              /></span>
+            </p>
+            <p>
+              <strong>Thời gian vào làm:</strong><span>{{ dateStartWork }}</span>
+            </p>
             <p><strong>Quyền tài khoản:</strong><span>123123</span></p>
             <p><strong>Quyền tài khoản:</strong><span>123123</span></p>
           </div>
@@ -96,12 +106,12 @@
       </div>
     </section>
     <!-- box edit -->
-    <section class="edit-info container d-flex" v-if="isEdit">
+    <section class="edit-info container " v-if="isEdit">
       <div>
         <strong>Giới tính</strong>
         <el-radio-group v-model="sex" class="ml-4 justify-content-end">
-          <el-radio label="1" size="large">Nam</el-radio>
-          <el-radio label="0" size="large">Nữ</el-radio>
+          <el-radio :label="true" size="large">Nam</el-radio>
+          <el-radio :label="false" size="large">Nữ</el-radio>
         </el-radio-group>
       </div>
       <div class="">
@@ -110,13 +120,17 @@
       </div>
       <div>
         <strong>Địa chỉ</strong>
-        <input
+        <el-input
           v-model="address"
-          type="text"
-          class="edit-address"
+          :rows="2"
+          type="textarea"
           placeholder="Địa chỉ"
           autocomplete="on"
+          class="edit-address"
         />
+      </div>
+      <div class="submit">
+        <button type="button" class="btn btn-primary ">Cập nhật<loadingSpinner></loadingSpinner></button>
       </div>
     </section>
     <!-- dialog change password -->
@@ -128,7 +142,9 @@
       class="group-change-password"
     >
       <form action="" class="from-change-password">
-        <p><strong>Tài khoản : </strong><span>Nguyễn Văn A</span></p>
+        <p class="text-center">
+          <strong>Tài khoản : </strong><span>{{ staffName }}</span>
+        </p>
         <div>
           <span>Mật khẩu cũ</span
           ><input
@@ -182,12 +198,16 @@ import avatar from "../../components/avatar.vue";
 import "animate.css";
 import UploadAvatar from "../../components/popupUploadAvatar.vue";
 import globalVariable from "@/js/generalSetting/globalVariable.js";
+import apiBranch from "@/js/api/admin/apiBranch.js";
+import method from "@/js/mixins/methodDefine.js";
+import loadingSpinner from "../../components/loadingSpinner.vue";
 
 export default {
   name: "staffProfile",
   components: {
     avatar,
     UploadAvatar,
+    loadingSpinner,
   },
   setup() {},
   directives: {},
@@ -210,7 +230,11 @@ export default {
       birthDay: null,
       phoneNumber: null,
       email: null,
-      position_id:null,
+      position_id: null,
+      dateStartWork: null,
+      branch: {
+        name: "",
+      },
       // emitUpload:null,
     };
   },
@@ -251,8 +275,6 @@ export default {
           clearInterval(this.pollingInterval);
           // Tiếp tục
           if (this.staff) {
-            console.log(globalVariable.getGlobalVariableInfoStaff());
-            console.log(this.staff);
             this.staffName = this.staff.name;
             this.sex = this.staff.sex;
             this.yearOld = this.currentAge(this.staff.birthday);
@@ -260,7 +282,9 @@ export default {
             this.address = this.staff.address;
             this.phoneNumber = this.staff.phone_number;
             this.email = this.staff.email;
-            this.position_id=this.staff.position_id;
+            this.position_id = this.staff.position_id;
+            await this.getBranchById(this.staff.branch_id);
+            this.dateStartWork = method.methods.formatDate(this.staff.created_at);
           } else {
             ElNotification({
               title: "Error",
@@ -276,6 +300,23 @@ export default {
       const yearBirth = new Date(birthday).getFullYear();
       return Number(yearNow) - Number(yearBirth);
     },
+    async getBranchById(branchId) {
+      apiBranch
+        .getInfoBranch(branchId)
+        .then((res) => {
+          var dataResponse = res.data;
+          if (dataResponse.result_code == 200) {
+            this.branch = dataResponse.results;
+          } else throw new Error(dataResponse.result_code);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "Error",
+            message: "Có lỗi bất thường",
+            type: "error",
+          });
+        });
+    },
   },
 };
 </script>
@@ -283,6 +324,14 @@ export default {
 <style scoped>
 #profile-staff {
   height: 100vh;
+}
+.submit{
+    width: 60%;
+    text-align: end;
+    margin-top: 2rem;
+}
+.tick {
+  background-color: aqua;
 }
 
 #background-info-staff {
@@ -417,23 +466,26 @@ export default {
 }
 
 .edit-address {
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.147);
   padding: 2px 12px;
   outline: none;
   box-sizing: border-box;
   font-size: 16px;
+  width: 50%;
+  margin-top: 1rem;
 }
 
-.edit-address:hover {
-  border: 1px solid rgb(11, 237, 11);
-}
+
 
 .action-change-bg {
   font-size: 20px;
   position: absolute;
   right: 15px;
   bottom: 5px;
+}
+
+.from-change-password > p {
+  color: red;
+  font-weight: 600;
 }
 
 @media (max-width: 990px) {

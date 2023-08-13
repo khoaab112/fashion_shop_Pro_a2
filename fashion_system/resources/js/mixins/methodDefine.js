@@ -10,6 +10,20 @@ export default {
             } else {
                 return false;
             }
+        },
+        formatTime(date) {
+            const dateformat = new Date(date);
+            const house = dateformat.getHours();
+            const minute = dateformat.getMinutes();
+            const seconds = dateformat.getSeconds();
+            return house + ':' + minute + ':' + seconds
+        },
+        formatDate(date) {
+            const dateformat = new Date(date);
+            const day = dateformat.getDate();
+            const month = Number(dateformat.getMonth()) + 1;
+            const year = dateformat.getFullYear();
+            return day + '-' + month + '-' + year;
         }
     },
 };

@@ -70,6 +70,8 @@ class StaffAccount extends Authenticatable implements JWTSubject
         "issued_at",
         "expired_time",
         "status",
+        'created_at',
+        'updated_at',
     ];
     protected $hidden = [
         'password',

@@ -74,12 +74,12 @@ async function checkHttpResponse(codeHttp, response) {
         case 401:
             //request failed
             if (response.data.results == "CANCEL_SESSION" && response.data.status == 'error' && response.data.result_code == 401) {
-                await logout.logoutAdmin();
+                await logout.methods.logoutAdmin();
                 router.push({ path: "/auth/login" });
                 break;
             }
             if (response.data.results == "Unauthorized" && response.data.status == 'error' && response.data.result_code == 401) {
-                await logout.logoutAdmin();
+                await logout.logoutAdmin;
                 router.push({ path: "/auth/login" });
                 break;
             }

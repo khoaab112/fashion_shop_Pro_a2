@@ -5,6 +5,7 @@ import localStorage from './localStorage';
 export default {
     methods: {
         async logoutAdmin() {
+            console.log('â');
             try {
                 const response = await API.logout();
                 if (response.data.result_code === 200) {
@@ -19,7 +20,6 @@ export default {
             } catch (error) {
                 cookie.deleteCookie();
                 localStorage.removeAccessToken();
-                console.error(error);
                 return false;
             };
         },
