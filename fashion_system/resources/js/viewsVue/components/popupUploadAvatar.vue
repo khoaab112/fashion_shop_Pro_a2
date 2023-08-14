@@ -31,6 +31,7 @@
 
 <script>
 import { ElNotification } from 'element-plus'
+import apiStaff from "@/js/api/admin/apiStaff.js";
 
 export default {
     name: 'popupUploadAvatar',
@@ -60,6 +61,7 @@ export default {
             arrFile: [],
             isErrorFile: false,
             contentError: null,
+            FileToSend: null,
         };
     },
     created() {
@@ -91,13 +93,18 @@ export default {
                 this.contentError = "Hãy xóa bớt file, chỉ chấp nhận một file"
                 return;
             }
+            const reader = new FileReader();
+            reader.readAsDataURL(file.raw);
+            reader.onload = (e) => {
+                this.FileToSend = e.target.result;
+            }
         },
         hideUpLoad() {
             this.$emit('hide-upload', this.showUploadFile = false);
         },
         removeFile(file, fileList) {
             //xóa  file
-             this.arrFile = this.arrFile.filter(item => item.name !== file.name);
+            this.arrFile = this.arrFile.filter(item => item.name !== file.name);
             if (fileList.length < 2) {
                 this.isErrorFile = false;
                 this.contentError = ""
@@ -114,12 +121,29 @@ export default {
             }
             if (this.arrFile.length == 1) {
                 if (this.type == 'AVT') {
-                    console.log(this.type);
+                    const file = {
+                        'file': this.FileToSend,
+                        'name': 'ádasd'
+                    }
+                    apiStaff
+                        .changeAvatarStaffById(file, 1)
+                        .then((res) => {
+                            var dataResponse = res.data;
+                            if (dataResponse.result_code == 200) {
+
+                            } else throw new Error(dataResponse.result_code);
+                        })
+                        .catch((error) => {
+                            ElNotification({
+                                title: "Error",
+                                message: "Có lỗi bất thường",
+                                type: "error",
+                            });
+                        });
                 }
                 if (this.type == 'BG') { }
             }
-            else if (this.arrFile.length==0)
-            {
+            else if (this.arrFile.length == 0) {
                 return ElNotification({
                     title: "Warning",
                     message: "Hãy nhập file trước khi lưu",

@@ -40,6 +40,7 @@ Route::middleware('checkURL')->group(function () {
 
             //staff
             Route::get('/staff/{id}', [StaffController::class, 'getInFoStaff']);
+            Route::post('/avatar-staff/{id}', [StaffController::class, 'changeAvatarStaffById']);
 
             //branch
             Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
