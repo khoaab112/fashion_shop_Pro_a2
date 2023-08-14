@@ -45,10 +45,16 @@ export default {
         type: {
             type: String,
         },
+        data: {
+            type: Object,
+        }
     },
     watch: {
         show(value) {
             this.showUploadFile = value;
+        },
+        data(value) {
+            this.dataStaff = value;
         },
     },
     setup() {
@@ -58,6 +64,7 @@ export default {
     data() {
         return {
             showUploadFile: this.show,
+            dataStaff: this.data,
             arrFile: [],
             isErrorFile: false,
             contentError: null,
@@ -112,6 +119,7 @@ export default {
             };
         },
         upFile() {
+
             if (this.isErrorFile) {
                 return ElNotification({
                     title: "Error",
@@ -125,13 +133,20 @@ export default {
                         'file': this.FileToSend,
                         'name': 'ádasd'
                     }
+                    const staffId = this.dataStaff.id;
                     apiStaff
-                        .changeAvatarStaffById(file, 1)
+                        .changeAvatarStaffById(file, staffId)
                         .then((res) => {
                             var dataResponse = res.data;
                             if (dataResponse.result_code == 200) {
-
-                            } else throw new Error(dataResponse.result_code);
+                                ElNotification({
+                                    title: "Success",
+                                    message: dataResponse.results,
+                                    type: "success",
+                                });
+                                this.$emit('upload-success', true);
+                                return this.$emit('hide-upload', this.showUploadFile = false);
+                            } else throw new Error(dataResponse.results);
                         })
                         .catch((error) => {
                             ElNotification({

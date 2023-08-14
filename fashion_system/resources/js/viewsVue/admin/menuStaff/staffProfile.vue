@@ -143,7 +143,8 @@
         </el-dialog>
     </div>
 
-    <upload-avatar :type="typeImg" :show="showUploadFile" @hide-upload="emitUpload"></upload-avatar>
+    <upload-avatar :type="typeImg" :show="showUploadFile" :data="staff" @hide-upload="emitUpload"
+        @upload-success="uploadSuccess"></upload-avatar>
 </template>
 
 <script>
@@ -199,11 +200,13 @@ export default {
             // emitUpload:null,
         };
     },
-    watch: {},
+    watch: {
+    },
     async created() {
         this.startPolling();
     },
-    mounted() { },
+    mounted() {
+    },
     computed() {
         // được sử dụng để định nghĩa các thuộc tính tính toán
     },
@@ -217,13 +220,17 @@ export default {
             this.isEdit = !this.isEdit;
         },
         UploadAvatar(value) {
-            // this.showUploadFile = !this.showUploadFile
             this.showUploadFile = !this.showUploadFile;
             this.typeImg = value;
         },
         //theo dõi sự kiện thoát upload file
         emitUpload(value) {
             this.showUploadFile = value;
+        },
+        uploadSuccess(value) {
+            if (value) {
+                this.startPolling();
+            }
         },
         async startPolling() {
             this.defaultShow();
@@ -270,7 +277,7 @@ export default {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
                         this.branch = dataResponse.results;
-                        this.isShowDetails=true;
+                        this.isShowDetails = true;
                     } else throw new Error(dataResponse.result_code);
                 })
                 .catch((error) => {
@@ -283,7 +290,7 @@ export default {
         },
         defaultShow() {
             this.isShowInfoBase = false;
-            this.isShowDetails=false;
+            this.isShowDetails = false;
         }
     },
 };

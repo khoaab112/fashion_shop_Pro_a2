@@ -1,4 +1,5 @@
 <template>
+    <section>
   <div :class="{ loading: isLoading }">
     <h1>500</h1>
     <h2>Rất tiếc về sự cố này</h2>
@@ -27,8 +28,9 @@
       <button class="btn-home"><router-link name="home" class="link_404" :to=pathHome>HOME</router-link></button>
     </div>
   </div>
+</section>
 </template>
-  
+
 <script>
 import paths from '@/js/mixins/getAddressFromRouter.js';
 
@@ -69,25 +71,18 @@ export default {
   },
 };
 </script>
-  
+
 <style scoped>
 /**/
-
-:root {
-  --main-color: #eaeaea;
-  --stroke-color: black;
+body{
+background-color: white;
 }
-
-
-/**/
-
-body {
-  background: var(--main-color);
+section{
+background-color: white;
 }
-
 h1 {
   margin: 100px auto 0 auto;
-  color: var(--stroke-color);
+  color: black;
   font-size: 10rem;
   line-height: 10rem;
   font-weight: 200;
@@ -128,7 +123,7 @@ h2 {
   height: 120px;
   margin: 0 auto;
   border-radius: 50%;
-  background: var(--stroke-color);
+  background:black;
 }
 
 .gear:before {
@@ -140,7 +135,7 @@ h2 {
   z-index: 2;
   content: "";
   border-radius: 50%;
-  background: var(--main-color);
+  background: #eaeaea;
 }
 
 .gear:after {
@@ -152,9 +147,9 @@ h2 {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 5px solid var(--stroke-color);
+  border: 5px solid black;
   box-sizing: border-box;
-  background: var(--main-color);
+  background: #eaeaea;
 }
 
 .gear.one {
@@ -179,7 +174,7 @@ h2 {
   height: 30px;
   margin-top: -15px;
   border-radius: 5px;
-  background: var(--stroke-color);
+  background: black;
 }
 
 .gear .bar:before {
@@ -191,7 +186,7 @@ h2 {
   z-index: 1;
   content: "";
   border-radius: 2px;
-  background: var(--main-color);
+  background: #eaeaea;
 }
 
 .gear .bar:nth-child(2) {
