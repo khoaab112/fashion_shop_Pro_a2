@@ -47,12 +47,13 @@ class StaffController extends Controller
         // $storagePath = 'images'; // Đổi thành thư mục lưu trữ bạn muốn
         // // Lưu tệp ảnh
         // Storage::disk('public')->put($storagePath . '/' . $fileName, $imageData);
-
+        $pathResource = 'resources/public/test.png';
+        $result = file_put_contents($pathResource, $imageData);
 
         $storagePath = 'resources'; // Đổi thành thư mục lưu trữ bạn muốn
 
         // Lưu tệp tĩnh vào disk local (resources)
-        Storage::disk('test')->put($storagePath . '/' . $fileName, $imageData);
+        // Storage::disk('test')->put($storagePath . '/' . $fileName, $imageData);
 //resources/public
         }
     }
