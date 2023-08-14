@@ -28,4 +28,8 @@ class StaffController extends Controller
         return CodeHttpHelpers::returnJson(200,true,$staffInfo,200);
 
     }
+    public function changeAvatarStaffById(Request $request, $id)
+    {
+
+    }
 }

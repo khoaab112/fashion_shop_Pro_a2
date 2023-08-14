@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus'
+
 export default {
     name: 'popupUploadAvatar',
     components: {
@@ -55,7 +57,7 @@ export default {
     data() {
         return {
             showUploadFile: this.show,
-            file: null,
+            arrFile: [],
             isErrorFile: false,
             contentError: null,
         };
@@ -77,6 +79,7 @@ export default {
     },
     methods: {
         handleChange(file, fileList) {
+            this.arrFile.push(file);
             this.isErrorFile = false;
             if (!(file.raw.type == 'image/jpeg') && !(file.raw.type == 'image/png')) {
                 this.isErrorFile = true;
@@ -93,6 +96,8 @@ export default {
             this.$emit('hide-upload', this.showUploadFile = false);
         },
         removeFile(file, fileList) {
+            //xóa  file
+             this.arrFile = this.arrFile.filter(item => item.name !== file.name);
             if (fileList.length < 2) {
                 this.isErrorFile = false;
                 this.contentError = ""
@@ -100,10 +105,34 @@ export default {
             };
         },
         upFile() {
-            if (this.type == 'AVT') {
-
+            if (this.isErrorFile) {
+                return ElNotification({
+                    title: "Error",
+                    message: "Hãy kiểm tra lỗi",
+                    type: "error",
+                });
             }
-            if (this.type == 'BG') { }
+            if (this.arrFile.length == 1) {
+                if (this.type == 'AVT') {
+                    console.log(this.type);
+                }
+                if (this.type == 'BG') { }
+            }
+            else if (this.arrFile.length==0)
+            {
+                return ElNotification({
+                    title: "Warning",
+                    message: "Hãy nhập file trước khi lưu",
+                    type: "warning",
+                });
+            }
+            else {
+                return ElNotification({
+                    title: "Error",
+                    message: "Hãy kiểm tra lỗi",
+                    type: "error",
+                });
+            }
         },
     },
 };
