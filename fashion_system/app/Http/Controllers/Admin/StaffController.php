@@ -37,6 +37,7 @@ class StaffController extends Controller
         $image = $request->get('file');
         $storagePath = 'images/staff';
         $staff = $this->staff->getById($id)->first();
+        $pathImg = $staff->img;
         if (!$staff)  return CodeHttpHelpers::returnJson(400, true, 'Mã nhân viên không hơp lệ', 200);
         if ($image) {
             $base64Image = $image;
@@ -54,6 +55,10 @@ class StaffController extends Controller
             $resultUpdateAvatar = $this->staff->updateById($arrDataUpdate, $id);
             if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
             $resultSaveFile =  Storage::disk('dataClient')->put($pathFull, $imageData);
+            // xóa bỏ một file từ db nếu nó đã tồn tại
+            if ($pathImg && Storage::disk('dataClient')->exists($pathImg)) {
+                Storage::disk('dataClient')->delete($pathImg);
+            }
             if ($resultSaveFile)   return CodeHttpHelpers::returnJson(200, true, 'Cập nhật ảnh đại diện thành công thành công', 200);
             return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
         }
