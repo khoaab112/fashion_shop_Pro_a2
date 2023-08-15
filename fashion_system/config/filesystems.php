@@ -42,9 +42,10 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-        'dataClient' => [
+        'frontEnd' => [
             'driver' => 'local',
-            'root' => storage_path('data_client'),
+            'root' => base_path('public/data_client'),
+            'url' => env('APP_URL').'/public',
             'visibility' => 'public',
             'throw' => false,
         ],

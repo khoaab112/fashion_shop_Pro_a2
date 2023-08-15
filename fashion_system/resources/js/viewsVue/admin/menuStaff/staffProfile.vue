@@ -3,11 +3,13 @@
         <section id="background-info-staff" style="
         background-image: url('https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg');
       ">
-            <avatar :src="src" class="avatar-staff" @click="UploadAvatar('AVT')"></avatar>
+            <avatar :src="urlAvatar" class="avatar-staff" @click="UploadAvatar('AVT')" @image-error="failureTracking">
+            </avatar>
             <div class="action-change-bg" @click="UploadAvatar('BG')">
                 <font-awesome-icon icon="fa-solid fa-palette" style="color: #ffffff" />
             </div>
         </section>
+
         <section id="avatar-staff">
             <div class="basic-information">
                 <InfoStaff v-if="!isShowInfoBase" class="staff-name"></InfoStaff>
@@ -158,8 +160,9 @@ import loadingSpinner from "../../components/loadingSpinner.vue";
 import InfoStaff from "../../components/svgComponents/infoStaff.vue";
 import twoColumnsOfData from "../../components/svgComponents/twoColumnsOfData.vue";
 import { ElNotification } from 'element-plus'
+import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 
-
+const pathPublic = "@public/data_client/"
 export default {
     name: "staffProfile",
     components: {
@@ -197,13 +200,21 @@ export default {
             },
             isShowInfoBase: false,
             isShowDetails: false,
+            // isAvatarError: false,
+            urlAvatar: null,
             // emitUpload:null,
         };
     },
     watch: {
+        img(value) {
+            this.checkImageAdmin(this.img);
+            console.log(this.img);
+        },
+
     },
     async created() {
         this.startPolling();
+        this.checkImageAdmin(this.img);
     },
     mounted() {
     },
@@ -226,11 +237,15 @@ export default {
         //theo dõi sự kiện thoát upload file
         emitUpload(value) {
             this.showUploadFile = value;
+            console.log(value);
         },
         uploadSuccess(value) {
             if (value) {
                 this.startPolling();
             }
+        },
+        failureTracking(value) {
+            this.urlAvatar = new URL(avatarAdminDefault, import.meta.url).href
         },
         async startPolling() {
             this.defaultShow();
@@ -253,6 +268,9 @@ export default {
                         this.phoneNumber = this.staff.phone_number;
                         this.email = this.staff.email;
                         this.position_id = this.staff.position_id;
+                        this.img = this.staff.img;
+                        console.log(this.img)
+                        this.checkImageAdmin(this.img);
                         await this.getBranchById(this.staff.branch_id);
                         this.dateStartWork = method.methods.formatDate(this.staff.created_at);
                     } else {
@@ -291,7 +309,23 @@ export default {
         defaultShow() {
             this.isShowInfoBase = false;
             this.isShowDetails = false;
-        }
+        },
+        checkImageAdmin(img) {
+            try {
+                if (img) {
+                    const publicPath = window.location.origin + '/public';
+                    const imagePath = `data_client/${img}`;
+                    // const urlImage = new URL(imagePath, publicPath).href
+                    this.urlAvatar = new URL(imagePath, publicPath).href;
+                    return
+                }
+                this.urlAvatar = new URL(avatarAdminDefault, import.meta.url).href
+                return
+            } catch (e) {
+                this.urlAvatar = new URL(avatarAdminDefault, import.meta.url).href
+                return
+            }
+        },
     },
 };
 </script>

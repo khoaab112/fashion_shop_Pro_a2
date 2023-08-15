@@ -20,7 +20,7 @@
 
         <template #footer>
             <span class="dialog-footer">
-                <el-button @click="hideUpLoad">Thoát</el-button>
+                <el-button @click="clonePopup">Thoát</el-button>
                 <el-button type="primary" @click='upFile'>
                     Thay đổi
                 </el-button>
@@ -69,6 +69,7 @@ export default {
             isErrorFile: false,
             contentError: null,
             FileToSend: null,
+
         };
     },
     created() {
@@ -107,7 +108,12 @@ export default {
             }
         },
         hideUpLoad() {
+            this.FileToSend = [];
             this.$emit('hide-upload', this.showUploadFile = false);
+        },
+        clonePopup() {
+            this.FileToSend = [];
+            this.showUploadFile = false
         },
         removeFile(file, fileList) {
             //xóa  file
@@ -131,7 +137,6 @@ export default {
                 if (this.type == 'AVT') {
                     const file = {
                         'file': this.FileToSend,
-                        'name': 'ádasd'
                     }
                     const staffId = this.dataStaff.id;
                     apiStaff

@@ -54,10 +54,10 @@ class StaffController extends Controller
             ];
             $resultUpdateAvatar = $this->staff->updateById($arrDataUpdate, $id);
             if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
-            $resultSaveFile =  Storage::disk('dataClient')->put($pathFull, $imageData);
+            $resultSaveFile =  Storage::disk('frontEnd')->put($pathFull, $imageData);
             // xóa bỏ một file từ db nếu nó đã tồn tại
-            if ($pathImg && Storage::disk('dataClient')->exists($pathImg)) {
-                Storage::disk('dataClient')->delete($pathImg);
+            if ($pathImg && Storage::disk('frontEnd')->exists($pathImg)) {
+                Storage::disk('frontEnd')->delete($pathImg);
             }
             if ($resultSaveFile)   return CodeHttpHelpers::returnJson(200, true, 'Cập nhật ảnh đại diện thành công thành công', 200);
             return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);

@@ -1,12 +1,12 @@
 <template>
-<img :src=src class="rounded-circle shadow-4"
-  style="width: 150px;" alt="Avatar" />
-  </template>
+    <img :src=src @error="imageError" class="rounded-circle shadow-4" alt="Avatar" />
+</template>
 
-  <script>
-  export default {
+<script>
+
+export default {
     name: 'avatar',
-  props: ['srcImg'],
+    props: ['srcImg'],
     components: {
     },
     setup() {
@@ -14,18 +14,18 @@
     directives: {
     },
     data() {
-      return {
-        src:this.srcImg
-      };
+        return {
+            src: this.srcImg
+        };
     },
     created() {
-      // Logic khi component được khởi tạo
+        // Logic khi component được khởi tạo
     },
     mounted() {
-      // Logic sau khi component được gắn kết (render) vào DOM
+        // Logic sau khi component được gắn kết (render) vào DOM
     },
     computed() {
-      // được sử dụng để định nghĩa các thuộc tính tính toán
+        // được sử dụng để định nghĩa các thuộc tính tính toán
     },
     updated() {
 
@@ -34,11 +34,16 @@
 
     },
     methods: {
-      // Các phương thức xử lý sự kiện hoặc logic khác
+        imageError() {
+            this.$emit('image-error', true);
+        },
     },
-  };
-  </script>
+};
+</script>
 
-  <style>
-  /* CSS cho component */
-  </style>
+<style>
+img{
+    width: 150px !important;
+    height: 150px !important;
+}
+</style>

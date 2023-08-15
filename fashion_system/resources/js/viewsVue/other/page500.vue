@@ -5,7 +5,7 @@
     <h2>Rất tiếc về sự cố này</h2>
     <h2>Dường như hệ thống có lỗi khi cố thao tác một hoạt động nào đó</h2>
     <h2>Tôi sẽ khắc phục ngay khi nhận được báo cáo về sự cố !</h2>
-    <h2 style="font-size: 200%;">Trân thành cảm ơn ❤️</h2>
+    <h2 style="font-size: 200%;">Chân thành cảm ơn ❤️</h2>
     <br>
     <div class="gears">
       <div class="gear one">

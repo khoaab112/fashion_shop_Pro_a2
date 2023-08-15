@@ -5,6 +5,9 @@ import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const laravelPublicPath = path.resolve(__dirname, './public');
+
+
 export default defineConfig({
     plugins: [
         laravel(['resources/js/app.js']),
@@ -22,6 +25,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'resources'),
+            '@public': laravelPublicPath,
         },
     },
 });
