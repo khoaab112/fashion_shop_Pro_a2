@@ -161,6 +161,7 @@ import InfoStaff from "../../components/svgComponents/infoStaff.vue";
 import twoColumnsOfData from "../../components/svgComponents/twoColumnsOfData.vue";
 import { ElNotification } from 'element-plus'
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
+import apiStaff from '@/js/api/admin/apiStaff.js';
 
 const pathPublic = "@public/data_client/"
 export default {
@@ -176,7 +177,6 @@ export default {
     directives: {},
     data() {
         return {
-            src: "https://mdbcdn.b-cdn.net/img/new/avatars/1.webp",
             img: null,
             isShowAction: false,
             centerDialogVisible: false,
@@ -195,6 +195,7 @@ export default {
             email: null,
             position_id: null,
             dateStartWork: null,
+            idStaff: null,
             branch: {
                 name: "",
             },
@@ -208,9 +209,7 @@ export default {
     watch: {
         img(value) {
             this.checkImageAdmin(this.img);
-            console.log(this.img);
         },
-
     },
     async created() {
         this.startPolling();
@@ -237,11 +236,11 @@ export default {
         //theo dõi sự kiện thoát upload file
         emitUpload(value) {
             this.showUploadFile = value;
-            console.log(value);
+
         },
         uploadSuccess(value) {
             if (value) {
-                this.startPolling();
+                this.getBackInformationStaff();
             }
         },
         failureTracking(value) {
@@ -259,6 +258,7 @@ export default {
                     clearInterval(this.pollingInterval);
                     // Tiếp tục
                     if (this.staff) {
+                        this.idStaff = this.staff.id;
                         this.isShowInfoBase = true;
                         this.staffName = this.staff.name;
                         this.sex = this.staff.sex;
@@ -269,7 +269,6 @@ export default {
                         this.email = this.staff.email;
                         this.position_id = this.staff.position_id;
                         this.img = this.staff.img;
-                        console.log(this.img)
                         this.checkImageAdmin(this.img);
                         await this.getBranchById(this.staff.branch_id);
                         this.dateStartWork = method.methods.formatDate(this.staff.created_at);
@@ -325,6 +324,22 @@ export default {
                 this.urlAvatar = new URL(avatarAdminDefault, import.meta.url).href
                 return
             }
+        },
+        getBackInformationStaff() {
+            apiStaff.getInfoStaff(this.idStaff).then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    console.log(dataResponse);
+
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
         },
     },
 };
