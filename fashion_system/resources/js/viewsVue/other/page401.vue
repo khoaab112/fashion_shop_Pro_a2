@@ -10,7 +10,7 @@
         </div>
     </section>
 </template>
-    
+
 <script>
 import svgBG from '@/public/images/svg/page_401/bg_401.svg';
 import paths from '@/js/mixins/getAddressFromRouter.js';
@@ -49,7 +49,7 @@ export default {
     },
 };
 </script>
-    
+
 <style scoped>
 #page-401 {
     width: 100%;

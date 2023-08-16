@@ -64,4 +64,36 @@ class StaffController extends Controller
         }
         return CodeHttpHelpers::returnJson(400, true, 'Không có ảnh nào được tải nên', 200);
     }
+    public function changeBackgroundStaffById(Request $request, $id)
+    {
+        $image = $request->get('file');
+        $storagePath = 'images/background_staff';
+        $staff = $this->staff->getById($id)->first();
+        $pathImg = $staff->background;
+        if (!$staff)  return CodeHttpHelpers::returnJson(400, true, 'Mã nhân viên không hơp lệ', 200);
+        if ($image) {
+            $base64Image = $image;
+            $data = explode(',', $base64Image);
+            $imageData = base64_decode($data[1]);
+            $formatParts = explode('/', explode(':', substr($base64Image, 0, strpos($base64Image, ';')))[1]);
+            //đuôi file
+            $fileExtension = $formatParts[1];
+            //tên file
+            $nameFile = $id . "_" . FormatDate::getTimestamp() . "." . $fileExtension;
+            $pathFull = $storagePath . '/' . $nameFile;
+            $arrDataUpdate = [
+                'background' => $pathFull,
+            ];
+            $resultUpdateAvatar = $this->staff->updateById($arrDataUpdate, $id);
+            if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
+            $resultSaveFile =  Storage::disk('frontEnd')->put($pathFull, $imageData);
+            // xóa bỏ một file từ db nếu nó đã tồn tại
+            if ($pathImg && Storage::disk('frontEnd')->exists($pathImg)) {
+                Storage::disk('frontEnd')->delete($pathImg);
+            }
+            if ($resultSaveFile)   return CodeHttpHelpers::returnJson(200, true, 'Cập nhật ảnh bìa thành công thành công', 200);
+            return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
+        }
+        return CodeHttpHelpers::returnJson(400, true, 'Không có ảnh nào được tải nên', 200);
+    }
 }

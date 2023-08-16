@@ -161,6 +161,7 @@ import InfoStaff from "../../components/svgComponents/infoStaff.vue";
 import twoColumnsOfData from "../../components/svgComponents/twoColumnsOfData.vue";
 import { ElNotification } from 'element-plus'
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
+import backgroundAdminDefault from "@/public/images/staff/backgroundStaff.png";
 import apiStaff from '@/js/api/admin/apiStaff.js';
 
 const pathPublic = "@public/data_client/"
@@ -329,11 +330,22 @@ export default {
             apiStaff.getInfoStaff(this.idStaff).then(res => {
                 var dataResponse = res.data;
                 if (dataResponse.result_code == 200) {
-                    console.log(dataResponse);
-
+                  const  result= dataResponse.results[0];
+                    this.idStaff = result.id;
+                    this.isShowInfoBase = true;
+                    this.staffName = result.name;
+                    this.sex = result.sex;
+                    this.yearOld = this.currentAge(result.birthday);
+                    this.birthDay = result.birthday;
+                    this.address = result.address;
+                    this.phoneNumber = result.phone_number;
+                    this.email = result.email;
+                    this.position_id = result.position_id;
+                    this.img = result.img;
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
+                console.log(error)
                 ElNotification({
                     title: 'Error',
                     message: 'Có lỗi bất thường',

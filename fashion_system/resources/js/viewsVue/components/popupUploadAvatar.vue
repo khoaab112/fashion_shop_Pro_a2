@@ -161,7 +161,35 @@ export default {
                             });
                         });
                 }
-                if (this.type == 'BG') { }
+                if (this.type == 'BG') {
+                    console.log('br');
+                    const file = {
+                        'file': this.FileToSend,
+                    }
+                    const staffId = this.dataStaff.id;
+                    apiStaff
+                        .changeBackgroundStaffById(file, staffId)
+                        .then((res) => {
+                            var dataResponse = res.data;
+                            if (dataResponse.result_code == 200) {
+                                ElNotification({
+                                    title: "Success",
+                                    message: dataResponse.results,
+                                    type: "success",
+                                });
+                                this.$emit('upload-success', true);
+                                return this.$emit('hide-upload', this.showUploadFile = false);
+                            } else throw new Error(dataResponse.results);
+                        })
+                        .catch((error) => {
+                            ElNotification({
+                                title: "Error",
+                                message: "Có lỗi bất thường",
+                                type: "error",
+                            });
+                        });
+
+                }
             }
             else if (this.arrFile.length == 0) {
                 return ElNotification({
