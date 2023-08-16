@@ -1,10 +1,15 @@
 <template>
     <div id="profile-staff">
-        <section id="background-info-staff" style="
+        <!-- <section id="background-info-staff" style="
         background-image: url('https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg');
-      ">
+      "> -->
+        <section id="background-info-staff" @mouseenter="eventHoverBackground(true)"
+            @mouseleave="eventHoverBackground(false)" :style="`background-image: url(${backgroundStaff})`">
             <avatar :src="urlAvatar" class="avatar-staff" @click="UploadAvatar('AVT')" @image-error="failureTracking">
             </avatar>
+            <div class="show-background" v-if="isShowIconEyeBackground">
+                <font-awesome-icon icon="fa-regular fa-eye" fade class="icon-eye" @click="showPopupBackgroundStaff()" />
+            </div>
             <div class="action-change-bg" @click="UploadAvatar('BG')">
                 <font-awesome-icon icon="fa-solid fa-palette" style="color: #ffffff" />
             </div>
@@ -120,18 +125,20 @@
                     <strong>Tài khoản : </strong><span>{{ staffName }}</span>
                 </p>
                 <div>
-                    <span>Mật khẩu cũ</span><input type="password" class="pass-old float-end" placeholder="Mật khẩu cũ"
-                        autocomplete="off" />
+                    <span>Mật khẩu cũ</span><input v-model="password.passwordOld" type="password" class="pass-old float-end"
+                        placeholder="Mật khẩu cũ" autocomplete="off" />
                 </div>
                 <br />
                 <div>
                     <span>Mật khẩu mới</span>
-                    <input type="password" class="pass-new float-end" placeholder="Mật khẩu mới" autocomplete="off" />
+                    <input type="password" v-model="password.passwordNew" class="pass-new float-end"
+                        placeholder="Mật khẩu mới" autocomplete="off" />
                 </div>
                 <br />
                 <div>
                     <span>Xác thực</span>
-                    <input type="password" class="pass-confirm float-end" placeholder="Xác nhận" autocomplete="off" />
+                    <input type="password" v-model="password.passwordConfirm" class="pass-confirm float-end"
+                        placeholder="Xác nhận" autocomplete="off" />
                 </div>
             </form>
             <template #footer>
@@ -144,9 +151,12 @@
             </template>
         </el-dialog>
     </div>
-
     <upload-avatar :type="typeImg" :show="showUploadFile" :data="staff" @hide-upload="emitUpload"
         @upload-success="uploadSuccess"></upload-avatar>
+
+    <el-dialog v-model="showPopupBackground" title="Ảnh" width="70%" draggable>
+        <div :style="`background-image: url(${backgroundStaff})`" class="show-background-popup"></div>
+    </el-dialog>
 </template>
 
 <script>
@@ -174,7 +184,8 @@ export default {
         InfoStaff,
         twoColumnsOfData,
     },
-    setup() { },
+    setup() {
+    },
     directives: {},
     data() {
         return {
@@ -204,6 +215,14 @@ export default {
             isShowDetails: false,
             // isAvatarError: false,
             urlAvatar: null,
+            backgroundStaff: '',
+            isShowIconEyeBackground: false,
+            showPopupBackground: false,
+            password: {
+                passwordNew: "",
+                passwordOld: "",
+                passwordConfirm: "",
+            }
             // emitUpload:null,
         };
     },
@@ -211,10 +230,16 @@ export default {
         img(value) {
             this.checkImageAdmin(this.img);
         },
+        // backgroundStaff(value) {
+        //     this.checkBackground(this.backgroundStaff);
+        // }
     },
     async created() {
         this.startPolling();
         this.checkImageAdmin(this.img);
+        this.checkBackground(this.backgroundStaff);
+        // this.checkBackground(this.backgroundStaff);
+
     },
     mounted() {
     },
@@ -270,7 +295,9 @@ export default {
                         this.email = this.staff.email;
                         this.position_id = this.staff.position_id;
                         this.img = this.staff.img;
+                        // this.backgroundStaff= this.staff.background;
                         this.checkImageAdmin(this.img);
+                        this.checkBackground(this.staff.background);
                         await this.getBranchById(this.staff.branch_id);
                         this.dateStartWork = method.methods.formatDate(this.staff.created_at);
                     } else {
@@ -311,6 +338,7 @@ export default {
             this.isShowDetails = false;
         },
         checkImageAdmin(img) {
+
             try {
                 if (img) {
                     const publicPath = window.location.origin + '/public';
@@ -326,11 +354,27 @@ export default {
                 return
             }
         },
+        checkBackground(background) {
+            try {
+                if (background) {
+                    const publicPath = window.location.origin + '/public';
+                    const imagePath = `data_client/${background}`;
+                    // const urlImage = new URL(imagePath, publicPath).href
+                    this.backgroundStaff = new URL(imagePath, publicPath).href;
+                    return
+                }
+                this.backgroundStaff = new URL(backgroundAdminDefault, import.meta.url).href
+                return
+            } catch (e) {
+                this.backgroundStaff = new URL(backgroundAdminDefault, import.meta.url).href
+                return
+            }
+        },
         getBackInformationStaff() {
             apiStaff.getInfoStaff(this.idStaff).then(res => {
                 var dataResponse = res.data;
                 if (dataResponse.result_code == 200) {
-                  const  result= dataResponse.results[0];
+                    const result = dataResponse.results[0];
                     this.idStaff = result.id;
                     this.isShowInfoBase = true;
                     this.staffName = result.name;
@@ -342,6 +386,8 @@ export default {
                     this.email = result.email;
                     this.position_id = result.position_id;
                     this.img = result.img;
+                    this.checkBackground(result.background);
+                    // this.backgroundStaff= result.background;
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
@@ -353,6 +399,43 @@ export default {
                 });
             });
         },
+        eventHoverBackground(isHover) {
+            this.isShowIconEyeBackground = isHover;
+        },
+        showPopupBackgroundStaff() {
+            this.showPopupBackground = !this.showPopupBackground;
+        },
+        changePassword() {
+            if (this.password.passwordOld) {
+                ElNotification({
+                    title: "Warning",
+                    message: "Hãy nhập mật khẩu cũ",
+                    type: "warning",
+                });
+            }
+            else if (this.password.passwordNew) {
+                ElNotification({
+                    title: "Warning",
+                    message: "Hãy nhập mật khẩu mới",
+                    type: "warning",
+                });
+            }
+            else if (this.password.passwordNew) {
+                ElNotification({
+                    title: "Warning",
+                    message: "Hãy nhập mật khẩu xác nhận",
+                    type: "warning",
+                });
+            }
+            else{
+                ElNotification({
+                    title: "Error",
+                    message: "Lỗi bất thường",
+                    type: "error",
+                });
+            }
+
+        }
     },
 };
 </script>
@@ -362,10 +445,32 @@ export default {
     height: 100vh;
 }
 
+.show-background-popup {
+    width: 100%;
+    height: 43rem;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
 .submit {
     width: 60%;
     text-align: end;
     margin-top: 2rem;
+}
+
+.show-background {
+    position: absolute;
+    bottom: 50%;
+    top: 50%;
+    right: 50%;
+    left: 50%;
+    font-size: 34px;
+    color: #e1eaea;
+}
+
+.icon-eye:hover {
+    color: blue;
 }
 
 .tick {
@@ -480,7 +585,7 @@ export default {
 }
 
 .group-change-password form input:hover {
-    border: 2px solid rgb(61, 244, 15);
+    border: 1px solid rgb(61, 244, 15);
     width: 70%;
     padding: 0.5rem 1px 0.5rem 1rem;
     outline: none;
@@ -488,7 +593,7 @@ export default {
 }
 
 .group-change-password form input[type="password"]:focus {
-    border: 2px solid rgb(61, 244, 15);
+    border: 1px solid rgb(61, 244, 15);
     width: 70%;
     padding: 0.5rem 1px 0.5rem 1rem;
     outline: none;

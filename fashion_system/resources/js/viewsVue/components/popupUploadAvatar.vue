@@ -1,6 +1,7 @@
 <template>
     <el-dialog v-model="showUploadFile" title="Thay đổi ảnh" width="30%" align-center @close="hideUpLoad">
-        <el-upload class="upload-demo" drag :auto-upload="false" :on-change="handleChange" :on-remove="removeFile" multiple>
+        <el-upload class="upload-demo" drag :auto-upload="false" :on-change="handleChange" :on-remove="removeFile"
+            ref="upload" multiple>
             <font-awesome-icon icon="fa-solid fa-cloud-arrow-up" style="font-size: 50px;"></font-awesome-icon>
             <div class="el-upload__text">
                 Kéo hoặc <em>click để tải file</em>
@@ -108,10 +109,16 @@ export default {
             }
         },
         hideUpLoad() {
+            this.arrFile=[];
             this.FileToSend = [];
+            this.isErrorFile = false;
+            this.$refs.upload.clearFiles();
             this.$emit('hide-upload', this.showUploadFile = false);
         },
         clonePopup() {
+            this.arrFile=[];
+            this.$refs.upload.clearFiles();
+            this.isErrorFile = false;
             this.FileToSend = [];
             this.showUploadFile = false
         },
@@ -125,7 +132,7 @@ export default {
             };
         },
         upFile() {
-
+            console.log(this.isErrorFile);
             if (this.isErrorFile) {
                 return ElNotification({
                     title: "Error",
@@ -149,11 +156,15 @@ export default {
                                     message: dataResponse.results,
                                     type: "success",
                                 });
+                                this.$refs.upload.clearFiles();
+
                                 this.$emit('upload-success', true);
                                 return this.$emit('hide-upload', this.showUploadFile = false);
                             } else throw new Error(dataResponse.results);
                         })
                         .catch((error) => {
+                            this.$refs.upload.clearFiles();
+
                             ElNotification({
                                 title: "Error",
                                 message: "Có lỗi bất thường",
@@ -162,7 +173,6 @@ export default {
                         });
                 }
                 if (this.type == 'BG') {
-                    console.log('br');
                     const file = {
                         'file': this.FileToSend,
                     }
@@ -177,11 +187,13 @@ export default {
                                     message: dataResponse.results,
                                     type: "success",
                                 });
+                                this.$refs.upload.clearFiles();
                                 this.$emit('upload-success', true);
                                 return this.$emit('hide-upload', this.showUploadFile = false);
                             } else throw new Error(dataResponse.results);
                         })
                         .catch((error) => {
+                            this.$refs.upload.clearFiles();
                             ElNotification({
                                 title: "Error",
                                 message: "Có lỗi bất thường",

@@ -18,6 +18,7 @@ const setGlobalVariableInfoStaff = (newValue) => {
         'phone_number': newValue.phone_number,
         'birthday': newValue.birthday,
         'sex': newValue.sex,
+        'background': newValue.background,
         "created_at": newValue.created_at,
         "updated_at": newValue.updated_at,
     }
