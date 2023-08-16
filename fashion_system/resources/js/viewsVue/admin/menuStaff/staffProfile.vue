@@ -14,7 +14,6 @@
                 <font-awesome-icon icon="fa-solid fa-palette" style="color: #ffffff" />
             </div>
         </section>
-
         <section id="avatar-staff">
             <div class="basic-information">
                 <InfoStaff v-if="!isShowInfoBase" class="staff-name"></InfoStaff>
@@ -94,6 +93,9 @@
                     </div>
                 </div>
             </div>
+
+            <VueClientRecaptcha :value="inputValue" @getCode="getCaptchaCode" @isValid="checkValidCaptcha" />
+
         </section>
         <!-- box edit -->
         <section class="edit-info container " v-if="isEdit">
@@ -225,12 +227,22 @@ export default {
             },
             showPopupChangePassword: false,
             // emitUpload:null,
+            inputValue:'',
+            getCaptchaCode:null,
+            checkValidCaptcha:null,
         };
     },
     watch: {
         img(value) {
             this.checkImageAdmin(this.img);
         },
+        getCaptchaCode(value){
+            console.log(value);
+        },
+        checkValidCaptcha(value)
+        {
+            console.log(value);
+        }
         // backgroundStaff(value) {
         //     this.checkBackground(this.backgroundStaff);
         // }
@@ -429,8 +441,7 @@ export default {
                     type: "warning",
                 });
             }
-            if(this.password.passwordNew!=this.password.passwordConfirm)
-            {
+            if (this.password.passwordNew != this.password.passwordConfirm) {
                 ElNotification({
                     title: "Warning",
                     message: "Mật khẩu mới và mật khẩu xác thực không hợp lệ",
@@ -439,7 +450,7 @@ export default {
             }
 
         },
-        clearPassword(){
+        clearPassword() {
             console.log("clear password");
             this.showPopupChangePassword = false;
             this.password = {
