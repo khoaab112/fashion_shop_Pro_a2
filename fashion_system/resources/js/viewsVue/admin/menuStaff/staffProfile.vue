@@ -36,7 +36,7 @@
                 <div class="action-page" :class="{ 'animate__animated animate__fadeInRight': isShowAction }">
                     <font-awesome-icon icon="fa-solid fa-gears" class="icon" @click="showAction()" />
                     <div class="list-action" v-if="isShowAction">
-                        <div class="action-change-pass" @click="centerDialogVisible = true">
+                        <div class="action-change-pass" @click="showPopupChangePassword = true">
                             Đổi mật khẩu
                         </div>
                         <hr class="line-action" />
@@ -118,7 +118,7 @@
             </div>
         </section>
         <!-- dialog change password -->
-        <el-dialog v-model="centerDialogVisible" title="Đổi mật khẩu" width="30%" align-center
+        <el-dialog v-model="showPopupChangePassword" title="Đổi mật khẩu" width="30%" align-center @close="clearPassword"
             class="group-change-password">
             <form action="" class="from-change-password">
                 <p class="text-center">
@@ -143,8 +143,8 @@
             </form>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="centerDialogVisible = false">Đóng</el-button>
-                    <el-button type="primary" @click="centerDialogVisible = false">
+                    <el-button @click="showPopupChangePassword = false">Đóng</el-button>
+                    <el-button type="primary" @click="changePassword">
                         Xác nhận
                     </el-button>
                 </span>
@@ -222,7 +222,8 @@ export default {
                 passwordNew: "",
                 passwordOld: "",
                 passwordConfirm: "",
-            }
+            },
+            showPopupChangePassword: false,
             // emitUpload:null,
         };
     },
@@ -406,35 +407,46 @@ export default {
             this.showPopupBackground = !this.showPopupBackground;
         },
         changePassword() {
-            if (this.password.passwordOld) {
+            console.log(this.password);
+            if (!this.password.passwordOld) {
                 ElNotification({
                     title: "Warning",
                     message: "Hãy nhập mật khẩu cũ",
                     type: "warning",
                 });
             }
-            else if (this.password.passwordNew) {
+            else if (!this.password.passwordNew) {
                 ElNotification({
                     title: "Warning",
                     message: "Hãy nhập mật khẩu mới",
                     type: "warning",
                 });
             }
-            else if (this.password.passwordNew) {
+            else if (!this.password.passwordConfirm) {
                 ElNotification({
                     title: "Warning",
                     message: "Hãy nhập mật khẩu xác nhận",
                     type: "warning",
                 });
             }
-            else{
+            if(this.password.passwordNew!=this.password.passwordConfirm)
+            {
                 ElNotification({
-                    title: "Error",
-                    message: "Lỗi bất thường",
-                    type: "error",
+                    title: "Warning",
+                    message: "Mật khẩu mới và mật khẩu xác thực không hợp lệ",
+                    type: "warning",
                 });
             }
 
+        },
+        clearPassword(){
+            console.log("clear password");
+            this.showPopupChangePassword = false;
+            this.password = {
+                passwordOld: "",
+                passwordNew: "",
+                passwordConfirm: "",
+            }
         }
     },
 };
