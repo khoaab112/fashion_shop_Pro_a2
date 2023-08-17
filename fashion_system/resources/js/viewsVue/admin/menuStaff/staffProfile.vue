@@ -93,9 +93,6 @@
                     </div>
                 </div>
             </div>
-
-            <VueClientRecaptcha :value="inputValue" @getCode="getCaptchaCode" @isValid="checkValidCaptcha" />
-
         </section>
         <!-- box edit -->
         <section class="edit-info container " v-if="isEdit">
@@ -124,7 +121,7 @@
             class="group-change-password">
             <form action="" class="from-change-password">
                 <p class="text-center">
-                    <strong>Tài khoản : </strong><span>{{ staffName }}</span>
+                    <strong>Tài khoản : </strong><span>{{ userName }}</span>
                 </p>
                 <div>
                     <span>Mật khẩu cũ</span><input v-model="password.passwordOld" type="password" class="pass-old float-end"
@@ -141,6 +138,11 @@
                     <span>Xác thực</span>
                     <input type="password" v-model="password.passwordConfirm" class="pass-confirm float-end"
                         placeholder="Xác nhận" autocomplete="off" />
+                </div>
+                <div class="captcha">
+                    <input type="text" class="" placeholder="mã xác thức ->" v-model="inputValue">
+                    <VueClientRecaptcha ref="recaptcha" :value="inputValue" @getCode="getCaptchaCode" @isValid="checkValidCaptcha"
+                        class="code-captcha" />
                 </div>
             </form>
             <template #footer>
@@ -171,6 +173,7 @@ import method from "@/js/mixins/methodDefine.js";
 import loadingSpinner from "../../components/loadingSpinner.vue";
 import InfoStaff from "../../components/svgComponents/infoStaff.vue";
 import twoColumnsOfData from "../../components/svgComponents/twoColumnsOfData.vue";
+import jwt from "@/js/auth/jwt.js";
 import { ElNotification } from 'element-plus'
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 import backgroundAdminDefault from "@/public/images/staff/backgroundStaff.png";
@@ -191,6 +194,7 @@ export default {
     directives: {},
     data() {
         return {
+            userName:null,
             img: null,
             isShowAction: false,
             centerDialogVisible: false,
@@ -227,22 +231,18 @@ export default {
             },
             showPopupChangePassword: false,
             // emitUpload:null,
-            inputValue:'',
-            getCaptchaCode:null,
-            checkValidCaptcha:null,
+            inputValue: '',
+            captcha: null,
+            isSuccessCaptcha: false,
+            getCaptchaCode: (value) => { this.captcha = value },
+            checkValidCaptcha: (value) => { this.isSuccessCaptcha = value },
         };
     },
     watch: {
         img(value) {
             this.checkImageAdmin(this.img);
         },
-        getCaptchaCode(value){
-            console.log(value);
-        },
-        checkValidCaptcha(value)
-        {
-            console.log(value);
-        }
+
         // backgroundStaff(value) {
         //     this.checkBackground(this.backgroundStaff);
         // }
@@ -251,6 +251,7 @@ export default {
         this.startPolling();
         this.checkImageAdmin(this.img);
         this.checkBackground(this.backgroundStaff);
+        this.getInfoAccout();
         // this.checkBackground(this.backgroundStaff);
 
     },
@@ -297,6 +298,7 @@ export default {
                     clearInterval(this.pollingInterval);
                     // Tiếp tục
                     if (this.staff) {
+                        console.log(this.staff);
                         this.idStaff = this.staff.id;
                         this.isShowInfoBase = true;
                         this.staffName = this.staff.name;
@@ -421,44 +423,63 @@ export default {
         changePassword() {
             console.log(this.password);
             if (!this.password.passwordOld) {
-                ElNotification({
+                return ElNotification({
                     title: "Warning",
                     message: "Hãy nhập mật khẩu cũ",
                     type: "warning",
                 });
             }
             else if (!this.password.passwordNew) {
-                ElNotification({
+                return ElNotification({
                     title: "Warning",
                     message: "Hãy nhập mật khẩu mới",
                     type: "warning",
                 });
             }
             else if (!this.password.passwordConfirm) {
-                ElNotification({
+                return ElNotification({
                     title: "Warning",
                     message: "Hãy nhập mật khẩu xác nhận",
                     type: "warning",
                 });
             }
             if (this.password.passwordNew != this.password.passwordConfirm) {
-                ElNotification({
+                return ElNotification({
                     title: "Warning",
                     message: "Mật khẩu mới và mật khẩu xác thực không hợp lệ",
+                    type: "warning",
+                });
+            }
+            if(this.password.passwordNew.length<8)
+            {
+                return ElNotification({
+                    title: "Warning",
+                    message: "Mật khẩu mới tối thiểu phải có 8 kí tự",
+                    type: "warning",
+                });
+            }
+            if (!this.isSuccessCaptcha) {
+                this.resetCaptcha();
+                return ElNotification({
+                    title: "Warning",
+                    message: "Mã xác thực không hợp lệ",
                     type: "warning",
                 });
             }
 
         },
         clearPassword() {
-            console.log("clear password");
             this.showPopupChangePassword = false;
             this.password = {
                 passwordOld: "",
                 passwordNew: "",
                 passwordConfirm: "",
             }
-        }
+        },
+        getInfoAccout() {
+           this.userName=jwt.decodePayloadAccessToken().user_name
+        },
+
     },
 };
 </script>
@@ -468,12 +489,25 @@ export default {
     height: 100vh;
 }
 
+.captcha {
+    margin-top: 1rem;
+}
+
+.captcha input {
+    width: 40% !important;
+    margin-top: 1rem;
+}
+
+.captcha .code-captcha {
+    float: right;
+}
+
 .show-background-popup {
     width: 100%;
     height: 43rem;
     background-repeat: no-repeat;
     background-position: center;
-
+    background-size: contain;
 }
 
 .submit {

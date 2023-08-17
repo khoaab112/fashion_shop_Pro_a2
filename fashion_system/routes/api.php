@@ -32,9 +32,10 @@ Route::middleware('checkURL')->group(function () {
             //authentication administration
             Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api']);
             Route::post('/register', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api']);
+            Route::put('/change-password', [AuthnController::class, 'changePassword']);
             Route::post('/decodeJwt', [AuthnController::class, 'decode']);
             Route::delete('/logout', [AuthnController::class, 'logout']);
-//test
+            //test
             Route::post('/test-login', [AuthnController::class, 'test']);
             Route::get('/test', [Test::class, 'index'])->withoutMiddleware(['auth:api']);
 
@@ -45,7 +46,6 @@ Route::middleware('checkURL')->group(function () {
 
             //branch
             Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
-
         });
     });
 });

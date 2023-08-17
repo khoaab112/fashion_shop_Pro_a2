@@ -216,6 +216,44 @@ class AuthnController extends Controller
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
         return $jwt;
     }
+    public function changePassword(Request $request)
+    {
+// |unique:staff_account,staff_id
+        $validation = [
+            'staff_id' => 'required|exists:staff_account,staff_id',
+            'user_name' => 'required|string|exists:staff_account,user_name',
+            'passwordOld' => 'required|min:9|string',
+            'password' => 'required|min:9|string|confirmed',
+            'password_confirmation' => 'required|min:9|string',
+        ];
+        $attribute = [
+            'staff_id' => 'Mã nhân viên',
+            'user_name' => 'Tài khoản sử dụng',
+            'passwordOld' => 'Mật khẩu',
+            'password' => 'Mật khẩu mới',
+            'password_confirmation' => 'Mật khẩu xác thực',
+        ];
+        try {
+
+            $validator = validationHelpers::validation($request->all(), $validation, $attribute);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+            }
+            $search = $this->query->searchUserName($request->post('user_name'));
+            if ($search)   return   CodeHttpHelpers::returnJson(200, false, 'tài khoản đã tồn tại', 400);
+            $staffAccount = [
+                'staff_id' => $request->post('staff_id'),
+                'administration_id' => $request->post('administration_id'),
+                'user_name' => $request->post('user_name'),
+                'password' => bcrypt($request->post('password')),
+            ];
+            $result = $this->query->create($staffAccount);
+            return CodeHttpHelpers::returnJson(200, true, $result, 200);
+        } catch (\Exception $error) {
+            return CodeHttpHelpers::returnJson(500, false, $error, 500);
+        }
+    }
     public function removeRefreshToken($id)
     {
         $this->query->removeRefreshToken($id);
