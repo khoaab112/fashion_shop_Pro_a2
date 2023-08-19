@@ -141,8 +141,8 @@
                 </div>
                 <div class="captcha">
                     <input type="text" class="" placeholder="mã xác thức ->" v-model="inputValue">
-                    <VueClientRecaptcha ref="recaptcha" :value="inputValue" @getCode="getCaptchaCode" @isValid="checkValidCaptcha"
-                        class="code-captcha" />
+                    <VueClientRecaptcha ref="recaptcha" :value="inputValue" @getCode="getCaptchaCode"
+                        @isValid="checkValidCaptcha" class="code-captcha" />
                 </div>
             </form>
             <template #footer>
@@ -174,6 +174,7 @@ import loadingSpinner from "../../components/loadingSpinner.vue";
 import InfoStaff from "../../components/svgComponents/infoStaff.vue";
 import twoColumnsOfData from "../../components/svgComponents/twoColumnsOfData.vue";
 import jwt from "@/js/auth/jwt.js";
+import logoutAdmin from "@/js/auth/logout.js";
 import { ElNotification } from 'element-plus'
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 import backgroundAdminDefault from "@/public/images/staff/backgroundStaff.png";
@@ -194,11 +195,10 @@ export default {
     directives: {},
     data() {
         return {
-            userName:null,
+            userName: null,
             img: null,
             isShowAction: false,
             centerDialogVisible: false,
-            value1: "",
             isEdit: false,
             yearOld: null,
             sex: null,
@@ -298,7 +298,6 @@ export default {
                     clearInterval(this.pollingInterval);
                     // Tiếp tục
                     if (this.staff) {
-                        console.log(this.staff);
                         this.idStaff = this.staff.id;
                         this.isShowInfoBase = true;
                         this.staffName = this.staff.name;
@@ -421,7 +420,6 @@ export default {
             this.showPopupBackground = !this.showPopupBackground;
         },
         changePassword() {
-            console.log(this.password);
             if (!this.password.passwordOld) {
                 return ElNotification({
                     title: "Warning",
@@ -450,8 +448,7 @@ export default {
                     type: "warning",
                 });
             }
-            if(this.password.passwordNew.length<8)
-            {
+            if (this.password.passwordNew.length < 9) {
                 return ElNotification({
                     title: "Warning",
                     message: "Mật khẩu mới tối thiểu phải có 8 kí tự",
@@ -459,14 +456,51 @@ export default {
                 });
             }
             if (!this.isSuccessCaptcha) {
-                this.resetCaptcha();
                 return ElNotification({
                     title: "Warning",
                     message: "Mã xác thực không hợp lệ",
                     type: "warning",
                 });
             }
+            var staffData = {
+                'staff_id': this.idStaff,
+                'user_name': this.userName,
+                'passwordOld': this.password.passwordOld,
+                'password': this.password.passwordNew,
+                'password_confirmation': this.password.passwordConfirm,
+            };
+            apiStaff.changePassword(staffData).then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    ElNotification({
+                        title: 'Success',
+                        message: dataResponse.results,
+                        type: 'success',
+                    });
+                    logoutAdmin.methods.logoutAdmin();
+                 return   location.reload();
+                }
+                else if (dataResponse.result_code == 400) {
+                    const resultsError = dataResponse.results
+                    for (let value in resultsError) {
+                        ElNotification({
+                            title: 'Error',
+                            message: resultsError[value][0],
+                            type: 'error',
+                        });
+                    }
+                }
+                else
+                    throw new Error(dataResponse.results);
+            }).catch(error => {
+                console.log(error)
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
 
+            });
         },
         clearPassword() {
             this.showPopupChangePassword = false;
@@ -477,9 +511,11 @@ export default {
             }
         },
         getInfoAccout() {
-           this.userName=jwt.decodePayloadAccessToken().user_name
+            this.userName = jwt.decodePayloadAccessToken().user_name
         },
-
+        delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
     },
 };
 </script>

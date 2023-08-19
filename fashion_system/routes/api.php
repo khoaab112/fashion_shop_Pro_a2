@@ -22,7 +22,7 @@ use App\Http\Controllers\Test;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::middleware('checkURL')->group(function () {
+Route::middleware(['checkURL'])->group(function () {
     Route::middleware('checkDB')->group(function () {
         Route::group([
             // 'middleware' => 'api',

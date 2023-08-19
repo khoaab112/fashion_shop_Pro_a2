@@ -242,11 +242,12 @@ class AuthnController extends Controller
             }
             $resultSearch = $this->query->search('user_name', $request->post('user_name'))->first();
             if (!$resultSearch) {
+
                 return CodeHttpHelpers::returnJson(401, false, 'Unauthorized', 401);
             }
             //so sánh vs mk cũ
             if (!(Hash::check($request->post('passwordOld'), $resultSearch->password))) {
-                return CodeHttpHelpers::returnJson(400, false, 'Mật khẩu cũ không chính xác', 200);
+                return CodeHttpHelpers::returnJson(400, false, ['password'=>['Mật khẩu cũ không chính xác']], 200);
             }
             $staffAccount = [
                 'password' => bcrypt($request->post('password')),

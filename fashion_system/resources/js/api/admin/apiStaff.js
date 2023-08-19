@@ -10,5 +10,8 @@ export default {
     },
     changeBackgroundStaffById(file, id) {
         return index.post(`/background-staff/${id}`, (file));
+    },
+    changePassword(staffData) {
+        return index.put(`/change-password`, (staffData));
     }
 }

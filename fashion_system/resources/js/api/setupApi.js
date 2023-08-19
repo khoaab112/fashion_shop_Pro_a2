@@ -15,7 +15,7 @@ const apiClient = axios.create({
     timeout: 5000, //  thời gian chờ tối đa cho mỗi yêu cầu
     headers: {
         'Accept': 'application/json',
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': (accessToken ? 'Bearer ' + accessToken : ''),
     }
 });
@@ -75,12 +75,12 @@ async function checkHttpResponse(codeHttp, response) {
             //request failed
             if (response.data.results == "CANCEL_SESSION" && response.data.status == 'error' && response.data.result_code == 401) {
                 await logout.methods.logoutAdmin();
-                router.push({ path: "/auth/login" });
+                // router.push({ path: "/auth/login" });
                 break;
             }
             if (response.data.results == "Unauthorized" && response.data.status == 'error' && response.data.result_code == 401) {
                 await logout.logoutAdmin;
-                router.push({ path: "/auth/login" });
+                // router.push({ path: "/auth/login" });
                 break;
             }
             break;
