@@ -3,7 +3,7 @@
         <header>
             <div class="image-text">
                 <span class="image-logo-sidebar">
-                    <dropdown-avatar :avatar="checkImageAdmin()"></dropdown-avatar>
+                    <dropdown-avatar :avatar="imagePath"></dropdown-avatar>
                 </span>
                 <div class="text logo-text">
                     <span class="admin-name">{{ staffName }}</span>
@@ -77,15 +77,23 @@ export default {
             infoAdmin: null,
             staffName: null,
             avatar: null,
+            imagePath: null,
         };
     },
     created() {
         this.dataMenuSidebar = this.addElementActiveToSidebar(dataSidebar);
         this.setGlobalStaffInfo();
+        this.checkImageAdmin()
+
         // Logic khi component được khởi tạo
     },
     mounted() {
-        this.checkImageAdmin();
+        // this.checkImageAdmin();
+    },
+    watch: {
+        avatar(value) {
+            this.checkImageAdmin()
+        },
     },
     updated() {
 
@@ -117,11 +125,26 @@ export default {
             value.active ? value.active = false : value.active = true;
         },
         checkImageAdmin() {
-            if (this.avatar) {
-                return new URL(this.avatar, import.meta.url).href
+            try {
+                if (this.avatar) {
+                    const publicPath = window.location.origin + '/public';
+                    const imagePath = `data_client/${this.avatar}`;
+                    this.imagePath = new URL(imagePath, publicPath).href
+                    return
+                }
+                this.imagePath = new URL(avatarAdminDefault, import.meta.url).href
+                return
+            } catch (e) {
+                // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
+                this.imagePath = new URL(avatarAdminDefault, import.meta.url).href
+                return
             }
-            // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
-            return new URL(avatarAdminDefault, import.meta.url).href
+
+            // if (this.avatar) {
+            //     return new URL(this.avatar, import.meta.url).href
+            // }
+            // // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
+            // return new URL(avatarAdminDefault, import.meta.url).href
         },
         //lấy id người dùng từ localStorage
         //gọi lên api

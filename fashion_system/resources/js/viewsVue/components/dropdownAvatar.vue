@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-wrap items-center">
         <el-dropdown>
-            <el-avatar :src=srcAvatar />
+            <el-avatar class="avatar-admin" :src=srcAvatar />
             <template #dropdown>
                 <el-dropdown-menu v-for="value in listDropdown " :key="value.key">
                     <router-link :to=value.path class="style-tag-a" @click="handleDropdownClick(value.key)">
@@ -41,6 +41,11 @@ export default {
             listDropdown: null,
             srcAvatar: this.avatar,
         };
+    },
+    watch: {
+        avatar(value) {
+            this.srcAvatar = value;
+        },
     },
     created() {
         this.listDropdown = listDropdown;
