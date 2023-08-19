@@ -90,9 +90,10 @@ export default {
     },
     methods: {
         handleChange(file, fileList) {
+            console.log(file.raw.type);
             this.arrFile.push(file);
             this.isErrorFile = false;
-            if (!(file.raw.type == 'image/jpeg') && !(file.raw.type == 'image/png')) {
+            if (!(file.raw.type == 'image/jpeg') && !(file.raw.type == 'image/png') && !(file.raw.type == 'image/gif')) {
                 this.isErrorFile = true;
                 this.contentError = "File tải lên không đúng định dạng"
                 return;
@@ -109,14 +110,14 @@ export default {
             }
         },
         hideUpLoad() {
-            this.arrFile=[];
+            this.arrFile = [];
             this.FileToSend = [];
             this.isErrorFile = false;
             this.$refs.upload.clearFiles();
             this.$emit('hide-upload', this.showUploadFile = false);
         },
         clonePopup() {
-            this.arrFile=[];
+            this.arrFile = [];
             this.$refs.upload.clearFiles();
             this.isErrorFile = false;
             this.FileToSend = [];

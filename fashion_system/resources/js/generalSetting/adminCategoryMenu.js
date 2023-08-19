@@ -187,4 +187,37 @@ export default [{
         role: '',
         children: []
     },
+    {
+        path: '',
+        name: 'responses',
+        title: 'Phản hồi',
+        component: '',
+        icon: 'fa-solid fa-lines-leaning',
+        role: '',
+        children: [{
+                path: '',
+                name: 'denounce',
+                title: 'Tố cáo',
+                component: '',
+                icon: 'fa-regular fa-flag',
+                role: '',
+            },
+            {
+                path: '',
+                name: 'feedback-products',
+                title: 'Phản hồi sản phẩm',
+                component: '',
+                icon: 'a-regular fa-comment',
+                role: '',
+            },
+            {
+                path: '',
+                name: 'feedback-app',
+                title: 'Phản hồi ứng dụng',
+                component: '',
+                icon: 'fa-regular fa-message',
+                role: '',
+            },
+        ]
+    },
 ]

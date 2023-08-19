@@ -4,7 +4,8 @@
         background-image: url('https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg');
       "> -->
         <section id="background-info-staff" @mouseenter="eventHoverBackground(true)"
-            @mouseleave="eventHoverBackground(false)" :style="`background-image: url(${backgroundStaff})`">
+            @mouseleave="eventHoverBackground(false)"
+            :style="`background-image: url(${backgroundStaff});height:${heightBackground}rem`">
             <avatar :src="urlAvatar" class="avatar-staff" @click="UploadAvatar('AVT')" @image-error="failureTracking">
             </avatar>
             <div class="show-background" v-if="isShowIconEyeBackground">
@@ -12,6 +13,14 @@
             </div>
             <div class="action-change-bg" @click="UploadAvatar('BG')">
                 <font-awesome-icon icon="fa-solid fa-palette" style="color: #ffffff" />
+            </div>
+            <div class="action-edit-height" @click="isEditHeightBackground = !isEditHeightBackground">
+                <font-awesome-icon :icon="['fas', 'up-down']" style="color: #ffffff" v-if="!isEditHeightBackground" />
+                <font-awesome-icon icon="fa-solid fa-floppy-disk" class="save" style="color: white"
+                    v-if="isEditHeightBackground" @click="updateHeightBackground()"/>
+            </div>
+            <div class="action-slider" v-show="isEditHeightBackground">
+                <el-slider v-model="heightBackground"></el-slider>
             </div>
         </section>
         <section id="avatar-staff">
@@ -175,13 +184,15 @@ import loadingSpinner from "../../components/loadingSpinner.vue";
 import InfoStaff from "../../components/svgComponents/infoStaff.vue";
 import twoColumnsOfData from "../../components/svgComponents/twoColumnsOfData.vue";
 import jwt from "@/js/auth/jwt.js";
+import localStorage from "@/js/auth/localStorage.js";
 import logoutAdmin from "@/js/auth/logout.js";
 import { ElNotification } from 'element-plus'
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 import backgroundAdminDefault from "@/public/images/staff/backgroundStaff.png";
 import apiStaff from '@/js/api/admin/apiStaff.js';
 
-const pathPublic = "@public/data_client/"
+const pathPublic = "@public/data_client/";
+const keyHeightBackgroundAdmin = "heightAdmin";
 export default {
     name: "staffProfile",
     components: {
@@ -238,6 +249,8 @@ export default {
             getCaptchaCode: (value) => { this.captcha = value },
             checkValidCaptcha: (value) => { this.isSuccessCaptcha = value },
             isLoadButtonData: false,
+            heightBackground: 10,
+            isEditHeightBackground: false,
         };
     },
     watch: {
@@ -254,6 +267,7 @@ export default {
         this.checkImageAdmin(this.img);
         this.checkBackground(this.backgroundStaff);
         this.getInfoAccout();
+        this.getHeightBackground();
         // this.checkBackground(this.backgroundStaff);
 
     },
@@ -531,10 +545,10 @@ export default {
                 if (dataResponse.result_code == 200) {
                     this.isLoadButtonData = false;
                     ElNotification({
-                    title: 'Success',
-                    message: dataResponse.results,
-                    type: 'success',
-                });
+                        title: 'Success',
+                        message: dataResponse.results,
+                        type: 'success',
+                    });
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
@@ -546,6 +560,17 @@ export default {
                 });
             });
         },
+        getHeightBackground() {
+            try {
+            const height = localStorage.getLocalStorage(keyHeightBackgroundAdmin);
+           this.heightBackground=Number(height);
+            } catch (e) {
+                this.heightBackground=10;
+            }
+        },
+        updateHeightBackground() {
+            const value = localStorage.setLocalStorage(keyHeightBackgroundAdmin,this.heightBackground);
+        },
     },
 };
 </script>
@@ -554,6 +579,7 @@ export default {
 #profile-staff {
     height: 100vh;
 }
+
 
 .captcha {
     margin-top: 1rem;
@@ -612,7 +638,7 @@ export default {
 .avatar-staff {
     width: 0px;
     position: absolute;
-    top: 170px;
+    bottom: -6rem;
     left: 3rem;
     border: 2px solid white;
     transition: transform 0.5s ease;
@@ -740,12 +766,28 @@ export default {
     margin-top: 1rem;
 }
 
+.action-slider {
+    width: 40%;
+    font-size: 20px;
+    position: absolute;
+    right: 135px;
+    bottom: 0px;
+}
 
+.action-edit-height {
+    font-size: 20px;
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    background: #20212461;
+    padding: 0.3rem 0.7rem;
+    border-radius: 10px;
+}
 
 .action-change-bg {
     font-size: 20px;
     position: absolute;
-    right: 15px;
+    right: 64px;
     bottom: 5px;
     background: #20212461;
     padding: 0.3rem 0.7rem;
@@ -821,5 +863,4 @@ export default {
         text-align: center;
         padding-bottom: 1rem;
     }
-}
-</style>
+}</style>
