@@ -55,9 +55,9 @@ abstract class BaseRepositories implements RepositoryInterface
     {
         return $this->model->paging($numberOfElements);
     }
-    public function search()
+    public function search($key , $value)
     {
-
+        return $this->model->where($key,$value)->get();
     }
     // abstract public function getModel();
 }

@@ -19,6 +19,7 @@ use \Firebase\JWT\Algorithm\HS256;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Integer;
 use App\Models\StaffAccount;
+use Illuminate\Support\Facades\Hash;
 
 class AuthnController extends Controller
 {
@@ -218,7 +219,7 @@ class AuthnController extends Controller
     }
     public function changePassword(Request $request)
     {
-// |unique:staff_account,staff_id
+        // |unique:staff_account,staff_id
         $validation = [
             'staff_id' => 'required|exists:staff_account,staff_id',
             'user_name' => 'required|string|exists:staff_account,user_name',
@@ -234,22 +235,30 @@ class AuthnController extends Controller
             'password_confirmation' => 'Mật khẩu xác thực',
         ];
         try {
-
             $validator = validationHelpers::validation($request->all(), $validation, $attribute);
             if ($validator->fails()) {
                 $errors = $validator->errors();
-                return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+                return CodeHttpHelpers::returnJson(400, false, $errors, 200);
             }
-            $search = $this->query->searchUserName($request->post('user_name'));
-            if ($search)   return   CodeHttpHelpers::returnJson(200, false, 'tài khoản đã tồn tại', 400);
+            $resultSearch = $this->query->search('user_name', $request->post('user_name'))->first();
+            if (!$resultSearch) {
+                return CodeHttpHelpers::returnJson(401, false, 'Unauthorized', 401);
+            }
+            //so sánh vs mk cũ
+            if (!(Hash::check($request->post('passwordOld'), $resultSearch->password))) {
+                return CodeHttpHelpers::returnJson(400, false, 'Mật khẩu cũ không chính xác', 200);
+            }
             $staffAccount = [
-                'staff_id' => $request->post('staff_id'),
-                'administration_id' => $request->post('administration_id'),
-                'user_name' => $request->post('user_name'),
                 'password' => bcrypt($request->post('password')),
+                'refresh_token' => null,
+                'issued_at' => null,
+                'expired_time' => null
             ];
-            $result = $this->query->create($staffAccount);
-            return CodeHttpHelpers::returnJson(200, true, $result, 200);
+            $result = $this->query->updateByUserName($staffAccount, $request->post('user_name'));
+            if ($result) {
+                return CodeHttpHelpers::returnJson(200, true, "Đổi mật khẩu thành công", 200);
+            }
+            return CodeHttpHelpers::returnJson(500, false, "error", 200);
         } catch (\Exception $error) {
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }

@@ -9,7 +9,7 @@ class StaffAccountRepository extends BaseRepositories implements StaffAccountRep
 
     protected StaffAccount $staffAccount;
     public function __construct(StaffAccount $staffAccount)
-    { 
+    {
         $this->staffAccount = $staffAccount;
         parent::__construct($staffAccount);
     }
@@ -24,8 +24,13 @@ class StaffAccountRepository extends BaseRepositories implements StaffAccountRep
     {
         return $this->staffAccount->where('id', $id)->update(['refresh_token'=>null,'issued_at'=>null,'expired_time'=>null]);
     }
+    public function updateByUserName($arr , $userName)
+    {
+        return $this->staffAccount->where('user_name', $userName)->update($arr);
+
+    }
 
 
- 
+
 
 }

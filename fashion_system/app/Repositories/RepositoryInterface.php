@@ -14,5 +14,5 @@ interface RepositoryInterface {
     public function deleteAll();
     public function deleteById($id);
     public function paging($numberOfElements);
-    public function search();
+    public function search($key, $value);
 }
