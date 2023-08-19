@@ -13,5 +13,8 @@ export default {
     },
     changePassword(staffData) {
         return index.put(`/change-password`, (staffData));
-    }
+    },
+    updateDataStaff(staffData) {
+        return index.put(`/update-info-staff`, (staffData));
+    },
 }

@@ -113,7 +113,8 @@
                     class="edit-address" />
             </div>
             <div class="submit">
-                <button type="button" class="btn btn-primary ">Cập nhật<loadingSpinner></loadingSpinner></button>
+                <button type="button" class="btn btn-primary " @click="updateDataStaff()">Cập nhật<loadingSpinner
+                        v-show="isLoadButtonData"></loadingSpinner></button>
             </div>
         </section>
         <!-- dialog change password -->
@@ -236,6 +237,7 @@ export default {
             isSuccessCaptcha: false,
             getCaptchaCode: (value) => { this.captcha = value },
             checkValidCaptcha: (value) => { this.isSuccessCaptcha = value },
+            isLoadButtonData: false,
         };
     },
     watch: {
@@ -478,7 +480,7 @@ export default {
                         type: 'success',
                     });
                     logoutAdmin.methods.logoutAdmin();
-                 return   location.reload();
+                    return location.reload();
                 }
                 else if (dataResponse.result_code == 400) {
                     const resultsError = dataResponse.results
@@ -515,7 +517,35 @@ export default {
         },
         delay(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
-        }
+        },
+        updateDataStaff() {
+            this.isLoadButtonData = true;
+            const staff = {
+                "staff_id": this.idStaff,
+                'sex': this.sex,
+                'birthday': this.birthDay,
+                'address': this.address,
+            }
+            apiStaff.updateDataStaff(staff).then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    this.isLoadButtonData = false;
+                    ElNotification({
+                    title: 'Success',
+                    message: dataResponse.results,
+                    type: 'success',
+                });
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                this.isLoadButtonData = false;
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        },
     },
 };
 </script>
@@ -616,7 +646,7 @@ export default {
 }
 
 .action-page .icon:hover {
-    transform: translateY(-5px);
+    transform: scale(1.1);
 }
 
 .line-hr {
@@ -717,6 +747,13 @@ export default {
     position: absolute;
     right: 15px;
     bottom: 5px;
+    background: #20212461;
+    padding: 0.3rem 0.7rem;
+    border-radius: 10px;
+}
+
+.action-change-bg:hover {
+    transform: scale(1.1);
 }
 
 .from-change-password>p {

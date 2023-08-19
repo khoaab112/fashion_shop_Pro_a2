@@ -33,7 +33,21 @@ class StaffController extends Controller
     }
     public function updateInfo(Request $request)
     {
-
+        $staffId = $request->staff_id;
+        $data = [
+            'sex' => $request->sex,
+            'birthday' => $request->birthday,
+            'address' => $request->address,
+        ];
+        try {
+            $resultUpdateAvatar = $this->staff->updateById($data, $staffId);
+            if ($resultUpdateAvatar) {
+                return CodeHttpHelpers::returnJson(200, true, 'Cập nhật thành công', 200);
+            }
+            return CodeHttpHelpers::returnJson(500, false, 'Cập nhật thất bại', 500);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
     }
     //tìm kiếm xóa file cũ
     public function changeAvatarStaffById(Request $request, $id)
