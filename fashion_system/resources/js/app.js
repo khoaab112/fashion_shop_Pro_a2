@@ -5,7 +5,7 @@ import VN from 'element-plus/dist/locale/vi.mjs';
 // import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import 'element-plus/dist/index.css';
 //ant-design
-import { DatePicker, Radio } from 'ant-design-vue';
+import { DatePicker, Radio, Table } from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 //bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";

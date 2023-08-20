@@ -189,8 +189,8 @@ export default [{
         children: []
     },
     {
-        path: pathAdmin + '/manage-feedback',
-        name: 'responses',
+        path: pathAdmin + '/admin-feedback',
+        name: 'adminFeedback',
         title: 'Phản hồi',
         component: '',
         icon: 'fa-solid fa-lines-leaning',
@@ -217,6 +217,14 @@ export default [{
                 title: 'Phản hồi ứng dụng',
                 component: '',
                 icon: 'fa-regular fa-message',
+                role: '',
+            },
+            {
+                path: '/manage-feedback',
+                name: 'manage-feedback',
+                title: 'Quản lý chung',
+                component: '',
+                icon: "fa-solid fa-sliders",
                 role: '',
             },
         ]

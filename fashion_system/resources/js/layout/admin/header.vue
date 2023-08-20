@@ -1,26 +1,27 @@
 <template>
     <section class="home">
-
-        <div class="header-admin d-flex justify-content-end">
-            <div id="breadcrumb">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <div>
-                        <el-breadcrumb-item :to="{ path: '/admin/home' }">HOME</el-breadcrumb-item>
-                        <el-breadcrumb-item v-for="value in  breadcrumb "
-                            :class="{ 'show-breadcrumb': Object.keys(value.meta).length <= 0 || value.path == '/admin/home' || value.path == '/admin' }"
-                            :to="{ path: value.path }">{{ value.meta.breadcrumb }}</el-breadcrumb-item>
-                    </div>
-                </el-breadcrumb>
+        <section id="header-admin">
+            <div class="header-admin d-flex justify-content-end">
+                <div id="breadcrumb">
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <div>
+                            <el-breadcrumb-item :to="{ path: '/admin/home' }">HOME</el-breadcrumb-item>
+                            <el-breadcrumb-item v-for="value in  breadcrumb "
+                                :class="{ 'show-breadcrumb': Object.keys(value.meta).length <= 0 || value.path == '/admin/home' || value.path == '/admin' }"
+                                :to="{ path: value.path }">{{ value.meta.breadcrumb }}</el-breadcrumb-item>
+                        </div>
+                    </el-breadcrumb>
+                </div>
+                <div class="">
+                    <button type="button" class="btn-set btn-header-admin"><font-awesome-icon
+                            icon="fa-solid fa-list-check" /></button>
+                    <button type="button" class="btn-bell btn-header-admin"><font-awesome-icon
+                            icon="fa-regular fa-bell" /></button>
+                    <button type="button" class="btn-bell-signal btn-header-admin"><font-awesome-icon
+                            icon="fa-regular fa-bell" beat-fade /></button>
+                </div>
             </div>
-            <div class="">
-                <button type="button" class="btn-set btn-header-admin"><font-awesome-icon
-                        icon="fa-solid fa-list-check" /></button>
-                <button type="button" class="btn-bell btn-header-admin"><font-awesome-icon
-                        icon="fa-regular fa-bell" /></button>
-                <button type="button" class="btn-bell-signal btn-header-admin"><font-awesome-icon icon="fa-regular fa-bell"
-                        beat-fade /></button>
-            </div>
-        </div>
+        </section>
         <main>
             <div id="content-admin">
                 <div class="container-content bg-content">
@@ -75,6 +76,18 @@ export default {
     float: right;
     background: none;
     margin-right: 2rem;
+}
+
+
+main {
+    margin-top: 6.5rem;
+}
+
+section#header-admin {
+    position: fixed;
+    width: 96%;
+    right: 0px;
+    z-index: 1;
 }
 
 div#breadcrumb {
@@ -166,11 +179,35 @@ body.dark .home .text {
     margin: 0 auto;
 }
 
+@media (max-width:1600px) {
+    section#header-admin {
+        width: 95%;
+    }
+}
+
+@media (max-width:1300px) {
+    section#header-admin {
+        width: 94%;
+    }
+}
+
+@media (max-width:1300px) {
+    section#header-admin {
+        width: 92%;
+    }
+}
+@media (max-width:800px) {
+    section#header-admin {
+        width: 90%;
+    }
+}
 @media (max-width:580px) {
     .container-content {
         width: 90%;
         margin: 0 auto;
     }
+    section#header-admin {
+        width: 84%;
+    }
 
-}
-</style>
+}</style>

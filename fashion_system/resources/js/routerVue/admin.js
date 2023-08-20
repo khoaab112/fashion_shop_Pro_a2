@@ -38,16 +38,24 @@ const admin = [{
                 import ('../viewsVue/admin/menuStaff/employeeFeedback.vue'),
         },
         {
-            path: "manage-feedback",
-            name: "manageFeedback",
+            path: "admin-feedback",
+            name: "adminFeedback",
             group: true,
             children: [{
-                path: "feedback-app",
-                name: "feedbackApp",
-                meta: { breadcrumb: 'Phản hồi APP' },
-                component: () =>
-                    import ('../viewsVue/admin/feedback/feedbackApp.vue'),
-            }, ],
+                    path: "feedback-app",
+                    name: "feedbackApp",
+                    meta: { breadcrumb: 'Phản hồi APP' },
+                    component: () =>
+                        import ('../viewsVue/admin/feedback/feedbackApp.vue'),
+                },
+                {
+                    path: "manage-feedback",
+                    name: "manageFeedback",
+                    meta: { breadcrumb: 'Quản lý' },
+                    component: () =>
+                        import ('../viewsVue/admin/feedback/settingFeedback.vue'),
+                },
+            ],
         },
     ],
 }]
