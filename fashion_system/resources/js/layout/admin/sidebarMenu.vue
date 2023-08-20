@@ -21,26 +21,33 @@
                         v-if="value.showLabel ? true : false">
                         NG.KHOA
                     </h3>
+                    <!-- ở đây chia làm 2 loại
+                    . chính và nhánh
+                    .click : mở submenu
+                    router điều hướng trang
+                    khi có submenu thì ko cho điều hướng trang bằng class none-use
+                    -->
                     <li class="item">
                         <div href="#" class="nav_link submenu_item show_submenu hover-icon-mainMenu"
                             @click="changeActiveSubmenu(value.name)">
-                            <!-- <router-link :to=value.path class="style-tag-a"> -->
+                            <router-link :to=value.path class="style-tag-a"
+                                :class="{ 'use-none': (value.children.length>0) }">
                                 <span class="navlink_icon">
                                     <font-awesome-icon :icon="value.icon" class="icon " />
                                 </span>
                                 <span class="navlink" v-bind:hidden="!activeShowSidebar">{{ value.title }}</span>
                                 <div class="ml-auto p-2 down" v-if="value.children.length"><font-awesome-icon
                                         icon="fa-solid fa-chevron-down" class="" /></div>
-                                <!-- <i class="bx bx-chevron-right arrow-left"></i> -->
-                            <!-- </router-link> -->
+                                <i class="bx bx-chevron-right arrow-left"></i>
+                            </router-link>
                         </div>
                         <ul class="menu_items submenu" v-if="value.children.length && value.active"
                             v-bind:hidden="!activeShowSidebar">
                             <div class="nav_link sublink hover-icon-subMenu" v-for="item in value.children">
-                                <!-- <router-link :to=(value.path) + (item.path) class="style-tag-a"> -->
+                                <router-link :to="value.path + item.path" class="style-tag-a">
                                     <font-awesome-icon :icon="item.icon" class="icon-submenu" />
                                     {{ item.title }}
-                                <!-- </router-link> -->
+                                </router-link>
                             </div>
                         </ul>
                     </li>
@@ -49,7 +56,7 @@
                     <li><button class="btn-dark">Dark mode</button></li>
                 </ul>
                 <ul class="menu_items last-menu">
-</ul>
+                </ul>
             </div>
         </div>
     </nav>
@@ -187,9 +194,15 @@ export default {
     transition: var(--tran-05);
     z-index: 100;
 }
-.last-menu{
+
+.use-none {
+    pointer-events: none;
+}
+
+.last-menu {
     padding: 5rem 0 !important;
 }
+
 .sidebar.close {
     width: 88px;
 }
@@ -379,12 +392,14 @@ body.dark .switch::before {
     width: 5px;
     height: 5px;
 }
+
 .list-menu::-webkit-scrollbar-track {
     background-color: #e9f0ff;
     border-radius: 4px;
     border-left: 2.5px solid white;
     border-right: 2.5px solid white;
 }
+
 .list-menu::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 4px;

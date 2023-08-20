@@ -1,8 +1,9 @@
 //map với file routerVue
 //2 file có điểm tương đồng nhưng lười không cấu hình lại
+const pathAdmin = "/admin"
 export default [{
         showLabel: true,
-        path: '/admin/home',
+        path: pathAdmin + '/home',
         name: 'home',
         title: 'Home',
         component: '',
@@ -188,14 +189,14 @@ export default [{
         children: []
     },
     {
-        path: '',
+        path: pathAdmin + '/manage-feedback',
         name: 'responses',
         title: 'Phản hồi',
         component: '',
         icon: 'fa-solid fa-lines-leaning',
         role: '',
         children: [{
-                path: '',
+                path: '/denounce',
                 name: 'denounce',
                 title: 'Tố cáo',
                 component: '',
@@ -203,7 +204,7 @@ export default [{
                 role: '',
             },
             {
-                path: '',
+                path: '/feedback-products',
                 name: 'feedback-products',
                 title: 'Phản hồi sản phẩm',
                 component: '',
@@ -211,7 +212,7 @@ export default [{
                 role: '',
             },
             {
-                path: '',
+                path: '/feedback-app',
                 name: 'feedback-app',
                 title: 'Phản hồi ứng dụng',
                 component: '',
