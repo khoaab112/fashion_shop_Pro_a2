@@ -6,49 +6,35 @@
           <el-tab-pane label="Ứng dụng">Phản hồi đã trả lời</el-tab-pane>
         </el-tabs>
     </div> -->
+<table-client></table-client>
 
 
-    <table>
-        <tr>
-          <th>Company</th>
-          <th>Contact</th>
-          <th>Country</th>
-        </tr>
-        <tr>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
-        </tr>
-        <tr>
-          <td>Centro comercial Moctezuma</td>
-          <td>Francisco Chang</td>
-          <td>Mexico</td>
-        </tr>
-      </table>
-  </template>
+</template>
 
-  <script>
-  export default {
+<script>
+import tableClient from '../../components/tableClient.vue';
+export default {
     name: 'HtpShiftDetail',
     components: {
+        tableClient,
     },
     setup() {
     },
     directives: {
     },
     data() {
-      return {
-        tabPosition: 'left'
-      };
+        return {
+            tabPosition: 'left'
+        };
     },
     created() {
-      // Logic khi component được khởi tạo
+        // Logic khi component được khởi tạo
     },
     mounted() {
-      // Logic sau khi component được gắn kết (render) vào DOM
+        // Logic sau khi component được gắn kết (render) vào DOM
     },
     computed() {
-      // được sử dụng để định nghĩa các thuộc tính tính toán
+        // được sử dụng để định nghĩa các thuộc tính tính toán
     },
     updated() {
 
@@ -57,11 +43,11 @@
 
     },
     methods: {
-      // Các phương thức xử lý sự kiện hoặc logic khác
+        // Các phương thức xử lý sự kiện hoặc logic khác
     },
-  };
-  </script>
+};
+</script>
 
-  <style>
-  /* CSS cho component */
-  </style>
+<style scoped>
+
+</style>
