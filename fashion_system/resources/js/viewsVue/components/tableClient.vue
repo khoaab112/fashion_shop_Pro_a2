@@ -1,203 +1,81 @@
 <template>
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-wrap">
-                        <table class="table">
-                            <thead class="thead-primary">
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th>&nbsp;</th>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>total</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="alert" role="alert">
-                                    <td>
-                                        <label class="checkbox-wrap checkbox-primary">
-										  <input type="checkbox" checked>
-										  <span class="checkmark"></span>
-										</label>
-                                    </td>
-                                    <td>
-                                        <div class="img" style="background-image: url('https://www.vietnamfineart.com.vn/wp-content/uploads/2023/03/6539305fb14952972dabefd10d4402b3.jpg');"></div>
-                                    </td>
-                                    <td>
-                                        <div class="email">
-                                            <span>Sneakers Shoes 2020 For Men </span>
-                                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                        </div>
-                                    </td>
-                                    <td>$44.99</td>
-                                    <td class="quantity">
-                                        <div class="input-group">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">
-                                        </div>
-                                    </td>
-                                    <td>$89.98</td>
-                                    <td>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
-				          	</button>
-                                    </td>
-                                </tr>
+    <table>
+        <thead>
+            <tr>
+                <th v-for="(val, indexTitles) in titles" :key="indexTitles">{{ val.label }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(record, key) of  items " :key="key">
 
-                                <tr class="alert" role="alert">
-                                    <td>
-                                        <label class="checkbox-wrap checkbox-primary">
-										  <input type="checkbox">
-										  <span class="checkmark"></span>
-										</label>
-                                    </td>
-                                    <td>
-                                        <div class="img" style="background-image: url(images/product-2.png);"></div>
-                                    </td>
-                                    <td>
-                                        <div class="email">
-                                            <span>Sneakers Shoes 2020 For Men </span>
-                                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                        </div>
-                                    </td>
-                                    <td>$30.99</td>
-                                    <td class="quantity">
-                                        <div class="input-group">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-                                    <td>$30.99</td>
-                                    <td>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
-				          	</button>
-                                    </td>
-                                </tr>
+                <td v-for="(valTitles, indexTitles) in  titles " :key="indexTitles">
+                    <template v-if="searchCellName(record, valTitles.key)">
+                        <slot :name="`cell(${valTitles.key})`" :data="{ value: record[valTitles.key] }"></slot>
+                    </template>
+                </td>
+            </tr>
 
-                                <tr class="alert" role="alert">
-                                    <td>
-                                        <label class="checkbox-wrap checkbox-primary">
-										  <input type="checkbox">
-										  <span class="checkmark"></span>
-										</label>
-                                    </td>
-                                    <td>
-                                        <div class="img" style="background-image: url(images/product-3.png);"></div>
-                                    </td>
-                                    <td>
-                                        <div class="email">
-                                            <span>Sneakers Shoes 2020 For Men </span>
-                                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                        </div>
-                                    </td>
-                                    <td>$35.50</td>
-                                    <td class="quantity">
-                                        <div class="input-group">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-                                    <td>$35.50</td>
-                                    <td>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
-				          	</button>
-                                    </td>
-                                </tr>
+            <!-- <tr>
+                <td>CES-9000</td>
+                <td>50mt</td>
+                <td>9mm</td>
+                <td>1/2"</td>
+                <td>Kangal / Coil</td>
+            </tr>
+            <tr>
+                <td>CES-9000</td>
+                <td>50mt</td>
+                <td>9mm</td>
+                <td>1/2"</td>
+                <td>Kangal / Coil</td>
+            </tr>
+            <tr>
+                <td>CES-9000</td>
+                <td>50mt</td>
+                <td>9mm</td>
+                <td>1/2"</td>
+                <td>Kangal / Coil</td>
+            </tr>
+            <tr>
+                <td>CES-9000</td>
+                <td>50mt</td>
+                <td>9mm</td>
+                <td>1/2"</td>
+                <td>Kangal / Coil</td>
+            </tr> -->
+        </tbody>
+    </table>
+</template>
 
-                                <tr class="alert" role="alert">
-                                    <td>
-                                        <label class="checkbox-wrap checkbox-primary">
-										  <input type="checkbox">
-										  <span class="checkmark"></span>
-										</label>
-                                    </td>
-                                    <td>
-                                        <div class="img" style="background-image: url(images/product-4.png);"></div>
-                                    </td>
-                                    <td>
-                                        <div class="email">
-                                            <span>Sneakers Shoes 2020 For Men </span>
-                                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                        </div>
-                                    </td>
-                                    <td>$76.99</td>
-                                    <td class="quantity">
-                                        <div class="input-group">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-                                    <td>$76.99</td>
-                                    <td>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
-				          	</button>
-                                    </td>
-                                </tr>
-
-                                <tr class="alert" role="alert">
-                                    <td class="border-bottom-0">
-                                        <label class="checkbox-wrap checkbox-primary">
-										  <input type="checkbox">
-										  <span class="checkmark"></span>
-										</label>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <div class="img" style="background-image: url(images/product-1.png);"></div>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <div class="email">
-                                            <span>Sneakers Shoes 2020 For Men </span>
-                                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                        </div>
-                                    </td>
-                                    <td class="border-bottom-0">$40.00</td>
-                                    <td class="quantity border-bottom-0">
-                                        <div class="input-group">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-                                    <td class="border-bottom-0">$40.00</td>
-                                    <td class="border-bottom-0">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
-				          	</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-  </template>
-
-  <script>
-  export default {
-    name: 'tableClient',
+<script scoped>
+export default {
+    name: 'tableAdmin',
     components: {
+    },
+    props: {
+        //  titles = key , label
+        titles: Array,
+        items: Array
+    },
+    watch: {
     },
     setup() {
     },
     directives: {
     },
     data() {
-      return {
-        // Dữ liệu của component
-      };
+        return {
+            cellName: [],
+            arrTitle: this.titles,
+        };
     },
     created() {
-      // Logic khi component được khởi tạo
+        this.mapCellName();
+
     },
     mounted() {
-      // Logic sau khi component được gắn kết (render) vào DOM
     },
-    computed() {
-      // được sử dụng để định nghĩa các thuộc tính tính toán
+    computed: {
     },
     updated() {
 
@@ -206,11 +84,142 @@
 
     },
     methods: {
-      // Các phương thức xử lý sự kiện hoặc logic khác
-    },
-  };
-  </script>
+        mapCellName() {
+            for (let value of this.arrTitle) {
+                this.cellName.push(value.key)
+            }
+        },
+        searchCellName(record, key) {
+            const arrTitle = Object.keys(record)
+            arrTitle.forEach(element => {
+                if (element == key) {
+                    return true;
+                }
+            });
+            return true;
+        },
 
-  <style>
-  /* CSS cho component */
-  </style>
+    },
+};
+</script>
+
+<style>
+table {
+    border-spacing: 1;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+table * {
+    position: relative;
+}
+
+table td,
+table th {
+    padding-left: 3rem;
+}
+
+table thead tr {
+    height: 60px;
+    background: #99b19c;
+    font-size: 16px;
+}
+
+table tbody tr {
+    height: 48px;
+    border-bottom: 1px solid #E3F1D5;
+}
+
+table tbody tr:last-child {
+    border: 0;
+}
+
+table td,
+table th {
+    text-align: left;
+}
+
+table td.l,
+table th.l {
+    text-align: right;
+}
+
+table td.c,
+table th.c {
+    text-align: center;
+}
+
+table td.r,
+table th.r {
+    text-align: center;
+}
+
+@media screen and (max-width: 35.5em) {
+    table {
+        display: block;
+    }
+
+    table>*,
+    table tr,
+    table td,
+    table th {
+        display: block;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tbody tr {
+        height: auto;
+        padding: 8px 0;
+    }
+
+    table tbody tr td {
+        padding-left: 45%;
+        margin-bottom: 12px;
+    }
+
+    table tbody tr td:last-child {
+        margin-bottom: 0;
+    }
+
+    table tbody tr td:before {
+        position: absolute;
+        font-weight: 700;
+        width: 40%;
+        left: 10px;
+        top: 0;
+    }
+
+    table tbody tr td:nth-child(1):before {
+        content: "Code";
+    }
+
+    table tbody tr td:nth-child(2):before {
+        content: "Stock";
+    }
+
+    table tbody tr td:nth-child(3):before {
+        content: "Cap";
+    }
+
+    table tbody tr td:nth-child(4):before {
+        content: "Inch";
+    }
+
+    table tbody tr td:nth-child(5):before {
+        content: "Box Type";
+    }
+}
+
+blockquote {
+    color: white;
+    text-align: center;
+}
+</style>

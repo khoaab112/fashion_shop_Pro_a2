@@ -227,7 +227,7 @@ export default {
 }
 
 .sidebar.close .text {
-    opacity: 0;
+   display: none;
 }
 
 .sidebar header {

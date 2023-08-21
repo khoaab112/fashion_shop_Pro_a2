@@ -47,8 +47,6 @@ export default {
     watch: {
         '$route.matched'(value) {
             this.breadcrumb = value;
-            console.log(this.breadcrumb);
-
         },
     },
     mounted() {
