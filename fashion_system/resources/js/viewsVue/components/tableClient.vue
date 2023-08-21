@@ -20,7 +20,7 @@
 
 <script scoped>
 export default {
-    name: 'tableAdmin',
+    name: 'tableClient',
     components: {
     },
     props: {
@@ -91,7 +91,7 @@ table th {
 
 table thead tr {
     height: 60px;
-    background: #99b19c;
+    background: #6c7ae0;
     font-size: 16px;
 }
 
@@ -106,7 +106,7 @@ table tbody tr:last-child {
 
 table td,
 table th {
-    text-align: left;
+    text-align: center;
 }
 
 table td.l,

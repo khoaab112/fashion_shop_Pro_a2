@@ -2,41 +2,19 @@
     <table>
         <thead>
             <tr>
-                <th>CODE</th>
-                <th>STOCK</th>
-                <th>CAP</th>
-                <th>INCH</th>
-                <th>BOX TYPE</th>
+                <th v-for="(val, indexTitles) in titles" :key="indexTitles" :class="(val.key == `index`?'p-0':'')">{{ val.label }}</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
-            </tr>
-            <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
-            </tr>
-            <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
-            </tr>
-            <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
+            <tr v-for="(record, key) of  items " :key="key">
+                <td v-for="(valTitles, indexTitles) in  titles " :key="indexTitles" :class="[getClass(valTitles.text),(valTitles.key == `index`?'p-0':'')]">
+                    <template v-if="valTitles.key == `index`">
+                        {{ key }}
+                    </template>
+                    <template v-if="searchCellName(record, valTitles.key)">
+                        <slot :name="`cell(${valTitles.key})`" :data="{ value: record[valTitles.key] }"></slot>
+                    </template>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -47,13 +25,19 @@ export default {
     name: 'tableAdmin',
     components: {
     },
+    props: {
+        //  titles = key , label
+        titles: Array,
+        items: Array
+    },
     setup() {
     },
     directives: {
     },
     data() {
         return {
-            // Dữ liệu của component
+            arrTitle: this.titles,
+
         };
     },
     created() {
@@ -72,7 +56,26 @@ export default {
 
     },
     methods: {
-        // Các phương thức xử lý sự kiện hoặc logic khác
+        searchCellName(record, key) {
+            const arrTitle = Object.keys(record)
+            arrTitle.forEach(element => {
+                if (element == key) {
+                    return true;
+                }
+            });
+            return true;
+        },
+        getClass(value) {
+            switch (value) {
+                case "center":
+                    return 'text-center';
+                case "start":
+                    return 'text-start';
+                case "end":
+                    return 'text-end';
+                default: return 'text-start';
+            }
+        }
     },
 };
 </script>
@@ -100,7 +103,7 @@ table th {
 
 table thead tr {
     height: 60px;
-    background: #6c7ae0;
+    background: #99b19c;
     font-size: 16px;
 }
 
@@ -115,7 +118,7 @@ table tbody tr:last-child {
 
 table td,
 table th {
-    text-align: left;
+    text-align: center;
 }
 
 table td.l,
@@ -137,26 +140,32 @@ table th.r {
     table {
         display: block;
     }
+
     table>*,
     table tr,
     table td,
     table th {
         display: block;
     }
+
     table thead {
         display: none;
     }
+
     table tbody tr {
         height: auto;
         padding: 8px 0;
     }
+
     table tbody tr td {
         padding-left: 45%;
         margin-bottom: 12px;
     }
+
     table tbody tr td:last-child {
         margin-bottom: 0;
     }
+
     table tbody tr td:before {
         position: absolute;
         font-weight: 700;
@@ -164,18 +173,23 @@ table th.r {
         left: 10px;
         top: 0;
     }
+
     table tbody tr td:nth-child(1):before {
         content: "Code";
     }
+
     table tbody tr td:nth-child(2):before {
         content: "Stock";
     }
+
     table tbody tr td:nth-child(3):before {
         content: "Cap";
     }
+
     table tbody tr td:nth-child(4):before {
         content: "Inch";
     }
+
     table tbody tr td:nth-child(5):before {
         content: "Box Type";
     }
