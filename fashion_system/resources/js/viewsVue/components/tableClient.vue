@@ -14,35 +14,6 @@
                     </template>
                 </td>
             </tr>
-
-            <!-- <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
-            </tr>
-            <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
-            </tr>
-            <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
-            </tr>
-            <tr>
-                <td>CES-9000</td>
-                <td>50mt</td>
-                <td>9mm</td>
-                <td>1/2"</td>
-                <td>Kangal / Coil</td>
-            </tr> -->
         </tbody>
     </table>
 </template>
@@ -65,12 +36,11 @@ export default {
     },
     data() {
         return {
-            cellName: [],
             arrTitle: this.titles,
         };
     },
     created() {
-        this.mapCellName();
+
 
     },
     mounted() {
@@ -84,11 +54,6 @@ export default {
 
     },
     methods: {
-        mapCellName() {
-            for (let value of this.arrTitle) {
-                this.cellName.push(value.key)
-            }
-        },
         searchCellName(record, key) {
             const arrTitle = Object.keys(record)
             arrTitle.forEach(element => {

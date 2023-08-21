@@ -1,17 +1,13 @@
 <template>
-    <!-- <div class="p-3">
-        <el-tabs :tab-position="tabPosition" >
-          <el-tab-pane label="Tố cáo">Thêm sửa xóa các loại phản hồi</el-tab-pane>
-          <el-tab-pane label="Sản phẩm">danh sách phản hồi , thêm , sửa , xóa , trả lời phản hồi </el-tab-pane>
-          <el-tab-pane label="Ứng dụng">Phản hồi đã trả lời</el-tab-pane>
-        </el-tabs>
-    </div> -->
     <section id="setting-feedback">
         <table-client :titles="titlesTable" :items="itemsTable">
             <template #cell(title1)="data">
                 <button>{{ data.data.value }}</button>
             </template>
             <template #cell(title3)="data">
+                <button>{{ data.data.value }}</button>
+            </template>
+            <template #cell(title2)="data">
                 <button>{{ data.data.value }}</button>
             </template>
         </table-client>

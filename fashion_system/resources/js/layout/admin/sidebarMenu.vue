@@ -382,6 +382,7 @@ body.dark .switch::before {
     height: 86vh;
     padding: 5px 0px 0px 5px;
     z-index: 100;
+    overflow-x: hidden;
     overflow-y: scroll;
     box-shadow: 0 0 1px var(--grey-color-light);
     transition: all 0.5s ease;
