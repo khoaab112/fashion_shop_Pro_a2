@@ -70,7 +70,7 @@
             </table-admin>
         </div>
     </section>
-    <pagination-Button></pagination-Button>
+    <pagination-Button :rows="rowDefault" :currentPage="currentPageDefault"  @page-return="pageReturn"></pagination-Button>
 </template>
 
 <script>
@@ -119,7 +119,10 @@ export default {
                     value: 1,
                     label: 'Hoạt động',
                 },
-            ]
+            ],
+            rowDefault:500,
+            currentPageDefault:2,
+            pageReturn:'',
         };
     },
     created() {

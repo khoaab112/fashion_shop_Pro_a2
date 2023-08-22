@@ -18,7 +18,6 @@
                 </div>
             </template>
         </el-upload>
-
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="clonePopup">Thoát</el-button>
