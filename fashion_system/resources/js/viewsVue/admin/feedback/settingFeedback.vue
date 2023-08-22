@@ -1,9 +1,34 @@
 <template>
     <section id="setting-feedback">
+        <!-- add -->
         <div class="add-type-feedback">
-            <div class="text-end"><button @click="isShowDiaLog =!isShowDiaLog">Thêm</button></div>
-            <el-dialog v-model="isShowDiaLog" title="Tạo kiểu / nguồn thu thập phản hồi mới" width="30%" align-center>
-                <span>Open the dialog from the center from the screen</span>
+            <div class="text-end"><button @click="isShowDiaLog = !isShowDiaLog">Thêm</button></div>
+            <el-dialog v-model="isShowDiaLog" title="Tạo kiểu / nguồn thu thập phản hồi mới" width="60%" align-center>
+                <table-admin :titles="titlesTable" :items="valuesTableCreateNew" class="p-2">
+                    <template #cell(name)="data">
+                        <input type="text" placeholder="Nhập" class="input-add"
+                            v-model="valuesTableCreateNew[data.data.index].name">
+                    </template>
+                    <template #cell(note)="data">
+                        <textarea placeholder="Nhập..." class="" data-mdb-toggle="popover" title="Click 2 lần để mở to"
+                            v-model="valuesTableCreateNew[data.data.index].note"
+                            @dblclick="showTextAreaAdd()">
+                        </textarea>
+                    </template>
+                    <template #cell(status)="data">
+                        <el-select v-model="valuesTableCreateNew[data.data.index].status" placeholder="Chọn"
+                            style="width: 100%">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                        </el-select>
+                    </template>
+                    <template #cell(actions)="data">
+                        <button class="action-table-add action-add-type" @click="addRow(data.data.index)"><font-awesome-icon
+                                icon="fa-solid fa-plus" />{{
+                                    data.data.value }}</button>
+                        <button class="action-table-add action-minus-type"
+                            @click="minusRow(data.data.index)"><font-awesome-icon icon="fa-solid fa-minus" /></button>
+                    </template>
+                </table-admin>
                 <template #footer>
                     <span class="dialog-footer">
                         <el-button @click="isShowDiaLog = false">Thoát</el-button>
@@ -13,8 +38,21 @@
                     </span>
                 </template>
             </el-dialog>
-
         </div>
+
+        <el-dialog v-model="showTextArea" :title="`Nội dung ghi chú cột ${idCol}`" width="30%" class="show-text-area"
+            @close="showTextArea = false">
+            <textarea placeholder="Chưa có nội dung">{{ contentCol.value }}</textarea>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="clearContentTextArea()">Xóa</el-button>
+                    <el-button type="primary" @click="submitPopupTextArea()">
+                        Xác nhận
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
+        <!-- end add -->
         <div class="card p-3">
             <table-admin :titles="titlesTable" :items="itemsTable" class="p-2">
                 <template #cell(name)="data">
@@ -37,6 +75,7 @@
 
 <script>
 import tableAdmin from "../../components/tableAdmin.vue";
+import { ElMessage } from 'element-plus'
 export default {
     name: "HtpShiftDetail",
     components: {
@@ -46,6 +85,9 @@ export default {
     directives: {},
     data() {
         return {
+            contentCol: null,
+            idCol: 1,
+            showTextArea: false,
             tabPosition: "left",
             titlesTable: [
                 { key: "index", label: "STT", text: 'center' },
@@ -58,7 +100,21 @@ export default {
                 { title1: "khoa", title2: "HtpShiftDetail", title3: "HtpShiftDetail" },
                 { title1: "khoa", title2: "HtpShiftDetail", title3: "HtpShiftDetail" },
             ],
-            isShowDiaLog:false,
+            isShowDiaLog: false,
+            valuesTableCreateNew: [
+                { name: '', note: '', status: null, actions: '', }
+            ],
+            valueStatus: null,
+            options: [
+                {
+                    value: 0,
+                    label: 'Khóa',
+                },
+                {
+                    value: 1,
+                    label: 'Hoạt động',
+                },
+            ]
         };
     },
     created() {
@@ -72,7 +128,43 @@ export default {
     },
     updated() { },
     destroyed() { },
-    methods: {},
+    methods: {
+        showTextAreaAdd() {
+            this.showTextArea = true;
+            // this.contentCol.value = value
+            // this.contentCol.index = index
+        },
+        clearContentTextArea() {
+            console.log('');
+            this.contentCol = '';
+        },
+        addRow(index) {
+            if (this.valuesTableCreateNew.length == 10) {
+                ElMessage({
+                    showClose: true,
+                    message: 'Oh thật mệt mỏi khi phải thêm quá nhiều dữ liệu cùng một lúc',
+                    type: 'warning',
+                })
+            }
+            if (this.valuesTableCreateNew.length > 11) {
+                ElMessage({
+                    showClose: true,
+                    message: 'Quá nhiều dữ liệu cùng một lúc !',
+                    type: 'error',
+                })
+                return;
+            }
+            const obj = { name: '', note: '', status: '', actions: '' };
+            this.valuesTableCreateNew.splice(++index, 0, obj);
+        },
+        minusRow(index) {
+            this.valuesTableCreateNew.splice(index, 1);
+        },
+        // submitPopupTextArea(value) {
+            // this.showTextArea = false
+            // this.valuesTableCreateNew[value.index].note=value.value;
+        // },
+    },
 };
 </script>
 
@@ -117,5 +209,57 @@ button.action:hover {
 .add-type-feedback>.text-end>button:hover {
     transform: scale(1.1);
     background-color: #186f2c;
+}
+
+.action-table-add {
+    max-width: 1.5rem;
+    min-width: 1.5rem;
+    max-height: 1.5rem;
+    min-height: 1.5rem;
+    margin: 0.3rem;
+    border: none;
+    border-radius: 20px;
+}
+
+.action-table-add:hover {
+    transform: scale(1.2);
+
+}
+
+.action-add-type {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.input-add {
+    width: 100%;
+    padding: 5px 12px;
+    border: 1px solid #e8eaee;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+    color: #000;
+}
+
+input[type=text]:focus {
+    border-color: red !important;
+    outline: none
+}
+
+.add-type-feedback textarea {
+    width: 100%;
+    height: 2rem;
+    border: 1px solid #e8eaee;
+    border-radius: 5px;
+    padding: 4px 0 0 4px;
+}
+
+.add-type-feedback textarea:focus {
+    border-color: red !important;
+    outline: none
+}
+
+.show-text-area textarea {
+    width: 100%;
+    padding: 11px 0px 0px 11px;
 }
 </style>

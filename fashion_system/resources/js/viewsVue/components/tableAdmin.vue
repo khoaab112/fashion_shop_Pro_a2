@@ -9,10 +9,10 @@
             <tr v-for="(record, key) of  items " :key="key">
                 <td v-for="(valTitles, indexTitles) in  titles " :key="indexTitles" :class="[getClass(valTitles.text),(valTitles.key == `index`?'p-0':'')]">
                     <template v-if="valTitles.key == `index`">
-                        {{ key }}
+                        {{Number(key)+1 }}
                     </template>
                     <template v-if="searchCellName(record, valTitles.key)">
-                        <slot :name="`cell(${valTitles.key})`" :data="{ value: record[valTitles.key] }"></slot>
+                        <slot :name="`cell(${valTitles.key})`" :data="{ value: record[valTitles.key] , index :key}"></slot>
                     </template>
                 </td>
             </tr>
