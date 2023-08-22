@@ -70,15 +70,18 @@
             </table-admin>
         </div>
     </section>
+    <pagination-Button></pagination-Button>
 </template>
 
 <script>
 import tableAdmin from "../../components/tableAdmin.vue";
+import paginationButton from "../../components/paginationButton.vue";
 import { ElMessage } from 'element-plus'
 export default {
     name: "HtpShiftDetail",
     components: {
         tableAdmin,
+        paginationButton,
     },
     setup() { },
     directives: {},
