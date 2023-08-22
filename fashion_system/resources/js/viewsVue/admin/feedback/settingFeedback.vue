@@ -6,13 +6,13 @@
             <el-dialog v-model="isShowDiaLog" title="Tạo kiểu / nguồn thu thập phản hồi mới" width="60%" align-center>
                 <table-admin :titles="titlesTable" :items="valuesTableCreateNew" class="p-2">
                     <template #cell(name)="data">
-                        <input type="text" placeholder="Nhập" class="input-add"
+                        <input type="text" placeholder="Tên" class="input-add"
                             v-model="valuesTableCreateNew[data.data.index].name">
                     </template>
                     <template #cell(note)="data">
-                        <textarea placeholder="Nhập..." class="" data-mdb-toggle="popover" title="Click 2 lần để mở to"
+                        <textarea placeholder="Ghi chú..." class="" data-mdb-toggle="popover" title="Click 2 lần để mở to"
                             v-model="valuesTableCreateNew[data.data.index].note"
-                            @dblclick="showTextAreaAdd()">
+                            @dblclick="showTextAreaAdd(valuesTableCreateNew[data.data.index].note, data.data.index)">
                         </textarea>
                     </template>
                     <template #cell(status)="data">
@@ -40,13 +40,12 @@
             </el-dialog>
         </div>
 
-        <el-dialog v-model="showTextArea" :title="`Nội dung ghi chú cột ${idCol}`" width="30%" class="show-text-area"
-            @close="showTextArea = false">
-            <textarea placeholder="Chưa có nội dung">{{ contentCol.value }}</textarea>
+        <el-dialog v-model="showTextArea" :title="`Nội dung ghi chú hàng ${idCol}`" width="30%" class="show-text-area">
+            <textarea placeholder="Chưa có nội dung" v-model="contentCol.value" class="textarea-more">{{ contentCol.value }}</textarea>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="clearContentTextArea()">Xóa</el-button>
-                    <el-button type="primary" @click="submitPopupTextArea()">
+                    <el-button @click="clearContentTextArea(contentCol.index)">Xóa</el-button>
+                    <el-button type="primary" @click="submitPopupTextArea(contentCol)">
                         Xác nhận
                     </el-button>
                 </span>
@@ -85,7 +84,10 @@ export default {
     directives: {},
     data() {
         return {
-            contentCol: null,
+            contentCol: {
+                value: '',
+                index: 1
+            },
             idCol: 1,
             showTextArea: false,
             tabPosition: "left",
@@ -129,14 +131,14 @@ export default {
     updated() { },
     destroyed() { },
     methods: {
-        showTextAreaAdd() {
+        showTextAreaAdd(value, index) {
             this.showTextArea = true;
-            // this.contentCol.value = value
-            // this.contentCol.index = index
+            this.contentCol.value = value
+            this.contentCol.index = index
         },
-        clearContentTextArea() {
-            console.log('');
-            this.contentCol = '';
+        clearContentTextArea(index) {
+            this.contentCol.value = '';
+            this.valuesTableCreateNew[index].note = '';
         },
         addRow(index) {
             if (this.valuesTableCreateNew.length == 10) {
@@ -158,12 +160,22 @@ export default {
             this.valuesTableCreateNew.splice(++index, 0, obj);
         },
         minusRow(index) {
+            if (this.valuesTableCreateNew.length <= 1) {
+                ElMessage({
+                    showClose: true,
+                    message: 'Không thể xóa thêm được nữa',
+                    type: 'warning',
+                });
+                return;
+            }
+
             this.valuesTableCreateNew.splice(index, 1);
         },
-        // submitPopupTextArea(value) {
-            // this.showTextArea = false
-            // this.valuesTableCreateNew[value.index].note=value.value;
-        // },
+        submitPopupTextArea(value) {
+            console.log(value);
+            this.showTextArea = false
+            this.valuesTableCreateNew[value.index].note = value.value;
+        },
     },
 };
 </script>
@@ -257,7 +269,14 @@ input[type=text]:focus {
     border-color: red !important;
     outline: none
 }
-
+.textarea-more{
+    border: 1px solid #e8eaee;
+    border-radius: 5px;
+}
+.textarea-more:focus{
+    border-color: palegreen !important;
+    outline: none
+}
 .show-text-area textarea {
     width: 100%;
     padding: 11px 0px 0px 11px;
