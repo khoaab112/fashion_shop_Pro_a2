@@ -9,11 +9,12 @@
                                     icon="fa-solid fa-angles-left" /></button></li>
                         <li><button class="page-jump" @click="activeJump(2)"><font-awesome-icon
                                     icon="fa-solid fa-angle-left" /></button></li>
-                        <li class="active"><button>1</button></li>
-                        <li><button>2</button></li>
-                        <li><button><font-awesome-icon icon="fa-solid fa-ellipsis" /></button></li>
-                        <li><button>5</button></li>
-                        <li><button>{{lastNumber}}</button></li>
+                        <li class="active" @click="choosePage(currentPage)"><button>{{ currentPage }}</button></li>
+                        <li><button @click="choosePage(currentPage + 1)">{{ currentPage + 1 }}</button></li>
+                        <li><button @click="choosePage(pageCenter(lastNumber / currentPage))"><font-awesome-icon
+                                    icon="fa-solid fa-ellipsis" /></button></li>
+                        <li><button @click="choosePage(lastNumber - 1)">{{ lastNumber - 1 }}</button></li>
+                        <li><button @click="choosePage(lastNumber)">{{ lastNumber }}</button></li>
                         <li><button class="page-jump" @click="activeJump(3)"><font-awesome-icon
                                     icon="fa-solid fa-angle-right" /></button></li>
                         <li><button class="page-jump" @click="activeJump(4)"><font-awesome-icon
@@ -55,7 +56,7 @@ export default {
         return {
             totalRow: this.rows,
             page: this.currentPage,
-            lastNumber:null,
+            lastNumber: null,
         };
     },
     created() {
@@ -81,22 +82,31 @@ export default {
         activeJump(value) {
             switch (value) {
                 case 1:
-                    return this.$emit('page-return', 1);
+                    return this.$emit('page-return', this.currentPage - 1);
                 case 2:
-                    let resultCase2 = currentPage - 1
-                    if (!resultCase2) return this.$emit('page-return', currentPage)
-                    return this.$emit('page-return', result);
+                    let resultCase2 = this.currentPage - 10
+                    if (!resultCase2) return this.$emit('page-return', this.currentPage)
+                    return this.$emit('page-return', resultCase2);
                 case 3:
-                    let resultCase3 = currentPage + 1
-                    if (resultCase3 > (row / 10)) return this.$emit('page-return', currentPage)
+                    let resultCase3 = this.currentPage + 1
+                    if (resultCase3 >= this.convertRow(this.row)) return this.$emit('page-return', this.currentPage)
                     return this.$emit('page-return', resultCase3);
                 case 4:
-                    let resultCase4 = convertRow;
+                    let resultCase4 = this.currentPage + 10;
+                    if (resultCase4 >= this.convertRow(this.row)) return this.$emit('page-return', this.currentPage)
                     return this.$emit('page-return', resultCase4);
             }
         },
         convertRow(value) {
-            const result = Math.ceil((value/10))
+            const result = Math.ceil((value / 10))
+            return result;
+        },
+        choosePage(value) {
+            console.log(value);
+            return this.$emit('page-return', value);
+        },
+        pageCenter(value) {
+            const result = Math.ceil(value)
             return result;
         },
     },

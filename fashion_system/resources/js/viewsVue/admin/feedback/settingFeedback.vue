@@ -70,7 +70,9 @@
             </table-admin>
         </div>
     </section>
+    <section class="text-end me-5 mt-3 pb-1">
     <pagination-Button :rows="rowDefault" :currentPage="currentPageDefault"  @page-return="pageReturn"></pagination-Button>
+</section>
 </template>
 
 <script>
