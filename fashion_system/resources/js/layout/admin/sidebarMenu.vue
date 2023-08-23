@@ -71,7 +71,7 @@ import apiStaff from '@/js/api/admin/apiStaff.js';
 // import localStorage from '@/js/auth/localStorage.js';
 import jwt from '@/js/auth/jwt.js';
 import globalVariable from '@/js/generalSetting/globalVariable.js';
-import { ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus';
 
 
 export default {

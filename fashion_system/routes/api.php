@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypeTicketController;
 use App\Http\Controllers\Authentication\AuthnController;
 use App\Http\Controllers\Admin\BranchController;
+use App\Http\Controllers\Admin\TypeReportController;
 use App\Http\Controllers\Test;
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,10 @@ Route::middleware(['checkURL'])->group(function () {
 
             //branch
             Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
+
+            //type-report
+            Route::post('/type-reports', [TypeReportController::class, 'createsTypeReport']);
+
         });
     });
 });

@@ -29,6 +29,10 @@ abstract class BaseRepositories implements RepositoryInterface
     {
         return $this->model->create($array);
     }
+    public function creates(array $array)
+    {
+        return $this->model->insert($array);
+    }
     public function updateById(array $array, int $id)
     {
         $object = $this->model->find($id);

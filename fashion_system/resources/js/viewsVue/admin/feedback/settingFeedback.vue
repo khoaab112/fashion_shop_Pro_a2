@@ -8,6 +8,7 @@
                     <template #cell(name)="data">
                         <input type="text" placeholder="Tên" class="input-add"
                             v-model="valuesTableCreateNew[data.data.index].name">
+                        <span class="remind-user" v-if="!valuesTableCreateNew[data.data.index].name">Bắt buộc</span>
                     </template>
                     <template #cell(note)="data">
                         <textarea placeholder="Ghi chú..." class="" data-mdb-toggle="popover" title="Click 2 lần để mở to"
@@ -32,7 +33,7 @@
                 <template #footer>
                     <span class="dialog-footer">
                         <el-button @click="isShowDiaLog = false">Thoát</el-button>
-                        <el-button type="primary" @click="isShowDiaLog = false">
+                        <el-button type="primary" @click="createTypeReports()">
                             Tạo
                         </el-button>
                     </span>
@@ -41,7 +42,8 @@
         </div>
 
         <el-dialog v-model="showTextArea" :title="`Nội dung ghi chú hàng ${idCol}`" width="30%" class="show-text-area">
-            <textarea placeholder="Chưa có nội dung" v-model="contentCol.value" class="textarea-more">{{ contentCol.value }}</textarea>
+            <textarea placeholder="Chưa có nội dung" v-model="contentCol.value"
+                class="textarea-more">{{ contentCol.value }}</textarea>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="clearContentTextArea(contentCol.index)">Xóa</el-button>
@@ -64,21 +66,27 @@
                     <button>{{ data.data.value }}</button>
                 </template>
                 <template #cell(actions)="data">
-                    <button class="action action-block">Khóa{{ data.data.value }}</button>
+                    <button class="action action-block">Khóa</button>
+                    <button class="action action-live">Hoạt động</button>
                     <button class="action action-remove">Xóa</button>
                 </template>
             </table-admin>
         </div>
     </section>
     <section class="text-end me-5 mt-3 pb-1">
-    <pagination-Button :rows="rowDefault" :currentPage="currentPageDefault"  @page-return="pageReturn"></pagination-Button>
-</section>
+        <pagination-Button :rows="rowDefault" :currentPage="currentPageDefault"
+            @page-return="pageReturn"></pagination-Button>
+    </section>
 </template>
 
 <script>
 import tableAdmin from "../../components/tableAdmin.vue";
 import paginationButton from "../../components/paginationButton.vue";
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus';
+import { ElNotification } from 'element-plus';
+
+import apiTypeReport from '@/js/api/admin/apiTypeReport.js';
+
 export default {
     name: "HtpShiftDetail",
     components: {
@@ -109,7 +117,7 @@ export default {
             ],
             isShowDiaLog: false,
             valuesTableCreateNew: [
-                { name: '', note: '', status: null, actions: '', }
+                { name: '', note: '', status: 0, }
             ],
             valueStatus: null,
             options: [
@@ -122,9 +130,9 @@ export default {
                     label: 'Hoạt động',
                 },
             ],
-            rowDefault:500,
-            currentPageDefault:2,
-            pageReturn:'',
+            rowDefault: 500,
+            currentPageDefault: 2,
+            pageReturn: '',
         };
     },
     created() {
@@ -164,7 +172,7 @@ export default {
                 })
                 return;
             }
-            const obj = { name: '', note: '', status: '', actions: '' };
+            const obj = { name: '', note: '', status: 0 };
             this.valuesTableCreateNew.splice(++index, 0, obj);
         },
         minusRow(index) {
@@ -183,6 +191,48 @@ export default {
             console.log(value);
             this.showTextArea = false
             this.valuesTableCreateNew[value.index].note = value.value;
+        },
+        createTypeReports() {
+            var shouldCallApi = true;
+            this.valuesTableCreateNew.forEach((element, key) => {
+                if (!element.name) {
+                    shouldCallApi = false;
+                    return;
+                }
+                if (!element.note) {
+                    this.valuesTableCreateNew[key].note = "Trống"
+                }
+            });
+            if (!shouldCallApi) {
+                return ElMessage({
+                    showClose: true,
+                    message: 'Trường tên là trường bắt buộc',
+                    type: 'warning',
+                });
+            };
+            const data = this.valuesTableCreateNew
+            apiTypeReport
+                .createTypeReports(data)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        ElNotification({
+                            title: "Success",
+                            message: dataResponse.results,
+                            type: "success",
+                        });
+                        this.isShowDiaLog = false
+                        this.valuesTableCreateNew='';
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    ElNotification({
+                        title: "Error",
+                        message: "Có lỗi bất thường",
+                        type: "error",
+                    });
+                });
         },
     },
 };
@@ -204,7 +254,11 @@ button.action-block {
     color: #fff;
     font-weight: bolder;
 }
-
+button.action-live{
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bolder;
+}
 button.action-remove {
     background-color: red;
     color: #fff;
@@ -260,8 +314,12 @@ button.action:hover {
     color: #000;
 }
 
+.input-add:placeholder-shown {
+    border: 1px solid #da2525;
+}
+
 input[type=text]:focus {
-    border-color: red !important;
+    border-color: rgb(94, 255, 0) !important;
     outline: none
 }
 
@@ -274,19 +332,28 @@ input[type=text]:focus {
 }
 
 .add-type-feedback textarea:focus {
-    border-color: red !important;
+    border-color: rgb(94, 255, 0) !important;
     outline: none
 }
-.textarea-more{
+
+.textarea-more {
     border: 1px solid #e8eaee;
     border-radius: 5px;
 }
-.textarea-more:focus{
+
+.textarea-more:focus {
     border-color: palegreen !important;
     outline: none
 }
+
 .show-text-area textarea {
     width: 100%;
     padding: 11px 0px 0px 11px;
 }
+
+span.remind-user {
+    font-size: 70%;
+    color: red;
+}
 </style>
+
