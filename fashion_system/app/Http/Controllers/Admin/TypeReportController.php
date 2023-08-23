@@ -31,8 +31,7 @@ class TypeReportController extends Controller
     {
 
         $arrayData = $request->input();
-        foreach($arrayData as $val)
-        {
+        foreach ($arrayData as $val) {
             $validator = validationHelpers::validation($val, $this->validationRules, $this->attributeNames);
             if ($validator->fails()) {
                 $errors = $validator->errors();
@@ -41,10 +40,15 @@ class TypeReportController extends Controller
         }
         try {
             $result = $this->typeReport->creates($arrayData);
-            if($result) return CodeHttpHelpers::returnJson(200, true, "Thêm thành công", 200);
+            if ($result) return CodeHttpHelpers::returnJson(200, true, "Thêm thành công", 200);
             return CodeHttpHelpers::returnJson(500, false, "Cập nhật không thành công", 200);
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
+    }
+    public function getRecords($paging)
+    {
+        $count = $this->typeReport->pagingRecord($paging);
+        dd($count);
     }
 }
