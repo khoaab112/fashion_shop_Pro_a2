@@ -55,9 +55,14 @@ abstract class BaseRepositories implements RepositoryInterface
         $object = $this->model->find($id);
         return $object->delete();
     }
+    // First 10 records
     public function pagingRecord($numberOfElements)
     {
-        return $this->model->paginate($numberOfElements)->sortByDesc('created_at');
+        return $this->model->paginate($numberOfElements)->sortByDesc('id');
+    }
+    public function getRecordByPage($recordNumber,$page)
+    {
+        return $this->model->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
     }
     public function search($key, $value)
     {

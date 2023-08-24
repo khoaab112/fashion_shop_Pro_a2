@@ -46,9 +46,15 @@ class TypeReportController extends Controller
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
     }
-    public function getRecords($paging)
+    public function getRecords(Request $request)
     {
-        $count = $this->typeReport->pagingRecord($paging);
-        dd($count);
+        $recordNumber = $request->input('record_number', 10);
+        $page = $request->input('page', 1);
+        try {
+            $records = $this->typeReport->getRecordByPage($recordNumber, $page);
+            dd($records);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
     }
 }

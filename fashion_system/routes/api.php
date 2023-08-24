@@ -51,7 +51,7 @@ Route::middleware(['checkURL'])->group(function () {
 
             //type-report
             Route::post('/type-reports', [TypeReportController::class, 'createsTypeReport']);
-            Route::get('/type-reports/{paging}', [TypeReportController::class, 'getRecords']);
+            Route::get('/type-reports', [TypeReportController::class, 'getRecords']);
 
         });
     });
