@@ -24,8 +24,8 @@
                     </template>
                     <template #cell(actions)="data">
                         <button class="action-table-add action-add-type" @click="addRow(data.data.index)"><font-awesome-icon
-                                icon="fa-solid fa-plus" />{{
-                                    data.data.value }}</button>
+                                icon="fa-solid fa-plus" />
+                                   </button>
                         <button class="action-table-add action-minus-type"
                             @click="minusRow(data.data.index)"><font-awesome-icon icon="fa-solid fa-minus" /></button>
                     </template>
@@ -57,24 +57,25 @@
         <div class="card p-3">
             <table-admin :titles="titlesTable" :items="itemsTable" class="p-2">
                 <template #cell(name)="data">
-                    <button>{{ data.data.value }}</button>
+                    {{ data.data.value.name }}
                 </template>
                 <template #cell(note)="data">
-                    <button>{{ data.data.value }}</button>
+                    {{ data.data.value.note }}
                 </template>
                 <template #cell(status)="data">
-                    <button>{{ data.data.value }}</button>
+                    <span v-if="data.data.value.status">Hoạt động<strong class="float-end"><font-awesome-icon icon="fa-solid fa-heart-pulse" style="color:#28a745 ;" /></strong></span>
+                    <span v-else>Khóa<strong class="float-end"><font-awesome-icon icon="fa-solid fa-road-barrier"  style="color:#dc3545 ;" /></strong></span>
                 </template>
                 <template #cell(actions)="data">
-                    <button class="action action-block">Khóa</button>
-                    <button class="action action-live">Hoạt động</button>
+                    <button class="action action-block" v-if="data.data.value.status">Khóa</button>
+                    <button class="action action-live" v-else>Hoạt động</button>
                     <button class="action action-remove">Xóa</button>
                 </template>
             </table-admin>
         </div>
     </section>
     <section class="text-end me-5 mt-3 pb-1">
-        <pagination-Button :rows="rowDefault" :currentPage="currentPageDefault"
+        <pagination-Button :total="rowDefault" :currentPage="currentPageDefault"
             @page-return="pageReturn"></pagination-Button>
     </section>
 </template>
@@ -130,13 +131,16 @@ export default {
                     label: 'Hoạt động',
                 },
             ],
-            rowDefault: 500,
-            currentPageDefault: 2,
+            rowDefault: 5,
+            currentPageDefault: 1,
+            visibleRecordCount: 10,
             pageReturn: '',
+            isCount: true,
+
         };
     },
     created() {
-        // Logic khi component được khởi tạo
+        this.getListTypeReports();
     },
     mounted() {
         // Logic sau khi component được gắn kết (render) vào DOM
@@ -222,7 +226,7 @@ export default {
                             type: "success",
                         });
                         this.isShowDiaLog = false
-                        this.valuesTableCreateNew='';
+                        this.valuesTableCreateNew = '';
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -234,6 +238,30 @@ export default {
                     });
                 });
         },
+        getListTypeReports() {
+            const data = {
+                "page": this.currentPageDefault,
+                "record_number": this.visibleRecordCount,
+                "count": this.isCount
+            };
+            apiTypeReport
+                .getListTypeReportsByPage(data)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        this.rowDefault = dataResponse.results.total_record;
+                        this.itemsTable =Object.values( dataResponse.results.page);
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    ElNotification({
+                        title: "Error",
+                        message: "Có lỗi bất thường",
+                        type: "error",
+                    });
+                });
+        }
     },
 };
 </script>
@@ -254,11 +282,13 @@ button.action-block {
     color: #fff;
     font-weight: bolder;
 }
-button.action-live{
+
+button.action-live {
     background-color: #28a745;
     color: #fff;
     font-weight: bolder;
 }
+
 button.action-remove {
     background-color: red;
     color: #fff;

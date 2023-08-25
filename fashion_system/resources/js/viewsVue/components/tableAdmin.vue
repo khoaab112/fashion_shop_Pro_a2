@@ -12,7 +12,7 @@
                         {{Number(key)+1 }}
                     </template>
                     <template v-if="searchCellName(record, valTitles.key)">
-                        <slot :name="`cell(${valTitles.key})`" :data="{ value: record[valTitles.key] , index :key}"></slot>
+                        <slot :name="`cell(${valTitles.key})`" :data="{  value:record , index :key}"></slot>
                     </template>
                 </td>
             </tr>
