@@ -25,7 +25,7 @@
                     <template #cell(actions)="data">
                         <button class="action-table-add action-add-type" @click="addRow(data.data.index)"><font-awesome-icon
                                 icon="fa-solid fa-plus" />
-                                   </button>
+                        </button>
                         <button class="action-table-add action-minus-type"
                             @click="minusRow(data.data.index)"><font-awesome-icon icon="fa-solid fa-minus" /></button>
                     </template>
@@ -63,8 +63,10 @@
                     {{ data.data.value.note }}
                 </template>
                 <template #cell(status)="data">
-                    <span v-if="data.data.value.status">Hoạt động<strong class="float-end"><font-awesome-icon icon="fa-solid fa-heart-pulse" style="color:#28a745 ;" /></strong></span>
-                    <span v-else>Khóa<strong class="float-end"><font-awesome-icon icon="fa-solid fa-road-barrier"  style="color:#dc3545 ;" /></strong></span>
+                    <span v-if="data.data.value.status">Hoạt động<strong class="float-end"><font-awesome-icon
+                                icon="fa-solid fa-heart-pulse" style="color:#28a745 ;" /></strong></span>
+                    <span v-else>Khóa<strong class="float-end"><font-awesome-icon icon="fa-solid fa-road-barrier"
+                                style="color:#dc3545 ;" /></strong></span>
                 </template>
                 <template #cell(actions)="data">
                     <button class="action action-block" v-if="data.data.value.status">Khóa</button>
@@ -75,8 +77,11 @@
         </div>
     </section>
     <section class="text-end me-5 mt-3 pb-1">
-        <pagination-Button :total="rowDefault" :currentPage="currentPageDefault"
-            @page-return="pageReturn"></pagination-Button>
+        <pagination-Button
+        :total="rowDefault"
+        :currentPage="currentPageDefault"
+        @page-return="returnResultFromPagination">
+        </pagination-Button>
     </section>
 </template>
 
@@ -134,7 +139,7 @@ export default {
             rowDefault: 5,
             currentPageDefault: 1,
             visibleRecordCount: 10,
-            pageReturn: '',
+            pageReturn: 12123,
             isCount: true,
 
         };
@@ -147,6 +152,12 @@ export default {
     },
     computed() {
         // được sử dụng để định nghĩa các thuộc tính tính toán
+    },
+    watch: {
+        pageReturn(val) {
+            this.currentPageDefault = val;
+            this.getListTypeReports();
+        }
     },
     updated() { },
     destroyed() { },
@@ -192,7 +203,6 @@ export default {
             this.valuesTableCreateNew.splice(index, 1);
         },
         submitPopupTextArea(value) {
-            console.log(value);
             this.showTextArea = false
             this.valuesTableCreateNew[value.index].note = value.value;
         },
@@ -230,7 +240,6 @@ export default {
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
-                    console.log(error);
                     ElNotification({
                         title: "Error",
                         message: "Có lỗi bất thường",
@@ -250,17 +259,19 @@ export default {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
                         this.rowDefault = dataResponse.results.total_record;
-                        this.itemsTable =Object.values( dataResponse.results.page);
+                        this.itemsTable = Object.values(dataResponse.results.page);
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
-                    console.log(error);
                     ElNotification({
                         title: "Error",
                         message: "Có lỗi bất thường",
                         type: "error",
                     });
                 });
+        },
+        returnResultFromPagination(value) {
+            this.pageReturn = value;
         }
     },
 };

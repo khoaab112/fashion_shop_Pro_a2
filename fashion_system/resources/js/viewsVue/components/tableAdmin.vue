@@ -1,4 +1,5 @@
 <template>
+    <section class="table-vue">
     <table>
         <thead>
             <tr>
@@ -18,6 +19,7 @@
             </tr>
         </tbody>
     </table>
+</section>
 </template>
 
 <script scoped>
@@ -91,7 +93,9 @@ table {
     margin: 0 auto;
     position: relative;
 }
-
+.table-vue{
+    min-height: 30rem;
+}
 table * {
     position: relative;
 }

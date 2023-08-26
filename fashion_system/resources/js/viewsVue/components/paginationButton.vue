@@ -5,26 +5,47 @@
             <div class="col-md-12">
                 <div class="block-27">
                     <ul>
-                        <li><button class="page-jump" @click="activeJump(1)"><font-awesome-icon
-                                    icon="fa-solid fa-angles-left" /></button></li>
-                        <li><button class="page-jump" @click="activeJump(2)"><font-awesome-icon
-                                    icon="fa-solid fa-angle-left" /></button></li>
-                        <li class="active" @click="choosePage(currentPage)"><button>{{ currentPage }}</button></li>
-                        <li v-if="lastNumber >= 2"><button @click="choosePage(currentPage + 1)">{{ currentPage + 1
-                        }}</button>
+                        <li>
+                            <button class="page-jump" @click="activeJump(1)">
+                                <font-awesome-icon icon="fa-solid fa-angles-left" />
+                            </button>
                         </li>
-                        <li v-if="lastNumber >= 5"><button
-                                @click="choosePage(pageCenter(lastNumber / currentPage))"><font-awesome-icon
-                                    icon="fa-solid fa-ellipsis" /></button></li>
-                        <li v-if="lastNumber >= 4"><button @click="choosePage(lastNumber - 1)">{{ lastNumber - 1 }}</button>
+                        <li>
+                            <button class="page-jump" @click="activeJump(2)">
+                                <font-awesome-icon icon="fa-solid fa-angle-left" />
+                            </button>
                         </li>
-                        <li v-if="lastNumber > 4"><button @click="choosePage(lastNumber)">{{ lastNumber }}</button></li>
-                        <li><button class="page-jump" @click="activeJump(3)"><font-awesome-icon
-                                    icon="fa-solid fa-angle-right" /></button></li>
-                        <li v-if="lastNumber >= 10"><button class="page-jump" @click="activeJump(4)"><font-awesome-icon
-                                    icon="fa-solid fa-angles-right" /></button></li>
+                        <li class="active" @click="choosePage(currentPage)">
+                            <button>{{ currentPage }}</button>
+                        </li>
+                        <li v-if="lastNumber >= 2 && currentPage <= lastNumber - 1">
+                            <button @click="choosePage(currentPage + 1)">{{ currentPage + 1 }}</button>
+                        </li>
+                        <li v-if="lastNumber >= 5 && lastNumber - 1 > currentPage">
+                            <button @click="choosePage(pageCenter((lastNumber + currentPage) / 2))">
+                                <font-awesome-icon icon="fa-solid fa-ellipsis" />
+                            </button>
+                        </li>
+                        <li v-if="lastNumber >= 4 && lastNumber - 2 > currentPage">
+                            <button @click="choosePage(lastNumber - 1)">{{ lastNumber - 1 }}</button>
+                        </li>
+                        <li v-if="lastNumber > 4 && lastNumber - 2 >= currentPage">
+                            <button @click="choosePage(lastNumber)">{{ lastNumber }}</button>
+                        </li>
+                        <li>
+                            <button class="page-jump" @click="activeJump(3)">
+                                <font-awesome-icon icon="fa-solid fa-angle-right" />
+                            </button>
+                        </li>
+                        <li v-if="lastNumber >= 10">
+                            <button class="page-jump" @click="activeJump(4)">
+                                <font-awesome-icon icon="fa-solid fa-angles-right" />
+                            </button>
+                        </li>
                     </ul>
-                    <p class="description">{{ numberOfRecords() }}&nbsp;/&nbsp;{{ total }}&nbsp;bản ghi</p>
+                    <p class="description">
+                        {{ numberOfRecords() }}&nbsp;/&nbsp;{{ total }}&nbsp;bản ghi
+                    </p>
                 </div>
             </div>
         </div>
@@ -33,9 +54,8 @@
 
 <script>
 export default {
-    name: 'paginationButton',
-    components: {
-    },
+    name: "paginationButton",
+    components: {},
     props: {
         total: {
             type: Number,
@@ -48,16 +68,13 @@ export default {
         total(value) {
             this.totalRecord = Number(value);
             this.lastNumber = this.convertRow(Number(value));
-            console.log(value);
         },
         currentPage(value) {
             this.page = Number(value);
         },
     },
-    setup() {
-    },
-    directives: {
-    },
+    setup() { },
+    directives: {},
     data() {
         return {
             totalRecord: Number(this.total),
@@ -74,58 +91,56 @@ export default {
     computed() {
         // được sử dụng để định nghĩa các thuộc tính tính toán
     },
-    updated() {
-
-    },
-    destroyed() {
-
-    },
+    updated() { },
+    destroyed() { },
     methods: {
         activePage(value) {
-            this.$emit('page-return', value);
+            return this.$emit("page-return", value);
         },
         // nhảy 1 tragn và 10 trang
         activeJump(value) {
             switch (value) {
                 case 1:
-                    let resultCase1 = this.currentPage - 10
-                    if (!resultCase1) return this.$emit('page-return', 1)
-                    return this.$emit('page-return', resultCase1);
+                    let resultCase1 = this.currentPage - 10;
+                    if (resultCase1 < 0) return this.$emit("page-return", 1);
+                    return this.$emit("page-return", resultCase1);
                 case 2:
-                    return this.$emit('page-return', this.currentPage - 1);
+                    if (this.page == 1) return this.$emit("page-return", 1);
+                    return this.$emit("page-return", this.currentPage - 1);
                 case 3:
-                    let resultCase3 = this.currentPage + 1
-                    if (resultCase3 >= this.convertRow(this.row)) return this.$emit('page-return', this.currentPage)
-                    return this.$emit('page-return', resultCase3);
+                    let resultCase3 = this.currentPage + 1;
+                    if (resultCase3 >= this.convertRow(this.total))
+                        return this.$emit("page-return", this.lastNumber);
+                    return this.$emit("page-return", resultCase3);
                 case 4:
                     let resultCase4 = this.currentPage + 10;
-                    if (resultCase4 >= this.convertRow(this.row)) return this.$emit('page-return', this.currentPage)
-                    return this.$emit('page-return', resultCase4);
+                    if (resultCase4 >= this.convertRow(this.total))
+                        return this.$emit("page-return", this.lastNumber);
+                    return this.$emit("page-return", resultCase4);
             }
         },
         convertRow(value) {
-            const result = Math.ceil((value / 10))
+            const result = Math.ceil(value / 10);
             return result;
         },
         choosePage(value) {
-            console.log(value);
-            return this.$emit('page-return', value);
+
+            if (value >= this.lastNumber) return this.$emit("page-return", this.lastNumber);
+            return this.$emit("page-return", value);
         },
         pageCenter(value) {
-            const result = Math.ceil(value)
+            const result = Math.ceil(value);
             return result;
         },
         numberOfRecords() {
             var roundedNumber = this.lastNumber * 10;
             if (this.page < this.lastNumber) {
-                return this.page*10;
+                return this.page * 10;
             }
             if (roundedNumber == this.totalRecord) {
                 return 10;
-            }
-            else
-                return (10 - (Number(roundedNumber) - Number(this.totalRecord)));
-        }
+            } else return Number(this.totalRecord);
+        },
     },
 };
 </script>
@@ -178,7 +193,8 @@ export default {
     background: #778ba5 !important;
     color: white;
 }
-.description{
+
+.description {
     margin-top: 1rem;
     font-size: 90%;
     font-style: italic;

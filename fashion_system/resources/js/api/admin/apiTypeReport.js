@@ -7,7 +7,6 @@ export default {
         return index.post(`/type-reports`, (data));
     },
     getListTypeReportsByPage(data) {
-        console.log(data);
         return index.get(`/type-reports?page=${data.page}&record_number=${data.record_number}&count=${data.count}`);
     }
 }

@@ -167,7 +167,6 @@
     </div>
     <upload-avatar :type="typeImg" :show="showUploadFile" :data="staff" @hide-upload="emitUpload"
         @upload-success="uploadSuccess"></upload-avatar>
-
     <el-dialog v-model="showPopupBackground" title="Ảnh" width="70%" draggable>
         <div :style="`background-image: url(${backgroundStaff})`" class="show-background-popup"></div>
     </el-dialog>
