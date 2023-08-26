@@ -66,4 +66,35 @@ class TypeReportController extends Controller
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
     }
+    public function changeStatus(Request $request)
+    {
+        $id = $request->id;
+        try {
+            $search = $this->typeReport->getById($id)->first();
+            if (!$search) {
+                return CodeHttpHelpers::returnJson(204, false, 'Mã không tồn tại', 200);
+            }
+            $status = !($search->status);
+            $resultChange = $this->typeReport->statusChange($id, $status);
+            if (!$resultChange)  return CodeHttpHelpers::returnJson(400, false, 'Thay đổi trạng thái thất bại', 200);
+            return CodeHttpHelpers::returnJson(200, false, 'Cập nhật thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
+    }
+    public function deleteRecord(Request $request)
+    {
+        $id = $request->id;
+        try {
+            $search = $this->typeReport->getById($id)->first();
+            if (!$search) {
+                return CodeHttpHelpers::returnJson(204, false, 'Mã không tồn tại', 200);
+            }
+            $resultDelete = $this->typeReport->deleteById($id);
+            if (!$resultDelete)  return CodeHttpHelpers::returnJson(400, false, 'Xóa thất bại', 200);
+            return CodeHttpHelpers::returnJson(200, false, 'Xóa thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
+    }
 }

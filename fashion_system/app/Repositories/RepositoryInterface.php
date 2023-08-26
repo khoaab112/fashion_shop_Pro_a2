@@ -11,7 +11,7 @@ interface RepositoryInterface {
     public function creates(array $array);
     public function updateById(array $array,int $id);
     public function findById(int $id);
-    public function statusChange($id);
+    public function statusChange($id,$status);
     public function deleteAll();
     public function deleteById($id);
     public function pagingRecord($numberOfElements);

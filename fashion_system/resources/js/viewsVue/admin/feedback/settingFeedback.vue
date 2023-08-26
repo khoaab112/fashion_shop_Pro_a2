@@ -117,10 +117,7 @@ export default {
                 { key: "status", label: "Trạng thái", text: 'center' },
                 { key: "actions", label: "Thao tác", text: 'center' },
             ],
-            itemsTable: [
-                { title1: "khoa", title2: "HtpShiftDetail", title3: "HtpShiftDetail" },
-                { title1: "khoa", title2: "HtpShiftDetail", title3: "HtpShiftDetail" },
-            ],
+            itemsTable: [],
             isShowDiaLog: false,
             valuesTableCreateNew: [
                 { name: '', note: '', status: 0, }

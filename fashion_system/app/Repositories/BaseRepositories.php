@@ -42,10 +42,10 @@ abstract class BaseRepositories implements RepositoryInterface
     {
         return $this->model->findOrFail($id);
     }
-    public function statusChange($id)
+    public function statusChange($id,$status)
     {
         $object = $this->model->find($id);
-        return $object->update(['status' => true]);
+        return $object->update(['status' => $status]);
     }
     public function deleteAll()
     {
