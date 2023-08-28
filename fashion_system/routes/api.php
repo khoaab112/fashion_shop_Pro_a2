@@ -53,7 +53,7 @@ Route::middleware(['checkURL'])->group(function () {
             Route::post('/type-reports', [TypeReportController::class, 'createsTypeReport']);
             Route::get('/type-reports', [TypeReportController::class, 'getRecords']);
             Route::put('/change-type-report', [TypeReportController::class, 'changeStatus']);
-            Route::delete('/delete-type-report', [TypeReportController::class, 'deleteRecord']);
+            Route::delete('/delete-type-report/{id}', [TypeReportController::class, 'deleteRecord']);
 
         });
     });

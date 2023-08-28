@@ -55,7 +55,7 @@
         </el-dialog>
         <!-- end add -->
         <div class="card p-3">
-            <table-admin :titles="titlesTable" :items="itemsTable" class="p-2">
+            <table-admin :titles="titlesTable" :items="itemsTable" :loading="loadingTable" class="p-2">
                 <template #cell(name)="data">
                     {{ data.data.value.name }}
                 </template>
@@ -69,18 +69,16 @@
                                 style="color:#dc3545 ;" /></strong></span>
                 </template>
                 <template #cell(actions)="data">
-                    <button class="action action-block" v-if="data.data.value.status">Khóa</button>
-                    <button class="action action-live" v-else>Hoạt động</button>
-                    <button class="action action-remove">Xóa</button>
+                    <button class="action action-block" v-if="data.data.value.status"
+                        @click="changeStatus(data.data.value.id)">Khóa</button>
+                    <button class="action action-live" v-else @click="changeStatus(data.data.value.id)">Hoạt động</button>
+                    <button class="action action-remove" @click="deleteRecord(data.data.value.id)">Xóa</button>
                 </template>
             </table-admin>
         </div>
     </section>
     <section class="text-end me-5 mt-3 pb-1">
-        <pagination-Button
-        :total="rowDefault"
-        :currentPage="currentPageDefault"
-        @page-return="returnResultFromPagination">
+        <pagination-Button :total="rowDefault" :currentPage="currentPageDefault" @page-return="returnResultFromPagination">
         </pagination-Button>
     </section>
 </template>
@@ -90,6 +88,7 @@ import tableAdmin from "../../components/tableAdmin.vue";
 import paginationButton from "../../components/paginationButton.vue";
 import { ElMessage } from 'element-plus';
 import { ElNotification } from 'element-plus';
+
 
 import apiTypeReport from '@/js/api/admin/apiTypeReport.js';
 
@@ -138,6 +137,7 @@ export default {
             visibleRecordCount: 10,
             pageReturn: 12123,
             isCount: true,
+            loadingTable: true,
 
         };
     },
@@ -245,6 +245,7 @@ export default {
                 });
         },
         getListTypeReports() {
+            this.loadingTable = true;
             const data = {
                 "page": this.currentPageDefault,
                 "record_number": this.visibleRecordCount,
@@ -257,6 +258,7 @@ export default {
                     if (dataResponse.result_code == 200) {
                         this.rowDefault = dataResponse.results.total_record;
                         this.itemsTable = Object.values(dataResponse.results.page);
+                        this.loadingTable = false;
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -269,7 +271,58 @@ export default {
         },
         returnResultFromPagination(value) {
             this.pageReturn = value;
-        }
+        },
+        changeStatus(id) {
+            this.loadingTable = true;
+            var input = { id };
+            apiTypeReport
+                .changeTypeReports(input)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        ElNotification({
+                            title: "Success",
+                            message: dataResponse.results,
+                            type: "success",
+                        });
+                        this.getListTypeReports();
+                        this.loadingTable = false;
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: "Có lỗi bất thường",
+                        type: "error",
+                    });
+                });
+        },
+        deleteRecord(id) {
+            this.loadingTable = true;
+            var input = { id };
+            apiTypeReport
+                .deleteTypeReports(input)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        ElNotification({
+                            title: "Success",
+                            message: dataResponse.results,
+                            type: "success",
+                        });
+                        this.getListTypeReports();
+                        this.loadingTable = false;
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: "Có lỗi bất thường",
+                        type: "error",
+                    });
+                });
+
+        },
     },
 };
 </script>
@@ -283,6 +336,7 @@ button.action {
     padding: 0.2rem 0.5rem;
     border: none;
     border-radius: 15px;
+    user-select: none;
 }
 
 button.action-block {

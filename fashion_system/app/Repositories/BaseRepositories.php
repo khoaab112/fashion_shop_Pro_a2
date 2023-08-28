@@ -62,7 +62,8 @@ abstract class BaseRepositories implements RepositoryInterface
     }
     public function getRecordByPage($recordNumber,$page)
     {
-        return $this->model->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
+        // return $this->model->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
+        return $this->model->orderBy('id', 'desc')->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
     }
     public function search($key, $value)
     {

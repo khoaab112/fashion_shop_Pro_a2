@@ -13,6 +13,6 @@ export default {
         return index.put(`/change-type-report`, (data));
     },
     deleteTypeReports(data) {
-        return index.delete(`/delete-type-report`, (data));
+        return index.delete(`/delete-type-report/${data.id}`);
     },
 }

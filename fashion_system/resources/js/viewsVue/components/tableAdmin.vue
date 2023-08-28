@@ -19,18 +19,25 @@
             </tr>
         </tbody>
     </table>
+    <div class="loading-data text-center" v-if="loading">
+        <loadingStyleTwirl></loadingStyleTwirl>
+        <h5 class="pt-3 ps-3">Đang tải.....</h5>
+    </div>
 </section>
 </template>
 
 <script scoped>
+import loadingStyleTwirl from './loadingStyleTwirl.vue';
 export default {
     name: 'tableAdmin',
     components: {
+        loadingStyleTwirl,
     },
     props: {
         //  titles = key , label
         titles: Array,
-        items: Array
+        items: Array,
+        loading:Boolean,
     },
     setup() {
     },

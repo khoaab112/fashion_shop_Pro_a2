@@ -77,14 +77,13 @@ class TypeReportController extends Controller
             $status = !($search->status);
             $resultChange = $this->typeReport->statusChange($id, $status);
             if (!$resultChange)  return CodeHttpHelpers::returnJson(400, false, 'Thay đổi trạng thái thất bại', 200);
-            return CodeHttpHelpers::returnJson(200, false, 'Cập nhật thành công', 200);
+            return CodeHttpHelpers::returnJson(200, true, 'Cập nhật thành công', 200);
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
     }
-    public function deleteRecord(Request $request)
+    public function deleteRecord($id)
     {
-        $id = $request->id;
         try {
             $search = $this->typeReport->getById($id)->first();
             if (!$search) {
@@ -92,7 +91,7 @@ class TypeReportController extends Controller
             }
             $resultDelete = $this->typeReport->deleteById($id);
             if (!$resultDelete)  return CodeHttpHelpers::returnJson(400, false, 'Xóa thất bại', 200);
-            return CodeHttpHelpers::returnJson(200, false, 'Xóa thành công', 200);
+            return CodeHttpHelpers::returnJson(200, true, 'Xóa thành công', 200);
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
