@@ -4,7 +4,7 @@
     <p>Tên phân mềm : <strong>{{ nameSystem }}</strong></p>
     <p>Số phiên bản : <strong>{{ versionSystem }}</strong></p>
     <hr />
-    <strong class="title-comments h3">Phần đóng góp ý kiến hoặc phản hồi</strong>
+    <strong class="title-comments h3">Yêu cầu hỗ trợ</strong>
     <div class="content-support">
       <input
         class="form-control input-title"
@@ -30,11 +30,11 @@
 
 <script>
 import ENV from "@/js/generalSetting/filterEnv.js";
-import loadingSpinner from "../../components/loadingSpinner.vue";
+import LoadingSpinner from "../../components/loadingSpinner.vue";
 export default {
   name: "supportForEmployees",
   components: {
-    loadingSpinner,
+    LoadingSpinner
 },
   setup() {},
   directives: {},

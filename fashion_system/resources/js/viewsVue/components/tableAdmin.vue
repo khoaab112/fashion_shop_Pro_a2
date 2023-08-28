@@ -1,29 +1,34 @@
 <template>
     <section class="table-vue">
-    <table>
-        <thead>
-            <tr>
-                <th v-for="(val, indexTitles) in titles" :key="indexTitles" :class="(val.key == `index`?'p-0':'')">{{ val.label }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(record, key) of  items " :key="key">
-                <td v-for="(valTitles, indexTitles) in  titles " :key="indexTitles" :class="[getClass(valTitles.text),(valTitles.key == `index`?'p-0':'')]">
-                    <template v-if="valTitles.key == `index`">
-                        {{Number(key)+1 }}
-                    </template>
-                    <template v-if="searchCellName(record, valTitles.key)">
-                        <slot :name="`cell(${valTitles.key})`" :data="{  value:record , index :key}"></slot>
-                    </template>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="loading-data text-center" v-if="loading">
-        <loadingStyleTwirl></loadingStyleTwirl>
-        <h5 class="pt-3 ps-3">Đang tải.....</h5>
-    </div>
-</section>
+        <table>
+            <thead>
+                <tr>
+                    <th v-for="(val, indexTitles) in titles" :key="indexTitles" :class="(val.key == `index` ? 'p-3' : '')">
+                        {{
+                            val.label }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(record, key) of  items " :key="key">
+                    <td v-for="(valTitles, indexTitles) in  titles " :key="indexTitles"
+                        :class="[getClass(valTitles.text), (valTitles.key == `index` ? 'p-3' : '')]">
+                        <template v-if="valTitles.key == `index`">
+                            {{ Number(key) + 1 }}
+                        </template>
+                        <template v-if="searchCellName(record, valTitles.key)">
+                            <div :style="`color: ${getColor(valTitles)};`">
+                                <slot :name="`cell(${valTitles.key})`" :data="{ value: record, index: key }"></slot>
+                            </div>
+                        </template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="loading-data text-center" v-if="loading">
+            <loadingStyleTwirl></loadingStyleTwirl>
+            <h5 class="pt-3 ps-3">Đang tải.....</h5>
+        </div>
+    </section>
 </template>
 
 <script scoped>
@@ -37,7 +42,7 @@ export default {
         //  titles = key , label
         titles: Array,
         items: Array,
-        loading:Boolean,
+        loading: Boolean,
     },
     setup() {
     },
@@ -84,7 +89,14 @@ export default {
                     return 'text-end';
                 default: return 'text-start';
             }
-        }
+        },
+        getColor(value) {
+            if (!value.color) {
+                return 'black';
+            }
+            else
+                return value.color
+        },
     },
 };
 </script>
@@ -100,9 +112,11 @@ table {
     margin: 0 auto;
     position: relative;
 }
-.table-vue{
+
+.table-vue {
     min-height: 30rem;
 }
+
 table * {
     position: relative;
 }

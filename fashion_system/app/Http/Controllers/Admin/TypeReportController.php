@@ -29,7 +29,6 @@ class TypeReportController extends Controller
     }
     public function createsTypeReport(Request $request)
     {
-
         $arrayData = $request->input();
         foreach ($arrayData as $val) {
             $validator = validationHelpers::validation($val, $this->validationRules, $this->attributeNames);

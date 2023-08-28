@@ -102,7 +102,7 @@ export default {
             switch (value) {
                 case 1:
                     let resultCase1 = this.currentPage - 10;
-                    if (resultCase1 < 0) return this.$emit("page-return", 1);
+                    if (resultCase1 <= 0) return this.$emit("page-return", 1);
                     return this.$emit("page-return", resultCase1);
                 case 2:
                     if (this.page == 1) return this.$emit("page-return", 1);

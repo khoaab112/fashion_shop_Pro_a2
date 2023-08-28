@@ -57,7 +57,7 @@
         <div class="card p-3">
             <table-admin :titles="titlesTable" :items="itemsTable" :loading="loadingTable" class="p-2">
                 <template #cell(name)="data">
-                    {{ data.data.value.name }}
+                <span class="col-name">    {{ data.data.value.name }}</span>
                 </template>
                 <template #cell(note)="data">
                     {{ data.data.value.note }}
@@ -72,7 +72,7 @@
                     <button class="action action-block" v-if="data.data.value.status"
                         @click="changeStatus(data.data.value.id)">Khóa</button>
                     <button class="action action-live" v-else @click="changeStatus(data.data.value.id)">Hoạt động</button>
-                    <button class="action action-remove" @click="deleteRecord(data.data.value.id)">Xóa</button>
+                    <!-- <button class="action action-remove" @click="deleteRecord(data.data.value.id)">Xóa</button> -->
                 </template>
             </table-admin>
         </div>
@@ -111,7 +111,7 @@ export default {
             tabPosition: "left",
             titlesTable: [
                 { key: "index", label: "STT", text: 'center' },
-                { key: "name", label: "Tên", text: 'start' },
+                { key: "name", label: "Tên", text: 'start', color: 'black' },
                 { key: "note", label: "Ghi chú", text: 'start' },
                 { key: "status", label: "Trạng thái", text: 'center' },
                 { key: "actions", label: "Thao tác", text: 'center' },
@@ -233,7 +233,7 @@ export default {
                             type: "success",
                         });
                         this.isShowDiaLog = false
-                        this.valuesTableCreateNew = '';
+                        // this.valuesTableCreateNew = '';
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -446,6 +446,9 @@ input[type=text]:focus {
 span.remind-user {
     font-size: 70%;
     color: red;
+}
+.col-name{
+    font-weight:bold;
 }
 </style>
 
