@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TypeTicketController;
 use App\Http\Controllers\Authentication\AuthnController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\TypeReportController;
+use App\Http\Controllers\Admin\ReportSourceController;
 use App\Http\Controllers\Test;
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,10 @@ Route::middleware(['checkURL'])->group(function () {
             Route::get('/type-reports', [TypeReportController::class, 'getRecords']);
             Route::put('/change-type-report', [TypeReportController::class, 'changeStatus']);
             Route::delete('/delete-type-report/{id}', [TypeReportController::class, 'deleteRecord']);
+
+            //report_source
+            Route::post('/report-source', [ReportSourceController::class, 'createsReportSource']);
+
 
         });
     });

@@ -1,5 +1,11 @@
 <template>
     <section id="setting-feedback">
+        <div class="tap-view">
+            <button>Các loại phản hồi</button>
+            <button>Nguồn tố cáo</button>
+        </div>
+
+
         <!-- add -->
         <div class="add-type-feedback">
             <div class="text-end"><button @click="isShowDiaLog = !isShowDiaLog">Thêm</button></div>
@@ -57,7 +63,7 @@
         <div class="card p-3">
             <table-admin :titles="titlesTable" :items="itemsTable" :loading="loadingTable" class="p-2">
                 <template #cell(name)="data">
-                <span class="col-name">    {{ data.data.value.name }}</span>
+                    <span class="col-name"> {{ data.data.value.name }}</span>
                 </template>
                 <template #cell(note)="data">
                     {{ data.data.value.note }}
@@ -447,8 +453,9 @@ span.remind-user {
     font-size: 70%;
     color: red;
 }
-.col-name{
-    font-weight:bold;
+
+.col-name {
+    font-weight: bold;
 }
 </style>
 
