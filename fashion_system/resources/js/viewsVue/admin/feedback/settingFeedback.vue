@@ -1,91 +1,120 @@
 <template>
     <section id="setting-feedback">
         <div class="tap-view">
-            <button>Các loại phản hồi</button>
-            <button>Nguồn tố cáo</button>
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <button :class="{ 'active-table': isActiveTableTypeResponse }"
+                        @click="isActiveTableTypeResponse = true">Các
+                        loại
+                        phản hồi</button>
+                </div>
+                <div class="col-12 col-md-3">
+                    <button :class="{ 'active-table': isActiveTableReportSource }"
+                        @click="isActiveTableReportSource = true">Nguồn tố cáo</button>
+                </div>
+                <div class="col-12 col-md-3">
+                    <button>Test</button>
+                </div>
+                <div class="col-12 col-md-3">
+                    <button>Test</button>
+                </div>
+            </div>
         </div>
-
-
-        <!-- add -->
-        <div class="add-type-feedback">
+        <div class="btn-add">
             <div class="text-end"><button @click="isShowDiaLog = !isShowDiaLog">Thêm</button></div>
-            <el-dialog v-model="isShowDiaLog" title="Tạo kiểu / nguồn thu thập phản hồi mới" width="60%" align-center>
-                <table-admin :titles="titlesTable" :items="valuesTableCreateNew" class="p-2">
-                    <template #cell(name)="data">
-                        <input type="text" placeholder="Tên" class="input-add"
-                            v-model="valuesTableCreateNew[data.data.index].name">
-                        <span class="remind-user" v-if="!valuesTableCreateNew[data.data.index].name">Bắt buộc</span>
-                    </template>
-                    <template #cell(note)="data">
-                        <textarea placeholder="Ghi chú..." class="" data-mdb-toggle="popover" title="Click 2 lần để mở to"
-                            v-model="valuesTableCreateNew[data.data.index].note"
-                            @dblclick="showTextAreaAdd(valuesTableCreateNew[data.data.index].note, data.data.index)">
+        </div>
+        <div class="table-type-response" v-if="isActiveTableTypeResponse">
+            <!-- add -->
+            <div class="add-type-feedback">
+                <!-- <div class="text-end"><button @click="isShowDiaLog = !isShowDiaLog">Thêm</button></div> -->
+                <el-dialog v-model="isShowDiaLog" title="Tạo kiểu / nguồn thu thập phản hồi mới" width="60%" align-center>
+                    <table-admin :titles="titlesTable" :items="valuesTableCreateNew" class="p-2">
+                        <template #cell(name)="data">
+                            <input type="text" placeholder="Tên" class="input-add"
+                                v-model="valuesTableCreateNew[data.data.index].name">
+                            <span class="remind-user" v-if="!valuesTableCreateNew[data.data.index].name">Bắt buộc</span>
+                        </template>
+                        <template #cell(note)="data">
+                            <textarea placeholder="Ghi chú..." class="" data-mdb-toggle="popover"
+                                title="Click 2 lần để mở to" v-model="valuesTableCreateNew[data.data.index].note"
+                                @dblclick="showTextAreaAdd(valuesTableCreateNew[data.data.index].note, data.data.index)">
                         </textarea>
+                        </template>
+                        <template #cell(status)="data">
+                            <el-select v-model="valuesTableCreateNew[data.data.index].status" placeholder="Chọn"
+                                style="width: 100%">
+                                <el-option v-for=" item  in  options " :key="item.value" :label="item.label"
+                                    :value="item.value" />
+                            </el-select>
+                        </template>
+                        <template #cell(actions)="data">
+                            <button class="action-table-add action-add-type"
+                                @click="addRow(data.data.index)"><font-awesome-icon icon="fa-solid fa-plus" />
+                            </button>
+                            <button class="action-table-add action-minus-type"
+                                @click="minusRow(data.data.index)"><font-awesome-icon icon="fa-solid fa-minus" /></button>
+                        </template>
+                    </table-admin>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="isShowDiaLog = false">Thoát</el-button>
+                            <el-button type="primary" @click="createTypeReports()">
+                                Tạo
+                            </el-button>
+                        </span>
                     </template>
-                    <template #cell(status)="data">
-                        <el-select v-model="valuesTableCreateNew[data.data.index].status" placeholder="Chọn"
-                            style="width: 100%">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-                        </el-select>
-                    </template>
-                    <template #cell(actions)="data">
-                        <button class="action-table-add action-add-type" @click="addRow(data.data.index)"><font-awesome-icon
-                                icon="fa-solid fa-plus" />
-                        </button>
-                        <button class="action-table-add action-minus-type"
-                            @click="minusRow(data.data.index)"><font-awesome-icon icon="fa-solid fa-minus" /></button>
-                    </template>
-                </table-admin>
+                </el-dialog>
+            </div>
+
+            <el-dialog v-model="showTextArea" :title="`Nội dung ghi chú hàng ${idCol}`" width="30%" class="show-text-area">
+                <textarea placeholder="Chưa có nội dung" v-model="contentCol.value"
+                    class="textarea-more">{{ contentCol.value }}</textarea>
                 <template #footer>
                     <span class="dialog-footer">
-                        <el-button @click="isShowDiaLog = false">Thoát</el-button>
-                        <el-button type="primary" @click="createTypeReports()">
-                            Tạo
+                        <el-button @click="clearContentTextArea(contentCol.index)">Xóa</el-button>
+                        <el-button type="primary" @click="submitPopupTextArea(contentCol)">
+                            Xác nhận
                         </el-button>
                     </span>
                 </template>
             </el-dialog>
+            <!-- end add -->
+
+            <div class="text-center">
+                <h3>Bảng quản lý các loại phản hồi</h3>
+            </div>
+            <div class="card p-3">
+                <table-admin :titles="titlesTable" :items="itemsTable" :loading="loadingTable" class="p-2">
+                    <template #cell(name)="data">
+                        <span class="col-name"> {{ data.data.value.name }}</span>
+                    </template>
+                    <template #cell(note)="data">
+                        {{ data.data.value.note }}
+                    </template>
+                    <template #cell(status)="data">
+                        <span v-if="data.data.value.status">Hoạt động<strong class="float-end"><font-awesome-icon
+                                    icon="fa-solid fa-heart-pulse" style="color:#28a745 ;" /></strong></span>
+                        <span v-else>Khóa<strong class="float-end"><font-awesome-icon icon="fa-solid fa-road-barrier"
+                                    style="color:#dc3545 ;" /></strong></span>
+                    </template>
+                    <template #cell(actions)="data">
+                        <button class="action action-block" v-if="data.data.value.status"
+                            @click="changeStatus(data.data.value.id)">Khóa</button>
+                        <button class="action action-live" v-else @click="changeStatus(data.data.value.id)">Hoạt
+                            động</button>
+                        <!-- <button class="action action-remove" @click="deleteRecord(data.data.value.id)">Xóa</button> -->
+                    </template>
+                </table-admin>
+            </div>
         </div>
 
-        <el-dialog v-model="showTextArea" :title="`Nội dung ghi chú hàng ${idCol}`" width="30%" class="show-text-area">
-            <textarea placeholder="Chưa có nội dung" v-model="contentCol.value"
-                class="textarea-more">{{ contentCol.value }}</textarea>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="clearContentTextArea(contentCol.index)">Xóa</el-button>
-                    <el-button type="primary" @click="submitPopupTextArea(contentCol)">
-                        Xác nhận
-                    </el-button>
-                </span>
-            </template>
-        </el-dialog>
-        <!-- end add -->
-        <div class="card p-3">
-            <table-admin :titles="titlesTable" :items="itemsTable" :loading="loadingTable" class="p-2">
-                <template #cell(name)="data">
-                    <span class="col-name"> {{ data.data.value.name }}</span>
-                </template>
-                <template #cell(note)="data">
-                    {{ data.data.value.note }}
-                </template>
-                <template #cell(status)="data">
-                    <span v-if="data.data.value.status">Hoạt động<strong class="float-end"><font-awesome-icon
-                                icon="fa-solid fa-heart-pulse" style="color:#28a745 ;" /></strong></span>
-                    <span v-else>Khóa<strong class="float-end"><font-awesome-icon icon="fa-solid fa-road-barrier"
-                                style="color:#dc3545 ;" /></strong></span>
-                </template>
-                <template #cell(actions)="data">
-                    <button class="action action-block" v-if="data.data.value.status"
-                        @click="changeStatus(data.data.value.id)">Khóa</button>
-                    <button class="action action-live" v-else @click="changeStatus(data.data.value.id)">Hoạt động</button>
-                    <!-- <button class="action action-remove" @click="deleteRecord(data.data.value.id)">Xóa</button> -->
-                </template>
-            </table-admin>
-        </div>
-    </section>
-    <section class="text-end me-5 mt-3 pb-1">
-        <pagination-Button :total="rowDefault" :currentPage="currentPageDefault" @page-return="returnResultFromPagination">
-        </pagination-Button>
+        <!-- table-source-report -->
+        <componentsReportSource v-if="isActiveTableReportSource"></componentsReportSource>
+        <section class="text-end me-5 mt-3 pb-1">
+            <pagination-Button :total="rowDefault" :currentPage="currentPageDefault"
+                @page-return="returnResultFromPagination">
+            </pagination-Button>
+        </section>
     </section>
 </template>
 
@@ -94,7 +123,7 @@ import tableAdmin from "../../components/tableAdmin.vue";
 import paginationButton from "../../components/paginationButton.vue";
 import { ElMessage } from 'element-plus';
 import { ElNotification } from 'element-plus';
-
+import componentsReportSource from "./componentsReportSource.vue";
 
 import apiTypeReport from '@/js/api/admin/apiTypeReport.js';
 
@@ -103,6 +132,7 @@ export default {
     components: {
         tableAdmin,
         paginationButton,
+        componentsReportSource
     },
     setup() { },
     directives: {},
@@ -141,10 +171,12 @@ export default {
             rowDefault: 5,
             currentPageDefault: 1,
             visibleRecordCount: 10,
-            pageReturn: 12123,
+            pageReturn: null,
             isCount: true,
             loadingTable: true,
-
+            //
+            isActiveTableTypeResponse: false,
+            isActiveTableReportSource: true,
         };
     },
     created() {
@@ -160,7 +192,15 @@ export default {
         pageReturn(val) {
             this.currentPageDefault = val;
             this.getListTypeReports();
-        }
+        },
+        isActiveTableTypeResponse(val) {
+            if (val) this.isActiveTableReportSource = false;
+            // if(!val && !this.isActiveTableReportSource) this.isActiveTableReportSource = true;
+        },
+        isActiveTableReportSource(val) {
+            if (val) this.isActiveTableTypeResponse = false;
+        },
+
     },
     updated() { },
     destroyed() { },
@@ -335,6 +375,41 @@ export default {
 
 <style scoped>
 #setting-feedback {}
+
+.tap-view {
+    display: flex;
+    padding: 1rem 1rem 0 1rem;
+}
+
+.tap-view button {
+    margin: 0.5rem;
+    min-height: 2.5rem;
+    min-width: 8.5rem;
+    border: none;
+    border-radius: 10px;
+    background: #2a6fe6;
+    color: white;
+    font-size: 14px;
+}
+
+.tap-view button.active-table {
+    background-color: #44a747 !important;
+}
+
+.tap-view button:hover {
+    background: #d9d9d9;
+    color: #000;
+}
+
+.btn-add>div>button {
+    border: 1px solid #28a745;
+    width: 4rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    margin: 1rem;
+    color: white;
+    background: #28a745;
+}
 
 button.action {
     font-size: 80%;

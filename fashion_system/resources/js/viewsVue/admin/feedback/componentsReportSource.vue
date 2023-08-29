@@ -1,36 +1,69 @@
 <template>
     <!-- Nội dung giao diện người dùng -->
-    <div>
-          <p class="text-center">Danh mục đang trong quá trình thi công</p>
-          <div class="text-center"><font-awesome-icon icon="fa-solid fa-person-digging" fade size="2xl"
-                  style="color: #1dcd20;font-size: 10rem;" />
-          </div>
-          <div class="text-center">🤕🤕🤕🤕🤕</div>
-      </div>
-  </template>
+    <section class="table-report-source">
+        <div class="title-table text-center">
+            <h3>Bảng quản lý nguồn tố cáo</h3>
+        </div>
+        <table-admin :titles="titleTable" :items="itemsTable" :loading="isLoadingTable">
 
-  <script>
-  export default {
-    name: 'HtpShiftDetail',
+        </table-admin>
+    </section>
+    <!-- <section class="text-end me-5 mt-3 pb-1">
+        <pagination-Button :total="rowDefault" :currentPage="currentPageDefault"
+            @page-return="returnResultFromPagination">
+        </pagination-Button>
+    </section> -->
+
+    <section>
+
+    </section>
+</template>
+
+<script>
+import tableAdmin from "../../components/tableAdmin.vue";
+import paginationButton from "../../components/paginationButton.vue";
+import { ElMessage } from 'element-plus';
+import { ElNotification } from 'element-plus';
+export default {
+    name: 'ReportSource',
     components: {
+        tableAdmin,
+        paginationButton,
     },
     setup() {
     },
     directives: {
     },
     data() {
-      return {
-        // Dữ liệu của component
-      };
+        return {
+            titleTable: [
+                { key: "index", label: "STT", text: 'center' },
+                { key: "name", label: "Tên", text: 'start', color: 'black' },
+                { key: "note", label: "Ghi chú", text: 'start' },
+                { key: "status", label: "Trạng thái", text: 'center' },
+                { key: "actions", label: "Thao tác", text: 'center' },
+            ],
+            itemsTable: [],
+            isLoadingTable: true,
+            pageReturn:null,
+            rowDefault:5,
+            currentPageDefault: 1,
+            // visibleRecordCount: 10,
+        };
     },
     created() {
-      // Logic khi component được khởi tạo
+        // Logic khi component được khởi tạo
+    },
+    watch:{
+        pageReturn(val) {
+            this.currentPageDefault = val;
+        },
     },
     mounted() {
-      // Logic sau khi component được gắn kết (render) vào DOM
+        // Logic sau khi component được gắn kết (render) vào DOM
     },
     computed() {
-      // được sử dụng để định nghĩa các thuộc tính tính toán
+        // được sử dụng để định nghĩa các thuộc tính tính toán
     },
     updated() {
 
@@ -39,11 +72,14 @@
 
     },
     methods: {
-      // Các phương thức xử lý sự kiện hoặc logic khác
+        returnResultFromPagination(value) {
+            this.pageReturn = value;
+        },
     },
-  };
-  </script>
+};
+</script>
 
-  <style>
-  /* CSS cho component */
-  </style>
+<style scoped>
+
+/* CSS cho component */
+</style>

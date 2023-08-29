@@ -46,4 +46,40 @@ class ReportSourceController extends Controller
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
     }
+    public function getRecords(Request $request)
+    {
+        $recordNumber = $request->input('record_number', 10);
+        $page = $request->input('page', 1);
+        $count = $request->input('count') === 'true';
+        try {
+            $records = $this->typeReport->getRecordByPage($recordNumber, $page);
+            if ($count) {
+                $totalRecord = $this->typeReport->count();
+                $result = [
+                    'page' => $records,
+                    'total_record' => $totalRecord,
+                ];
+                return CodeHttpHelpers::returnJson(200, true, $result, 200);
+            }
+            return CodeHttpHelpers::returnJson(200, true, ['page' => $records], 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
+    }
+    public function changeStatus(Request $request)
+    {
+        $id = $request->id;
+        try {
+            $search = $this->typeReport->getById($id)->first();
+            if (!$search) {
+                return CodeHttpHelpers::returnJson(204, false, 'Mã không tồn tại', 200);
+            }
+            $status = !($search->status);
+            $resultChange = $this->typeReport->statusChange($id, $status);
+            if (!$resultChange)  return CodeHttpHelpers::returnJson(400, false, 'Thay đổi trạng thái thất bại', 200);
+            return CodeHttpHelpers::returnJson(200, true, 'Cập nhật thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
+    }
 }
