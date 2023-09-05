@@ -5,7 +5,9 @@
             <h3>Bảng quản lý nguồn tố cáo</h3>
         </div>
         <table-admin :titles="titleTable" :items="itemsTable" :loading="isLoadingTable">
-
+            <template v-slot:notifyUsers>
+                <p>Không có dữ liệu</p>
+            </template>
         </table-admin>
     </section>
     <!-- <section class="text-end me-5 mt-3 pb-1">
@@ -45,8 +47,8 @@ export default {
             ],
             itemsTable: [],
             isLoadingTable: true,
-            pageReturn:null,
-            rowDefault:5,
+            pageReturn: null,
+            rowDefault: 5,
             currentPageDefault: 1,
             // visibleRecordCount: 10,
         };
@@ -54,7 +56,7 @@ export default {
     created() {
         // Logic khi component được khởi tạo
     },
-    watch:{
+    watch: {
         pageReturn(val) {
             this.currentPageDefault = val;
         },
@@ -80,6 +82,5 @@ export default {
 </script>
 
 <style scoped>
-
 /* CSS cho component */
 </style>

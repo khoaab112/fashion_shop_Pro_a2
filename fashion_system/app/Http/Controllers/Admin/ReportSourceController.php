@@ -14,7 +14,7 @@ class ReportSourceController extends Controller
     //
     protected $reportSource;
     protected $validationRules = [
-        'name' => 'required|unique:type_report,name',
+        'name' => 'required|unique:report_source,name',
         'note' => 'required|string',
         'status' => 'required|boolean',
     ];
@@ -52,9 +52,9 @@ class ReportSourceController extends Controller
         $page = $request->input('page', 1);
         $count = $request->input('count') === 'true';
         try {
-            $records = $this->typeReport->getRecordByPage($recordNumber, $page);
+            $records = $this->reportSource->getRecordByPage($recordNumber, $page);
             if ($count) {
-                $totalRecord = $this->typeReport->count();
+                $totalRecord = $this->reportSource->count();
                 $result = [
                     'page' => $records,
                     'total_record' => $totalRecord,
@@ -70,12 +70,12 @@ class ReportSourceController extends Controller
     {
         $id = $request->id;
         try {
-            $search = $this->typeReport->getById($id)->first();
+            $search = $this->reportSource->getById($id)->first();
             if (!$search) {
                 return CodeHttpHelpers::returnJson(204, false, 'Mã không tồn tại', 200);
             }
             $status = !($search->status);
-            $resultChange = $this->typeReport->statusChange($id, $status);
+            $resultChange = $this->reportSource->statusChange($id, $status);
             if (!$resultChange)  return CodeHttpHelpers::returnJson(400, false, 'Thay đổi trạng thái thất bại', 200);
             return CodeHttpHelpers::returnJson(200, true, 'Cập nhật thành công', 200);
         } catch (\Exception $e) {

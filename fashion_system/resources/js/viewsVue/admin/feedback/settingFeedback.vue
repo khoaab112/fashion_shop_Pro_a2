@@ -23,7 +23,7 @@
         <div class="btn-add">
             <div class="text-end"><button @click="isShowDiaLog = !isShowDiaLog">Thêm</button></div>
         </div>
-        <div class="table-type-response" v-if="isActiveTableTypeResponse">
+        <div>
             <!-- add -->
             <div class="add-type-feedback">
                 <!-- <div class="text-end"><button @click="isShowDiaLog = !isShowDiaLog">Thêm</button></div> -->
@@ -38,7 +38,7 @@
                             <textarea placeholder="Ghi chú..." class="" data-mdb-toggle="popover"
                                 title="Click 2 lần để mở to" v-model="valuesTableCreateNew[data.data.index].note"
                                 @dblclick="showTextAreaAdd(valuesTableCreateNew[data.data.index].note, data.data.index)">
-                        </textarea>
+                    </textarea>
                         </template>
                         <template #cell(status)="data">
                             <el-select v-model="valuesTableCreateNew[data.data.index].status" placeholder="Chọn"
@@ -58,7 +58,7 @@
                     <template #footer>
                         <span class="dialog-footer">
                             <el-button @click="isShowDiaLog = false">Thoát</el-button>
-                            <el-button type="primary" @click="createTypeReports()">
+                            <el-button type="primary" @click="switchAPICreate()">
                                 Tạo
                             </el-button>
                         </span>
@@ -79,7 +79,8 @@
                 </template>
             </el-dialog>
             <!-- end add -->
-
+        </div>
+        <div class="table-type-response" v-if="isActiveTableTypeResponse">
             <div class="text-center">
                 <h3>Bảng quản lý các loại phản hồi</h3>
             </div>
@@ -126,6 +127,7 @@ import { ElNotification } from 'element-plus';
 import componentsReportSource from "./componentsReportSource.vue";
 
 import apiTypeReport from '@/js/api/admin/apiTypeReport.js';
+import apiReportSource from '@/js/api/admin/apiReportSource.js';
 
 export default {
     name: "HtpShiftDetail",
@@ -279,7 +281,9 @@ export default {
                             type: "success",
                         });
                         this.isShowDiaLog = false
-                        // this.valuesTableCreateNew = '';
+                        this.valuesTableCreateNew = [
+                            { name: '', note: '', status: 0, }
+                        ];
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -368,6 +372,83 @@ export default {
                     });
                 });
 
+        },
+        createReportSource() {
+            var shouldCallApi = true;
+            this.valuesTableCreateNew.forEach((element, key) => {
+                if (!element.name) {
+                    shouldCallApi = false;
+                    return;
+                }
+                if (!element.note) {
+                    this.valuesTableCreateNew[key].note = "Trống"
+                }
+            });
+            if (!shouldCallApi) {
+                return ElMessage({
+                    showClose: true,
+                    message: 'Trường tên là trường bắt buộc',
+                    type: 'warning',
+                });
+            };
+            const data = this.valuesTableCreateNew;
+            apiReportSource
+                .createReportSource(data)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        ElNotification({
+                            title: "Success",
+                            message: dataResponse.results,
+                            type: "success",
+                        });
+                        this.isShowDiaLog = false
+                        this.valuesTableCreateNew = [
+                            { name: '', note: '', status: 0, }
+                        ];
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: "Có lỗi bất thường",
+                        type: "error",
+                    });
+                });
+        },
+        getListReportSource() {
+            const data = {
+                "page": this.currentPageDefault,
+                "record_number": this.visibleRecordCount,
+                "count": this.isCount
+            };
+            apiReportSource
+                .getListReportSourceByPage(data)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        this.rowDefault = dataResponse.results.total_record;
+                        this.itemsTable = Object.values(dataResponse.results.page);
+                        this.loadingTable = false;
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: "Có lỗi bất thường",
+                        type: "error",
+                    });
+                });
+        },
+        switchAPICreate() {
+            if (this.isActiveTableTypeResponse) {
+                this.createTypeReports();
+                return;
+            }
+            if (this.isActiveTableReportSource) {
+                this.createReportSource();
+                return;
+            }
         },
     },
 };
