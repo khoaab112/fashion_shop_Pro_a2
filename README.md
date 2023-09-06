@@ -159,6 +159,15 @@ Time 5/24/2023 to ? Estimated 4 months
  ```javascript
 https://dbdiagram.io/d/647a31d2722eb774944d2b4f
 ```
+**Idea**
+<img src="Note_Project/idea.png" width="100rem" alt="Element Logo" style="margin-left:10px">
+
+Details :
+
+```
+fashion_shop_Pro_a2\Note_Project\IDEA_SHOP.xmind
+```
+
 # Contact
 Gmail :
 ```javascript
