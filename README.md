@@ -1,15 +1,16 @@
-<p  style="display:flex ; justify-content: center; align-items: center;">
+<p align="center">
+<div  style="display:flex ; justify-content: center; align-items: center;">
 <a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400rem" alt="Laravel Logo"></a>
 <a href="https://laravel.com" target="_blank"><img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="150rem" alt="Laravel Logo"></a>
+</div>
 </p>
-
 
  # fashion_shop_Pro_a2
  **It is a retail chain management system with functionalities for system administration, news publishing, and user management**
 
  <strong style="color:blue">The system is built using the following tools:</strong>
 
- <div style="display:flex ; justify-content: center; align-items: center;" class="test">
+ <div style="display:flex ; justify-content: center; align-items: center;" >
  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="100rem" alt="Laravel Logo">
 <img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="40rem" alt="Vue Logo">
 <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" width="40rem" alt="Bootstrap Logo" style="margin-left:10px">
@@ -148,8 +149,4 @@ Gmail :
 ```javascript
 nguyenvankhoark@gmail.com
 ```
-<style>
-.test{
-  display:flex ; justify-content: center; align-items: center;
-}
-</style>
+
