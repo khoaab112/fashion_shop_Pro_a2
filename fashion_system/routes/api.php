@@ -58,7 +58,9 @@ Route::middleware(['checkURL'])->group(function () {
 
             //report_source
             Route::post('/report-source', [ReportSourceController::class, 'createsReportSource']);
-
+            Route::get('/report-source', [ReportSourceController::class, 'getRecords']);
+            Route::put('/change-report-source', [ReportSourceController::class, 'changeStatus']);
+            Route::delete('/delete-report-source/{id}', [ReportSourceController::class, 'deleteRecord']);
 
         });
     });

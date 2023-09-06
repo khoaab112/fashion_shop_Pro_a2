@@ -4,8 +4,7 @@
             <thead>
                 <tr>
                     <th v-for="(val, indexTitles) in titles" :key="indexTitles" :class="(val.key == `index` ? 'p-3' : '')">
-                        {{
-                            val.label }}</th>
+                        {{val.label}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +26,9 @@
         <div class="loading-data text-center" v-if="loading">
             <loadingStyleTwirl></loadingStyleTwirl>
             <h5 class="pt-3 ps-3">Đang tải.....</h5>
+        </div>
+        <div class="text-center notify-users">
+            <slot name="notifyUsers"></slot>
         </div>
     </section>
 </template>
@@ -102,6 +104,15 @@ export default {
 </script>
 
 <style>
+section.table-vue{
+    position: relative;
+}
+.notify-users{
+    position: absolute;
+    bottom: 50%;
+    right: 40%;
+    left: 40%;
+}
 table {
     border-spacing: 1;
     border-collapse: collapse;
