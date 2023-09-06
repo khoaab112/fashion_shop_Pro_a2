@@ -96,6 +96,7 @@
 
 ```Step 4  :```
 - Install in the command prompt (CMD)
+
 **Server**
 
 ```javascript
@@ -143,7 +144,11 @@ php artisan ser
 | `Customers`      	 | `client1231`| `123488888` |`{domain}/customer/auth/login`|
 
 # The system functions 
-peding
+
+**System management**
+
+**User interface, news and product advertising**
+
 # construction time and completion time
 ```time
 Time 5/24/2023 to ? Estimated 4 months
