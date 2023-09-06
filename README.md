@@ -1,18 +1,4 @@
 <p align="center">
-  <div style="display: flex; justify-content: center; align-items: center;">
-    <a href="https://laravel.com" target="_blank">
-      <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400rem" alt="Laravel Logo">
-    </a>
-    <a href="https://laravel.com" target="_blank">
-      <img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="150rem" alt="Laravel Logo">
-    </a>
-  </div>
-</p>
-
-
-
-
-<p align="center">
 <div  style="display:flex ; justify-content: center; align-items: center;">
 <a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400rem" alt="Laravel Logo"></a>
 <a href="https://vuejs.org/" target="_blank"><img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="150rem" alt="Vuejs Logo"></a>
@@ -25,17 +11,32 @@
  <strong style="color:blue">The system is built using the following tools:</strong>
 
  <div style="display:flex ; justify-content: center; align-items: center;" >
- <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="100rem" alt="Laravel Logo">
+ <a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="100rem" alt="Laravel Logo">
+</a>
+<a href="https://vuejs.org/" target="_blank">
 <img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="40rem" alt="Vue Logo">
+</a>
+<a href="https://getbootstrap.com/" target="_blank">
 <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" width="40rem" alt="Bootstrap Logo" style="margin-left:10px">
+</a>
+<a href="https://antdv.com/" target="_blank">
 <img src="https://next.antdv.com/assets/logo.1ef800a8.svg" width="40rem" alt="Antdv Logo" style="margin-left:10px">
+</a>
+<a href="https://element-plus.org/" target="_blank">
 <img src="https://element-plus.org/images/element-plus-logo.svg" width="100rem" alt="Element Logo" style="margin-left:10px">
+</a>
+<a href="https://fontawesome.com/" target="_blank">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Font_Awesome_logomark_blue.svg/1200px-Font_Awesome_logomark_blue.svg.png" width="40rem" alt="Font Awesome Logo" style="margin-left:10px">
+</a>
+<a href="https://axios-http.com/" target="_blank">
 <img src="https://camo.githubusercontent.com/272811d860f3fab0dd8ff0690e2ca36afbf0c96ad44100b8d42dfdce8511679b/68747470733a2f2f6178696f732d687474702e636f6d2f6173736574732f6c6f676f2e737667" width="90rem" alt="Axios Logo" style="margin-left:10px">
+</a>
+<a href="https://jwt.io/" target="_blank">
 <img src="https://jwt.io/img/pic_logo.svg" width="50rem" alt="jwt Logo" style="margin-left:10px">
+</a>
  </div>
 
- -  **Laravel**  <span style="color:red">v10.15.0</span>
+ - **Laravel**  <span style="color:red">v10.15.0</span>
 
  - **Vuejs**  <span style="color:red">v3.3.4</span>
 
@@ -59,15 +60,15 @@
 
  <strong style="color:blue">Additionally, it utilizes various supporting libraries:</strong>
 
- -  **Vue-quill**  <span style="color:red">v1.2.0</span>
+ - **Vue-quill**  <span style="color:red">v1.2.0</span>
 
- -  **Mavon-editor**  <span style="color:red">v3.0.1</span>
+ - **Mavon-editor**  <span style="color:red">v3.0.1</span>
 
- -  **Quill-image-uploader**  <span style="color:red">v1.3.0</span>
+ - **Quill-image-uploader**  <span style="color:red">v1.3.0</span>
 
- -  **Vue-client-recaptcha**  <span style="color:red">v1.1.4</span>
+ - **Vue-client-recaptcha**  <span style="color:red">v1.1.4</span>
  
- -  **tsparticles**  <span style="color:red">v2.10.1</span>
+ - **tsparticles**  <span style="color:red">v2.10.1</span>
 
 ## # Mandatory System Requirements (to prevent errors during operation)
  ```javascript
