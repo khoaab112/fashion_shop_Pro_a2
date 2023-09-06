@@ -8,7 +8,7 @@
 
  <strong style="color:blue">The system is built using the following tools:</strong>
 
- <div style="display:flex ; justify-content: center; align-items: center;" >
+ <div style="display:flex ; justify-content: center; align-items: center;" class="test">
  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="100rem" alt="Laravel Logo">
 <img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="40rem" alt="Vue Logo">
 <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" width="40rem" alt="Bootstrap Logo" style="margin-left:10px">
@@ -120,23 +120,10 @@ php artisan ser
 
 ## Login system requirements :
 
-**System management** :
-
-**url**  : {domain}/auth/login
-
-**user** : admin1231
-
-**pass** : 123488888
-
-------------
-
-**Customers** :
-
-**url**  : {domain}/customer/auth/login
-
-**user** : client_test1231
-
-**pass** : 123418888
+|            		 | `User`      | `pass`      |`url`                         |
+| :----------------- | :---------- | :-----------|:-----------------------------|
+| `System management`| `admin1231` | `123488888` |`{domain}/auth/login`         |
+| `Customers`      	 | `client1231`| `123488888` |`{domain}/customer/auth/login`|
 
 # The system functions 
 peding
@@ -160,3 +147,8 @@ Gmail :
 ```javascript
 nguyenvankhoark@gmail.com
 ```
+<style>
+.test{
+  display:flex ; justify-content: center; align-items: center;
+}
+</style>
