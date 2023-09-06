@@ -248,7 +248,7 @@ export default {
             getCaptchaCode: (value) => { this.captcha = value },
             checkValidCaptcha: (value) => { this.isSuccessCaptcha = value },
             isLoadButtonData: false,
-            heightBackground: 10,
+            heightBackground: 20,
             isEditHeightBackground: false,
         };
     },
@@ -564,7 +564,7 @@ export default {
             const height = localStorage.getLocalStorage(keyHeightBackgroundAdmin);
            this.heightBackground=Number(height);
             } catch (e) {
-                this.heightBackground=10;
+                this.heightBackground=20;
             }
         },
         updateHeightBackground() {
