@@ -1,4 +1,4 @@
-<div  style="display:flex">
+<div  style="display:flex ; justify-content: center; align-items: center;">
 <a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400rem" alt="Laravel Logo"></a>
 <a href="https://laravel.com" target="_blank"><img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="150rem" alt="Laravel Logo"></a>
 </div>
@@ -8,7 +8,7 @@
 
  <strong style="color:blue">The system is built using the following tools:</strong>
 
- <div style="display:flex" >
+ <div style="display:flex ; justify-content: center; align-items: center;" >
  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="100rem" alt="Laravel Logo">
 <img src="https://www.svgrepo.com/show/303494/vue-9-logo.svg" width="40rem" alt="Vue Logo">
 <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" width="40rem" alt="Bootstrap Logo" style="margin-left:10px">
@@ -106,21 +106,23 @@ npm install
 npm install -g @vue/cli
 ```
 	
-**Run server**
+**Run**
+
 Client : 
 ```javascript
 npm run dev
 ```
+Server
 ```javascript
 php artisan ser
 ```
 
 
-#Login system requirements :
+## Login system requirements :
 
 **System management** :
 
-**url**  : {domain} /auth/login
+**url**  : {domain}/auth/login
 
 **user** : admin1231
 
@@ -130,7 +132,7 @@ php artisan ser
 
 **Customers** :
 
-**url**  : domain/customer/auth/login
+**url**  : {domain}/customer/auth/login
 
 **user** : client_test1231
 
@@ -146,7 +148,7 @@ Time 5/24/2023 to ? Estimated 4 months
  one
 ## Other
  ```
- ## open files
+## open files
  - ide open with software Xmind
  - diagram  copy and paste web dbdiagram.io
   demo diagram db
