@@ -110,7 +110,9 @@
         </div>
 
         <!-- table-source-report -->
-        <componentsReportSource v-if="isActiveTableReportSource"></componentsReportSource>
+        <componentsReportSource v-if="isActiveTableReportSource" :items="itemsTable" :isData="nullReportSource"
+            :showLoading="loadingTable" @retrieval-request="dataRetrievalRequest">
+        </componentsReportSource>
         <section class="text-end me-5 mt-3 pb-1">
             <pagination-Button :total="rowDefault" :currentPage="currentPageDefault"
                 @page-return="returnResultFromPagination">
@@ -130,7 +132,7 @@ import apiTypeReport from '@/js/api/admin/apiTypeReport.js';
 import apiReportSource from '@/js/api/admin/apiReportSource.js';
 
 export default {
-    name: "HtpShiftDetail",
+    name: "settingFeedback",
     components: {
         tableAdmin,
         paginationButton,
@@ -177,12 +179,15 @@ export default {
             isCount: true,
             loadingTable: true,
             //
-            isActiveTableTypeResponse: false,
-            isActiveTableReportSource: true,
+            isActiveTableTypeResponse: true,
+            isActiveTableReportSource: false,
+            //reportSource
+            nullReportSource: false,
         };
     },
     created() {
-        this.getListTypeReports();
+        // this.getListTypeReports();
+        this.switchAPIList();
     },
     mounted() {
         // Logic sau khi component được gắn kết (render) vào DOM
@@ -193,14 +198,19 @@ export default {
     watch: {
         pageReturn(val) {
             this.currentPageDefault = val;
-            this.getListTypeReports();
+            this.switchAPIList();
         },
         isActiveTableTypeResponse(val) {
-            if (val) this.isActiveTableReportSource = false;
-            // if(!val && !this.isActiveTableReportSource) this.isActiveTableReportSource = true;
+            if (val) {
+                this.isActiveTableReportSource = false;
+                this.switchAPIList();
+            }
         },
         isActiveTableReportSource(val) {
-            if (val) this.isActiveTableTypeResponse = false;
+            if (val) {
+                this.isActiveTableTypeResponse = false;
+                this.switchAPIList();
+            }
         },
 
     },
@@ -406,6 +416,7 @@ export default {
                         this.valuesTableCreateNew = [
                             { name: '', note: '', status: 0, }
                         ];
+                        this.getListReportSource();
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -417,6 +428,7 @@ export default {
                 });
         },
         getListReportSource() {
+
             const data = {
                 "page": this.currentPageDefault,
                 "record_number": this.visibleRecordCount,
@@ -427,6 +439,11 @@ export default {
                 .then((res) => {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
+                        console.log(dataResponse.results.page.length);
+                        this.nullReportSource = false;
+                        if (dataResponse.results.page.length <= 0) {
+                            this.nullReportSource = true;
+                        }
                         this.rowDefault = dataResponse.results.total_record;
                         this.itemsTable = Object.values(dataResponse.results.page);
                         this.loadingTable = false;
@@ -449,6 +466,20 @@ export default {
                 this.createReportSource();
                 return;
             }
+        },
+        switchAPIList() {
+            this.loadingTable = true;
+            if (this.isActiveTableTypeResponse) {
+                this.getListTypeReports();
+                return;
+            }
+            if (this.isActiveTableReportSource) {
+                this.getListReportSource();
+                return;
+            }
+        },
+        dataRetrievalRequest(val) {
+            this.switchAPIList();
         },
     },
 };

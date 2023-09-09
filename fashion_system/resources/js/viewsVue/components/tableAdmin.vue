@@ -4,11 +4,11 @@
             <thead>
                 <tr>
                     <th v-for="(val, indexTitles) in titles" :key="indexTitles" :class="(val.key == `index` ? 'p-3' : '')">
-                        {{val.label}}</th>
+                        {{ val.label }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(record, key) of  items " :key="key">
+                <tr v-for="(record, key) of  items " :key="key" :class="(record.status ? 'color-status' : '')">
                     <td v-for="(valTitles, indexTitles) in  titles " :key="indexTitles"
                         :class="[getClass(valTitles.text), (valTitles.key == `index` ? 'p-3' : '')]">
                         <template v-if="valTitles.key == `index`">
@@ -103,16 +103,22 @@ export default {
 };
 </script>
 
-<style>
-section.table-vue{
+<style scoped>
+.color-status {
+    background-color: #e0d3db;
+}
+
+section.table-vue {
     position: relative;
 }
-.notify-users{
+
+.notify-users {
     position: absolute;
     bottom: 50%;
     right: 40%;
     left: 40%;
 }
+
 table {
     border-spacing: 1;
     border-collapse: collapse;
@@ -234,5 +240,4 @@ table th.r {
 blockquote {
     color: white;
     text-align: center;
-}
-</style>
+}</style>
