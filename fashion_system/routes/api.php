@@ -8,6 +8,7 @@ use App\Http\Controllers\Authentication\AuthnController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\TypeReportController;
 use App\Http\Controllers\Admin\ReportSourceController;
+use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Test;
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,9 @@ Route::middleware(['checkURL'])->group(function () {
             Route::get('/report-source', [ReportSourceController::class, 'getRecords']);
             Route::put('/change-report-source', [ReportSourceController::class, 'changeStatus']);
             Route::delete('/delete-report-source/{id}', [ReportSourceController::class, 'deleteRecord']);
+
+            //report
+            Route::post('/report', [ReportsController::class, 'addTicketReport']);
 
         });
     });

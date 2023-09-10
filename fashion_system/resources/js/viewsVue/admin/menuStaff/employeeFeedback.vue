@@ -24,6 +24,10 @@
 <script>
 import ENV from "@/js/generalSetting/filterEnv.js";
 import loadingSpinner from "../../components/loadingSpinner.vue";
+import apiReport from '@/js/api/admin/apiReport.js';
+import globalVariable from "@/js/generalSetting/globalVariable.js";
+
+
 export default {
     name: 'employeeFeedback',
     components: {
@@ -58,6 +62,17 @@ export default {
 
     },
     methods: {
+        sendFeedback() {
+            this.staff = await globalVariable.getGlobalVariableInfoStaff();
+
+            var data = {
+                'customers_id':,
+                'sub_report': false,
+                'is_processed': false,
+                'content': '',
+
+            };
+        },
         // Các phương thức xử lý sự kiện hoặc logic khác
     },
 };
@@ -67,15 +82,18 @@ export default {
 .input-title {
     width: 80%;
     margin: 1rem;
-  }
-  .ql-container{
-      padding: 50px;
-  }
-  .lining {
-      width: 100%;
-      height: 1rem;
-  }
-  .main-support {
-      padding: 18px 2.3rem;
-  }
+}
+
+.ql-container {
+    padding: 50px;
+}
+
+.lining {
+    width: 100%;
+    height: 1rem;
+}
+
+.main-support {
+    padding: 18px 2.3rem;
+}
 </style>
