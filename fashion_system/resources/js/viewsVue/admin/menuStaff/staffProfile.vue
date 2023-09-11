@@ -564,7 +564,7 @@ export default {
             const height = localStorage.getLocalStorage(keyHeightBackgroundAdmin);
             if(!height)
             {
-                height=20;
+                this.heightBackground=20;
             }
            this.heightBackground=Number(height);
             } catch (e) {

@@ -63,15 +63,15 @@ export default {
     },
     methods: {
         sendFeedback() {
-            this.staff = await globalVariable.getGlobalVariableInfoStaff();
+            // this.staff = await globalVariable.getGlobalVariableInfoStaff();
 
-            var data = {
-                'customers_id':,
-                'sub_report': false,
-                'is_processed': false,
-                'content': '',
+            // var data = {
+            //     'customers_id':,
+            //     'sub_report': false,
+            //     'is_processed': false,
+            //     'content': '',
 
-            };
+            // };
         },
         // Các phương thức xử lý sự kiện hoặc logic khác
     },
