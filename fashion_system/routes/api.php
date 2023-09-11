@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\TypeReportController;
 use App\Http\Controllers\Admin\ReportSourceController;
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Test;
+use App\Http\Controllers\Test\TestEventController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +41,7 @@ Route::middleware(['checkURL'])->group(function () {
             Route::delete('/logout', [AuthnController::class, 'logout']);
             //test
             Route::post('/test-login', [AuthnController::class, 'test']);
+            Route::get('/test-ting', [TestEventController::class, 'testTing'])->withoutMiddleware(['auth:api']);
             Route::get('/test', [Test::class, 'index'])->withoutMiddleware(['auth:api']);
 
             //staff
