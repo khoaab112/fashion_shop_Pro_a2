@@ -10,18 +10,16 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEventSocket implements ShouldBroadcast
+class EventTransferOfNotification
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public $data;
-    public function __construct($data)
+    public function __construct()
     {
         //
-        $this->data = $data;
     }
 
     /**
@@ -32,12 +30,7 @@ class TestEventSocket implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('chan-name.1'),
+            new PrivateChannel('channel-name'),
         ];
     }
-
-    // public function broadcastAs(): string
-    // {
-    //     return 'server.created';
-    // }
 }

@@ -34,11 +34,17 @@ export default {
 
         console.log('e');
    // to connect the public channel
-    window.Echo.channel('chan-name').listen('TestEventSocket',(e)=>{
+    window.Echo.channel('chan-name.1').listen('TestEventSocket',(e)=>{
        console.log('go public');
        //code for displaying the serve data
        console.log(e); // the data from the server
-    })
+    });
+
+    // window.Echo.channel('chan-name.1').listen('server.created',(e)=>{
+    //    console.log('go public');
+    //    //code for displaying the serve data
+    //    console.log(e); // the data from the server
+    // });
     },
     computed: {
     },

@@ -45,7 +45,7 @@ window.Echo = new Echo({
     cluster: ENV.PUSHER_APP_CLUSTER,
     forceTLS: false,
     disableStats: true,
-    // authEndpoint: 'http://127.0.0.1:8000/api/auth/test-ting',
+    // authEndpoint: 'http://127.0.0.1:8000/api/broadcasting/auth',
     // auth: {
     //     headers: {
     //         Authorization: 'Bearer ' + YOUR_TOKEN_FROM_LOGIN,
