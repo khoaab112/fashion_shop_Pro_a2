@@ -35,9 +35,4 @@ class TestEventSocket implements ShouldBroadcast
             new Channel('chan-name.1'),
         ];
     }
-
-    // public function broadcastAs(): string
-    // {
-    //     return 'server.created';
-    // }
 }
