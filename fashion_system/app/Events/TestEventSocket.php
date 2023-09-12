@@ -17,9 +17,11 @@ class TestEventSocket implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public $data;
+    public function __construct($data)
     {
         //
+        $this->data = $data;
     }
 
     /**

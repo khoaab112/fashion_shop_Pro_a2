@@ -11,6 +11,6 @@ class TestEventController extends Controller
     //
     public function testTing()
     {
-        event(new TestEventSocket);
+        event(new TestEventSocket('test'));
     }
 }
