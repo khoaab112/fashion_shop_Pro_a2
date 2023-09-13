@@ -58,6 +58,8 @@
 
  - **Jwt-auth**  <span style="color:red">v6.0</span>
 
+ - **laravel-websockets**  <span style="color:red">v1.14</span>
+
  <strong style="color:blue">Additionally, it utilizes various supporting libraries:</strong>
 
  - **Vue-quill**  <span style="color:red">v1.2.0</span>
@@ -134,7 +136,10 @@ Server
 ```javascript
 php artisan ser
 ```
-
+Run server socket
+```javascript
+php artisan websockets:serve
+```
 
 ## Login system requirements :
 
