@@ -46,12 +46,12 @@ window.Echo = new Echo({
     cluster: ENV.PUSHER_APP_CLUSTER,
     forceTLS: true,
     disableStats: true,
-    // authEndpoint: 'http://127.0.0.1:8000/api/auth/test-ting',
-    // auth: {
-    //     headers: {
-    //         Authorization: 'Bearer ' + YOUR_TOKEN_FROM_LOGIN,
-    //     }
-    // },
+    authEndpoint: '/broadcasting/auth',
+    auth: {
+        headers: {
+            Authorization: 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvc3RhZmYvMyIsImlhdCI6MTY5NDYyNDE0OCwiZXhwIjoxNjk0NjI3NzQ4LCJuYmYiOjE2OTQ2MjQxNDgsImp0aSI6Ik5lTXdpWkQ2OFVGeHRIZEciLCJzdWIiOiIzNSIsInBydiI6IjUzNjM4NDg3Y2IwYjI5ZDhmOGRjMDMwMTA1YmJhMGQzMDdiZTljMDAiLCJ1c2VyX25hbWUiOiIwODQ5MzIyODEwIiwicmFuayI6ImRlZmluZWQiLCJyZXNlcnZhdGlvbiI6dHJ1ZSwic3RhZmZfaWQiOjN9.V9DsBJPFsJ1-wMklHzB2NVNDl30c6_5VNTHHnKxoots',
+        }
+    },
 });
 
 window.axios = axios;

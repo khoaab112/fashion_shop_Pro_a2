@@ -27,6 +27,6 @@ class ListenToUsers
         // Xử lý sự kiện ở đây
         // Ví dụ: Ghi log
         // \Log::info('Sự kiện được kích hoạt: ' . $event->someData);
-        echo 'Hello, World!';
+        echo $event;
     }
 }

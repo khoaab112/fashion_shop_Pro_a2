@@ -34,7 +34,7 @@ export default {
     mounted() {
         console.log('e');
         // to connect the public channel
-        window.Echo.channel('channel-name').listen('MessageNotification', (e) => {
+        window.Echo.private('channel-name').listen('MessageNotification', (e) => {
             console.log('go public');
             //code for displaying the serve data
             console.log(e); // the data from the server
@@ -45,11 +45,10 @@ export default {
     methods: {
         testSendSocket() {
             // Sử dụng Laravel Echo
-            window.Echo.channel('online-users')
+            window.Echo.private('channel-name')
                 .whisper('MessageNotification', {
                     message: 'This is a message from the client!',
                 });
-
         }
     },
 };
