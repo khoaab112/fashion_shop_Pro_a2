@@ -12,6 +12,7 @@
         box : sự kiện
         <br>
         <button><router-link to="/error403" class="style-tag-a ">Giới thiệu</router-link></button>
+        <button @click="testSendSocket()">Test</button>
     </div>
 </template>
 
@@ -31,12 +32,25 @@ export default {
     created() {
     },
     mounted() {
-
+        console.log('e');
+        // to connect the public channel
+        window.Echo.channel('channel-name').listen('MessageNotification', (e) => {
+            console.log('go public');
+            //code for displaying the serve data
+            console.log(e); // the data from the server
+        });
     },
     computed: {
     },
     methods: {
+        testSendSocket() {
+            // Sử dụng Laravel Echo
+            window.Echo.channel('online-users')
+                .whisper('MessageNotification', {
+                    message: 'This is a message from the client!',
+                });
 
+        }
     },
 };
 </script>

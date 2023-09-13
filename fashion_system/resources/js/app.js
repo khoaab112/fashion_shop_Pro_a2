@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import ENV from './generalSetting/filterEnv'
 //element-plus
 import ElementPlus from 'element-plus';
 import VN from 'element-plus/dist/locale/vi.mjs';
@@ -30,6 +31,28 @@ import VueClientRecaptcha from 'vue-client-recaptcha'
 //app
 import App from './App.vue';
 import router from './routerVue/index.js';
+
+
+//BROADCAST
+import Echo from "laravel-echo"
+// window.Pusher = require('pusher-js');
+import Pusher from 'pusher-js';
+window.Pusher = Pusher;
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: ENV.PUSHER_APP_KEY,
+    // wsHost: ENV.APP_URL,
+    // wsPort: 6001,
+    cluster: ENV.PUSHER_APP_CLUSTER,
+    forceTLS: true,
+    disableStats: true,
+    // authEndpoint: 'http://127.0.0.1:8000/api/auth/test-ting',
+    // auth: {
+    //     headers: {
+    //         Authorization: 'Bearer ' + YOUR_TOKEN_FROM_LOGIN,
+    //     }
+    // },
+});
 
 window.axios = axios;
 
