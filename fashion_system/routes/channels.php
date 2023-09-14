@@ -18,5 +18,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 Broadcast::channel('channel-name', function ($user) {
     // Kiểm tra xác thực và phân quyền ở đây
-    return $user !== null;
+    return true;
+});
+Broadcast::channel('admin_connect', function ($user) {
+    // Kiểm tra xác thực và phân quyền ở đây
+    return true;
 });

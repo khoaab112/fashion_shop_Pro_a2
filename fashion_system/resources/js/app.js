@@ -1,5 +1,8 @@
 import { createApp } from 'vue';
 import ENV from './generalSetting/filterEnv'
+import localStorage from "@/js/auth/localStorage";
+
+
 //element-plus
 import ElementPlus from 'element-plus';
 import VN from 'element-plus/dist/locale/vi.mjs';
@@ -32,11 +35,10 @@ import VueClientRecaptcha from 'vue-client-recaptcha'
 import App from './App.vue';
 import router from './routerVue/index.js';
 
-
 //BROADCAST
 import Echo from "laravel-echo"
-// window.Pusher = require('pusher-js');
 import Pusher from 'pusher-js';
+const accessToken = localStorage.getAccessToken();
 window.Pusher = Pusher;
 window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -49,7 +51,7 @@ window.Echo = new Echo({
     authEndpoint: '/broadcasting/auth',
     auth: {
         headers: {
-            Authorization: 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvc3RhZmYvMyIsImlhdCI6MTY5NDYyNDE0OCwiZXhwIjoxNjk0NjI3NzQ4LCJuYmYiOjE2OTQ2MjQxNDgsImp0aSI6Ik5lTXdpWkQ2OFVGeHRIZEciLCJzdWIiOiIzNSIsInBydiI6IjUzNjM4NDg3Y2IwYjI5ZDhmOGRjMDMwMTA1YmJhMGQzMDdiZTljMDAiLCJ1c2VyX25hbWUiOiIwODQ5MzIyODEwIiwicmFuayI6ImRlZmluZWQiLCJyZXNlcnZhdGlvbiI6dHJ1ZSwic3RhZmZfaWQiOjN9.V9DsBJPFsJ1-wMklHzB2NVNDl30c6_5VNTHHnKxoots',
+            Authorization: 'Bearer ' + accessToken,
         }
     },
 });

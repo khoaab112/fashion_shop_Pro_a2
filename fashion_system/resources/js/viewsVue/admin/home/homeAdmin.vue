@@ -27,9 +27,11 @@ export default {
     data() {
         return {
             circleMenuAdmin: circleMenuAdmin.menu,
+            users: [],
         };
     },
     created() {
+        // this.listenToChannel();
     },
     mounted() {
         console.log('e');
@@ -39,6 +41,22 @@ export default {
             //code for displaying the serve data
             console.log(e); // the data from the server
         });
+        window.Echo.channel('admin_connect')
+            .listen('AdminConnected', (e) => {
+                console.log('User connected from server:', e.user_id);
+                // Thực hiện các xử lý khác tại đây
+            });
+        // window.Echo.channel('admin_connect')
+        //     .listen('AdminConnected', (e) => {
+        //         console.log('User connected from server:', e.user_id);
+        //         // Thực hiện các xử lý khác tại đây
+        //     });
+
+        window.Echo.channel('users').listen('user_connected', (user) => {
+      // Thêm người dùng vào danh sách
+      this.users.push(user);
+    });
+
     },
     computed: {
     },
@@ -49,7 +67,7 @@ export default {
                 .whisper('MessageNotification', {
                     message: 'This is a message from the client!',
                 });
-        }
+        },
     },
 };
 </script>

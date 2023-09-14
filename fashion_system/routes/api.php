@@ -43,6 +43,7 @@ Route::middleware(['checkURL'])->group(function () {
             //test
             Route::post('/test-login', [AuthnController::class, 'test']);
             Route::get('/test-socket', [TestSockets::class, 'testTing'])->withoutMiddleware(['auth:api']);
+            Route::get('/test-2', [TestSockets::class, 'testTing2'])->withoutMiddleware(['auth:api']);
             Route::get('/test', [Test::class, 'index'])->withoutMiddleware(['auth:api']);
 
             //staff

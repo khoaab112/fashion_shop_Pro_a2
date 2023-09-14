@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 class ListenToUsers
 {
@@ -26,7 +27,7 @@ class ListenToUsers
     {
         // Xử lý sự kiện ở đây
         // Ví dụ: Ghi log
-        // \Log::info('Sự kiện được kích hoạt: ' . $event->someData);
+        // Log::info( $event);
         echo $event;
     }
 }

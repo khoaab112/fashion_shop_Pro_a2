@@ -9,17 +9,19 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-class MessageNotification implements ShouldBroadcast
+use Illuminate\Support\Facades\Log;
+
+class AdminConnected implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $message;
+
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public $user;
+    public function __construct( $user)
     {
-        //
-        $this->message = $message;
+        $this->user = $user;
     }
 
     /**
@@ -27,13 +29,11 @@ class MessageNotification implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    //kênh nhận sóng
     public function broadcastOn(): array
     {
+
         return [
-            new PrivateChannel('channel-name'),
+            new PresenceChannel('admin_connect'),
         ];
     }
-
-
 }
