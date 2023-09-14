@@ -13,6 +13,7 @@
         <br>
         <button><router-link to="/error403" class="style-tag-a ">Giới thiệu</router-link></button>
         <button @click="testSendSocket()">Test</button>
+        <button @click="testGetLogin()">testGetLogin</button>
     </div>
 </template>
 
@@ -53,9 +54,9 @@ export default {
         //     });
 
         window.Echo.channel('users').listen('user_connected', (user) => {
-      // Thêm người dùng vào danh sách
-      this.users.push(user);
-    });
+            // Thêm người dùng vào danh sách
+            this.users.push(user);
+        });
 
     },
     computed: {
@@ -68,6 +69,22 @@ export default {
                     message: 'This is a message from the client!',
                 });
         },
+        testGetLogin() {
+            // Tạo một danh sách theo dõi
+            const watchlist = ['1234567890'];
+
+            // Đăng nhập người dùng vào Pusher
+            window.pusher.signin();
+
+            // Liên kết hàm watchlistEventHandler với các sự kiện trực tuyến/ngoại tuyến
+            window.pusher.user.watchlist.bind('online', (event) => {
+                console.log('Người dùng trực tuyến:', event.user_ids);
+            });
+
+            window.pusher.user.watchlist.bind('offline', (event) => {
+                console.log('Người dùng ngoại tuyến:', event.user_ids);
+            });
+        }
     },
 };
 </script>
