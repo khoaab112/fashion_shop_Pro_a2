@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,8 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 Broadcast::channel('channel-name', function ($user) {
     // Kiểm tra xác thực và phân quyền ở đây
+    Log::info( 'channel-name');
+
     return true;
 });
 Broadcast::channel('admin_connect', function ($user) {

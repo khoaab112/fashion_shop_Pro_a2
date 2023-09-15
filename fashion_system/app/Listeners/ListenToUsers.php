@@ -27,7 +27,7 @@ class ListenToUsers
     {
         // Xử lý sự kiện ở đây
         // Ví dụ: Ghi log
-        // Log::info( $event);
-        echo $event;
+        Log::info( "kh");
+        // echo $event;
     }
 }

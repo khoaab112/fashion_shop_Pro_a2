@@ -9,6 +9,9 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+
+
 class MessageNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -30,10 +33,9 @@ class MessageNotification implements ShouldBroadcast
     //kênh nhận sóng
     public function broadcastOn(): array
     {
+        Log::info('drgdfgd');
         return [
             new PrivateChannel('channel-name'),
         ];
     }
-
-
 }

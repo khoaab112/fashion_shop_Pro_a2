@@ -57,16 +57,26 @@ export default {
             // Thêm người dùng vào danh sách
             this.users.push(user);
         });
-
+        window.Echo.private(`channel-name`)
+            .listenForWhisper('MessageNotification', (e) => {
+                console.log(e);
+                console.log('adasdas');
+            });
     },
     computed: {
     },
     methods: {
+        // testSendSocket() {
+        //     // Sử dụng Laravel Echo
+        //     window.Echo.private('channel-name')
+        //         .whisper('MessageNotification', {
+        //             message: 'This is a message from the client!',
+        //         });
+        // },
         testSendSocket() {
-            // Sử dụng Laravel Echo
-            window.Echo.private('channel-name')
-                .whisper('MessageNotification', {
-                    message: 'This is a message from the client!',
+            window.Echo.private(`channel-name`)
+                .dispatch('MessageNotification', {
+                    message: 'This is a message from the client to the server!',
                 });
         },
         testGetLogin() {
