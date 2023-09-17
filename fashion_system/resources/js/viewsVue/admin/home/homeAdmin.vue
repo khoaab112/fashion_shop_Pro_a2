@@ -42,10 +42,9 @@ export default {
             //code for displaying the serve data
             console.log(e); // the data from the server
         });
-        window.Echo.channel('admin_connect')
-            .listen('AdminConnected', (e) => {
-                console.log('User connected from server:', e.user_id);
-                // Thực hiện các xử lý khác tại đây
+        window.Echo.private('admin_connect')
+            .listen('.admin.connect', (e) => {
+                console.log(e);
             });
         // window.Echo.channel('admin_connect')
         //     .listen('AdminConnected', (e) => {
@@ -66,35 +65,13 @@ export default {
     computed: {
     },
     methods: {
-        // testSendSocket() {
-        //     // Sử dụng Laravel Echo
-        //     window.Echo.private('channel-name')
-        //         .whisper('MessageNotification', {
-        //             message: 'This is a message from the client!',
-        //         });
-        // },
         testSendSocket() {
-            window.Echo.private(`channel-name`)
-                .dispatch('MessageNotification', {
-                    message: 'This is a message from the client to the server!',
+            // Sử dụng Laravel Echo
+            window.Echo.private('channel-name')
+                .whisper('MessageNotification', {
+                    message: 'This is a message from the client!',
                 });
         },
-        testGetLogin() {
-            // Tạo một danh sách theo dõi
-            const watchlist = ['1234567890'];
-
-            // Đăng nhập người dùng vào Pusher
-            window.pusher.signin();
-
-            // Liên kết hàm watchlistEventHandler với các sự kiện trực tuyến/ngoại tuyến
-            window.pusher.user.watchlist.bind('online', (event) => {
-                console.log('Người dùng trực tuyến:', event.user_ids);
-            });
-
-            window.pusher.user.watchlist.bind('offline', (event) => {
-                console.log('Người dùng ngoại tuyến:', event.user_ids);
-            });
-        }
     },
 };
 </script>

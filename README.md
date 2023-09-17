@@ -70,6 +70,8 @@
  
  - **tsparticles**  <span style="color:red">v2.10.1</span>
 
+ - **tsparticles**  <span style="color:red">https://dashboard.pusher.com/apps/1669732/console</span>
+
 ## # Mandatory System Requirements (to prevent errors during operation)
  ```javascript
 -PostgreSQL : 15.3

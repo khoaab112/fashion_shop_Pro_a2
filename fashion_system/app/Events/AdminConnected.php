@@ -23,7 +23,10 @@ class AdminConnected implements ShouldBroadcast
     {
         $this->user = $user;
     }
-
+    public function broadcastAs(): string
+    {
+        return 'admin.connect';
+    }
     /**
      * Get the channels the event should broadcast on.
      *
@@ -31,9 +34,8 @@ class AdminConnected implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-
         return [
-            new PresenceChannel('admin_connect'),
+            new PrivateChannel('admin_connect'),
         ];
     }
 }

@@ -33,16 +33,27 @@
 </template>
 
 <script>
+import sessionStorage from '@/js/auth/sessionStorage.js'
+import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
+import { ElNotification } from 'element-plus';
+import globalVariable from '@/js/generalSetting/globalVariable.js';
+
 
 export default {
     data() {
         return {
+            KEY_SESSION: 'session_storage_accessed',
             circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
             breadcrumb: null,
+            pollingInterval: null,
+            staff: null,
         };
     },
     created() {
-        this.breadcrumb = this.$route.matched
+        console.log('123');
+        this.breadcrumb = this.$route.matched;
+        this.getGlobalVariableInfoStaff();
+        window.addEventListener('beforeunload', this.handleBeforeUnload);
     },
     watch: {
         '$route.matched'(value) {
@@ -50,7 +61,6 @@ export default {
         },
     },
     mounted() {
-        // Logic sau khi component được gắn kết (render) vào DOM
     },
     computed() {
         // được sử dụng để định nghĩa các thuộc tính tính toán
@@ -59,9 +69,66 @@ export default {
 
     },
     destroyed() {
-
+        window.removeEventListener('beforeunload', this.handleBeforeUnload);
     },
     methods: {
+        async getGlobalVariableInfoStaff() {
+            const intervalTime = 1000; // 1 giây
+            const maxDuration = 10000; // 10 giây
+            const startTime = Date.now();
+            this.pollingInterval = setInterval(async () => {
+                 this.staff = await globalVariable.getGlobalVariableInfoStaff();
+                if (this.staff || Date.now() - startTime > maxDuration) {
+                    // Dừng polling
+                    clearInterval(this.pollingInterval);
+                    // Tiếp tục
+                    this.checkAccessed(this.staff)
+                }
+            }, intervalTime);
+        },
+        async checkAccessed(data) {
+            if (sessionStorage.getSession(this.KEY_SESSION)) {
+                return;
+            }
+            var dataPost = {
+                'id': data.id,
+                'name': data.name,
+                'phone_number': data.phone_number,
+                'img': data.img,
+                'code_staff': data.code_staff,
+            };
+            apiManagerAccount.followAccountAdmin(dataPost).then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    sessionStorage.setSession(this.KEY_SESSION, true);
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+
+        },
+        handleBeforeUnload()
+        {
+            const idUser = this.staff.id;
+            apiManagerAccount.deleteStatusAccountAdmin(idUser).then(res => {
+                var dataResponse = res.data;
+                sessionStorage.clearSession();
+                if (dataResponse.result_code == 200) {
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        }
     },
 };
 </script>
@@ -194,18 +261,22 @@ body.dark .home .text {
         width: 92%;
     }
 }
+
 @media (max-width:800px) {
     section#header-admin {
         width: 90%;
     }
 }
+
 @media (max-width:580px) {
     .container-content {
         width: 90%;
         margin: 0 auto;
     }
+
     section#header-admin {
         width: 84%;
     }
 
-}</style>
+}
+</style>

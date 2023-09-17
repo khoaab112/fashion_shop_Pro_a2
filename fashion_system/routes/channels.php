@@ -18,12 +18,10 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 Broadcast::channel('channel-name', function ($user) {
-    // Kiểm tra xác thực và phân quyền ở đây
-    Log::info( 'channel-name');
-
     return true;
 });
-Broadcast::channel('admin_connect', function ($user) {
-    // Kiểm tra xác thực và phân quyền ở đây
+
+//
+Broadcast::channel('admin.connect', function ($user) {
     return true;
 });
