@@ -45,7 +45,6 @@ class ManagerController extends Controller
             }
             //nếu chưa tồn tại id người dùng
             if (!$hasExisted) {
-                dd('3');
                 $user['ip'] = array($request->ip());
                 $user['version_browser'] = array($request->header('User-Agent'));
                 $numberPeople[] = $user;
