@@ -17,7 +17,7 @@
                             icon="fa-solid fa-list-check" /></button>
                     <button type="button" class="btn-bell btn-header-admin"><font-awesome-icon
                             icon="fa-regular fa-bell" /></button>
-                    <button type="button" class="btn-bell-signal btn-header-admin"><font-awesome-icon
+                    <button type="button" class="btn-bell-signal btn-header-admin" @click="handleBeforeUnload"><font-awesome-icon
                             icon="fa-regular fa-bell" beat-fade /></button>
                 </div>
             </div>
