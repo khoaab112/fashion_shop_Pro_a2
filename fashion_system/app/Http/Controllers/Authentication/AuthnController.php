@@ -20,9 +20,14 @@ use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Integer;
 use App\Models\StaffAccount;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
+use App\Events\AdminConnected;
+
 
 class AuthnController extends Controller
 {
+    private $KEY_CACHE = "numberOfActivePeople";
+
     //xử lí cho nhân viên trước
     protected $query;
     protected $validationRules = [
@@ -154,6 +159,7 @@ class AuthnController extends Controller
             Auth::setToken($token)->invalidate();
             Auth::logout();
             $this->removeRefreshToken($IDUser);
+            $this->statusChange($request, $IDUser);
             return CodeHttpHelpers::returnJson(200, true, 'Đăng xuất thành công', 200);
         } catch (\Exception $err) {
             return CodeHttpHelpers::returnJson(400, false, $err, 200);
@@ -247,7 +253,7 @@ class AuthnController extends Controller
             }
             //so sánh vs mk cũ
             if (!(Hash::check($request->post('passwordOld'), $resultSearch->password))) {
-                return CodeHttpHelpers::returnJson(400, false, ['password'=>['Mật khẩu cũ không chính xác']], 200);
+                return CodeHttpHelpers::returnJson(400, false, ['password' => ['Mật khẩu cũ không chính xác']], 200);
             }
             $staffAccount = [
                 'password' => bcrypt($request->post('password')),
@@ -342,5 +348,66 @@ class AuthnController extends Controller
         } catch (\Exception $e) {
             return false;
         }
+    }
+    public function statusChange($request, $id)
+    {
+        $idUser = $id;
+        $ip = $request->ip();
+        $versionBrowser = $request->header('User-Agent');
+
+        if (count(Cache::get($this->KEY_CACHE)) > 0) {
+            $numberPeople = Cache::get($this->KEY_CACHE);
+            // kiểm tra id có tồn tại hay chưa
+            $hasExisted = false;
+            $exitsIp = false;
+            $exitsVersion = false;
+            $indexId = 0;
+            $indexIp = 0;
+            $indexVer = 0;
+            foreach ($numberPeople as $key => $value) {
+                if ($idUser == $value['id']) {
+                    $hasExisted = true;
+                    $indexId = $key;
+                    foreach ($value['ip'] as $keyIp => $valueIP) {
+                        if ($ip == $valueIP) {
+                            $exitsIp = true;
+                            $indexIp = $keyIp;
+                            break;
+                        }
+                    }
+                    foreach ($value['version_browser'] as $keyVer => $valueVer) {
+                        if ($versionBrowser == $valueVer) {
+                            $exitsVersion = true;
+                            $indexIp = $keyVer;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            if ($hasExisted) {
+                if (count($numberPeople[$indexId]['version_browser']) <= 1 && count($numberPeople[$indexId]['ip']) <= 1) {
+                    unset($numberPeople[$key]);
+                    Cache::put($this->KEY_CACHE, $numberPeople, null);
+                    event(new AdminConnected($numberPeople));
+                    return;
+                }
+                if ($exitsIp) {
+                    if ($exitsVersion) {
+                        if (count($numberPeople[$indexId]['version_browser']) > 1) {
+                            array_splice($numberPeople[$indexId]['version_browser'], $indexVer, 1);
+                        } else {
+                            array_splice($numberPeople[$indexId]['version_browser'], $indexVer, 1);
+                            array_splice($numberPeople[$indexId]['ip'], $indexIp, 1);
+                        }
+                        Cache::put($this->KEY_CACHE, $numberPeople, null);
+                        event(new AdminConnected($numberPeople));
+                    }
+                }
+            }
+        } else {
+            return;
+        }
+        return;
     }
 }

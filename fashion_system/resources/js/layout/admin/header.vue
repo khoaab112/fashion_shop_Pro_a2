@@ -15,10 +15,11 @@
                 <div class="">
                     <button type="button" class="btn-set btn-header-admin"><font-awesome-icon
                             icon="fa-solid fa-list-check" /></button>
-                    <button type="button" class="btn-bell btn-header-admin"><font-awesome-icon
-                            icon="fa-regular fa-bell" /></button>
-                    <button type="button" class="btn-bell-signal btn-header-admin" @click="handleBeforeUnload"><font-awesome-icon
-                            icon="fa-regular fa-bell" beat-fade /></button>
+                    <button type="button" class="btn-bell btn-header-admin" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><font-awesome-icon
+                            class="icon-notification" icon="fa-regular fa-bell" />
+                        <p class="notification-number">10</p>
+                    </button>
                 </div>
             </div>
         </section>
@@ -30,6 +31,17 @@
             </div>
         </main>
     </section>
+    <section>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel">Thông báo</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                ...
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
@@ -37,9 +49,9 @@ import sessionStorage from '@/js/auth/sessionStorage.js'
 import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
 import { ElNotification } from 'element-plus';
 import globalVariable from '@/js/generalSetting/globalVariable.js';
-
-
 export default {
+    components: {
+    },
     data() {
         return {
             KEY_SESSION: 'session_storage_accessed',
@@ -50,7 +62,6 @@ export default {
         };
     },
     created() {
-        console.log('123');
         this.breadcrumb = this.$route.matched;
         this.getGlobalVariableInfoStaff();
         window.addEventListener('beforeunload', this.handleBeforeUnload);
@@ -77,7 +88,7 @@ export default {
             const maxDuration = 10000; // 10 giây
             const startTime = Date.now();
             this.pollingInterval = setInterval(async () => {
-                 this.staff = await globalVariable.getGlobalVariableInfoStaff();
+                this.staff = await globalVariable.getGlobalVariableInfoStaff();
                 if (this.staff || Date.now() - startTime > maxDuration) {
                     // Dừng polling
                     clearInterval(this.pollingInterval);
@@ -112,12 +123,11 @@ export default {
             });
 
         },
-        handleBeforeUnload()
-        {
+        async handleBeforeUnload() {
             const idUser = this.staff.id;
-            apiManagerAccount.deleteStatusAccountAdmin(idUser).then(res => {
+            sessionStorage.clearSession();
+            await apiManagerAccount.deleteStatusAccountAdmin(idUser).then(res => {
                 var dataResponse = res.data;
-                sessionStorage.clearSession();
                 if (dataResponse.result_code == 200) {
                 } else
                     throw new Error(dataResponse.result_code);
@@ -135,14 +145,43 @@ export default {
 
 <style scoped>
 /* CSS cho component */
+.offcanvas-end {
+    top: 25vh !important;
+}
+
 .btn-header-admin {
     border: none;
     font-size: 24px;
     float: right;
     background: none;
     margin-right: 2rem;
+    position: relative;
 }
 
+.icon-notification:hover {
+    color: #409eff;
+    transform: scale(1.2);
+}
+
+.btn-header-admin .notification-number {
+    position: absolute;
+    top: 0px;
+    font-size: 12px;
+    font-weight: bold;
+    right: -8px;
+    background: #ff0000ab;
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    animation: beat 0.8s infinite alternate;
+    transform-origin: center;
+}
+
+@keyframes beat {
+    to {
+        transform: scale(1.1);
+    }
+}
 
 main {
     margin-top: 6.5rem;

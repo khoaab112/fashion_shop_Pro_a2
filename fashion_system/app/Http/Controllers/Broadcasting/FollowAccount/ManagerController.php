@@ -89,7 +89,8 @@ class ManagerController extends Controller
         $idUser = $id;
         $ip = $request->ip();
         $versionBrowser = $request->header('User-Agent');
-        if (Cache::get($this->KEY_CACHE)) {
+
+        if (count(Cache::get($this->KEY_CACHE)) > 0) {
             $numberPeople = Cache::get($this->KEY_CACHE);
             // kiểm tra id có tồn tại hay chưa
             $hasExisted = false;
@@ -124,6 +125,7 @@ class ManagerController extends Controller
                     unset($numberPeople[$key]);
                     Cache::put($this->KEY_CACHE, $numberPeople, null);
                     event(new AdminConnected($numberPeople));
+                    return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
                 }
                 if ($exitsIp) {
                     if ($exitsVersion) {
@@ -142,5 +144,9 @@ class ManagerController extends Controller
             return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
         }
         return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
+    }
+    public function get()
+    {
+        dd(Cache::get($this->KEY_CACHE));
     }
 }

@@ -29,14 +29,21 @@ export default {
         return {
             circleMenuAdmin: circleMenuAdmin.menu,
             users: [],
+            listAccountsAdmin: [],
         };
     },
     created() {
         // this.listenToChannel();
     },
     mounted() {
-        console.log('e');
-        // to connect the public channel
+        //theo dõi tài khoản trực tuyến
+        window.Echo.private('admin_connect')
+            .listen('.admin.connect', (e) => {
+                this.listAccountsAdmin = e;
+            });
+
+
+
         window.Echo.private('channel-name').listen('MessageNotification', (e) => {
             console.log('go public');
             //code for displaying the serve data
