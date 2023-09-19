@@ -22,6 +22,7 @@ import logout from '@/js/auth/logout';
 import { ElNotification } from 'element-plus'
 import methodDefine from '@/js/mixins/methodDefine.js';
 import paths from '@/js/mixins/getAddressFromRouter.js';
+import sessionStorage from '@/js/auth/sessionStorage.js'
 
 export default {
     name: 'dropdownAvatar',
@@ -63,6 +64,7 @@ export default {
     methods: {
         async handleDropdownClick(key) {
             if (key == 'logout') {
+                sessionStorage.clearSession();
                 const response = await this.logoutAdmin();
                 if (response) {
                     ElNotification({

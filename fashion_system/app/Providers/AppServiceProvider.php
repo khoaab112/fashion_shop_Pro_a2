@@ -60,6 +60,9 @@ use App\Repositories\TypeTicket;
 use App\Repositories\TypeUpdate;
 // use App\Repositories\UserStaff;
 use App\Repositories\WareHouse;
+use App\Repositories\TypeNotification;
+use App\Repositories\AdminsNotification;
+use App\Repositories\CustomersNotification;
 
 
 
@@ -129,7 +132,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TypeTicket\TypeTicketRepositoryInterface::class,TypeTicket\TypeTicketRepository::class);
         $this->app->bind(TypeUpdate\TypeUpdateRepositoryInterface::class,TypeUpdate\TypeUpdateRepository::class);
         $this->app->bind(WareHouse\WareHouseRepositoryInterface::class,WareHouse\WareHouseRepository::class);
-        
+        $this->app->bind(TypeNotification\TypeNotificationRepositoryInterface::class,TypeNotification\TransferProvidersRepository::class);
+        $this->app->bind(AdminsNotification\AdminsNotificationRepositoryInterface::class,AdminsNotification\AdminsNotificationRepository::class);
+        $this->app->bind(CustomersNotification\CustomersNotificationRepositoryInterface::class,CustomersNotification\CustomersNotificationProvidersRepository::class);
+
     }
 
 

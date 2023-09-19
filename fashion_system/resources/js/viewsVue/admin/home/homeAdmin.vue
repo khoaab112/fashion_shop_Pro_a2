@@ -5,30 +5,45 @@
                 <div class="col-lg-8 col-12">
                     <p class="text-center">
                         Người dùng đang hoạt động
-                        <font-awesome-icon icon="fa-solid fa-circle" style="color: #48dd08;" />
+                        <font-awesome-icon icon="fa-solid fa-check" style="color: #48dd08;" />
                     </p>
                     <div class="list-people">
-                        <!-- <div v-for="item in listAccountsAdminNew" :key="item.id">
+                        <div v-for="item in listAccountsAdminNew" :key="item.id">
                             <div class="people row">
-                                <strong class="col-5">
+                                <strong class="col-4">
                                     <font-awesome-icon class="icon-on" icon="fa-solid fa-circle" style="color: #48dd08;" />
                                     {{ item.name }}</strong>
-                                <p class="col-4 code-staff">{{ item.code_staff }}</p>
-                                <p class="col-3">{{ item.ip.length }} thiết bị</p>
+                                <p class="col-3 code-staff">{{ item.code_staff }}</p>
+                                <p class="col-2">{{ item.ip.length }} thiết bị</p>
+                                <div class="col-3">
+                                    <button class="action action-block">Khóa</button>
+                                    <!-- <button class="action action-live">Hoạt động</button> -->
+                                    <button class="action action-contact">Liên hệ</button>
+                                </div>
                                 <hr>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
                     <p class="text-center">
-                        Đã thoát
-                        <font-awesome-icon icon="fa-solid fa-circle" style="color: #e70808;" />
+                        Mất kết nối
+                        <font-awesome-icon icon="fa-solid fa-xmark" style="color: #e70808;" />
                         <!-- <div v-for="item in listAccountsAdminOld" :key="item.id" v-if="l">
 
                         </div> -->
                     </p>
-                    <div class="list-people"></div>
+                    <div class="list-people">
+                        <div v-for="item in listAccountsOff" :key="item.id">
+                            <div class="people row">
+                                <strong class="col-7">
+                                    <font-awesome-icon class="icon-on" icon="fa-solid fa-circle" style="color: #e70808;" />
+                                    {{ item.name }}</strong>
+                                <p class="col-5 code-staff">{{ item.code_staff }}</p>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -65,7 +80,6 @@ export default {
             listAccountsAdminNew: null,
             listAccountsAdminOld: null,
             listAccountsOff: null,
-            listenDataAdminConnected: null,
         };
     },
     created() {
@@ -75,17 +89,21 @@ export default {
         //theo dõi tài khoản trực tuyến
         window.Echo.private('admin_connect')
             .listen('.admin.connect', async (e) => {
-                this.listAccountsAdminNew = { ...e };
+                console.log(e.user);
+                this.getListUsers(e.user);
+
             });
+
+        //
         window.Echo.private('channel-name').listen('MessageNotification', (e) => {
             console.log('go public');
             //code for displaying the serve data
             console.log(e); // the data from the server
         });
-        window.Echo.private('admin_connect')
-            .listen('.admin.connect', (e) => {
-                console.log(e);
-            });
+        // window.Echo.private('admin_connect')
+        //     .listen('.admin.connect', (e) => {
+        //         console.log(e);
+        //     });
         // window.Echo.channel('admin_connect')
         //     .listen('AdminConnected', (e) => {
         //         console.log('User connected from server:', e.user_id);
@@ -105,9 +123,6 @@ export default {
     computed: {
     },
     watch: {
-        listAccountsAdminNew(val) {
-            this.getListUsers(val);
-        }
     },
     methods: {
         testSendSocket() {
@@ -117,28 +132,58 @@ export default {
                     message: 'This is a message from the client!',
                 });
         },
-        async findDifference(arr1, arr2) {
-            const diff1 = await arr1.filter(item => !arr2.includes(item));
-            const diff2 = await arr2.filter(item => !arr1.includes(item));
-            return diff1.concat(diff2);
+        // so sánh 2 mảng , tìm những người dùng vừa off
+        findDifference(arrOld, arrNew) {
+            console.log(arrNew);
+            console.log(arrOld);
+            // const missingElements = await arrNew.filter(itemNew => !arrOld.some(itemOld => itemOld.id === itemNew.id));
+            const missingElements = arrOld.filter(itemOld => !arrNew.some(itemNew => itemNew.id === itemOld.id));
+            return missingElements;
         },
-         getListUsers(val) {
-            if (this.listAccountsAdminOld <= 0 || this.listAccountsAdminOld.user.length <= 0) {
-                this.listAccountsAdminOld = val.user;
-                this.listAccountsAdminNew = val.user;
+        getListUsers(val) {
+            // console.log(val);
+            const arr = Object.freeze(val);
+            if (!this.listAccountsAdminOld) {
+                this.listAccountsAdminOld = arr;
+                this.listAccountsAdminNew = arr;
             }
             else {
                 this.listAccountsAdminOld = this.listAccountsAdminNew;
-                this.listAccountsAdminNew = val.user;
-                this.listAccountsAdminOld =  this.findDifference(this.listAccountsAdminOld.user, this.listAccountsAdminNew.user);
-                console.log(this.listAccountsAdminOld);
+                this.listAccountsAdminNew = arr;
+                this.listAccountsOff = this.findDifference(this.listAccountsAdminOld, this.listAccountsAdminNew);
             }
-
+            return true;
         },
     },
 };
 </script>
 <style scoped>
+section#list-of-active-people {
+    border-bottom: 1px solid #c7c8c9;
+}
+button.action-block {
+    background-color: orange;
+    color: #fff;
+    font-weight: bolder;
+}
+
+button.action-contact {
+    background-color: #0098f6;
+    color: #fff;
+    font-weight: bolder;
+}
+
+
+
+button.action {
+    font-size: 70%;
+    margin: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    border: none;
+    border-radius: 15px;
+    user-select: none;
+}
+
 .icon-on {
     font-size: 12px;
 }
