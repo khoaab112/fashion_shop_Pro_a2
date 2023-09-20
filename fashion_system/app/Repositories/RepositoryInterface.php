@@ -15,6 +15,8 @@ interface RepositoryInterface {
     public function deleteAll();
     public function deleteById($id);
     public function pagingRecord($numberOfElements);
+    public function getRecordByPage($recordNumber,$page);
+    public function getRecordByPageConditional($recordNumber,$page,$conditional,$value);
     public function search($key, $value);
     public function count();
 }

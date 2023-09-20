@@ -42,7 +42,7 @@ abstract class BaseRepositories implements RepositoryInterface
     {
         return $this->model->findOrFail($id);
     }
-    public function statusChange($id,$status)
+    public function statusChange($id, $status)
     {
         $object = $this->model->find($id);
         return $object->update(['status' => $status]);
@@ -60,10 +60,15 @@ abstract class BaseRepositories implements RepositoryInterface
     {
         return $this->model->paginate($numberOfElements)->sortByDesc('id');
     }
-    public function getRecordByPage($recordNumber,$page)
+    public function getRecordByPage($recordNumber, $page)
     {
         // return $this->model->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
         return $this->model->orderBy('id', 'desc')->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
+    }
+    public function getRecordByPageConditional($recordNumber, $page, $conditional, $value)
+    {
+        // return $this->model->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
+        return $this->model->where($conditional,$value)->orderBy('id', 'desc')->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
     }
     public function search($key, $value)
     {

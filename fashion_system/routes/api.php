@@ -9,10 +9,12 @@ use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\TypeReportController;
 use App\Http\Controllers\Admin\ReportSourceController;
 use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Broadcasting\FollowAccount\ManagerController;
+use App\Http\Controllers\Admin\NotificationController;
+
 //test controller
 use App\Http\Controllers\Test;
 use App\Http\Controllers\Test\TestSockets;
-use App\Http\Controllers\Broadcasting\FollowAccount\ManagerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -75,6 +77,11 @@ Route::middleware(['checkURL'])->group(function () {
             Route::post('/follow-account-admin', [ManagerController::class, 'followAccountAdmin']);
             Route::delete('/delete-account-admin', [ManagerController::class, 'statusChange']);
             Route::get('/get', [ManagerController::class, 'get']);
+
+            //notifications administration
+            Route::get('/get-notifications', [NotificationController::class, 'getNotificationByIdStaff']);
+
+
 
         });
     });
