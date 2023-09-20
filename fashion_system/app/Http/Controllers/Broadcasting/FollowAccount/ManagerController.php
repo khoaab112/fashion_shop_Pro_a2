@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Helpers\CodeHttpHelpers;
 use App\Events\AdminConnected;
+use Illuminate\Support\Facades\Auth;
 
 class ManagerController extends Controller
 {
@@ -90,9 +91,11 @@ class ManagerController extends Controller
             return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
         }
     }
-    public function statusChange(Request $request, $id)
+    public function statusChange(Request $request)
     {
-        $idUser = $id;
+        // $idUser = $id;
+        $idUser=Auth::user()->staff_id;
+
         $ip = $request->ip();
         $versionBrowser = $request->header('User-Agent');
 

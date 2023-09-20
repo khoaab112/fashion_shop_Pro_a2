@@ -152,14 +152,15 @@ class AuthnController extends Controller
     public function logout(Request $request)
     {
         try {
-            $IDUser = Auth::user()->id;
+            $staffId=Auth::user()->staff_id;
+            $accountId = Auth::user()->id;
             $authorizationHeader = $request->header('Authorization');
             $token = str_replace('Bearer ', '', $authorizationHeader);
             //xóa access token
             Auth::setToken($token)->invalidate();
             Auth::logout();
-            $this->removeRefreshToken($IDUser);
-            $this->statusChange($request, $IDUser);
+            $this->removeRefreshToken($accountId);
+            $this->statusChange($request, $staffId);
             return CodeHttpHelpers::returnJson(200, true, 'Đăng xuất thành công', 200);
         } catch (\Exception $err) {
             return CodeHttpHelpers::returnJson(400, false, $err, 200);

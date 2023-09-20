@@ -73,7 +73,7 @@ Route::middleware(['checkURL'])->group(function () {
 
             //Broadcasting
             Route::post('/follow-account-admin', [ManagerController::class, 'followAccountAdmin']);
-            Route::delete('/delete-account-admin/{id}', [ManagerController::class, 'statusChange']);
+            Route::delete('/delete-account-admin', [ManagerController::class, 'statusChange']);
             Route::get('/get', [ManagerController::class, 'get']);
 
         });

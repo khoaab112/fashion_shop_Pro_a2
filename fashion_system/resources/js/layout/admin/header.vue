@@ -38,7 +38,6 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                ...
             </div>
         </div>
     </section>
@@ -124,9 +123,9 @@ export default {
 
         },
         async handleBeforeUnload() {
-            const idUser = this.staff.id;
+            // const idUser = this.staff.id;
             sessionStorage.clearSession();
-            await apiManagerAccount.deleteStatusAccountAdmin(idUser).then(res => {
+            await apiManagerAccount.deleteStatusAccountAdmin().then(res => {
                 var dataResponse = res.data;
                 if (dataResponse.result_code == 200) {
                 } else

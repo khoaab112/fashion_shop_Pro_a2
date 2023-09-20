@@ -6,7 +6,7 @@ export default {
     followAccountAdmin(data) {
         return index.post(`/follow-account-admin`, (data));
     },
-    deleteStatusAccountAdmin(id) {
-        return index.delete(`/delete-account-admin/${id}`, );
+    deleteStatusAccountAdmin() {
+        return index.delete(`/delete-account-admin`);
     },
 }
