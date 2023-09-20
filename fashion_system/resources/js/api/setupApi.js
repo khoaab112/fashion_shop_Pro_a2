@@ -3,7 +3,8 @@ import localStorage from "@/js/auth/localStorage";
 import logout from "@/js/auth/logout.js";
 import jwt from "@/js/auth/jwt.js";
 import router from "@/js/routerVue/index.js";
-
+//broadcasting
+import { configureEcho } from "@/js/generalSetting/configureEcho.js";
 
 
 // sửa lại tên file là setting_api
@@ -48,6 +49,10 @@ apiClient.interceptors.response.use(
             }
             localStorage.clearStorage();
             localStorage.setAccessToken(token);
+            //broadcasting
+            const echo = configureEcho(token);
+            window.Echo.disconnect();
+            window.Echo = echo;
             return apiClient.request(response.config);
         }
         if (checkHttpResponse(codeHttp, response))

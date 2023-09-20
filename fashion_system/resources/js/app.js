@@ -36,25 +36,29 @@ import App from './App.vue';
 import router from './routerVue/index.js';
 
 //BROADCAST
-import Echo from "laravel-echo"
-import Pusher from 'pusher-js';
+import { configureEcho } from "@/js/generalSetting/configureEcho.js";
 const accessToken = localStorage.getAccessToken();
-window.Pusher = Pusher;
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: ENV.PUSHER_APP_KEY,
-    // wsHost: ENV.APP_URL,
-    // wsPort: 6001,
-    cluster: ENV.PUSHER_APP_CLUSTER,
-    forceTLS: true,
-    disableStats: true,
-    authEndpoint: '/broadcasting/auth',
-    auth: {
-        headers: {
-            Authorization: 'Bearer ' + accessToken,
-        }
-    },
-});
+const echo = configureEcho(accessToken);
+// import Echo from "laravel-echo"
+// import Pusher from 'pusher-js';
+window.Echo = echo;
+// const accessToken = localStorage.getAccessToken();
+// window.Pusher = Pusher;
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: ENV.PUSHER_APP_KEY,
+//     // wsHost: ENV.APP_URL,
+//     // wsPort: 6001,
+//     cluster: ENV.PUSHER_APP_CLUSTER,
+//     forceTLS: true,
+//     disableStats: true,
+//     authEndpoint: '/broadcasting/auth',
+//     auth: {
+//         headers: {
+//             Authorization: 'Bearer ' + accessToken,
+//         }
+//     },
+// });
 
 window.axios = axios;
 

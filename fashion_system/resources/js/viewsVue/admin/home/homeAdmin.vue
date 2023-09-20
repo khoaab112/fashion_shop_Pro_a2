@@ -68,6 +68,8 @@
 <script>
 import circleMenuAdmin from "@/js/generalSetting/circleMenuAdmin.js";
 import circleMenu from "@/js/viewsVue/components/circleMenu.vue";
+
+
 export default {
     name: "homeAdmin",
     components: {
@@ -86,39 +88,41 @@ export default {
         // this.listenToChannel();
     },
     mounted() {
-        //theo dõi tài khoản trực tuyến
         window.Echo.private('admin_connect')
             .listen('.admin.connect', async (e) => {
                 console.log(e.user);
                 this.getListUsers(e.user);
-
+            })
+            .error((error) => {
+                if (error.status == 403) {
+                    location.reload();
+                }
             });
-
         //
-        window.Echo.private('channel-name').listen('MessageNotification', (e) => {
-            console.log('go public');
-            //code for displaying the serve data
-            console.log(e); // the data from the server
-        });
-        // window.Echo.private('admin_connect')
-        //     .listen('.admin.connect', (e) => {
-        //         console.log(e);
-        //     });
-        // window.Echo.channel('admin_connect')
-        //     .listen('AdminConnected', (e) => {
-        //         console.log('User connected from server:', e.user_id);
-        //         // Thực hiện các xử lý khác tại đây
-        //     });
+        // window.Echo.private('channel-name').listen('MessageNotification', (e) => {
+        //     console.log('go public');
+        //     //code for displaying the serve data
+        //     console.log(e); // the data from the server
+        // });
+        // // window.Echo.private('admin_connect')
+        // //     .listen('.admin.connect', (e) => {
+        // //         console.log(e);
+        // //     });
+        // // window.Echo.channel('admin_connect')
+        // //     .listen('AdminConnected', (e) => {
+        // //         console.log('User connected from server:', e.user_id);
+        // //         // Thực hiện các xử lý khác tại đây
+        // //     });
 
-        window.Echo.channel('users').listen('user_connected', (user) => {
-            // Thêm người dùng vào danh sách
-            this.users.push(user);
-        });
-        window.Echo.private(`channel-name`)
-            .listenForWhisper('MessageNotification', (e) => {
-                console.log(e);
-                console.log('adasdas');
-            });
+        // window.Echo.channel('users').listen('user_connected', (user) => {
+        //     // Thêm người dùng vào danh sách
+        //     this.users.push(user);
+        // });
+        // window.Echo.private(`channel-name`)
+        //     .listenForWhisper('MessageNotification', (e) => {
+        //         console.log(e);
+        //         console.log('adasdas');
+        //     });
     },
     computed: {
     },
@@ -134,8 +138,6 @@ export default {
         },
         // so sánh 2 mảng , tìm những người dùng vừa off
         findDifference(arrOld, arrNew) {
-            console.log(arrNew);
-            console.log(arrOld);
             // const missingElements = await arrNew.filter(itemNew => !arrOld.some(itemOld => itemOld.id === itemNew.id));
             const missingElements = arrOld.filter(itemOld => !arrNew.some(itemNew => itemNew.id === itemOld.id));
             return missingElements;
@@ -161,6 +163,7 @@ export default {
 section#list-of-active-people {
     border-bottom: 1px solid #c7c8c9;
 }
+
 button.action-block {
     background-color: orange;
     color: #fff;
