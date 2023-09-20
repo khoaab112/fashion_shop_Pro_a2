@@ -17,7 +17,7 @@
             <div class="action-edit-height" @click="isEditHeightBackground = !isEditHeightBackground">
                 <font-awesome-icon :icon="['fas', 'up-down']" style="color: #ffffff" v-if="!isEditHeightBackground" />
                 <font-awesome-icon icon="fa-solid fa-floppy-disk" class="save" style="color: white"
-                    v-if="isEditHeightBackground" @click="updateHeightBackground()"/>
+                    v-if="isEditHeightBackground" @click="updateHeightBackground()" />
             </div>
             <div class="action-slider" v-show="isEditHeightBackground">
                 <el-slider v-model="heightBackground"></el-slider>
@@ -561,18 +561,17 @@ export default {
         },
         getHeightBackground() {
             try {
-            const height = localStorage.getLocalStorage(keyHeightBackgroundAdmin);
-            if(!height)
-            {
-                this.heightBackground=20;
-            }
-           this.heightBackground=Number(height);
+                const height = localStorage.getLocalStorage(keyHeightBackgroundAdmin);
+                if (!height) {
+                    return this.heightBackground = 20;
+                }
+                this.heightBackground = Number(height);
             } catch (e) {
-                this.heightBackground=20;
+                this.heightBackground = 20;
             }
         },
         updateHeightBackground() {
-            const value = localStorage.setLocalStorage(keyHeightBackgroundAdmin,this.heightBackground);
+            const value = localStorage.setLocalStorage(keyHeightBackgroundAdmin, this.heightBackground);
         },
     },
 };
@@ -866,4 +865,5 @@ export default {
         text-align: center;
         padding-bottom: 1rem;
     }
-}</style>
+}
+</style>
