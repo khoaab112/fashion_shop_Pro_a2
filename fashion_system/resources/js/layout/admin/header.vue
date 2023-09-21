@@ -44,7 +44,8 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <div v-for="item in listNotifications" class="notification" :class="{ 'unread-notification': !item.watched }">
+                <div v-for="item in listNotifications" class="notification"
+                    :class="{ 'unread-notification': !item.watched }">
                     <strong class="label-notification" :style="{ background: '#' + `${item.color}` }">{{ item.name
                     }}</strong><span>&ensp;:&ensp;</span>
                     <span class="item-un">
@@ -184,7 +185,13 @@ export default {
             });
         },
         getListNotifications() {
-            apiNotification.getNotificationByIdStaff().then(res => {
+            var data =
+            {
+                'record_number': 10,
+                'page': 1,
+                'count': true
+            };
+            apiNotification.getNotificationByIdStaff(data).then(res => {
                 var dataResponse = res.data;
                 if (dataResponse.result_code == 200) {
                     this.listNotifications = dataResponse.results.notification
@@ -209,12 +216,14 @@ button.check-all {
     border: none;
     background: none;
     margin-left: 20px;
-    color:#007bff;
+    color: #007bff;
 }
+
 button.check-all:hover {
     color: black;
     transform: scale(1.2);
 }
+
 .notification {
 
     border-radius: 5px;
