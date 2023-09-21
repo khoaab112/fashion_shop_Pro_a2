@@ -48,7 +48,7 @@ class NotificationController extends Controller
                     'admins_notification.updated_at'
                 )
                 ->where(
-                    'admins_notification.id',
+                    'admins_notification.staff_id',
                     '=',
                     $staffId
                 )
@@ -58,18 +58,22 @@ class NotificationController extends Controller
                     true
                 )
                 ->orderByDesc('admins_notification.id')
-                ->paginate($recordNumber, ['*'], 'page', $page);
+                ->paginate($recordNumber, ['*'], 'page', $page)->items();
+
             // if (!$records)
             //     return CodeHttpHelpers::returnJson(200, true, ['null' => 'Không có dữ liệu'], 200);
             if ($count) {
-                $totalRecord = $this->notification->count();
+                $conditions = [
+                    ['staff_id', '=', $staffId]
+                ];
+                $totalRecord = $this->notification->countByConditions($conditions);
                 $result = [
-                    'page' => $records,
+                    'notification' => $records,
                     'total_record' => $totalRecord,
                 ];
                 return CodeHttpHelpers::returnJson(200, true, $result, 200);
             }
-            return CodeHttpHelpers::returnJson(200, true, ['page' => $records], 200);
+            return CodeHttpHelpers::returnJson(200, true, ['notification' => $records], 200);
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }

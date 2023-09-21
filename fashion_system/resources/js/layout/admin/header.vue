@@ -16,9 +16,12 @@
                     <button type="button" class="btn-set btn-header-admin"><font-awesome-icon
                             icon="fa-solid fa-list-check" /></button>
                     <button type="button" class="btn-bell btn-header-admin" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><font-awesome-icon
-                            class="icon-notification" icon="fa-regular fa-bell" />
-                        <p class="notification-number">10</p>
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                        @click="getListNotifications"><font-awesome-icon class="icon-notification"
+                            icon="fa-regular fa-bell" />
+                        <p class="notification-number" v-if="notificationNumber > 0 && notificationNumber < 99">{{
+                            notificationNumber }}</p>
+                        <p class="notification-number" v-else-if="notificationNumber > 99">+99</p>
                     </button>
                 </div>
             </div>
@@ -31,13 +34,27 @@
             </div>
         </main>
     </section>
+    <!-- THông báo cho người dùng -->
     <section>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">Thông báo</h5>
+                <h5 id="offcanvasRightLabel">Thông báo
+                    <button class="check-all"><font-awesome-icon icon="fa-solid fa-list-check" /></button>
+                </h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
+                <div v-for="item in listNotifications" class="notification" :class="{ 'unread-notification': !item.watched }">
+                    <strong class="label-notification" :style="{ background: '#' + `${item.color}` }">{{ item.name
+                    }}</strong><span>&ensp;:&ensp;</span>
+                    <span class="item-un">
+                        {{ item.content }}
+                    </span>
+                    <hr>
+                </div>
+                <div class="more-notification text-center">
+                    Xem thêm
+                </div>
             </div>
         </div>
     </section>
@@ -46,6 +63,7 @@
 <script>
 import sessionStorage from '@/js/auth/sessionStorage.js'
 import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
+import apiNotification from '@/js/api/admin/apiNotification.js';
 import { ElNotification } from 'element-plus';
 import globalVariable from '@/js/generalSetting/globalVariable.js';
 export default {
@@ -54,10 +72,12 @@ export default {
     data() {
         return {
             KEY_SESSION: 'session_storage_accessed',
-            circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+            // circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
             breadcrumb: null,
             pollingInterval: null,
             staff: null,
+            notificationNumber: null,
+            listNotifications: null,
         };
     },
     created() {
@@ -99,6 +119,7 @@ export default {
                 this.staff = await globalVariable.getGlobalVariableInfoStaff();
                 if (this.staff || Date.now() - startTime > maxDuration) {
                     // Dừng polling
+                    this.numberOfUnreadNotifications(this.staff.id);
                     clearInterval(this.pollingInterval);
                     // Tiếp tục
                     this.checkAccessed(this.staff)
@@ -146,15 +167,102 @@ export default {
                     type: 'error',
                 });
             });
-        }
+        },
+        numberOfUnreadNotifications(staffId) {
+            apiNotification.CheckForUnreadNotifications(staffId).then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    this.notificationNumber = Number(dataResponse.results);
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        },
+        getListNotifications() {
+            apiNotification.getNotificationByIdStaff().then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    this.listNotifications = dataResponse.results.notification
+                    console.log(this.listNotifications);
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        },
     },
 };
 </script>
 
 <style scoped>
 /* CSS cho component */
+button.check-all {
+    border: none;
+    background: none;
+    margin-left: 20px;
+    color:#007bff;
+}
+button.check-all:hover {
+    color: black;
+    transform: scale(1.2);
+}
+.notification {
+
+    border-radius: 5px;
+    padding: 6px 0px 0px 5px;
+}
+
+.unread-notification {
+    background: #b4b3b35c;
+}
+
+.more-notification {
+    padding: 1px 5px;
+    border-radius: 10px;
+    background-color: #007bff;
+    display: block;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+.more-notification:hover {
+    background-color: #219C90;
+}
+
+strong.label-notification {
+    padding: 1px 5px;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    user-select: none;
+}
+
+strong.label-notification:hover {
+    background-color: #26577C !important;
+    color: #F1EFEF;
+}
+
+hr {
+    border-top: 1px dashed #ff000000;
+}
+
 .offcanvas-end {
-    top: 25vh !important;
+    top: 9vh !important;
+    bottom: 6vh;
+    border-radius: 20px 0 0 20px;
 }
 
 .btn-header-admin {
@@ -325,5 +433,4 @@ body.dark .home .text {
         width: 84%;
     }
 
-}
-</style>
+}</style>

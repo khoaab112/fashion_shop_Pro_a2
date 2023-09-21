@@ -93,10 +93,10 @@
                         {{ data.data.value.note }}
                     </template>
                     <template #cell(status)="data">
-                        <span v-if="data.data.value.status">Hoạt động<strong class="float-end"><font-awesome-icon
-                                    icon="fa-solid fa-heart-pulse" style="color:#28a745 ;" /></strong></span>
-                        <span v-else>Khóa<strong class="float-end"><font-awesome-icon icon="fa-solid fa-road-barrier"
-                                    style="color:#dc3545 ;" /></strong></span>
+                        <span v-if="data.data.value.status">Hoạt động<strong class="float-end">
+                                <font-awesome-icon icon="fa-solid fa-circle" style="color:#28a745 ;" /></strong></span>
+                        <span v-else>Khóa<strong class="float-end">
+                                <font-awesome-icon icon="fa-solid fa-circle" style="color:#dc3545 ;" /></strong></span>
                     </template>
                     <template #cell(actions)="data">
                         <button class="action action-block" v-if="data.data.value.status"
@@ -439,7 +439,6 @@ export default {
                 .then((res) => {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
-                        console.log(dataResponse.results.page.length);
                         this.nullReportSource = false;
                         if (dataResponse.results.page.length <= 0) {
                             this.nullReportSource = true;

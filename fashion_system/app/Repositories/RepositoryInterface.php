@@ -21,5 +21,6 @@ interface RepositoryInterface
     public function getRecordByPageConditional($recordNumber, $page, $conditional, $value);
     public function search($key, $value);
     public function count();
+    public function countByConditions($conditions);
     public function getDataAccordingToConditions($arrCondition);
 }

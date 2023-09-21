@@ -90,5 +90,10 @@ abstract class BaseRepositories implements RepositoryInterface
     {
         return $this->model->count();
     }
+    public function countByConditions($conditions)
+    {
+        return $this->model->where($conditions)->count();
+
+    }
     // abstract public function getModel();
 }
