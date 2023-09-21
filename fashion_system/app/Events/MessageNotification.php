@@ -25,6 +25,10 @@ class MessageNotification implements ShouldBroadcast
         $this->message = $message;
     }
 
+    public function broadcastAs(): string
+    {
+        return 'notification.admin';
+    }
     /**
      * Get the channels the event should broadcast on.
      *
@@ -33,9 +37,9 @@ class MessageNotification implements ShouldBroadcast
     //kênh nhận sóng
     public function broadcastOn(): array
     {
-        Log::info('drgdfgd');
+        Log::info('broadning');
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel('notification_admin'),
         ];
     }
 }

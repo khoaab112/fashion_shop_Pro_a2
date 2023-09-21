@@ -68,11 +68,23 @@ abstract class BaseRepositories implements RepositoryInterface
     public function getRecordByPageConditional($recordNumber, $page, $conditional, $value)
     {
         // return $this->model->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
-        return $this->model->where($conditional,$value)->orderBy('id', 'desc')->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
+        return $this->model->where($conditional, $value)->orderBy('id', 'desc')->paginate($recordNumber, ['*'], 'page', $page)->sortByDesc('id');
     }
+    // tìm kiếm theo điều kiện
     public function search($key, $value)
     {
         return $this->model->where($key, $value)->get();
+    }
+    //lấy data theo điều kiện nào đó
+    public function getDataAccordingToConditions($arrCondition)
+    {
+        /*
+        [
+          ['status', '=', '1'],
+          ['subscribed', '<>', '1'],
+        ]
+        */
+        return $this->model->where($arrCondition)->get();
     }
     public function count()
     {

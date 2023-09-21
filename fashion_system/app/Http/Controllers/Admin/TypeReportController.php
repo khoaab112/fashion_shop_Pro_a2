@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
 use App\Repositories\TypeReport\TypeReportRepository;
+use Illuminate\Support\Facades\Log;
+
 
 class TypeReportController extends Controller
 {

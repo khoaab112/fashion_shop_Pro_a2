@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
 use App\Repositories\ReportSource\ReportSourceRepository;
-
+use App\Http\Controllers\Admin\NotificationController;
 
 class ReportSourceController extends Controller
 {
@@ -35,6 +35,13 @@ class ReportSourceController extends Controller
             $validator = validationHelpers::validation($val, $this->validationRules, $this->attributeNames);
             if ($validator->fails()) {
                 $errors = $validator->errors();
+                $dataNotification = [
+                    'type_notification' => 2,
+                    'staff_id' => 2,
+                    'content' => json_encode($errors)
+                ];
+                $notificationController = app(NotificationController::class);
+                $notificationController->createNotificationByIdStaff($dataNotification);
                 return CodeHttpHelpers::returnJson(400, false, $errors, 200);
             }
         }

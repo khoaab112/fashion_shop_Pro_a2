@@ -90,7 +90,6 @@ export default {
     mounted() {
         window.Echo.private('admin_connect')
             .listen('.admin.connect', async (e) => {
-                console.log(e.user);
                 this.getListUsers(e.user);
             })
             .error((error) => {

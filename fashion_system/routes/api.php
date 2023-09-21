@@ -13,8 +13,8 @@ use App\Http\Controllers\Broadcasting\FollowAccount\ManagerController;
 use App\Http\Controllers\Admin\NotificationController;
 
 //test controller
-use App\Http\Controllers\Test;
-use App\Http\Controllers\Test\TestSockets;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,9 +45,6 @@ Route::middleware(['checkURL'])->group(function () {
             Route::delete('/logout', [AuthnController::class, 'logout']);
             //test
             Route::post('/test-login', [AuthnController::class, 'test']);
-            Route::get('/test-socket', [TestSockets::class, 'testTing'])->withoutMiddleware(['auth:api']);
-            Route::get('/test-2', [TestSockets::class, 'testTing2'])->withoutMiddleware(['auth:api']);
-            Route::get('/test', [Test::class, 'index'])->withoutMiddleware(['auth:api']);
 
             //staff
             Route::get('/staff/{id}', [StaffController::class, 'getInFoStaff']);
@@ -80,9 +77,8 @@ Route::middleware(['checkURL'])->group(function () {
 
             //notifications administration
             Route::get('/get-notifications', [NotificationController::class, 'getNotificationByIdStaff']);
-
-
-
+            Route::get('/check-notifications/{id}', [NotificationController::class, 'CheckForUnreadNotifications']);
+            Route::post('/test-no/{id}', [NotificationController::class, 'test']);
         });
     });
 });

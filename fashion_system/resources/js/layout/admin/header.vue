@@ -71,6 +71,15 @@ export default {
         },
     },
     mounted() {
+        window.Echo.private('notification_admin')
+            .listen('.notification.admin', async (e) => {
+                console.log(e);
+            })
+            .error((error) => {
+                if (error.status == 403) {
+                    location.reload();
+                }
+            });
     },
     computed() {
         // được sử dụng để định nghĩa các thuộc tính tính toán
