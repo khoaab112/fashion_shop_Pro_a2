@@ -157,4 +157,10 @@ class NotificationController extends Controller
             ->first();
         event(new MessageNotification($NotificationNew));
     }
+    public function changeWatchedStatus(Request $request)
+    {
+        $changeWatched = DB::table('admins_notification')
+
+
+    }
 }

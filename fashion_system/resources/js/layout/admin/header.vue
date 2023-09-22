@@ -35,17 +35,20 @@
         </main>
     </section>
     <!-- THông báo cho người dùng -->
-    <section>
+    <section id="sidebar-notification">
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel">Thông báo
-                    <button class="check-all"><font-awesome-icon icon="fa-solid fa-list-check" /></button>
+                    <button class="check-all" @click="markAllNotification"><font-awesome-icon
+                            icon="fa-solid fa-list-check" /></button>
                 </h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body" id="sidebar-notification">
+                <loadingStyleWave v-if="!isShowDataNotification" class="style-loading">
+                </loadingStyleWave>
                 <div v-for="item in listNotifications" class="notification"
-                    :class="{ 'unread-notification': !item.watched }">
+                    :class="{ 'unread-notification': !item.watched }" v-else>
                     <strong class="label-notification" :style="{ background: '#' + `${item.color}` }">{{ item.name
                     }}</strong><span>&ensp;:&ensp;</span>
                     <span class="item-un">
@@ -53,7 +56,8 @@
                     </span>
                     <hr>
                 </div>
-                <div class="more-notification text-center">
+                <span v-if="listNotifications.length <= 0">Không có thông báo</span>
+                <div class="more-notification text-center" v-if="nextPage < maxPage" @click="nextNotification()">
                     Xem thêm
                 </div>
             </div>
@@ -67,8 +71,10 @@ import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
 import apiNotification from '@/js/api/admin/apiNotification.js';
 import { ElNotification } from 'element-plus';
 import globalVariable from '@/js/generalSetting/globalVariable.js';
+import loadingStyleWave from '@/js/viewsVue/components/loadingStyleWave.vue'
 export default {
     components: {
+        loadingStyleWave
     },
     data() {
         return {
@@ -78,7 +84,12 @@ export default {
             pollingInterval: null,
             staff: null,
             notificationNumber: null,
-            listNotifications: null,
+            listNotifications: [],
+            isShowDataNotification: false,
+            recordNumber: null,
+            nextPage: 1,
+            maxPage: null,
+            isNotAllowed: false,
         };
     },
     created() {
@@ -185,17 +196,21 @@ export default {
             });
         },
         getListNotifications() {
+            if (this.isNotAllowed) return
+            this.isShowDataNotification = false;
             var data =
             {
                 'record_number': 10,
-                'page': 1,
+                'page': this.nextPage,
                 'count': true
             };
             apiNotification.getNotificationByIdStaff(data).then(res => {
                 var dataResponse = res.data;
                 if (dataResponse.result_code == 200) {
-                    this.listNotifications = dataResponse.results.notification
-                    console.log(this.listNotifications);
+                    this.isShowDataNotification = true;
+                    this.listNotifications = dataResponse.results.notification;
+                    this.recordNumber = dataResponse.results.total_record;
+                    this.maxPage = (this.recordNumber / 10).toFixed();
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
@@ -206,12 +221,61 @@ export default {
                 });
             });
         },
+        markAllNotification() {
+            if (this.notificationNumber <= 0) {
+                return ElNotification({
+                    title: 'Success',
+                    message: 'Đọc tất cả thành công',
+                    type: 'success',
+                });
+            }
+        },
+        nextNotification() {
+            if (this.nextPage == this.maxPage || this.nextPage > this.maxPage) {
+                this.isNotAllowed = true;
+                return ElNotification({
+                    title: 'Error',
+                    message: 'lỗi bất thường',
+                    type: 'error',
+                });
+            }
+            this.nextPage = this.nextPage + 1;
+            var data =
+            {
+                'record_number': 10,
+                'page': this.nextPage,
+                'count': true
+            };
+            apiNotification.getNotificationByIdStaff(data).then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    this.listNotifications = [
+                        ...this.listNotifications,
+                        ...dataResponse.results.notification
+                    ];
+                    this.recordNumber = dataResponse.results.total_record;
+                    this.maxPage = (this.recordNumber / 10).toFixed();
+                    if (this.nextPage == this.maxPage || this.nextPage > this.maxPage) this.isNotAllowed = true;
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        }
     },
 };
 </script>
 
 <style scoped>
 /* CSS cho component */
+.style-loading {
+    height: 37px;
+}
+
 button.check-all {
     border: none;
     background: none;
@@ -408,6 +472,31 @@ body.dark .home .text {
     margin: 0 auto;
 }
 
+.offcanvas-body {
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 40vh;
+}
+
+.offcanvas-body::-webkit-scrollbar {
+    width: 7px;
+    height: 5px;
+}
+
+.offcanvas-body::-webkit-scrollbar-track {
+    background-color: #e9f0ff;
+    border-radius: 4px;
+    border-left: 2.5px solid white;
+    border-right: 2.5px solid white;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    background-color: #8fb3ff;
+}
+
 @media (max-width:1600px) {
     section#header-admin {
         width: 95%;
@@ -442,4 +531,5 @@ body.dark .home .text {
         width: 84%;
     }
 
-}</style>
+}
+</style>
