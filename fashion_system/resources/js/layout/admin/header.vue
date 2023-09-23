@@ -41,6 +41,7 @@
                 <h5 id="offcanvasRightLabel">Thông báo
                     <button class="check-all" @click="markAllNotification"><font-awesome-icon
                             icon="fa-solid fa-list-check" /></button>
+                    <button class="check-all" @click="sortArr()"><font-awesome-icon icon="fa-solid fa-up-down" /></button>
                 </h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
@@ -49,14 +50,18 @@
                 </loadingStyleWave>
                 <div v-for="item in listNotifications" class="notification"
                     :class="{ 'unread-notification': !item.watched }" v-else>
+                    <el-checkbox v-model="item.status" @change="checkNotification(item)" v-if="!item.watched">
+                        &nbsp</el-checkbox>
                     <strong class="label-notification" :style="{ background: '#' + `${item.color}` }">{{ item.name
                     }}</strong><span>&ensp;:&ensp;</span>
                     <span class="item-un">
                         {{ item.content }}
                     </span>
+                    <br>
+                    <span class="time-notification">{{ item.created_at }}</span>
                     <hr>
                 </div>
-                <span v-if="listNotifications.length <= 0">Không có thông báo</span>
+                <div class="text-center"><span v-if="listNotifications.length <= 0">Không có thông báo</span></div>
                 <div class="more-notification text-center" v-if="nextPage < maxPage" @click="nextNotification()">
                     Xem thêm
                 </div>
@@ -90,6 +95,7 @@ export default {
             nextPage: 1,
             maxPage: null,
             isNotAllowed: false,
+            arrIdchecks: [],
         };
     },
     created() {
@@ -105,7 +111,9 @@ export default {
     mounted() {
         window.Echo.private('notification_admin')
             .listen('.notification.admin', async (e) => {
-                console.log(e);
+                console.log(e.message.content);
+                this.notificationNumber = ++this.notificationNumber;
+                this.listNotifications.push(e.message.content);
             })
             .error((error) => {
                 if (error.status == 403) {
@@ -210,7 +218,9 @@ export default {
                     this.isShowDataNotification = true;
                     this.listNotifications = dataResponse.results.notification;
                     this.recordNumber = dataResponse.results.total_record;
-                    this.maxPage = (this.recordNumber / 10).toFixed();
+                    // this.maxPage = (this.recordNumber / 10).toFixed();
+                    this.maxPage = Math.ceil(this.recordNumber / 10);
+                    console.log(this.maxPage);
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
@@ -222,13 +232,53 @@ export default {
             });
         },
         markAllNotification() {
+            console.log(this.arrIdchecks);
+            if (this.arrIdchecks.length > 0) {
+                apiNotification.changeWatchedStatusByID({ 'arr_id': this.arrIdchecks }).then(res => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        this.getListNotifications();
+                        return ElNotification({
+                            title: 'Success',
+                            message: 'Đọc tất cả thành công',
+                            type: 'success',
+                        });
+                    } else
+                        throw new Error(dataResponse.result_code);
+                }).catch(error => {
+                    ElNotification({
+                        title: 'Error',
+                        message: 'Có lỗi bất thường',
+                        type: 'error',
+                    });
+                });
+                return
+            }
             if (this.notificationNumber <= 0) {
                 return ElNotification({
                     title: 'Success',
                     message: 'Đọc tất cả thành công',
                     type: 'success',
                 });
-            }
+            };
+            apiNotification.changeWatchedStatus(this.staff.id).then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    this.getListNotifications();
+                    return ElNotification({
+                        title: 'Success',
+                        message: 'Đọc tất cả thành công',
+                        type: 'success',
+                    });
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
         },
         nextNotification() {
             if (this.nextPage == this.maxPage || this.nextPage > this.maxPage) {
@@ -265,6 +315,15 @@ export default {
                     type: 'error',
                 });
             });
+        },
+        checkNotification(data) {
+            if (data.status) {
+                return this.arrIdchecks.push(data.id);
+            }
+            return this.arrIdchecks.filter(item => item !== data.id);
+        },
+        sortArr() {
+            this.listNotifications = this.listNotifications.reverse();
         }
     },
 };
@@ -272,6 +331,12 @@ export default {
 
 <style scoped>
 /* CSS cho component */
+.time-notification {
+    float: right;
+    font-size: 80%;
+    color: #594e4e;
+}
+
 .style-loading {
     height: 37px;
 }
@@ -329,7 +394,7 @@ strong.label-notification:hover {
 }
 
 hr {
-    border-top: 1px dashed #ff000000;
+    border-top: 1px dashed black;
 }
 
 .offcanvas-end {

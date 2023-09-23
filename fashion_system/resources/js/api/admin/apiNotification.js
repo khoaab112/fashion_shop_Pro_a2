@@ -9,4 +9,10 @@ export default {
     CheckForUnreadNotifications(id) {
         return index.get(`/check-notifications/${id}`);
     },
+    changeWatchedStatus(staffId) {
+        return index.put(`/change-watched-notification/${staffId}`);
+    },
+    changeWatchedStatusByID(arr) {
+        return index.put(`/change-watched-notification`, (arr));
+    },
 }

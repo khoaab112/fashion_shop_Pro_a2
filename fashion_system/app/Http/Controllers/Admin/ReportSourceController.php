@@ -8,6 +8,7 @@ use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
 use App\Repositories\ReportSource\ReportSourceRepository;
 use App\Http\Controllers\Admin\NotificationController;
+use Illuminate\Support\Facades\Auth;
 
 class ReportSourceController extends Controller
 {
@@ -35,9 +36,10 @@ class ReportSourceController extends Controller
             $validator = validationHelpers::validation($val, $this->validationRules, $this->attributeNames);
             if ($validator->fails()) {
                 $errors = $validator->errors();
+                $staffId = Auth::user()->staff_id;
                 $dataNotification = [
                     'type_notification' => 2,
-                    'staff_id' => 2,
+                    'staff_id' => $staffId,
                     'content' => json_encode($errors)
                 ];
                 $notificationController = app(NotificationController::class);

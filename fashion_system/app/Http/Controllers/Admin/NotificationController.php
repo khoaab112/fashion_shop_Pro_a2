@@ -41,6 +41,7 @@ class NotificationController extends Controller
                 ->select(
                     'type_notification.name',
                     'type_notification.color',
+                    'admins_notification.id',
                     'admins_notification.staff_id',
                     'admins_notification.content',
                     'admins_notification.watched',
@@ -157,10 +158,22 @@ class NotificationController extends Controller
             ->first();
         event(new MessageNotification($NotificationNew));
     }
-    public function changeWatchedStatus(Request $request)
+    public function changeWatchedStatus($staff_id)
     {
         $changeWatched = DB::table('admins_notification')
-
-
+            ->where('staff_id', $staff_id)
+            ->update(['watched' => true]);
+        if ($changeWatched)
+            return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
+        return CodeHttpHelpers::returnJson(500, false, 'Lỗi hệ thống', 500);
+    }
+    public function changeWatchedStatusByID(Request $request)
+    {
+        $changeWatched = DB::table('admins_notification')
+            ->whereIn('id', $request['arr_id'])
+            ->update(['watched' => true]);
+        if ($changeWatched)
+            return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
+        return CodeHttpHelpers::returnJson(500, false, 'Lỗi hệ thống', 500);
     }
 }

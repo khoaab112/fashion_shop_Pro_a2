@@ -79,6 +79,8 @@ Route::middleware(['checkURL'])->group(function () {
             Route::get('/get-notifications', [NotificationController::class, 'getNotificationByIdStaff']);
             Route::get('/check-notifications/{id}', [NotificationController::class, 'CheckForUnreadNotifications']);
             Route::post('/test-no/{id}', [NotificationController::class, 'test']);
+            Route::put('/change-watched-notification/{id}', [NotificationController::class, 'changeWatchedStatus']);
+            Route::put('/change-watched-notification', [NotificationController::class, 'changeWatchedStatusByID']);
         });
     });
 });
