@@ -68,6 +68,11 @@
             </div>
         </div>
     </section>
+    <section>
+        <audio id="audio-notification">
+            <source :src=mp3Notification type="audio/mpeg">
+        </audio>
+    </section>
 </template>
 
 <script>
@@ -77,6 +82,8 @@ import apiNotification from '@/js/api/admin/apiNotification.js';
 import { ElNotification } from 'element-plus';
 import globalVariable from '@/js/generalSetting/globalVariable.js';
 import loadingStyleWave from '@/js/viewsVue/components/loadingStyleWave.vue'
+import notificationMp3 from "@/public/mp3/notification/notification-admin.mp3";
+
 export default {
     components: {
         loadingStyleWave
@@ -96,12 +103,14 @@ export default {
             maxPage: null,
             isNotAllowed: false,
             arrIdchecks: [],
+            mp3Notification: 'mp3-notification',
         };
     },
     created() {
         this.breadcrumb = this.$route.matched;
         this.getGlobalVariableInfoStaff();
         window.addEventListener('beforeunload', this.handleBeforeUnload);
+        this.mp3Notification = notificationMp3;
     },
     watch: {
         '$route.matched'(value) {
@@ -114,6 +123,7 @@ export default {
                 console.log(e.message.content);
                 this.notificationNumber = ++this.notificationNumber;
                 this.listNotifications.push(e.message.content);
+                this.playAudio();
             })
             .error((error) => {
                 if (error.status == 403) {
@@ -238,9 +248,10 @@ export default {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
                         this.getListNotifications();
+                        this.numberOfUnreadNotifications(this.staff.id);
                         return ElNotification({
                             title: 'Success',
-                            message: 'Đọc tất cả thành công',
+                            message: 'Đọc thành công',
                             type: 'success',
                         });
                     } else
@@ -324,6 +335,10 @@ export default {
         },
         sortArr() {
             this.listNotifications = this.listNotifications.reverse();
+        },
+        playAudio() {
+            const audio = document.getElementById('audio-notification');
+            audio.play();
         }
     },
 };
