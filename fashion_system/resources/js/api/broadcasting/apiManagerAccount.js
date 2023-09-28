@@ -9,4 +9,7 @@ export default {
     deleteStatusAccountAdmin() {
         return index.delete(`/delete-account-admin`);
     },
+    deleteListAccountAdmin() {
+        return index.delete(`/reset-list-account`);
+    },
 }

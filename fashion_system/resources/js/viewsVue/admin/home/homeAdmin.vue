@@ -7,6 +7,7 @@
                         Người dùng đang hoạt động
                         <font-awesome-icon icon="fa-solid fa-check" style="color: #48dd08;" />
                     </p>
+                    <button class="action action-reset" @click="resetListAccounts">Cài lại </button>
                     <div class="list-people">
                         <div v-for="item in listAccountsAdminNew" :key="item.id">
                             <div class="people row">
@@ -68,6 +69,7 @@
 <script>
 import circleMenuAdmin from "@/js/generalSetting/circleMenuAdmin.js";
 import circleMenu from "@/js/viewsVue/components/circleMenu.vue";
+import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
 
 
 export default {
@@ -155,6 +157,21 @@ export default {
             }
             return true;
         },
+        resetListAccounts() {
+            apiManagerAccount.deleteListAccountAdmin().then(res => {
+                var dataResponse = res.data;
+                if (dataResponse.result_code == 200) {
+                    this.listAccountsAdminNew = [];
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        },
     },
 };
 </script>
@@ -165,6 +182,12 @@ section#list-of-active-people {
 
 button.action-block {
     background-color: orange;
+    color: #fff;
+    font-weight: bolder;
+}
+
+button.action-reset {
+    background-color: red;
     color: #fff;
     font-weight: bolder;
 }

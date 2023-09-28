@@ -94,7 +94,7 @@ class ManagerController extends Controller
     public function statusChange(Request $request)
     {
         // $idUser = $id;
-        $idUser=Auth::user()->staff_id;
+        $idUser = Auth::user()->staff_id;
 
         $ip = $request->ip();
         $versionBrowser = $request->header('User-Agent');
@@ -154,6 +154,15 @@ class ManagerController extends Controller
             return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
         }
         return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
+    }
+    public function resetCache()
+    {
+        try {
+            Cache::forget($this->KEY_CACHE);
+            return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
     }
     public function get()
     {

@@ -57,8 +57,9 @@
                     <span class="item-un">
                         {{ item.content }}
                     </span>
+                    <!-- <span>{{}}</span> -->
                     <br>
-                    <span class="time-notification">{{ item.created_at }}</span>
+                    <span class="time-notification"><b>({{ calculateTime(item.created_at) }})</b>&nbsp{{ item.created_at }}</span>
                     <hr>
                 </div>
                 <div class="text-center"><span v-if="listNotifications.length <= 0">Không có thông báo</span></div>
@@ -104,6 +105,7 @@ export default {
             isNotAllowed: false,
             arrIdchecks: [],
             mp3Notification: 'mp3-notification',
+            dateNow: new Date(),
         };
     },
     created() {
@@ -120,7 +122,6 @@ export default {
     mounted() {
         window.Echo.private('notification_admin')
             .listen('.notification.admin', async (e) => {
-                console.log(e.message.content);
                 this.notificationNumber = ++this.notificationNumber;
                 this.listNotifications.push(e.message.content);
                 this.playAudio();
@@ -214,6 +215,7 @@ export default {
             });
         },
         getListNotifications() {
+            this.dateNow = new Date();
             if (this.isNotAllowed) return
             this.isShowDataNotification = false;
             var data =
@@ -230,7 +232,6 @@ export default {
                     this.recordNumber = dataResponse.results.total_record;
                     // this.maxPage = (this.recordNumber / 10).toFixed();
                     this.maxPage = Math.ceil(this.recordNumber / 10);
-                    console.log(this.maxPage);
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
@@ -242,7 +243,6 @@ export default {
             });
         },
         markAllNotification() {
-            console.log(this.arrIdchecks);
             if (this.arrIdchecks.length > 0) {
                 apiNotification.changeWatchedStatusByID({ 'arr_id': this.arrIdchecks }).then(res => {
                     var dataResponse = res.data;
@@ -339,7 +339,33 @@ export default {
         playAudio() {
             const audio = document.getElementById('audio-notification');
             audio.play();
-        }
+        },
+        calculateTime(timeInput) {
+            var timeStart =  new Date(timeInput);
+            const timeNow = this.dateNow;
+            const timeDifference = timeNow - timeStart;
+            const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+            const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+            const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            // sét theo giờ
+            if (hoursDifference >= 24) {
+                if (daysDifference >= 1) {
+                    return `${daysDifference} ngày trước`
+                }
+            }
+            else {
+                if (minutesDifference <= 0) {
+                    return `< 1 phút trước`
+                }
+                if (minutesDifference <= 60) {
+                    return `${minutesDifference} phút trước`
+                }
+                else {
+                    return `${hoursDifference} giờ trước`
+                }
+            }
+
+        },
     },
 };
 </script>
@@ -351,7 +377,9 @@ export default {
     font-size: 80%;
     color: #594e4e;
 }
-
+.time-notification>b{
+    color: #7c9cde;
+}
 .style-loading {
     height: 37px;
 }

@@ -73,6 +73,7 @@ Route::middleware(['checkURL'])->group(function () {
             //Broadcasting
             Route::post('/follow-account-admin', [ManagerController::class, 'followAccountAdmin']);
             Route::delete('/delete-account-admin', [ManagerController::class, 'statusChange']);
+            Route::delete('/reset-list-account', [ManagerController::class, 'resetCache']);
             Route::get('/get', [ManagerController::class, 'get']);
 
             //notifications administration
