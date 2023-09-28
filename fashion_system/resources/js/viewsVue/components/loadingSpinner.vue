@@ -51,4 +51,7 @@ export default {
     width: 4rem;
     height: 4rem;
 }
+section#loading-infinity {
+    display: inline-block;
+}
 </style>

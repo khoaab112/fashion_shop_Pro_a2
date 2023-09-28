@@ -48,7 +48,33 @@
                 </div>
             </div>
         </section>
-
+        <section>
+            <div class="card-weather">
+                <div class="header-weather text-center">
+                    <span class="text-center">{{ getTimeNow() }}</span>
+                    <br>
+                    <strong v-if="!supportGettingAddress">
+                        Trình duyệt không hỗ trợ lấy địa chỉ
+                    </strong>
+                    <strong v-else-if="!longitude || !latitude">
+                        Hãy mở quyền truy cập vị trí để sử dụng chức năng
+                    </strong>
+                    <strong v-else-if="loadingWeather">
+                        <loadingSpinner></loadingSpinner>
+                    </strong>
+                    <div v-else>
+                        <strong>Hà Nội</strong>
+                    </div>
+                    <!-- <br>
+                    <strong>Hà Nội</strong>
+                    <button @click="getLocation" class="action get-location">Lấy địa chỉ GPS</button> -->
+                </div>
+                <div class="footer-weather">
+                    <hr>
+                    <p>trân trang</p>
+                </div>
+            </div>
+        </section>
         <!-- <circle-Menu :circleMenu="circleMenuAdmin"></circle-Menu> -->
         box : thời tiết
         <br>
@@ -70,12 +96,16 @@
 import circleMenuAdmin from "@/js/generalSetting/circleMenuAdmin.js";
 import circleMenu from "@/js/viewsVue/components/circleMenu.vue";
 import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
+import loadingSpinner from '@/js/viewsVue/components/loadingSpinner.vue';
+import apiOpenWeatherMap from '@/js/apiThirdPartyService/apiOpenWeatherMap.js';
+import { ElNotification } from 'element-plus';
 
 
 export default {
     name: "homeAdmin",
     components: {
         circleMenu,
+        loadingSpinner
     },
     data() {
         return {
@@ -84,10 +114,16 @@ export default {
             listAccountsAdminNew: null,
             listAccountsAdminOld: null,
             listAccountsOff: null,
+            latitude: null,//vĩ độ
+            longitude: null,//kinh độ
+            supportGettingAddress: true,
+            loadingWeather: true,
+            dataWeather: null,
         };
     },
     created() {
         // this.listenToChannel();
+        this.getLocation();
     },
     mounted() {
         window.Echo.private('admin_connect')
@@ -172,10 +208,91 @@ export default {
                 });
             });
         },
+        getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    this.supportGettingAddress = true;
+                    this.latitude = position.coords.latitude;
+                    this.longitude = position.coords.longitude;
+                    this.callOpenWeatherMap();
+                    console.log(this.latitude);
+                });
+            } else {
+                this.supportGettingAddress = false;
+                console.error("Trình duyệt không hỗ trợ Geolocation.");
+            }
+        },
+        getTimeNow() {
+            var date = new Date();
+            const timeNow = {
+                'day': Number(date.getDay()) + 1,
+                'date': date.getDate(),
+                'month': date.getMonth(),
+                'year': date.getFullYear(),
+            }
+            var convertDay;
+            switch (timeNow.day) {
+                case 1: convertDay = 'thứ hai'; break
+                case 2: convertDay = 'thứ ba'; break
+                case 3: convertDay = 'thứ tư'; break
+                case 4: convertDay = 'thứ năm'; break
+                case 5: convertDay = 'thứ sáu'; break
+                case 6: convertDay = 'thứ bảy'; break
+                case 7: convertDay = 'thứ chủ nhật'; break
+            };
+            return convertDay + ", ngày " + timeNow.date + "/" + timeNow.month + "/" + timeNow.year;
+        },
+        callOpenWeatherMap() {
+            const data = {
+                'lat': this.latitude,
+                'lon': this.longitude,
+            }
+            apiOpenWeatherMap.getOpenWeatherMap(data).then(res => {
+                var dataResponse = res.data;
+                if (res.status == 200) {
+                    this.loadingWeather=false;
+                    this.dataWeather = dataResponse;
+                    console.log(dataResponse);
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
+        }
     },
 };
 </script>
 <style scoped>
+.header-weather {
+    color: white;
+}
+
+.footer-weather {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.footer-weather hr {
+    color: white;
+    width: 90%;
+    display: inline-block;
+}
+
+.card-weather {
+    min-width: 15rem;
+    max-width: 20rem;
+    min-height: 20rem;
+    box-shadow: 0px 1px 4px 2px #888888;
+    background-color: #43afd1;
+    position: relative;
+}
+
 section#list-of-active-people {
     border-bottom: 1px solid #c7c8c9;
 }
