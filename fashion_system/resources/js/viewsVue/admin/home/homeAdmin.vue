@@ -63,15 +63,26 @@
                         <loadingSpinner></loadingSpinner>
                     </strong>
                     <div v-else>
-                        <strong>Hà Nội</strong>
+                        <strong>{{ dataWeather.name }}</strong>
+                        <img :src=svgWeather :alt=dataWeather.weather[0].icon class="sgv-weather">
+                        <p class="temperature">{{ dataWeather.main.temp }}<sup>○</sup>C</p>
+                        <p>Cảm nhận thực tế : {{ dataWeather.main.feels_like }}</p>
+                        <p>{{ dataWeather.weather[0].description }}</p>
                     </div>
                     <!-- <br>
                     <strong>Hà Nội</strong>
                     <button @click="getLocation" class="action get-location">Lấy địa chỉ GPS</button> -->
                 </div>
+                <hr>
                 <div class="footer-weather">
-                    <hr>
-                    <p>trân trang</p>
+                    <div class="row" v-if="!loadingWeather">
+                        <div class="col-6">Kinh độ :{{ dataWeather.coord.lon }}</div>
+                        <div class="col-6">Vĩ độ : {{ dataWeather.coord.lat }}</div>
+                        <div class="col-6">Độ ẩm : {{ dataWeather.main.humidity }}%</div>
+                        <div class="col-6">Tốc độ gió : {{ dataWeather.wind.speed }}&nbsp;<font-awesome-icon
+                                icon="fa-solid fa-wind" /></div>
+                        <div class="col-6">Mật độ mây : {{ dataWeather.clouds.all }}%</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -99,7 +110,7 @@ import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
 import loadingSpinner from '@/js/viewsVue/components/loadingSpinner.vue';
 import apiOpenWeatherMap from '@/js/apiThirdPartyService/apiOpenWeatherMap.js';
 import { ElNotification } from 'element-plus';
-
+// import imgWeather from '@/public/images/svg/weather';
 
 export default {
     name: "homeAdmin",
@@ -119,6 +130,7 @@ export default {
             supportGettingAddress: true,
             loadingWeather: true,
             dataWeather: null,
+            svgWeather: null,
         };
     },
     created() {
@@ -250,8 +262,10 @@ export default {
             apiOpenWeatherMap.getOpenWeatherMap(data).then(res => {
                 var dataResponse = res.data;
                 if (res.status == 200) {
-                    this.loadingWeather=false;
+                    this.loadingWeather = false;
                     this.dataWeather = dataResponse;
+                    console.log(dataResponse);
+                    this.getImage(dataResponse.weather[0].icon);
                     console.log(dataResponse);
                 } else
                     throw new Error(dataResponse.result_code);
@@ -262,35 +276,55 @@ export default {
                     type: 'error',
                 });
             });
-        }
+        },
+        getImage(url) {
+            // // var path = ''
+            const publicPath = window.location.origin + '/public';
+            const imagePath = `weather/${url}.svg`;
+            this.svgWeather = new URL(imagePath, publicPath).href;
+            return;
+        },
     },
 };
 </script>
 <style scoped>
+.sgv-weather {
+    width: 7rem;
+    height: 7rem;
+}
+
+.temperature {
+    font-size: 220%;
+    padding: 0;
+    margin: 0;
+}
+
 .header-weather {
     color: white;
 }
 
 .footer-weather {
     position: absolute;
+    color: white;
+    font-size: 80%;
     bottom: 0;
     width: 100%;
-    text-align: center;
+    margin: 0rem 1.7rem;
+    padding-bottom: 1rem;
 }
 
-.footer-weather hr {
+hr {
     color: white;
-    width: 90%;
-    display: inline-block;
 }
 
 .card-weather {
     min-width: 15rem;
     max-width: 20rem;
-    min-height: 20rem;
+    min-height: 22rem;
     box-shadow: 0px 1px 4px 2px #888888;
     background-color: #43afd1;
     position: relative;
+    margin: 1rem;
 }
 
 section#list-of-active-people {

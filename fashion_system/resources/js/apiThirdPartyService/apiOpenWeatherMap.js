@@ -19,6 +19,6 @@ export default {
         const lon = data.lon;
         const units = 'metric';
         const appid = '86898262411df86d21f2d61b8300d1c4';
-        return apiClient.get(`weather?appid=${appid}&units=${units}&lat=${lat}&lon=${lon}`);
+        return apiClient.get(`weather?appid=${appid}&units=${units}&lat=${lat}&lon=${lon}&lang=vi`);
     }
 };
