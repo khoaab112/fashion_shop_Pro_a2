@@ -86,6 +86,7 @@
                 </div>
             </div>
         </section>
+        <button @click="testLichVanLien">test</button>
         <!-- <circle-Menu :circleMenu="circleMenuAdmin"></circle-Menu> -->
         box : thời tiết
         <br>
@@ -110,6 +111,7 @@ import apiManagerAccount from '@/js/api/broadcasting/apiManagerAccount.js';
 import loadingSpinner from '@/js/viewsVue/components/loadingSpinner.vue';
 import apiOpenWeatherMap from '@/js/apiThirdPartyService/apiOpenWeatherMap.js';
 import { ElNotification } from 'element-plus';
+import crawlDataLichVanLien from '@/js/crawlData/lich-van-nien.js';
 // import imgWeather from '@/public/images/svg/weather';
 
 export default {
@@ -283,6 +285,21 @@ export default {
             const imagePath = `weather/${url}.svg`;
             this.svgWeather = new URL(imagePath, publicPath).href;
             return;
+        },
+        testLichVanLien() {
+            crawlDataLichVanLien.crawlDataLichVanLien().then(res => {
+                var dataResponse = res.data;
+                if (res.status == 200) {
+
+                } else
+                    throw new Error(dataResponse.result_code);
+            }).catch(error => {
+                ElNotification({
+                    title: 'Error',
+                    message: 'Có lỗi bất thường',
+                    type: 'error',
+                });
+            });
         },
     },
 };
