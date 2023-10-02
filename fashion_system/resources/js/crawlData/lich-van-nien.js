@@ -2,6 +2,15 @@ import axios from "axios";
 
 const url = 'https://www.24h.com.vn/lich-van-nien-c936.html';
 
+async function cuttingStrings(string) {
+    var regex = /^(.*?)\s*\(/;
+    var result = regex.exec(string);
+    if (result && result.length > 1) {
+        return result[1].trim();
+    } else {
+        return null;
+    }
+}
 // Gửi yêu cầu HTTP đến trang web.
 export default {
     crawlDataLichVanLien() {
@@ -9,6 +18,7 @@ export default {
             'dates': [],
             'events': [],
             'good-hour': '',
+            'time-string': '',
         };
         return axios.get(url)
             .then(async response => {
@@ -23,7 +33,9 @@ export default {
                 events.forEach(async element => {
                     await obj.events.push(element.textContent.trim())
                 });
-                let goodHour = doc.querySelectorAll('.clBlue').textContent;
+                let timeStringNow = await cuttingStrings(doc.querySelector('h3.txt span.bld').textContent);
+                obj["time-string"] = timeStringNow.trim();
+                let goodHour = doc.querySelector('.clBlue').textContent.trim();
                 obj["good-hour"] = goodHour;
                 console.log(obj);
                 return obj;
