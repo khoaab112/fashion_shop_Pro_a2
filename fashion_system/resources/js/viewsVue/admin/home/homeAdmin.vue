@@ -1,5 +1,59 @@
 <template>
+    <br>
     <div class="container">
+        <div class="row v1">
+            <section class="card card-notification col-5">
+                <div class="header-notification-admin text-center">
+                    Thông báo
+                </div>
+            </section>
+            <section class="col-7">
+                <div class="header-link-account text-center">
+                    Kích hoạt tài khoản đã liên kết
+                </div>
+                <div class="body-link-account">
+                    <div class="item-account">
+                        <div class="form-check form-switch switch">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Google Account</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
+                        <input type="text" class="name ">
+                    </div>
+                    <div class="item-account">
+                        <div class="form-check form-switch switch">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Google Account</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
+                        <input type="text" class="name ">
+                    </div>       <div class="item-account">
+                        <div class="form-check form-switch switch">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Google Account</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
+                        <input type="text" class="name ">
+                    </div>       <div class="item-account">
+                        <div class="form-check form-switch switch">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Google Account</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
+                        <input type="text" class="name ">
+                    </div>       <div class="item-account">
+                        <div class="form-check form-switch switch">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Google Account</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
+                        <input type="text" class="name ">
+                    </div>       <div class="item-account">
+                        <div class="form-check form-switch switch">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Google Account</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
+                        <input type="text" class="name ">
+                    </div>
+                </div>
+            </section>
+        </div>
+        <hr>
         <section id="list-of-active-people">
             <div class="row pt-3">
                 <div class="col-lg-8 col-12">
@@ -49,59 +103,67 @@
             </div>
         </section>
         <section>
-            <div class="card-weather">
-                <div class="header-weather text-center">
-                    <span class="text-center">{{ getTimeNow() }}</span>
-                    <br>
-                    <strong v-if="!supportGettingAddress">
-                        Trình duyệt không hỗ trợ lấy địa chỉ
-                    </strong>
-                    <strong v-else-if="!longitude || !latitude">
-                        Hãy mở quyền truy cập vị trí để sử dụng chức năng
-                    </strong>
-                    <strong v-else-if="loadingWeather">
-                        <loadingSpinner></loadingSpinner>
-                    </strong>
-                    <div v-else>
-                        <strong>{{ dataWeather.name }}</strong>
-                        <img :src=svgWeather :alt=dataWeather.weather[0].icon class="sgv-weather">
-                        <p class="temperature">{{ dataWeather.main.temp }}<sup>○</sup>C</p>
-                        <p>Cảm nhận thực tế : {{ dataWeather.main.feels_like }}</p>
-                        <p>{{ dataWeather.weather[0].description }}</p>
-                    </div>
-                    <!-- <br>
+            <div class="row">
+                <div class="col-4">
+                    <div class="card-weather">
+                        <div class="header-weather text-center">
+                            <span class="text-center">{{ getTimeNow() }}</span>
+                            <br>
+                            <strong v-if="!supportGettingAddress">
+                                Trình duyệt không hỗ trợ lấy địa chỉ
+                            </strong>
+                            <strong v-else-if="!longitude || !latitude">
+                                Hãy mở quyền truy cập vị trí để sử dụng chức năng
+                            </strong>
+                            <strong v-else-if="loadingWeather">
+                                <loadingSpinner></loadingSpinner>
+                            </strong>
+                            <div v-else>
+                                <strong>{{ dataWeather.name }}</strong>
+                                <img :src=svgWeather :alt=dataWeather.weather[0].icon class="sgv-weather">
+                                <p class="temperature">{{ dataWeather.main.temp }}<sup>○</sup>C</p>
+                                <p>Cảm nhận thực tế : {{ dataWeather.main.feels_like }}</p>
+                                <p>{{ dataWeather.weather[0].description }}</p>
+                                <div class="row lich-van-nien" v-if="dataLichVanLien">
+                                    <div class="col-6">DL<br>{{ dataLichVanLien.days[0] }}&nbsp;{{ dataLichVanLien.dates[0]
+                                    }}
+                                    </div>
+                                    <div class="col-6">AL<br>{{ dataLichVanLien.days[1] }}&nbsp;{{ dataLichVanLien.dates[1]
+                                    }}
+                                    </div>
+                                    <div class="col-6">{{ dataLichVanLien.events[0] }}</div>
+                                    <div class="col-6">{{ dataLichVanLien.events[1] }}</div>
+                                    <div class="col-6">Hiện tại: {{ dataLichVanLien['time-string'] }}</div>
+                                    <div class="col-6">Hoàng đạo: {{ dataLichVanLien['good-hour'] }}</div>
+                                </div>
+                            </div>
+                            <!-- <br>
                     <strong>Hà Nội</strong>
                     <button @click="getLocation" class="action get-location">Lấy địa chỉ GPS</button> -->
+                        </div>
+                        <hr style="color: white;">
+                        <div class="footer-weather">
+                            <div class="row" v-if="!loadingWeather">
+                                <div class="col-6">Kinh độ :{{ dataWeather.coord.lon }}</div>
+                                <div class="col-6">Vĩ độ : {{ dataWeather.coord.lat }}</div>
+                                <div class="col-6">Độ ẩm : {{ dataWeather.main.humidity }}%</div>
+                                <div class="col-6">Tốc độ gió : {{ dataWeather.wind.speed }}&nbsp;<font-awesome-icon
+                                        icon="fa-solid fa-wind" /></div>
+                                <div class="col-6">Mật độ mây : {{ dataWeather.clouds.all }}%</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <hr>
-                <div class="footer-weather">
-                    <div class="row" v-if="!loadingWeather">
-                        <div class="col-6">Kinh độ :{{ dataWeather.coord.lon }}</div>
-                        <div class="col-6">Vĩ độ : {{ dataWeather.coord.lat }}</div>
-                        <div class="col-6">Độ ẩm : {{ dataWeather.main.humidity }}%</div>
-                        <div class="col-6">Tốc độ gió : {{ dataWeather.wind.speed }}&nbsp;<font-awesome-icon
-                                icon="fa-solid fa-wind" /></div>
-                        <div class="col-6">Mật độ mây : {{ dataWeather.clouds.all }}%</div>
+                <div class="col-8">
+                    <div class="card card-list-events">
+                        <div class="text-center">Sự kiện</div>
                     </div>
                 </div>
             </div>
         </section>
-        <button @click="testLichVanLien">test</button>
-        <!-- <circle-Menu :circleMenu="circleMenuAdmin"></circle-Menu> -->
-        box : thời tiết
-        <br>
-        box : thông tin cơ bản nhân viên
-        <br>
-        box : thông báo
-        <br>
-        box : người đang on
-        <br>
-        box : sự kiện
-        <br>
-        <button><router-link to="/error403" class="style-tag-a ">Giới thiệu</router-link></button>
-        <button @click="testSendSocket()">Test</button>
-        <button @click="testGetLogin()">testGetLogin</button>
     </div>
+    <br>
+    <br>
 </template>
 
 <script>
@@ -133,11 +195,13 @@ export default {
             loadingWeather: true,
             dataWeather: null,
             svgWeather: null,
+            dataLichVanLien: null,
         };
     },
     created() {
         // this.listenToChannel();
         this.getLocation();
+        this.getDataLichVanLien();
     },
     mounted() {
         window.Echo.private('admin_connect')
@@ -241,7 +305,7 @@ export default {
             const timeNow = {
                 'day': Number(date.getDay()) + 1,
                 'date': date.getDate(),
-                'month': date.getMonth(),
+                'month': date.getMonth() + 1,
                 'year': date.getFullYear(),
             }
             var convertDay;
@@ -286,11 +350,10 @@ export default {
             this.svgWeather = new URL(imagePath, publicPath).href;
             return;
         },
-        testLichVanLien() {
+        getDataLichVanLien() {
             crawlDataLichVanLien.crawlDataLichVanLien().then(res => {
-                var dataResponse = res.data;
-                if (res.status == 200) {
-
+                if (res) {
+                    this.dataLichVanLien = res;
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
@@ -305,6 +368,57 @@ export default {
 };
 </script>
 <style scoped>
+.body-link-account {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.switch{
+    margin-left: 0.5rem;
+}
+.item-account {
+    background-color: red;
+    min-width: 40%;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    display: grid;
+    border-radius: 15px;
+}
+
+.item-account .name:focus {
+    border-color: transparent !important;
+}
+
+.item-account .name {
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding: 0 1rem;
+    width: 90%;
+    margin-left: 0.5rem;
+
+}
+
+.row.v1 {
+    padding: 0 1rem;
+}
+
+.card-notification {
+    min-height: 12rem;
+}
+
+.card.card-list-events {
+    margin-top: 1rem;
+    height: 94%;
+}
+
+.row.lich-van-nien {
+    text-align: left;
+    margin-left: 1rem;
+    font-size: 80%;
+}
+
 .sgv-weather {
     width: 7rem;
     height: 7rem;
@@ -330,14 +444,12 @@ export default {
     padding-bottom: 1rem;
 }
 
-hr {
-    color: white;
-}
+
 
 .card-weather {
     min-width: 15rem;
     max-width: 20rem;
-    min-height: 22rem;
+    min-height: 30rem;
     box-shadow: 0px 1px 4px 2px #888888;
     background-color: #43afd1;
     position: relative;

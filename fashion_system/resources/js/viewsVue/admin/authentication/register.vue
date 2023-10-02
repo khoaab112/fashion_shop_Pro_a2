@@ -79,14 +79,14 @@
             <br>
             <span class="note-create">* Vui lòng liên hệ chủ quản để tạo tài khoản xác thực nhanh hơn</span>
             <br>
-            <span class="note-create" style="color: blue !important;">*Lưu ý đây là bản thử nghiệm  gmail chưa được xác thực nên bạn hãy kiểm tra tin nhắn spam</span>          
+            <span class="note-create" style="color: blue !important;">*Lưu ý đây là bản thử nghiệm  gmail chưa được xác thực nên bạn hãy kiểm tra tin nhắn spam</span>
           </div>
         </form>
       </div>
     </div>
   </div>
 </template>
-  
+
 <script>
 export default {
   name: 'registerAdmin',
@@ -138,8 +138,8 @@ export default {
   },
 };
 </script>
-  
-<style>
+
+<style scoped>
 /*---------------------------------------------*/
 
 .limiter input {

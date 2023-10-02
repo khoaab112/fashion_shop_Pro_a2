@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Helpers\CodeHttpHelpers;
 use App\Events\AdminConnected;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ManagerController extends Controller
 {
@@ -95,10 +96,11 @@ class ManagerController extends Controller
     {
         // $idUser = $id;
         $idUser = Auth::user()->staff_id;
-
         $ip = $request->ip();
         $versionBrowser = $request->header('User-Agent');
-
+        if (!Cache::get($this->KEY_CACHE)) {
+            return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
+        }
         if (count(Cache::get($this->KEY_CACHE)) > 0) {
             $numberPeople = Cache::get($this->KEY_CACHE);
             // kiểm tra id có tồn tại hay chưa
@@ -149,7 +151,8 @@ class ManagerController extends Controller
                         event(new AdminConnected($numberPeople));
                     }
                 }
-            }
+            } else
+                return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
         } else {
             return CodeHttpHelpers::returnJson(200, true, 'gửi thành công', 200);
         }

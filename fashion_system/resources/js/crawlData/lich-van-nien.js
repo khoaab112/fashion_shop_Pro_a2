@@ -17,6 +17,7 @@ export default {
         var obj = {
             'dates': [],
             'events': [],
+            'days': [],
             'good-hour': '',
             'time-string': '',
         };
@@ -25,9 +26,13 @@ export default {
                 let parser = new DOMParser();
                 let doc = parser.parseFromString(response.data, 'text/html');
                 // Lấy tiêu đề trang
-                let day = doc.querySelectorAll('.month.bld');
-                day.forEach(async element => {
+                let month = doc.querySelectorAll('.month.bld');
+                month.forEach(async element => {
                     await obj.dates.push(element.textContent.trim())
+                });
+                let day = doc.querySelectorAll('.day.bld');
+                day.forEach(async element => {
+                    await obj.days.push(element.textContent.trim())
                 });
                 let events = doc.querySelectorAll('.inner.txtCent .txt');
                 events.forEach(async element => {
@@ -37,7 +42,7 @@ export default {
                 obj["time-string"] = timeStringNow.trim();
                 let goodHour = doc.querySelector('.clBlue').textContent.trim();
                 obj["good-hour"] = goodHour;
-                console.log(obj);
+
                 return obj;
             })
             .catch(error => {

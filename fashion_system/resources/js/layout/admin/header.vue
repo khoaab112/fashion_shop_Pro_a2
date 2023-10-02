@@ -110,6 +110,7 @@ export default {
     },
     created() {
         this.breadcrumb = this.$route.matched;
+        console.log('á');
         this.getGlobalVariableInfoStaff();
         window.addEventListener('beforeunload', this.handleBeforeUnload);
         this.mp3Notification = notificationMp3;
