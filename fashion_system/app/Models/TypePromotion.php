@@ -14,6 +14,8 @@ class TypePromotion extends Model
         "content",
         "code_hide",
         "status",
+        "code",
+
     ];
     protected $attributes = [
         'status' => 'true',

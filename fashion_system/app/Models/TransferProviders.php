@@ -12,6 +12,7 @@ class TransferProviders extends Model
     protected $fillable = [
         "name",
         "status",
+        "code",
     ];
     protected $attributes = [
         'status' => 'true',

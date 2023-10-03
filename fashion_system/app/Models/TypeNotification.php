@@ -13,6 +13,8 @@ class TypeNotification extends Model
         "name",
         "note",
         "status",
+        "color",
+        "code",
     ];
     protected $attributes = [
         'status' => 'true',

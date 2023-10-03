@@ -13,6 +13,7 @@ class TypeUpdate extends Model
         "name",
         "note",
         "status",
+        "code",
     ];
     protected $attributes = [
         'status' => 'true',
