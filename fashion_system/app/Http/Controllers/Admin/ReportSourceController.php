@@ -40,7 +40,8 @@ class ReportSourceController extends Controller
                 $dataNotification = [
                     'type_notification' => 2,
                     'staff_id' => $staffId,
-                    'content' => json_encode($errors)
+                    'content' => json_encode($errors),
+                    'code' =>'SYSTEM'
                 ];
                 $notificationController = app(NotificationController::class);
                 $notificationController->createNotificationByIdStaff($dataNotification);

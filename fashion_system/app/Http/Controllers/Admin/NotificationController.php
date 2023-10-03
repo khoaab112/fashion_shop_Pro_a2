@@ -103,15 +103,21 @@ class NotificationController extends Controller
     public  function  createNotificationByIdStaff($data)
     {
         //type_notification
-        // 1|Thông báo       |thống gửi từ hệ thống cho người dùng về các sự kiện mà người quản lý chủ động gửi
-        // 7|Cảnh báo        |gửi cảnh báo cho người dùng
-        // 2|Hệ thống báo lỗi|hệ thống gửi thông báo lỗi dành cho người dùng
-        // 3|Người dùng      |Thông báo từ người dùng , người dùng gửi thông báo đến người dùng
-        // 5|Phản hồi        |Phản hồi từ những ý kiễn phản hồi cho khách hàng
-        // 6|Gửi             |gửi tin nhắn , phản hồi cho khách hàng thành công
+        /*
+        id|name            |code    |color |note
+        --+----------------+--------+------+---------------------------------------------------------------------------------
+         2|Hệ thống báo lỗi|SYSTEM  |ff0000|hệ thống gửi thông báo lỗi dành cho người dùng
+         1|Thông báo       |EVENT   |F4E869|thống gửi từ hệ thống cho người dùng về các sự kiện mà người quản lý chủ động gửi
+         3|Người dùng      |CUSTOMER|3085C3|Thông báo từ người dùng , người dùng gửi thông báo đến người dùng
+         7|Cảnh báo        |WARNING |E9B824|gửi cảnh báo cho người dùng
+         6|Gửi             |SEND    |28a745|gửi tin nhắn , phản hồi cho khách hàng thành công
+         5|Phản hồi        |RESPONSE|6c757d|Phản hồi từ những ý kiễn phản hồi cho khách hàng
+         */
+        $code = $data['code'];
+        $resultCode = DB::table('type_notification')->select('id')->where('code', $code)->where('status',true)->first();
         try {
             $notification = [
-                'type_notification' => $data['type_notification'],
+                'type_notification' =>$resultCode->id,
                 'staff_id' => $data['staff_id'],
                 'content' => $data['content']
             ];

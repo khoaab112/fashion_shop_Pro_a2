@@ -293,7 +293,6 @@ export default {
                     this.latitude = position.coords.latitude;
                     this.longitude = position.coords.longitude;
                     this.callOpenWeatherMap();
-                    console.log(this.latitude);
                 });
             } else {
                 this.supportGettingAddress = false;
@@ -330,9 +329,7 @@ export default {
                 if (res.status == 200) {
                     this.loadingWeather = false;
                     this.dataWeather = dataResponse;
-                    console.log(dataResponse);
                     this.getImage(dataResponse.weather[0].icon);
-                    console.log(dataResponse);
                 } else
                     throw new Error(dataResponse.result_code);
             }).catch(error => {
