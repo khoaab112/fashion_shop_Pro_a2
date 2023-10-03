@@ -16,12 +16,14 @@ class ReportSourceController extends Controller
     protected $reportSource;
     protected $validationRules = [
         'name' => 'required|unique:report_source,name',
+        'code' => 'required|unique:type_report,code',
         'note' => 'required|string',
         'status' => 'required|boolean',
     ];
 
     protected   $attributeNames = [
         'name' => 'Tên',
+        'code' => 'Mã',
         'note' => 'Ghi chú',
         'status' => 'Trạng thái',
     ];

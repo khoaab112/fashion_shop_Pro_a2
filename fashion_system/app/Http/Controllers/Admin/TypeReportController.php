@@ -16,12 +16,14 @@ class TypeReportController extends Controller
     protected $typeReport;
     protected $validationRules = [
         'name' => 'required|unique:type_report,name',
+        'code' => 'required|unique:type_report,code',
         'note' => 'required|string',
         'status' => 'required|boolean',
     ];
 
     protected   $attributeNames = [
         'name' => 'Tên',
+        'code' => 'Mã',
         'note' => 'Ghi chú',
         'status' => 'Trạng thái',
     ];
