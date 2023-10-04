@@ -10,6 +10,18 @@
       gửi mail thành công hoặc không thành công cho staff<br />
       filter thêm thời gian tạo , trạng thái hoạt động
     </code>
+    <section id="list-btn">
+      <div class="row">
+        <div class="col-6 text-center">
+          <button class="btn-show btn-staff" @click="useSwitch">Nhân viên</button>
+        </div>
+        <div class="col-6 text-center">
+          <button class="btn-show btn-customer" @click="useSwitch">Khách hàng</button>
+        </div>
+      </div>
+    </section>
+    <section id="staff-show" v-show="switchShow">ma</section>
+    <section id="customer-show" v-show="!switchShow">al</section>
   </div>
 </template>
 
@@ -21,7 +33,7 @@ export default {
   directives: {},
   data() {
     return {
-      // Dữ liệu của component
+      switchShow: true,
     };
   },
   created() {
@@ -36,11 +48,40 @@ export default {
   updated() {},
   destroyed() {},
   methods: {
-    // Các phương thức xử lý sự kiện hoặc logic khác
+    useSwitch() {
+      this.switchShow = !this.switchShow;
+    },
   },
 };
 </script>
 
-<style>
-/* CSS cho component */
+<style scoped>
+.btn-show {
+  width: 90%;
+  height: 100%;
+  border: none;
+  padding: 0.5rem 0;
+  border-radius: 5px;
+}
+
+.btn-show:hover {
+  background-color: #9fa5aa;
+  color: white;
+}
+
+.btn-show:active {
+  transform: scale(0.9);
+}
+
+.btn-staff {
+  background-color: #3edd4b;
+}
+
+.btn-customer {
+  background-color: #0b89f0;
+}
+
+section#list-btn {
+  margin-top: 1rem;
+}
 </style>
