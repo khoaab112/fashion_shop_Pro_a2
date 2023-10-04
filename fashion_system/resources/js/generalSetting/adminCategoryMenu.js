@@ -12,14 +12,14 @@ export default [{
         children: []
     },
     {
-        path: '',
+        path: pathAdmin + '/admin-manage',
         name: 'admin-manage',
         title: 'Admin hệ thống',
         component: '',
         icon: 'fa-solid fa-list-check',
         role: '',
         children: [{
-                path: 'khoa',
+                path: '/account-management',
                 code: 'account-management',
                 title: 'Quản lý tài khoản',
                 component: '',
