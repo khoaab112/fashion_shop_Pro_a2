@@ -38,6 +38,18 @@ const admin = [{
                 import ('../viewsVue/admin/menuStaff/employeeFeedback.vue'),
         },
         {
+            path: "admin-manage",
+            name: "adminManage",
+            group: 'true',
+            children: [{
+                path: "account-management",
+                name: "accountManagement",
+                meta: { breadcrumb: 'Quản lí tài khoản' },
+                component: () =>
+                    import ('../viewsVue/admin/systemManagement/accountManagement/main.vue'),
+            }, ],
+        },
+        {
             path: "admin-feedback",
             name: "adminFeedback",
             group: true,
