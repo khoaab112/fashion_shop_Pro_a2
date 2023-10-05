@@ -1,39 +1,59 @@
 <template>
   <!-- Nội dung giao diện người dùng -->
-  <div>
+  <div class="main-manager-account">
     <code>
       Quản lí tài khoản staff/admin (thêm ,sửa , khóa)
       <br />
       Quản lí tài khoản customer (thêm , sửa , khóa)<br />
       Danh sách tài khoản đang trong hàng chờ xét duyệt để tạo tài khoản liên kết với
       gmail .<br />
+      chi tiết tài khoản <br />
       gửi mail thành công hoặc không thành công cho staff<br />
       filter thêm thời gian tạo , trạng thái hoạt động
     </code>
     <section id="list-btn">
       <div class="row">
         <div class="col-6 text-center">
-          <button class="btn-show btn-staff" @click="useSwitch">Nhân viên</button>
+          <button class="btn-show btn-staff" @click="useSwitch(true)">Nhân viên</button>
         </div>
         <div class="col-6 text-center">
-          <button class="btn-show btn-customer" @click="useSwitch">Khách hàng</button>
+          <button class="btn-show btn-customer" @click="useSwitch(false)">
+            Khách hàng
+          </button>
         </div>
       </div>
     </section>
-    <section id="staff-show" v-show="switchShow">ma</section>
+    <div class="space"></div>
+    <section id="staff-show" v-show="switchShow">
+      <el-tabs :tab-position="tabPosition" style="height: 30 rem" class="demo-tabs">
+        <el-tab-pane label="Tài khoản">
+          <listAccountsStaff></listAccountsStaff>
+        </el-tab-pane>
+        <el-tab-pane label="Xác thực">
+          <waitingStaffAccounts></waitingStaffAccounts>
+        </el-tab-pane>
+      </el-tabs>
+    </section>
     <section id="customer-show" v-show="!switchShow">al</section>
+    <div class="space"></div>
   </div>
 </template>
 
 <script>
+import listAccountsStaff from "./componentListAccountStaff.vue";
+import waitingStaffAccounts from "./componentWaitingStaffAccount.vue";
 export default {
   name: "mainAccountManagement",
-  components: {},
+  components: {
+    listAccountsStaff,
+    waitingStaffAccounts,
+  },
   setup() {},
   directives: {},
   data() {
     return {
       switchShow: true,
+      tabPosition: "left",
     };
   },
   created() {
@@ -48,14 +68,17 @@ export default {
   updated() {},
   destroyed() {},
   methods: {
-    useSwitch() {
-      this.switchShow = !this.switchShow;
+    useSwitch(bool) {
+      this.switchShow = bool;
     },
   },
 };
 </script>
 
 <style scoped>
+.space {
+  padding: 1rem;
+}
 .btn-show {
   width: 90%;
   height: 100%;
