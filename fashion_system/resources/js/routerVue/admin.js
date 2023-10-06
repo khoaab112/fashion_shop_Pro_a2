@@ -47,6 +47,13 @@ const admin = [{
                 meta: { breadcrumb: 'Quản lí tài khoản' },
                 component: () =>
                     import ('../viewsVue/admin/systemManagement/accountManagement/main.vue'),
+                children: [{
+                    path: "detail-staff",
+                    name: "detailStaff",
+                    meta: { breadcrumb: 'Chi tiết nhân viên' },
+                    component: () =>
+                        import ('../viewsVue/admin/systemManagement/accountManagement/pageDetailStaff.vue'),
+                }, ],
             }, ],
         },
         {

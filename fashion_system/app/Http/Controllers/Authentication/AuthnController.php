@@ -105,6 +105,8 @@ class AuthnController extends Controller
         try {
             if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
                 $user = Auth::user();
+                if (!$user['active']) return CodeHttpHelpers::returnJson(401, false, 'Tài khoản chưa được xác thực hãy quay lại sau khi quá trình xác thực thành công, thông tin xác thực sẽ được gửi về mail mà bạn đăng ký', 200);
+                if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
                 $addInfoUser = [
                     'user_name' => $request->user_name,
                     'rank' => 'defined',
@@ -112,7 +114,7 @@ class AuthnController extends Controller
                     'staff_id' => $user['staff_id']
                 ];
                 $token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password]);
-                if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
+                // if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
                 $addInfoUserRefreshToken = [
                     'user_name' => $request->user_name,
                     'rank' => 'pending',
