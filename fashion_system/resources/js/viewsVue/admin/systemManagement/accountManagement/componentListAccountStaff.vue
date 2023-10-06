@@ -12,7 +12,7 @@
       class="p-2"
     >
       <template #cell(staff_name)="data">
-        <router-link to="detail-staff">
+        <router-link :to="{name:'detailStaff'}">
           <span class="col-name"> {{ data.data.value.staff_name }}</span>
         </router-link>
       </template>

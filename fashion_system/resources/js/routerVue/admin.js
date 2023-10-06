@@ -40,6 +40,7 @@ const admin = [{
         {
             path: "admin-manage",
             name: "adminManage",
+            exact: true,
             group: 'true',
             children: [{
                 path: "account-management",
