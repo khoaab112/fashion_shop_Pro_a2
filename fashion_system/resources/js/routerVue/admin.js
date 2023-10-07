@@ -49,9 +49,10 @@ const admin = [{
                 component: () =>
                     import ('../viewsVue/admin/systemManagement/accountManagement/main.vue'),
                 children: [{
-                    path: "detail-staff",
+                    path: "detail-staf",
                     name: "detailStaff",
                     meta: { breadcrumb: 'Chi tiết nhân viên' },
+                    props: true,
                     component: () =>
                         import ('../viewsVue/admin/systemManagement/accountManagement/pageDetailStaff.vue'),
                 }, ],

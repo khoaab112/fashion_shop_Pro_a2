@@ -1,24 +1,26 @@
 <template>
-    <!-- khoaaaaaaaaaaaaâ -->
   <strong>khoa</strong>
 </template>
 
 <script>
 export default {
-  name: "HtpShiftDetail",
+  name: "detailStaff",
   components: {},
+//   props: ['dataa'],
   setup() {},
   directives: {},
   data() {
     return {
-      // Dữ liệu của component
+        dataStaff:null,
     };
   },
   created() {
+    this.dataStaff=JSON.parse(this.$route.query.child);
+    console.log(this.dataStaff);
+
     // Logic khi component được khởi tạo
   },
   mounted() {
-    // Logic sau khi component được gắn kết (render) vào DOM
   },
   computed() {
     // được sử dụng để định nghĩa các thuộc tính tính toán
@@ -26,11 +28,10 @@ export default {
   updated() {},
   destroyed() {},
   methods: {
-    // Các phương thức xử lý sự kiện hoặc logic khác
   },
 };
 </script>
 
 <style>
-/* CSS cho component */
+
 </style>
