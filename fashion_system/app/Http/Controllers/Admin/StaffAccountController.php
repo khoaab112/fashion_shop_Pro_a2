@@ -60,6 +60,7 @@ class StaffAccountController extends Controller
                     'staff.birthday',
                     'staff.sex',
                     'staff.img',
+                    'staff.active',
                     'branch.name as branch_name',
                     'branch.address as branch_address',
                     'branch.hotline',
@@ -68,6 +69,7 @@ class StaffAccountController extends Controller
                     'position.name as position_name'
                 )
                 ->where('administration.status', '=', true)
+                ->where('staff.active', '=', true)
                 ->orderByDesc('staff_account.id')
                 ->paginate($recordNumber, ['*'], 'page', $page)->items();
             if ($count) {

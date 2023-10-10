@@ -7,7 +7,7 @@
         </div>
         <table-admin :titles="titlesTable" :items="itemsTable" :loading="loadingTable" class="p-2">
             <template #cell(staff_name)="data">
-                <router-link :to="{name: 'detailStaff', query:{child: JSON.stringify(data)}}">
+                <router-link :to="{ name: 'detailStaff', query: { child: pushData(data) } }">
                     <span class="col-name"> {{ data.data.value.staff_name }}</span>
                 </router-link>
             </template>
@@ -119,6 +119,9 @@ export default {
         },
         returnResultFromPagination(value) {
             this.pageReturn = value;
+        },
+        pushData(data) {
+            return encodeURIComponent(JSON.stringify(data));
         },
     },
 };
