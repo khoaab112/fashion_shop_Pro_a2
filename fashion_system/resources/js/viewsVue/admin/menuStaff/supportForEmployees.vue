@@ -30,7 +30,7 @@
 
 <script>
 import ENV from "@/js/generalSetting/filterEnv.js";
-import LoadingSpinner from "../../components/loadingSpinner.vue";
+import LoadingSpinner from "../../components/loading/loadingSpinner.vue";
 export default {
   name: "supportForEmployees",
   components: {

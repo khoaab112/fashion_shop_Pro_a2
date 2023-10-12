@@ -5,5 +5,11 @@ import index from '../setupApi.js';
 export default {
     getByPage(data) {
         return index.get(`/get-staff-accounts?page=${data.page}&record_number=${data.record_number}&count=${data.count}`);
+    },
+    getStaffDetail(id) {
+        return index.get(`/staff-detail/${id}`);
+    },
+    lockAccount(data) {
+        return index.put(`/lock-account/${data.id}`, (data));
     }
 }

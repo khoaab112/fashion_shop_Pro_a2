@@ -1,5 +1,11 @@
 <template>
-  <main id="page-detai-staff">
+  <div class="text-center pt-4" v-if="!dataStaff">
+    <loadingStyleTwirl></loadingStyleTwirl>
+    <br />
+    <loadingText></loadingText>
+    <div class="cushion-loading"></div>
+  </div>
+  <main id="page-detai-staff" v-else>
     <div class="row ps-3 pe-3">
       <div class="mt-3"></div>
       <div class="col-4">
@@ -129,8 +135,9 @@
               {{ this.dataStaff.status ? "Kích hoạt" : "Khóa" }}
             </p>
           </div>
-          <button class="action action-block mt-1">
-            Khóa<font-awesome-icon icon="fa-solid fa-lock" class="float-end pt-1" />
+          <button class="action action-block mt-1" @click="lockAccount()">
+            {{ this.dataStaff.status ? "Khóa" : "Kích hoạt"
+            }}<font-awesome-icon icon="fa-solid fa-lock" class="float-end pt-1" />
           </button>
           <button class="action action-log-out mt-2">
             Đăng xuất cưỡng bức
@@ -150,6 +157,13 @@
               class="float-end pt-1"
             />
           </button>
+          <button class="action action-edit mt-2">
+            Can thiệp trực tiếp
+            <font-awesome-icon
+              icon="fa-regular fa-pen-to-square"
+              class="float-end pt-1"
+            />
+          </button>
         </div>
       </section>
     </div>
@@ -163,11 +177,17 @@
 <script>
 import avatar from "../../../components/avatar.vue";
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
+import apiStaffAccount from "@/js/api/admin/apiStaffAccounts.js";
+import { ElNotification } from "element-plus";
+import loadingStyleTwirl from "../../../components/loading/loadingStyleTwirl.vue";
+import loadingText from "../../../components/loading/loadingText.vue";
 
 export default {
   name: "detailStaff",
   components: {
     avatar,
+    loadingStyleTwirl,
+    loadingText,
   },
   //   props: ['dataa'],
   setup() {},
@@ -179,10 +199,7 @@ export default {
     };
   },
   created() {
-    this.dataStaff = this.decodeURL(this.$route.query.child);
-    console.log(this.dataStaff);
-    // this.dataStaff = JSON.parse(this.$route.query.child);
-    this.checkImageAdmin(this.dataStaff.img);
+    this.getStaffDetail(this.decodeURL(this.$route.query.child));
     // Logic khi component được khởi tạo
   },
   mounted() {},
@@ -193,7 +210,6 @@ export default {
   destroyed() {},
   methods: {
     checkImageAdmin(img) {
-      console.log(img);
       try {
         if (img) {
           const publicPath = window.location.origin + "/public";
@@ -211,7 +227,7 @@ export default {
       }
     },
     decodeURL(data) {
-      return JSON.parse(decodeURIComponent(data)).data.value;
+      return JSON.parse(decodeURIComponent(data));
     },
     getYearOld(date) {
       var today = new Date();
@@ -223,14 +239,67 @@ export default {
       }
       return age;
     },
+    getStaffDetail(id) {
+      apiStaffAccount
+        .getStaffDetail(id)
+        .then((res) => {
+          var dataResponse = res.data;
+          if (dataResponse.result_code == 200) {
+            this.dataStaff = dataResponse.results;
+            this.checkImageAdmin(this.dataStaff.img);
+          } else throw new Error(dataResponse.results);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "Error",
+            message: error,
+            type: "error",
+          });
+        });
+    },
+    lockAccount() {
+      const data = {
+        id: this.dataStaff.id,
+        status: !this.dataStaff.status,
+      };
+      apiStaffAccount
+        .lockAccount(data)
+        .then((res) => {
+          var dataResponse = res.data;
+          if (dataResponse.result_code == 200) {
+            this.getStaffDetail(this.dataStaff.id);
+            ElNotification({
+              title: "Success",
+              message: "Thay đổi thành công",
+              type: "success",
+            });
+          } else throw new Error(dataResponse.results);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "Error",
+            message: error,
+            type: "error",
+          });
+        });
+    },
   },
 };
 </script>
 
 <style scoped>
+.cushion-loading {
+  min-height: 35rem;
+}
+
 .cushion {
   height: 2rem;
 }
+
+.action-edit {
+  background-color: aquamarine;
+}
+
 .action-block {
   background-color: red;
 }
@@ -240,7 +309,7 @@ export default {
 }
 
 .action-reset {
-  background-color: beige;
+  background-color: rgb(124, 233, 23);
 }
 
 .action-request {
@@ -254,6 +323,7 @@ button.action {
   border: none;
   border-radius: 15px;
   user-select: none;
+  color: black;
 }
 
 button.action:hover {
@@ -290,8 +360,9 @@ button.action:hover {
 }
 
 .card {
-  background-color: #cecccd70;
+  background-color: #fffaeb;
   border: none;
-  box-shadow: -1px 4px 8px 3px #888888;
+  box-shadow: -1px 4px 8px 2px #88888863;
+  color: cadetblue;
 }
 </style>

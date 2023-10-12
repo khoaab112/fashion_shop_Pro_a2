@@ -55,7 +55,8 @@ Route::middleware(['checkURL'])->group(function () {
 
             //staff Account
             Route::get('/get-staff-accounts', [StaffAccountController::class, 'getByPage']);
-
+            Route::put('/lock-account/{id}', [StaffAccountController::class, 'lockAccount']);
+            Route::get('/staff-detail/{id}', [StaffAccountController::class, 'staffDetail']);
 
             //branch
             Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);

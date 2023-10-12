@@ -352,6 +352,7 @@ class AuthnController extends Controller
             return false;
         }
     }
+    //theo dõi sự đăng nhập
     public function statusChange($request, $id)
     {
         $idUser = $id;

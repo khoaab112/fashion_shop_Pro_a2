@@ -179,7 +179,7 @@ import UploadAvatar from "../../components/popupUploadAvatar.vue";
 import globalVariable from "@/js/generalSetting/globalVariable.js";
 import apiBranch from "@/js/api/admin/apiBranch.js";
 import method from "@/js/mixins/methodDefine.js";
-import loadingSpinner from "../../components/loadingSpinner.vue";
+import loadingSpinner from "../../components/loading/loadingSpinner.vue";
 import InfoStaff from "../../components/svgComponents/infoStaff.vue";
 import twoColumnsOfData from "../../components/svgComponents/twoColumnsOfData.vue";
 import jwt from "@/js/auth/jwt.js";

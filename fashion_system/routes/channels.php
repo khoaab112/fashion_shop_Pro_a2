@@ -20,8 +20,10 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('notification.admin', function ($user) {
     return true;
 });
-
 //
 Broadcast::channel('admin.connect', function ($user) {
+    return true;
+});
+Broadcast::channel('disconnect-admin-{id}', function ($user) {
     return true;
 });
