@@ -22,6 +22,8 @@ Broadcast::channel('notification.admin', function ($user) {
 });
 //
 Broadcast::channel('admin.connect', function ($user) {
+    // Log::info('ádá');
+
     return true;
 });
 Broadcast::channel('disconnect-admin-{id}', function ($user) {

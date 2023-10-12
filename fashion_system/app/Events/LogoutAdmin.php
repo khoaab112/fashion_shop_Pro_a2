@@ -33,9 +33,9 @@ class LogoutAdmin implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
+
         return [
             new PrivateChannel('disconnect-admin-'.$this->account['id']),
-            // new PrivateChannel('disconnect-admin-'),
         ];
     }
 }

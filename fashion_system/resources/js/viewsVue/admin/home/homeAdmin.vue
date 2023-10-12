@@ -271,7 +271,7 @@ export default {
       })
       .error((error) => {
         if (error.status == 403) {
-          location.reload();
+        //   location.reload();
         }
       });
     //
