@@ -22,10 +22,10 @@ class LogoutAdmin implements ShouldBroadcast
     {
         $this->account = $account;
     }
-    // public function broadcastAs(): string
-    // {
-    //     return 'admin.disconnect';
-    // }
+    public function broadcastAs(): string
+    {
+        return 'admin.logout';
+    }
     /**
      * Get the channels the event should broadcast on.
      *
@@ -34,7 +34,8 @@ class LogoutAdmin implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('disconnect-admin-'.$this->account->id),
+            new PrivateChannel('disconnect-admin-'.$this->account['id']),
+            // new PrivateChannel('disconnect-admin-'),
         ];
     }
 }

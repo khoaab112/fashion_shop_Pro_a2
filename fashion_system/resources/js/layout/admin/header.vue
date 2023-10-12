@@ -158,11 +158,11 @@ export default {
       arrIdchecks: [],
       mp3Notification: "mp3-notification",
       dateNow: new Date(),
+      id: null,
     };
   },
   created() {
     this.breadcrumb = this.$route.matched;
-    console.log("á");
     this.getGlobalVariableInfoStaff();
     window.addEventListener("beforeunload", this.handleBeforeUnload);
     this.mp3Notification = notificationMp3;
@@ -182,6 +182,15 @@ export default {
       .error((error) => {
         if (error.status == 403) {
           location.reload();
+        }
+      });
+    window.Echo.private(`disconnect-admin-${this.id}`)
+      // window.Echo.private(`disconnect-admin-`)
+      .listen(".admin.logout", async (e) => {
+        console.log(e);
+      })
+      .error((error) => {
+        if (error.status == 403) {
         }
       });
   },
@@ -204,6 +213,8 @@ export default {
           this.numberOfUnreadNotifications(this.staff.id);
           clearInterval(this.pollingInterval);
           // Tiếp tục
+          this.id = this.staff.id;
+          console.log(this.id);
           this.checkAccessed(this.staff);
         }
       }, intervalTime);
@@ -437,9 +448,11 @@ export default {
   font-size: 80%;
   color: #594e4e;
 }
+
 .time-notification > b {
   color: #7c9cde;
 }
+
 .style-loading {
   height: 37px;
 }

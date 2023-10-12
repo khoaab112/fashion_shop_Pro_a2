@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepository;
 use App\Helpers\CodeHttpHelpers;
 use Illuminate\Support\Facades\DB;
+use App\Events\LogoutAdmin;
 
 
 class StaffAccountController extends Controller
@@ -161,5 +162,11 @@ class StaffAccountController extends Controller
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
+    }
+    public function indirectlyDisconnect($id)
+    {
+        $user = ['id' => $id];
+        event(new LogoutAdmin($user));
+        return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
     }
 }

@@ -231,7 +231,7 @@
 import circleMenuAdmin from "@/js/generalSetting/circleMenuAdmin.js";
 import circleMenu from "@/js/viewsVue/components/circleMenu.vue";
 import apiManagerAccount from "@/js/api/broadcasting/apiManagerAccount.js";
-import loadingSpinner from "@/js/viewsVue/components/loadingSpinner.vue";
+import loadingSpinner from "@/js/viewsVue/components/loading/loadingSpinner.vue";
 import apiOpenWeatherMap from "@/js/apiThirdPartyService/apiOpenWeatherMap.js";
 import { ElNotification } from "element-plus";
 import crawlDataLichVanLien from "@/js/crawlData/lich-van-nien.js";

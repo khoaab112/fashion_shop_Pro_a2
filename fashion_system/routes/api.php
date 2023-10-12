@@ -57,6 +57,7 @@ Route::middleware(['checkURL'])->group(function () {
             Route::get('/get-staff-accounts', [StaffAccountController::class, 'getByPage']);
             Route::put('/lock-account/{id}', [StaffAccountController::class, 'lockAccount']);
             Route::get('/staff-detail/{id}', [StaffAccountController::class, 'staffDetail']);
+            Route::delete('/indirectly-disconnect/{id}', [StaffAccountController::class, 'indirectlyDisconnect']);
 
             //branch
             Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
