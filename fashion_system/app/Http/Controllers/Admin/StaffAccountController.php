@@ -8,6 +8,9 @@ use App\Repositories\StaffAccount\StaffAccountRepository;
 use App\Helpers\CodeHttpHelpers;
 use Illuminate\Support\Facades\DB;
 use App\Events\LogoutAdmin;
+use App\Http\Controllers\Admin\NotificationController;
+use Faker\Core\Color;
+use Illuminate\Support\Facades\Auth;
 
 
 class StaffAccountController extends Controller
@@ -100,8 +103,19 @@ class StaffAccountController extends Controller
             $result = $this->staffAccount->statusChange($id, $status);
             if (!$result) return CodeHttpHelpers::returnJson(400, false, "Thay đổi trạng thái thất bại", 200);
             if ($status) {
-                $user = ['id' => $request->idStaff,'status'=>$status];
+                $user = ['id' => $request->idStaff, 'status' => $status];
                 event(new LogoutAdmin($user));
+                $idAdmin = Auth::user()->id;
+                $resultStaffDetail = $this->staffDetail($idAdmin);
+                $admin = json_decode($resultStaffDetail->getContent())->results;
+                $dataNotification = [
+                    'type_notification' => 2,
+                    'staff_id' => $request->idStaff,
+                    'content' => "Tài khoản của bạn đã bị khóa bởi <strong style=\"color:red\">".$admin->staff_name."</strong> (".$admin->position_name.")",
+                    'code' => 'EVENT'
+                ];
+                $notificationController = app(NotificationController::class);
+                $notificationController->createNotificationByIdStaff($dataNotification);
             }
             return CodeHttpHelpers::returnJson(200, true, "Thay đổi trạng thái thành công", 200);
         } catch (\Exception $e) {
@@ -170,8 +184,61 @@ class StaffAccountController extends Controller
     }
     public function indirectlyDisconnect($id)
     {
-        $user = ['id' => $id ,'status' =>'false'];
+        $user = ['id' => $id, 'status' => 'false'];
         event(new LogoutAdmin($user));
+        $idAdmin = Auth::user()->id;
+        $resultStaffDetail = $this->staffDetail($idAdmin);
+        $admin = json_decode($resultStaffDetail->getContent())->results;
+        $dataNotification = [
+            'type_notification' => 2,
+            'staff_id' => $id,
+            'content' => " <strong style=\"color:red\">".$admin->staff_name."</strong> (".$admin->position_name.") đã đăng xuất gián tiếp tài khoản của bạn",
+            'code' => 'EVENT'
+        ];
+        $notificationController = app(NotificationController::class);
+        $notificationController->createNotificationByIdStaff($dataNotification);
         return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
+    }
+    public function getInfoUsers($id)
+    {
+        $record = DB::table('staff_account')
+            ->leftJoin(
+                'administration',
+                'administration.id',
+                '=',
+                'staff_account.administration_id'
+            )
+            ->leftJoin(
+                'staff',
+                'staff.id',
+                '=',
+                'staff_account.staff_id'
+            )
+            ->leftJoin(
+                'position',
+                'position.id',
+                '=',
+                'staff.position_id'
+            )
+            ->select(
+                'staff_account.id as account_id',
+                'staff_account.user_name',
+                'staff_account.status',
+                'administration.name as administration',
+                'staff.id as staff_id',
+                'staff.code_staff',
+                'staff.name as staff_name',
+                'staff.address as staff_address',
+                'staff.phone_number',
+                'staff.email',
+                'staff.birthday',
+                'staff.sex',
+                'staff.img',
+                'staff.active',
+                'position.name as position_name'
+            )
+            // ->where('administration.status', '=', true)
+            ->where('staff_account.id', '=', $id)
+            ->first();
     }
 }

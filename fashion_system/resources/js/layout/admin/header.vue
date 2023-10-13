@@ -99,7 +99,7 @@
             >{{ item.name }}</strong
           ><span>&ensp;:&ensp;</span>
           <span class="item-un">
-            {{ item.content }}
+            <span v-html="formattedText(item.content)" />
           </span>
           <!-- <span>{{}}</span> -->
           <br />
@@ -178,8 +178,8 @@ export default {
     },
   },
   mounted() {
-    this.notificationEvent();
-    this.logOutEvent();
+    // this.notificationEvent();
+    // this.logOutEvent();
   },
   computed() {
     // được sử dụng để định nghĩa các thuộc tính tính toán
@@ -432,7 +432,7 @@ export default {
               message: "Bạn bị ép buộc đăng xuất",
               type: "warning",
             });
-            logoutAdmin.methods.logoutAdmin();
+            await logoutAdmin.methods.logoutAdmin();
           }
         })
         .error((error) => {
@@ -452,6 +452,9 @@ export default {
             // location.reload();
           }
         });
+    },
+    formattedText(string) {
+      return string;
     },
   },
 };
