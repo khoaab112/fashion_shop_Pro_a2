@@ -170,7 +170,7 @@ class StaffAccountController extends Controller
     }
     public function indirectlyDisconnect($id)
     {
-        $user = ['id' => $id];
+        $user = ['id' => $id ,'status' =>'false'];
         event(new LogoutAdmin($user));
         return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
     }

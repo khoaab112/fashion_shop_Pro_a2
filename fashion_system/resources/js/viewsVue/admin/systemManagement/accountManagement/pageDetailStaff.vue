@@ -139,7 +139,7 @@
             {{ this.dataStaff.status ? "Khóa" : "Kích hoạt"
             }}<font-awesome-icon icon="fa-solid fa-lock" class="float-end pt-1" />
           </button>
-          <button class="action action-log-out mt-2">
+          <button class="action action-log-out mt-2" @click="indirectlyDisconnect()">
             Đăng xuất cưỡng bức
             <font-awesome-icon
               icon="fa-solid fa-right-from-bracket"
@@ -272,6 +272,27 @@ export default {
             ElNotification({
               title: "Success",
               message: "Thay đổi thành công",
+              type: "success",
+            });
+          } else throw new Error(dataResponse.results);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "Error",
+            message: error,
+            type: "error",
+          });
+        });
+    },
+    indirectlyDisconnect() {
+      apiStaffAccount
+        .indirectlyDisconnect(this.dataStaff.staff_id)
+        .then((res) => {
+          var dataResponse = res.data;
+          if (dataResponse.result_code == 200) {
+            ElNotification({
+              title: "Success",
+              message: "Thành công",
               type: "success",
             });
           } else throw new Error(dataResponse.results);

@@ -37,9 +37,9 @@ class MessageNotification implements ShouldBroadcast
     //kênh nhận sóng
     public function broadcastOn(): array
     {
-        Log::info('broadning');
+        Log::info($this->message->staff_id);
         return [
-            new PrivateChannel('notification_admin'),
+            new PrivateChannel('notification_admin-staff-id-'.$this->message->staff_id),
         ];
     }
 }

@@ -11,5 +11,8 @@ export default {
     },
     lockAccount(data) {
         return index.put(`/lock-account/${data.idAccount}`, (data));
+    },
+    indirectlyDisconnect(id) {
+        return index.delete(`/indirectly-disconnect/${id}`);
     }
 }

@@ -174,20 +174,11 @@ export default {
     },
     id(value) {
       this.logOutEvent();
+      this.notificationEvent();
     },
   },
   mounted() {
-    window.Echo.private("notification_admin")
-      .listen(".notification.admin", async (e) => {
-        this.notificationNumber = ++this.notificationNumber;
-        this.listNotifications.push(e.message.content);
-        this.playAudio();
-      })
-      .error((error) => {
-        if (error.status == 403) {
-          // location.reload();
-        }
-      });
+    this.notificationEvent();
     this.logOutEvent();
   },
   computed() {
@@ -446,6 +437,19 @@ export default {
         })
         .error((error) => {
           if (error.status == 403) {
+          }
+        });
+    },
+    notificationEvent() {
+      window.Echo.private(`notification_admin-staff-id-${this.id}`)
+        .listen(".notification.admin", async (e) => {
+          this.notificationNumber = ++this.notificationNumber;
+          this.listNotifications.push(e.message.content);
+          this.playAudio();
+        })
+        .error((error) => {
+          if (error.status == 403) {
+            // location.reload();
           }
         });
     },
