@@ -137,6 +137,7 @@ import globalVariable from "@/js/generalSetting/globalVariable.js";
 import loadingStyleWave from "@/js/viewsVue/components/loading/loadingStyleWave.vue";
 import notificationMp3 from "@/public/mp3/notification/notification-admin.mp3";
 import logoutAdmin from "@/js/auth/logout.js";
+import DOMPurify from "dompurify";
 
 export default {
   components: {
@@ -454,7 +455,7 @@ export default {
         });
     },
     formattedText(string) {
-      return string;
+      return DOMPurify.sanitize(string);
     },
   },
 };

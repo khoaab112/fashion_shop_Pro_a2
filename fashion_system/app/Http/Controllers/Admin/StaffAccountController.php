@@ -9,6 +9,7 @@ use App\Helpers\CodeHttpHelpers;
 use Illuminate\Support\Facades\DB;
 use App\Events\LogoutAdmin;
 use App\Http\Controllers\Admin\NotificationController;
+use DateTime;
 use Faker\Core\Color;
 use Illuminate\Support\Facades\Auth;
 
@@ -111,7 +112,7 @@ class StaffAccountController extends Controller
                 $dataNotification = [
                     'type_notification' => 2,
                     'staff_id' => $request->idStaff,
-                    'content' => "Tài khoản của bạn đã bị khóa bởi <strong style=\"color:red\">".$admin->staff_name."</strong> (".$admin->position_name.")",
+                    'content' => "Tài khoản của bạn đã bị khóa bởi <strong style=\"color:red\">" . $admin->staff_name . "</strong> (" . $admin->position_name . ")",
                     'code' => 'EVENT'
                 ];
                 $notificationController = app(NotificationController::class);
@@ -184,20 +185,24 @@ class StaffAccountController extends Controller
     }
     public function indirectlyDisconnect($id)
     {
-        $user = ['id' => $id, 'status' => 'false'];
-        event(new LogoutAdmin($user));
-        $idAdmin = Auth::user()->id;
-        $resultStaffDetail = $this->staffDetail($idAdmin);
-        $admin = json_decode($resultStaffDetail->getContent())->results;
-        $dataNotification = [
-            'type_notification' => 2,
-            'staff_id' => $id,
-            'content' => " <strong style=\"color:red\">".$admin->staff_name."</strong> (".$admin->position_name.") đã đăng xuất gián tiếp tài khoản của bạn",
-            'code' => 'EVENT'
-        ];
-        $notificationController = app(NotificationController::class);
-        $notificationController->createNotificationByIdStaff($dataNotification);
-        return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
+        try {
+            $user = ['id' => $id, 'status' => 'false'];
+            event(new LogoutAdmin($user));
+            $idAdmin = Auth::user()->id;
+            $resultStaffDetail = $this->staffDetail($idAdmin);
+            $admin = json_decode($resultStaffDetail->getContent())->results;
+            $dataNotification = [
+                'type_notification' => 2,
+                'staff_id' => $id,
+                'content' => " <strong style=\"color:red\">" . $admin->staff_name . "</strong> (" . $admin->position_name . ") đã đăng xuất gián tiếp tài khoản của bạn",
+                'code' => 'EVENT'
+            ];
+            $notificationController = app(NotificationController::class);
+            $notificationController->createNotificationByIdStaff($dataNotification);
+            return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
     }
     public function getInfoUsers($id)
     {
@@ -240,5 +245,29 @@ class StaffAccountController extends Controller
             // ->where('administration.status', '=', true)
             ->where('staff_account.id', '=', $id)
             ->first();
+    }
+    public function editRequest(Request $request, $id)
+    {
+        if (!$request->time) {
+            return CodeHttpHelpers::returnJson(204, false, 'Thời gian yêu cầu không được để trống', 200);
+        }
+        $dateTime = new DateTime($request->time);
+        $formattedDate = $dateTime->format('d/m/Y');
+        $content = "";
+        if ($request->content) {
+            $content = "<br>Nội dung :<p style=\"color:blue\">" . $request->content . "</p>";
+        }
+        try {
+            $dataNotification = [
+                'staff_id' => $id,
+                'content' => "Quản trị viên yêu cầu bạn cập nhật lại thông tin, hạn : <strong style=\"color:red\";>" . $formattedDate . "</strong>" . $content,
+                'code' => 'SYSTEM'
+            ];
+            $notificationController = app(NotificationController::class);
+            $notificationController->createNotificationByIdStaff($dataNotification);
+            return CodeHttpHelpers::returnJson(200, true, 'Thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
     }
 }

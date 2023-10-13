@@ -36,7 +36,11 @@
           </div>
           <div class="row">
             <strong class="ps-5 col-5"> Sinh ngày : </strong>
-            <p class="col-7">{{ this.dataStaff.birthday }}</p>
+            <p class="col-7">
+              <input class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]" />{{
+                this.dataStaff.birthday
+              }}
+            </p>
           </div>
           <div class="row">
             <strong class="ps-5 col-5"> Giới tính : </strong>
@@ -135,35 +139,42 @@
               {{ this.dataStaff.status ? "Kích hoạt" : "Khóa" }}
             </p>
           </div>
-          <button class="action action-block mt-1" @click="lockAccount()">
-            {{ this.dataStaff.status ? "Khóa" : "Kích hoạt"
-            }}<font-awesome-icon icon="fa-solid fa-lock" class="float-end pt-1" />
-          </button>
-          <button class="action action-log-out mt-2" @click="indirectlyDisconnect()">
-            Đăng xuất cưỡng bức
-            <font-awesome-icon
-              icon="fa-solid fa-right-from-bracket"
-              class="float-end pt-1"
-            />
-          </button>
-          <button class="action action-reset mt-2">
-            Reset mật khẩu
-            <font-awesome-icon icon="fa-solid fa-retweet" class="float-end pt-1" />
-          </button>
-          <button class="action action-request mt-2">
-            Yêu cầu chỉnh sửa thông tin
-            <font-awesome-icon
-              icon="fa-solid fa-plane-departure"
-              class="float-end pt-1"
-            />
-          </button>
-          <button class="action action-edit mt-2">
-            Can thiệp trực tiếp
-            <font-awesome-icon
-              icon="fa-regular fa-pen-to-square"
-              class="float-end pt-1"
-            />
-          </button>
+          <div class="list-btn" v-if="!showBtnEdit">
+            <button class="action action-block mt-1" @click="lockAccount()">
+              {{ this.dataStaff.status ? "Khóa" : "Kích hoạt"
+              }}<font-awesome-icon icon="fa-solid fa-lock" class="float-end pt-1" />
+            </button>
+            <button class="action action-log-out mt-2" @click="indirectlyDisconnect()">
+              Đăng xuất cưỡng bức
+              <font-awesome-icon
+                icon="fa-solid fa-right-from-bracket"
+                class="float-end pt-1"
+              />
+            </button>
+            <button class="action action-reset mt-2">
+              Reset mật khẩu
+              <font-awesome-icon icon="fa-solid fa-retweet" class="float-end pt-1" />
+            </button>
+            <button class="action action-request mt-2" @click="dialogVisible = true">
+              Yêu cầu chỉnh sửa thông tin
+              <font-awesome-icon
+                icon="fa-solid fa-plane-departure"
+                class="float-end pt-1"
+              />
+            </button>
+            <button class="action action-edit mt-2" @click="showBtnEdit = true">
+              Can thiệp trực tiếp
+              <font-awesome-icon
+                icon="fa-regular fa-pen-to-square"
+                class="float-end pt-1"
+              />
+            </button>
+          </div>
+          <div class="list-btn-edit" v-else>
+            <strong class="text-edit">Chỉnh sửa</strong>
+            <button class="btn edit-submit mt-2">Lưu</button>
+            <button class="btn edit-clone mt-2" @click="showBtnEdit = false">Đóng</button>
+          </div>
         </div>
       </section>
     </div>
@@ -172,6 +183,32 @@
     </div> -->
     <div class="cushion"></div>
   </main>
+  <el-dialog
+    v-model="dialogVisible"
+    title="Yêu cầu chỉnh sửa"
+    width="50%"
+    :before-close="handleClose"
+  >
+    <el-date-picker
+      v-model="dataEditRequest.time"
+      type="date"
+      placeholder="Thời gian yêu cầu"
+      :size="sizeElInput"
+    />
+    <el-input
+      v-model="dataEditRequest.content"
+      :rows="2"
+      type="textarea"
+      placeholder="Nội dung ghi chú"
+      class="mt-2"
+    />
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="clearEditRequest()">Đóng</el-button>
+        <el-button type="primary" @click="editRequest()"> Gửi </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -196,6 +233,13 @@ export default {
     return {
       dataStaff: null,
       urlAvatar: null,
+      dialogVisible: false,
+      dataEditRequest: {
+        time: null,
+        content: null,
+      },
+      sizeElInput: "default",
+      showBtnEdit: true,
     };
   },
   created() {
@@ -305,11 +349,111 @@ export default {
           });
         });
     },
+    handleClose() {
+      this.dialogVisible = !this.dialogVisible;
+      this.dataEditRequest = {
+        time: null,
+        content: null,
+      };
+    },
+    clearEditRequest() {
+      this.dialogVisible = false;
+      this.dataEditRequest = {
+        time: null,
+        content: null,
+      };
+    },
+    editRequest() {
+      if (!this.dataEditRequest.time) {
+        return ElNotification({
+          title: "Error",
+          message: "Thời gian không được bỏ trống",
+          type: "error",
+        });
+      }
+      apiStaffAccount
+        .editRequest(this.dataEditRequest, this.dataStaff.staff_id)
+        .then((res) => {
+          var dataResponse = res.data;
+          if (dataResponse.result_code == 200) {
+            this.dialogVisible = false;
+            this.dataEditRequest = {
+              time: null,
+              content: null,
+            };
+            return ElNotification({
+              title: "Success",
+              message: "Thành công",
+              type: "success",
+            });
+          } else throw new Error(dataResponse.results);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "Error",
+            message: error,
+            type: "error",
+          });
+        });
+    },
   },
 };
 </script>
 
 <style scoped>
+.input-edit {
+  border-radius: 5px;
+  border: 1px solid;
+  padding: 0px 0.5rem;
+}
+
+.hide-input {
+  outline: none;
+  border: none;
+}
+
+.input-edit:focus {
+  border-color: #5fa0a9 !important;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.text-edit {
+  position: absolute;
+  top: -52px;
+  font-size: 120%;
+  color: red;
+}
+
+.edit-submit {
+  background-color: #409eff;
+}
+
+.edit-clone {
+  background-color: #909399;
+}
+
+.btn:hover {
+  color: #000;
+}
+
+.btn {
+  margin-bottom: 1rem;
+}
+
+.list-btn-edit {
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.list-btn {
+  display: contents;
+}
+
 .cushion-loading {
   min-height: 35rem;
 }

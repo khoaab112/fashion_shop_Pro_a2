@@ -14,5 +14,8 @@ export default {
     },
     indirectlyDisconnect(id) {
         return index.delete(`/indirectly-disconnect/${id}`);
+    },
+    editRequest(data, id) {
+        return index.post(`/edit-request/${id}`, (data));
     }
 }
