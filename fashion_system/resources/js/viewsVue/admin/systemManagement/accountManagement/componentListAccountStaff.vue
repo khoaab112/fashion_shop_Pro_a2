@@ -12,7 +12,10 @@
       class="p-2"
     >
       <template #cell(staff_name)="data">
-        <router-link :to="{ name: 'detailStaff', query: { child: pushData(data) } }">
+        <router-link
+          :to="{ name: 'detailStaff', query: { child: pushData(data) } }"
+          target="_blank"
+        >
           <span class="col-name"> {{ data.data.value.staff_name }}</span>
         </router-link>
       </template>

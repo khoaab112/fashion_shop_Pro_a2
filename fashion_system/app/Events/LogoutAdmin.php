@@ -17,10 +17,10 @@ class LogoutAdmin implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    protected $account;
-    public function __construct($account)
+    public $staff;
+    public function __construct($staff)
     {
-        $this->account = $account;
+        $this->staff = $staff;
     }
     public function broadcastAs(): string
     {
@@ -35,7 +35,7 @@ class LogoutAdmin implements ShouldBroadcast
     {
 
         return [
-            new PrivateChannel('disconnect-admin-'.$this->account['id']),
+            new PrivateChannel('disconnect-admin-staff-id-'.$this->staff['id']),
         ];
     }
 }

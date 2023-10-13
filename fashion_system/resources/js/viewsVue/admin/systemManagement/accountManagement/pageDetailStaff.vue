@@ -259,15 +259,16 @@ export default {
     },
     lockAccount() {
       const data = {
-        id: this.dataStaff.id,
+        idAccount: this.dataStaff.account_id,
         status: !this.dataStaff.status,
+        idStaff: this.dataStaff.staff_id,
       };
       apiStaffAccount
         .lockAccount(data)
         .then((res) => {
           var dataResponse = res.data;
           if (dataResponse.result_code == 200) {
-            this.getStaffDetail(this.dataStaff.id);
+            this.getStaffDetail(this.dataStaff.account_id);
             ElNotification({
               title: "Success",
               message: "Thay đổi thành công",

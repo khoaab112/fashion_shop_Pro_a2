@@ -10,6 +10,6 @@ export default {
         return index.get(`/staff-detail/${id}`);
     },
     lockAccount(data) {
-        return index.put(`/lock-account/${data.id}`, (data));
+        return index.put(`/lock-account/${data.idAccount}`, (data));
     }
 }
