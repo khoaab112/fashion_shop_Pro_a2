@@ -32,14 +32,24 @@
         <section class="card-row-1 card">
           <div class="mt-2 row">
             <strong class="ps-5 col-5"> Họ tên : </strong>
-            <p class="col-7">{{ this.dataStaff.staff_name }}</p>
+            <p class="col-7">
+              <input
+                type="text"
+                class="input-edit"
+                :class="[{ 'hide-input': !showBtnEdit }]"
+                v-model="this.dataStaff.staff_name"
+              />
+            </p>
           </div>
           <div class="row">
             <strong class="ps-5 col-5"> Sinh ngày : </strong>
             <p class="col-7">
-              <input class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]" />{{
-                this.dataStaff.birthday
-              }}
+              <input
+                type="text"
+                class="input-edit"
+                :class="[{ 'hide-input': !showBtnEdit }]"
+                v-model="this.dataStaff.birthday"
+              />
             </p>
           </div>
           <div class="row">
@@ -57,19 +67,34 @@
           <div class="row">
             <strong class="ps-5 col-5"> Địa chỉ : </strong>
             <p class="col-7">
-              {{ this.dataStaff.staff_address }}
+              <input
+                type="text"
+                class="input-edit"
+                :class="[{ 'hide-input': !showBtnEdit }]"
+                v-model="this.dataStaff.staff_address"
+              />
             </p>
           </div>
           <div class="row">
             <strong class="ps-5 col-5"> Số điện thoại: </strong>
             <p class="col-7">
-              {{ this.dataStaff.phone_number }}
+              <input
+                type="text"
+                class="input-edit"
+                :class="[{ 'hide-input': !showBtnEdit }]"
+                v-model="this.dataStaff.phone_number"
+              />
             </p>
           </div>
           <div class="row">
             <strong class="ps-5 col-5"> email: </strong>
             <p class="col-7">
-              {{ this.dataStaff.email }}
+              <input
+                type="text"
+                class="input-edit"
+                :class="[{ 'hide-input': !showBtnEdit }]"
+                v-model="this.dataStaff.email"
+              />
             </p>
           </div>
           <strong class="ps-5" :class="[this.dataStaff.active ? 'check' : 'question']">
