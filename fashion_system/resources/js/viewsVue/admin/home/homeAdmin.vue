@@ -270,8 +270,8 @@ export default {
         this.getListUsers(e.user);
       })
       .error((error) => {
-        if (error.status == 403) {
-        //   location.reload();
+        if (error.status == 403 && error.type === "AuthError") {
+          location.reload();
         }
       });
     //
@@ -454,9 +454,11 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
 .switch {
   margin-left: 0.5rem;
 }
+
 .item-account {
   background-color: red;
   min-width: 40%;
