@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Broadcasting\FollowAccount\ManagerController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\StaffAccountController;
+use App\Http\Controllers\Admin\Administration;
+use App\Http\Controllers\Admin\Position;
 
 //test controller
 
@@ -62,6 +64,7 @@ Route::middleware(['checkURL'])->group(function () {
 
             //branch
             Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
+            Route::get('/branches', [BranchController::class, 'getListBranches']);
 
             //type-report
             Route::post('/type-reports', [TypeReportController::class, 'createsTypeReport']);
@@ -90,6 +93,12 @@ Route::middleware(['checkURL'])->group(function () {
             Route::post('/test-no/{id}', [NotificationController::class, 'test']);
             Route::put('/change-watched-notification/{id}', [NotificationController::class, 'changeWatchedStatus']);
             Route::put('/change-watched-notification', [NotificationController::class, 'changeWatchedStatusByID']);
+
+            //administration
+            Route::get('/administrations', [Administration::class, 'getRecords']);
+
+            //position
+            Route::get('/positions', [Position::class, 'getRecords']);
         });
     });
 });

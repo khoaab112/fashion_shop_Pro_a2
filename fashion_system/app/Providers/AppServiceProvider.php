@@ -84,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AccountAdminAction\AccountAdminActionReposotpryIntaface::class,AccountAdminAction\AccountAdminActionRepository::class);
         $this->app->bind(AccountCustomer\AccountCustomerRepositoryInterface::class,AccountCustomer\AccountCustomersRepository::class);
         $this->app->bind(ActionAdmin\ActionAdminRepositoryInterface::class,ActionAdmin\ActionRepository::class);
-        $this->app->bind(AdministrationRe\AdministrationRepositoryInterface::class,AdministrationRe\AdministrationfRepository::class);
+        $this->app->bind(AdministrationRe\AdministrationRepositoryInterface::class,AdministrationRe\AdministrationRepository::class);
         $this->app->bind(Ads\AdsRepositoryInterface::class,Ads\AdsRepositoryInterface::class);
         $this->app->bind(Bill\BillRepositoryInterface::class,Bill\BillRepository::class);
         $this->app->bind(Branch\BranchRepositoryInterface::class,Branch\BranchRepository::class);
