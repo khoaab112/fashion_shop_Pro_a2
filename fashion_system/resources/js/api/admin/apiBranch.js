@@ -5,5 +5,8 @@ import index from '../setupApi.js';
 export default {
     getInfoBranch(id) {
         return index.get(`/branch/${id}`);
+    },
+    getBranches() {
+        return index.get(`/branches`);
     }
 }

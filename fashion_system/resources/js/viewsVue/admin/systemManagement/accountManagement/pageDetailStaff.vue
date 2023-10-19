@@ -13,10 +13,11 @@
                     <div class="mt-2">
                         <avatar :src="urlAvatar" class="avatar-staff"> </avatar>
                     </div>
-                    <strong>
+                    <!-- v-once không cho copy lại địa chỉ biêns -->
+                    <strong v-once>
                         {{ this.dataStaff.staff_name }}
                     </strong>
-                    <strong>
+                    <strong v-once>
                         {{ this.dataStaff.sex ? "Nam" : "Nữ" }}
                         {{ getYearOld(this.dataStaff.birthday) }}&nbsp;tuổi<br />{{
                             this.dataStaff.birthday
@@ -135,10 +136,10 @@
                         <strong class="col-5">Cấp độ</strong>
                         <p class="col-7" v-if="!showBtnEdit">
                             {{ this.dataStaff.administration }}</p>
-                        <el-select v-model="value" placeholder="Select" class="options-level-accout mb-2" v-else>
+                        <!-- <el-select v-model="value" placeholder="Select" class="options-level-accout mb-2" v-else>
                             <el-option v-for="item in optionsLevelAccout" :key="item.value" :label="item.label" :value="item.value" v-model="this.dataStaff.administration"
                                 :disabled="item.disabled" />
-                        </el-select>
+                        </el-select> -->
                     </div>
                     <div class="row ms-2">
                         <strong class="col-5">Trạng thái</strong>
@@ -163,7 +164,7 @@
                             Yêu cầu chỉnh sửa thông tin
                             <font-awesome-icon icon="fa-solid fa-plane-departure" class="float-end pt-1" />
                         </button>
-                        <button class="action action-edit mt-2" @click="showBtnEdit = true">
+                        <button class="action action-edit mt-2" @click="activeUpdate()">
                             Can thiệp trực tiếp
                             <font-awesome-icon icon="fa-regular fa-pen-to-square" class="float-end pt-1" />
                         </button>
@@ -197,6 +198,9 @@
 import avatar from "../../../components/avatar.vue";
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 import apiStaffAccount from "@/js/api/admin/apiStaffAccounts.js";
+import apiBranch from "@/js/api/admin/apiBranch.js";
+import apiPosition from "@/js/api/admin/apiPosition.js";
+import apiAdministration from "@/js/api/admin/apiAdministration.js";
 import { ElNotification } from "element-plus";
 import loadingStyleTwirl from "../../../components/loading/loadingStyleTwirl.vue";
 import loadingText from "../../../components/loading/loadingText.vue";
@@ -233,6 +237,7 @@ export default {
                     disabled: true,
                 },
             ],
+            activatedFirst: false,
         };
     },
     created() {
@@ -327,6 +332,7 @@ export default {
                 .then((res) => {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
+                        this.activatedFirst = false;
                         ElNotification({
                             title: "Success",
                             message: "Thành công",
@@ -389,14 +395,75 @@ export default {
                     });
                 });
         },
+        activeUpdate() {
+            if (!this.activatedFirst) {
+                this.activatedFirst = true;
+                this.showBtnEdit = true;
+                this.getBranches();
+                this.getPositions();
+                this.getAdministrations();
+            }
+        },
+        getBranches() {
+            apiBranch
+                .getBranches()
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: error,
+                        type: "error",
+                    });
+                });
+        },
+        getPositions() {
+            apiPosition
+                .getPositions()
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: error,
+                        type: "error",
+                    });
+                });
+        },
+        getAdministrations() {
+            apiAdministration
+                .getAdministrations()
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: error,
+                        type: "error",
+                    });
+                });
+        },
     },
 };
 </script>
 
 <style scoped>
-.options-level-accout{
+.options-level-accout {
     width: 50%;
 }
+
 .input-edit {
     border-radius: 5px;
     border: 1px solid;

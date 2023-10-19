@@ -24,11 +24,11 @@ class Administration extends Controller
     }
     public function getRecords(Request $request)
     {
-        $recordNumber = $request->input('record_number', 10);
-        $page = $request->input('page', 1);
-        $count = $request->input('count') === 'true';
         try {
-            if (!$request->input('record_number')) {
+            if ($request->input('record_number')) {
+                $recordNumber = $request->input('record_number', 10);
+                $page = $request->input('page', 1);
+                $count = $request->input('count') === 'true';
                 $records = $this->administration->getRecordByPage($recordNumber, $page);
                 if ($count) {
                     $totalRecord = $this->administration->count();

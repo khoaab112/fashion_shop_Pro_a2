@@ -36,11 +36,11 @@ class BranchController extends Controller
     }
     public function getListBranches(Request $request)
     {
-        $recordNumber = $request->input('record_number', 10);
-        $page = $request->input('page', 1);
-        $count = $request->input('count') === 'true';
-        if (!$request->input('record_number')) {
+        if ($request->input('record_number')) {
             try {
+                $recordNumber = $request->input('record_number', 10);
+                $page = $request->input('page', 1);
+                $count = $request->input('count') === 'true';
                 $records = $this->branch->getRecordByPage($recordNumber, $page);
                 if ($count) {
                     $totalRecord = $this->branch->count();
