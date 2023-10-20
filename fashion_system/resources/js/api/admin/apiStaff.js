@@ -17,4 +17,7 @@ export default {
     updateDataStaff(staffData) {
         return index.put(`/update-info-staff`, (staffData));
     },
+    editCarefully(staffData) {
+        return index.put(`/edit-carefully`, (staffData));
+    },
 }

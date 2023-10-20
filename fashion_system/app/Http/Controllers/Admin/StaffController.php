@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Helpers\FormatDate;
-
+use Illuminate\Support\Facades\DB;
 
 class StaffController extends Controller
 {
@@ -113,5 +113,87 @@ class StaffController extends Controller
             return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
         }
         return CodeHttpHelpers::returnJson(400, true, 'Không có ảnh nào được tải nên', 200);
+    }
+    public function editCarefully(Request $request)
+    {
+        $position_id = $request->input('position_name');
+        $branch_id = $request->input('branch_name');
+        $account_id = $request->input('account_id');
+        $staff_id = $request->input('staff_id');
+        $administration_id = $request->input('administration');
+        $staffData = $request->input();
+        $isPositionUpdate = true;
+        $isBranchUpdate = true;
+        $isAccountUpdate = true;
+        $isStaffUpdate = true;
+        $isAdministrationUpdate = true;
+        try {
+            if ((int)$position_id == 0) {
+                $isPositionUpdate = false;
+            } else {
+                $searchResultsPosition = DB::table('position')->where([['id', '=', (int)$position_id]])->first();
+                if (!$searchResultsPosition)
+                    return CodeHttpHelpers::returnJson(204, false, 'Quyền không tồn tại', 200);
+            }
+            if ((int)$branch_id == 0) {
+                $isBranchUpdate = false;
+            } else {
+                $searchResultsBranch = DB::table('branch')->where([['id', '=', (int)$branch_id]])->first();
+                if (!$searchResultsBranch)
+                    return CodeHttpHelpers::returnJson(204, false, 'Chi nhánh không tồn tại', 200);
+            }
+
+            if ((int)$account_id == 0) {
+                $isAccountUpdate = false;
+            } else {
+                $searchResultsAccount = DB::table('staff_account')->where([['id', '=', (int)$account_id]])->first();
+                if (!$searchResultsAccount)
+                    return CodeHttpHelpers::returnJson(204, false, 'Tài khoản không tồn tại', 200);
+            }
+            if ((int)$staffData == 0) {
+                $isStaffUpdate = false;
+            } else {
+                $searchResultsStaff = DB::table('staff')->where([['id', '=', (int)$staffData]])->first();
+                if (!$searchResultsStaff)
+                    return CodeHttpHelpers::returnJson(204, false, 'Nhân viên không tồn tại', 200);
+            }
+            if (!(int)$administration_id) {
+                $isAdministrationUpdate = false;
+            } else {
+                $searchResultsAdministration = DB::table('administration')->where([['id', ' =', (int)$administration_id]])->first();
+                if (!$searchResultsAdministration)
+                    return CodeHttpHelpers::returnJson(204, false, 'Câp độ tài khoản không tồn tại', 200);
+            }
+            //chia ra 2 loại cập nhật
+            //cập nhân viên
+            if ($isStaffUpdate) {
+                $arrUpdateStaff = [];
+                if ($isBranchUpdate) $arrUpdateStaff['branch_id'] = $branch_id;
+                if ($isPositionUpdate) $arrUpdateStaff['position_id'] = $position_id;
+
+                $arrUpdateStaff += [
+                    'address' => $request->input('staff_address'),
+                    'name' => $request->input('staff_name'),
+                    'phone_number' => $request->input('phone_number'),
+                    'email' => $request->input('email'),
+                    'birthday' => $request->input('birthday'),
+                    'sex' => $request->input('sex'),
+                    'status' => $request->input('status'),
+                ];
+                $resultStaffUpdate = DB::table('staff')->where('id', $staff_id)->update($arrUpdateStaff);
+            }
+            //cập nhật tài khoản
+            if ($isAccountUpdate) {
+                $arrUpdateAccount = [];
+                if ($isAdministrationUpdate)  $arrUpdateAccount['administration_id'] = $administration_id;
+                $arrUpdateAccount += [
+                    'status' => $request->input('status'),
+                ];
+                $resultAccountUpdate = DB::table('staff_account')->where('id', $account_id)->update($arrUpdateAccount);
+            }
+            return CodeHttpHelpers::returnJson(200, true, 'Cập nhật thành công', 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
     }
 }

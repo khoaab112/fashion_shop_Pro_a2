@@ -54,6 +54,7 @@ Route::middleware(['checkURL'])->group(function () {
             Route::put('/update-info-staff', [StaffController::class, 'updateInfo']);
             Route::post('/avatar-staff/{id}', [StaffController::class, 'changeAvatarStaffById']);
             Route::post('/background-staff/{id}', [StaffController::class, 'changeBackgroundStaffById']);
+            Route::put('/edit-carefully', [StaffController::class, 'editCarefully']);
 
             //staff Account
             Route::get('/get-staff-accounts', [StaffAccountController::class, 'getByPage']);

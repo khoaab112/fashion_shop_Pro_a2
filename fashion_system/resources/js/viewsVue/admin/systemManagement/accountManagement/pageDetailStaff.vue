@@ -46,19 +46,19 @@
                     <div class="row">
                         <strong class="ps-5 col-5"> Giới tính : </strong>
                         <p class="col-7" v-if="!showBtnEdit">
-                            {{ this.dataStaff.sex ? "Nam" : "Nữ" }}
+                            <span v-once>{{ this.dataStaff.sex ? "Nam" : "Nữ" }}</span>
                             <font-awesome-icon icon="fa-solid fa-mars" style="color: #0ed3e1" v-if="this.dataStaff.sex" />
                             <font-awesome-icon icon="fa-solid fa-venus" style="color: #e8179b" v-else />
                         </p>
                         <el-radio-group v-model="this.dataStaff.sex" class="col-7 pb-3" v-else>
-                            <el-radio :label='true' size="small">Nam</el-radio>
-                            <el-radio :label='false' size="small">Nữ</el-radio>
+                            <el-radio :label="true" size="small">Nam</el-radio>
+                            <el-radio :label="false" size="small">Nữ</el-radio>
                         </el-radio-group>
                     </div>
                     <div class="row">
                         <strong class="ps-5 col-5"> Địa chỉ : </strong>
                         <p class="col-7">
-                            <input type="text" class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]"
+                            <input type="text" v-once class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]"
                                 v-model="this.dataStaff.staff_address" />
                         </p>
                     </div>
@@ -89,40 +89,76 @@
                 <div class="card row-2">
                     <div class="row mt-2 ms-2">
                         <strong class="col-4">Chức vụ :</strong>
-                        <p class="col-8">
-                            <input type="text" class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]"
-                                v-model="this.dataStaff.position_name" />
+                        <p class="col-8" v-if="!showBtnEdit">
+                        <p v-once>{{ this.dataStaff.position_name }}</p>
                         </p>
+                        <el-select v-model="this.dataStaff.position_name" placeholder="Chọn"
+                            class="options-level-accout mb-2 col-8" v-else>
+                            <el-option v-for="item in optionPosition" :key="item.id" :label="item.name" :value="item.id"
+                                v-model="this.dataStaff.position_name" :disabled="item.disabled" />
+                        </el-select>
                     </div>
                     <div class="row mt-2 ms-2">
-                        <strong class="col-4">Mã nhân viên :</strong>
+                        <strong class="col-4" v-once>Mã nhân viên :</strong>
                         <p class="col-8">
                             <input type="text" class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]"
                                 v-model="this.dataStaff.code_staff" />
                         </p>
                     </div>
                     <div class="row mt-2 ms-2">
-                        <strong class="col-4">Thuộc chi nhánh :</strong>
-                        <p class="col-8">
-                            <input type="text" class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]"
-                                v-model="this.dataStaff.branch_name" />
+                        <strong class="col-4" v-once>Thuộc chi nhánh :</strong>
+                        <p class="col-8" v-if="!showBtnEdit">
+                        <p v-once> {{ this.dataStaff.branch_name }}</p>
                         </p>
+                        <el-select v-model="this.dataStaff.branch_name" placeholder="Chọn"
+                            class="options-level-accout mb-2 col-8" v-else>
+                            <el-option v-for="item in optionBranches" :key="item.id" :label="item.name" :value="item.id"
+                                v-model="this.dataStaff.branch_name" />
+                        </el-select>
                     </div>
                     <div class="row mt-2 ms-2">
                         <strong class="col-4">Địa chỉ chi nhánh :</strong>
-                        <p class="col-8">{{ this.dataStaff.branch_address }}</p>
+                        <p class="col-8" v-if="!showBtnEdit">
+                            <span v-once> {{ this.dataStaff.branch_address }}</span>
+                        </p>
+                        <p class="col-8" v-else>
+                            <span> {{ getElementById(optionBranches,
+                                this.dataStaff.branch_name) ? getElementById(optionBranches,
+                                    this.dataStaff.branch_name).address : this.dataStaff.branch_address }}</span>
+                        </p>
                     </div>
                     <div class="row mt-2 ms-2">
-                        <strong class="col-4">Hotline :</strong>
-                        <p class="col-8">{{ this.dataStaff.hotline }}</p>
+                        <strong class="col-4" v-once>Hotline :</strong>
+                        <p class="col-8" v-if="!showBtnEdit">
+                            <span>{{ this.dataStaff.hotline }}</span>
+                        </p>
+                        <p class="col-8" v-else>
+                            <span> {{ getElementById(optionBranches,
+                                this.dataStaff.branch_name) ? getElementById(optionBranches,
+                                    this.dataStaff.branch_name).hotline : this.dataStaff.hotline }}</span>
+                        </p>
                     </div>
                     <div class="row mt-2 ms-2">
-                        <strong class="col-4">Quản lí chi nhánh :</strong>
-                        <p class="col-8">{{ this.dataStaff.manage }}</p>
+                        <strong class="col-4" v-once>Quản lí chi nhánh :</strong>
+                        <p class="col-8" v-if="!showBtnEdit">
+                            <span>{{ this.dataStaff.manage }}</span>
+                        </p>
+                        <p class="col-8" v-else>
+                            <span> {{ getElementById(optionBranches,
+                                this.dataStaff.branch_name) ? getElementById(optionBranches,
+                                    this.dataStaff.branch_name).manage : this.dataStaff.manage }}</span>
+                        </p>
                     </div>
                     <div class="row mt-2 ms-2">
-                        <strong class="col-4">Thời gian làm việc :</strong>
-                        <p class="col-8">{{ this.dataStaff.working_time }}</p>
+                        <strong class="col-4" v-once>Thời gian làm việc :</strong>
+                        <p class="col-8" v-if="!showBtnEdit">
+                            <span>{{ this.dataStaff.working_time }}</span>
+                        </p>
+                        <p class="col-8" v-else>
+                            <span> {{ getElementById(optionBranches,
+                                this.dataStaff.branch_name) ? getElementById(optionBranches,
+                                    this.dataStaff.branch_name).working_time : this.dataStaff.working_time }}</span>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -135,17 +171,24 @@
                     <div class="row mt-2 ms-2">
                         <strong class="col-5">Cấp độ</strong>
                         <p class="col-7" v-if="!showBtnEdit">
-                            {{ this.dataStaff.administration }}</p>
-                        <!-- <el-select v-model="value" placeholder="Select" class="options-level-accout mb-2" v-else>
-                            <el-option v-for="item in optionsLevelAccout" :key="item.value" :label="item.label" :value="item.value" v-model="this.dataStaff.administration"
-                                :disabled="item.disabled" />
-                        </el-select> -->
+                        <p v-once>{{ this.dataStaff.administration }}</p>
+                        </p>
+                        <el-select v-model="this.dataStaff.administration" placeholder="Chọn"
+                            class="options-level-accout mb-2 col-7" v-else>
+                            <el-option v-for="item in optionsLevelAccout" :key="item.id" :label="item.name" :value="item.id"
+                                v-model="this.dataStaff.administration" />
+                        </el-select>
                     </div>
                     <div class="row ms-2">
                         <strong class="col-5">Trạng thái</strong>
-                        <p class="col-7" :class="[this.dataStaff.status ? 'check' : 'question']">
+                        <p class="col-7" :class="[this.dataStaff.status ? 'check' : 'question']" v-if="!showBtnEdit">
                             {{ this.dataStaff.status ? "Kích hoạt" : "Khóa" }}
                         </p>
+                        <el-select v-model="this.dataStaff.statusChange" placeholder="Chọn"
+                            class="options-level-accout mb-2 col-7" v-else>
+                            <el-option v-for="item in optionStatus" :key="item.id" :label="item.name" :value="item.id"
+                                v-model="this.dataStaff.statusChange" />
+                        </el-select>
                     </div>
                     <div class="list-btn" v-if="!showBtnEdit">
                         <button class="action action-block mt-1" @click="lockAccount()">
@@ -171,8 +214,8 @@
                     </div>
                     <div class="list-btn-edit" v-else>
                         <strong class="text-edit">Chỉnh sửa</strong>
-                        <button class="btn edit-submit mt-2">Lưu</button>
-                        <button class="btn edit-clone mt-2" @click="showBtnEdit = false">Đóng</button>
+                        <button class="btn edit-submit mt-2" @click="updateStaff">Lưu</button>
+                        <button class="btn edit-clone mt-2" @click="offBtnEdit">Đóng</button>
                     </div>
                 </div>
             </section>
@@ -198,10 +241,12 @@
 import avatar from "../../../components/avatar.vue";
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 import apiStaffAccount from "@/js/api/admin/apiStaffAccounts.js";
+import apiStaff from "@/js/api/admin/apiStaff.js";
 import apiBranch from "@/js/api/admin/apiBranch.js";
 import apiPosition from "@/js/api/admin/apiPosition.js";
 import apiAdministration from "@/js/api/admin/apiAdministration.js";
 import { ElNotification } from "element-plus";
+import { ElMessage } from 'element-plus'
 import loadingStyleTwirl from "../../../components/loading/loadingStyleTwirl.vue";
 import loadingText from "../../../components/loading/loadingText.vue";
 
@@ -225,19 +270,37 @@ export default {
                 content: null,
             },
             sizeElInput: "default",
-            showBtnEdit: true,
+            showBtnEdit: false,
             optionsLevelAccout: [
                 {
-                    value: 'Option1',
-                    label: 'Option1',
-                },
-                {
-                    value: 'Option2',
-                    label: 'Option2',
-                    disabled: true,
+                    id: "default",
+                    name: "default",
                 },
             ],
             activatedFirst: false,
+            optionBranches: [
+                {
+                    id: "default",
+                    name: "default",
+                },
+            ],
+            optionPosition: [
+                {
+                    id: "default",
+                    name: "default",
+                },
+            ],
+            optionStatus: [
+                {
+                    id: 1,
+                    name: "Kích hoạt",
+                },
+                {
+                    id: 0,
+                    name: "Khóa",
+                },
+            ],
+            originalData: null,
         };
     },
     created() {
@@ -396,12 +459,13 @@ export default {
                 });
         },
         activeUpdate() {
+            this.showBtnEdit = true;
             if (!this.activatedFirst) {
-                this.activatedFirst = true;
-                this.showBtnEdit = true;
+                this.originalData = { ...this.dataStaff };
                 this.getBranches();
                 this.getPositions();
                 this.getAdministrations();
+                this.activatedFirst = true;
             }
         },
         getBranches() {
@@ -410,7 +474,7 @@ export default {
                 .then((res) => {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
-
+                        this.optionBranches = dataResponse.results;
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -427,7 +491,7 @@ export default {
                 .then((res) => {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
-
+                        this.optionPosition = dataResponse.results;
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -444,7 +508,7 @@ export default {
                 .then((res) => {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
-
+                        this.optionsLevelAccout = dataResponse.results;
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -454,6 +518,46 @@ export default {
                         type: "error",
                     });
                 });
+        },
+        getElementById(arr, id) {
+            return arr.find(item => item.id === id);
+        },
+        offBtnEdit() {
+            this.showBtnEdit = false;
+            this.getStaffDetail(this.decodeURL(this.$route.query.child));
+        },
+        updateStaff() {
+            console.log(JSON.stringify(this.dataStaff) === JSON.stringify(this.originalData));
+            if (!(JSON.stringify(this.dataStaff) === JSON.stringify(this.originalData))) {
+                apiStaff
+                    .editCarefully(this.dataStaff)
+                    .then((res) => {
+                        var dataResponse = res.data;
+                        if (dataResponse.result_code == 200) {
+                            this.showBtnEdit = false;
+                            this.getStaffDetail(this.decodeURL(this.$route.query.child));
+                            return ElNotification({
+                                title: "Success",
+                                message: dataResponse.results,
+                                type: "success",
+                            });
+                        } else throw new Error(dataResponse.results);
+                    })
+                    .catch((error) => {
+                        ElNotification({
+                            title: "Error",
+                            message: error,
+                            type: "error",
+                        });
+                    });
+            }
+            else {
+                this.showBtnEdit = false;
+                return ElMessage({
+                    message: 'Không có dữ liệu bị chỉnh sửa',
+                    type: 'success',
+                })
+            }
         },
     },
 };
@@ -469,11 +573,14 @@ export default {
     border: 1px solid;
     padding: 0px 0.5rem;
     widows: 90%;
+    background: white;
 }
 
 .hide-input {
     outline: none;
     border: none;
+    pointer-events: none;
+    background: #fffaeb;
 }
 
 .input-edit:focus {
