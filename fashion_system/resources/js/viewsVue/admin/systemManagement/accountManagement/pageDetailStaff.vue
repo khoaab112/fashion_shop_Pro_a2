@@ -236,6 +236,16 @@
             </span>
         </template>
     </el-dialog>
+    <el-dialog v-model="showPasswordNew" title="Mật khẩu mới : " width="30%" :before-close="showPasswordNewClose">
+        <button class="btn-copy" @click="copyPass(passwordNew)"><font-awesome-icon icon="fa-regular fa-copy" /></button>
+        <span>Tài khoản : {{ dataStaff.user_name }}</span><br>
+        <span>Mật khẩu : {{ passwordNew }}</span>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="showPasswordNew = false">Cancel</el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 
 <script>
@@ -305,6 +315,8 @@ export default {
                 },
             ],
             originalData: null,
+            showPasswordNew: false,
+            passwordNew: null,
         };
     },
     created() {
@@ -570,7 +582,7 @@ export default {
             }
         },
         resetPassword: function () {
-            const pass = this.generateRandomCharacters(8);
+            const pass = this.generateRandomCharacters(9);
             const user = {
                 'staff_id': this.dataStaff.staff_id,
                 'user_name': this.dataStaff.user_name,
@@ -580,14 +592,23 @@ export default {
                 .resetPassword(user)
                 .then((res) => {
                     var dataResponse = res.data;
+                    console.log(dataResponse);
                     if (dataResponse.result_code == 200) {
-
                         ElNotification({
                             title: "Success",
                             message: dataResponse.results,
                             type: "success",
                         });
-                    } else throw new Error(dataResponse.results);
+                        this.passwordNew = user.password;
+                        this.showPasswordNew = true;
+                    } else {
+                        if (dataResponse.result_code.staff_id !== undefined) {
+                            throw new Error(dataResponse.results.staff_id[0]);
+                        }
+                        else if (dataResponse.result_code.user_name !== undefined) {
+                            throw new Error(dataResponse.results.user_name[0]);
+                        }
+                    }
                 })
                 .catch((error) => {
                     ElNotification({
@@ -597,11 +618,42 @@ export default {
                     });
                 });
         },
+        showPasswordNewClose() {
+            this.showPasswordNew = false;
+        },
+        copyPass() {
+            var data = "Tài khoản : " + this.dataStaff.user_name +"\nMật khẩu : "+this.passwordNew;
+                navigator.clipboard.writeText(data);
+                return ElNotification({
+                    title: "Success",
+                message: 'Sao chép thành công',
+                type: "success",
+            });
+
+        }
     },
 };
 </script>
 
 <style scoped>
+.btn-copy:active {
+    background-color: rgba(148, 141, 141, 0.288);
+    transform: scale(1);
+
+
+}
+
+.btn-copy {
+    float: right;
+    width: 2rem;
+    height: 2rem;
+    font-size: 20px;
+    background: white;
+    float: right;
+    border: 2px solid #b2a0a0;
+    border-radius: 5px;
+}
+
 .options-level-accout {
     width: 50%;
 }
