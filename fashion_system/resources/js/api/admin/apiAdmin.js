@@ -12,5 +12,8 @@ export default {
     logout() {
         return index.delete(`/logout`);
     },
+    resetPassword(data) {
+        return index.put(`/reset-password`, (data));
+    }
 
 }

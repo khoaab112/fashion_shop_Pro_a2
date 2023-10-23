@@ -46,6 +46,7 @@ Route::middleware(['checkURL'])->group(function () {
             Route::put('/change-password', [AuthnController::class, 'changePassword']);
             Route::post('/decodeJwt', [AuthnController::class, 'decode']);
             Route::delete('/logout', [AuthnController::class, 'logout']);
+            Route::put('/reset-password', [AuthnController::class, 'resetPassword']);
             //test
             Route::post('/test-login', [AuthnController::class, 'test']);
 

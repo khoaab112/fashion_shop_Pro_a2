@@ -47,6 +47,7 @@
                         <strong class="ps-5 col-5"> Giới tính : </strong>
                         <p class="col-7" v-if="!showBtnEdit">
                             <span v-once>{{ this.dataStaff.sex ? "Nam" : "Nữ" }}</span>
+                            &nbsp;
                             <font-awesome-icon icon="fa-solid fa-mars" style="color: #0ed3e1" v-if="this.dataStaff.sex" />
                             <font-awesome-icon icon="fa-solid fa-venus" style="color: #e8179b" v-else />
                         </p>
@@ -58,7 +59,7 @@
                     <div class="row">
                         <strong class="ps-5 col-5"> Địa chỉ : </strong>
                         <p class="col-7">
-                            <input type="text" v-once class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]"
+                            <input type="text" class="input-edit" :class="[{ 'hide-input': !showBtnEdit }]"
                                 v-model="this.dataStaff.staff_address" />
                         </p>
                     </div>
@@ -199,7 +200,7 @@
                             Đăng xuất cưỡng bức
                             <font-awesome-icon icon="fa-solid fa-right-from-bracket" class="float-end pt-1" />
                         </button>
-                        <button class="action action-reset mt-2">
+                        <button class="action action-reset mt-2" @click="resetPassword()">
                             Reset mật khẩu
                             <font-awesome-icon icon="fa-solid fa-retweet" class="float-end pt-1" />
                         </button>
@@ -244,7 +245,9 @@ import apiStaffAccount from "@/js/api/admin/apiStaffAccounts.js";
 import apiStaff from "@/js/api/admin/apiStaff.js";
 import apiBranch from "@/js/api/admin/apiBranch.js";
 import apiPosition from "@/js/api/admin/apiPosition.js";
+import apiAdmin from "@/js/api/admin/apiAdmin.js";
 import apiAdministration from "@/js/api/admin/apiAdministration.js";
+import methodDefine from "@/js/mixins/methodDefine.js";
 import { ElNotification } from "element-plus";
 import { ElMessage } from 'element-plus'
 import loadingStyleTwirl from "../../../components/loading/loadingStyleTwirl.vue";
@@ -252,6 +255,7 @@ import loadingText from "../../../components/loading/loadingText.vue";
 
 export default {
     name: "detailStaff",
+    mixins: [methodDefine],
     components: {
         avatar,
         loadingStyleTwirl,
@@ -527,7 +531,12 @@ export default {
             this.getStaffDetail(this.decodeURL(this.$route.query.child));
         },
         updateStaff() {
-            console.log(JSON.stringify(this.dataStaff) === JSON.stringify(this.originalData));
+            var dateConvert = new Date(this.dataStaff.birthday);
+            var year = dateConvert.getFullYear();
+            var month = ('0' + (dateConvert.getMonth() + 1)).slice(-2);
+            var day = ('0' + dateConvert.getDate()).slice(-2);
+            this.dataStaff.birthday = year + '-' + month + '-' + day;
+            console.log(this.dataStaff);
             if (!(JSON.stringify(this.dataStaff) === JSON.stringify(this.originalData))) {
                 apiStaff
                     .editCarefully(this.dataStaff)
@@ -535,12 +544,13 @@ export default {
                         var dataResponse = res.data;
                         if (dataResponse.result_code == 200) {
                             this.showBtnEdit = false;
-                            this.getStaffDetail(this.decodeURL(this.$route.query.child));
-                            return ElNotification({
+                            // this.getStaffDetail(this.decodeURL(this.$route.query.child));
+                            ElNotification({
                                 title: "Success",
                                 message: dataResponse.results,
                                 type: "success",
                             });
+                            return location.reload();
                         } else throw new Error(dataResponse.results);
                     })
                     .catch((error) => {
@@ -558,6 +568,34 @@ export default {
                     type: 'success',
                 })
             }
+        },
+        resetPassword: function () {
+            const pass = this.generateRandomCharacters(8);
+            const user = {
+                'staff_id': this.dataStaff.staff_id,
+                'user_name': this.dataStaff.user_name,
+                'password': pass
+            }
+            apiAdmin
+                .resetPassword(user)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+
+                        ElNotification({
+                            title: "Success",
+                            message: dataResponse.results,
+                            type: "success",
+                        });
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: error,
+                        type: "error",
+                    });
+                });
         },
     },
 };
@@ -668,7 +706,7 @@ button.action:hover {
 }
 
 .row-2 {
-    min-height: 21rem;
+    min-height: 23rem;
 }
 
 .check {

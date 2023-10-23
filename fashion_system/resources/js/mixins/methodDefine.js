@@ -24,6 +24,16 @@ export default {
             const month = Number(dateformat.getMonth()) + 1;
             const year = dateformat.getFullYear();
             return day + '-' + month + '-' + year;
+        },
+        //tạo kí tự ngẫu nhiên
+        generateRandomCharacters(length) {
+            var strings = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var randomCharacters = "";
+            for (var i = 0; i < length; i++) {
+                var location = Math.floor(Math.random() * strings.length);
+                randomCharacters += strings.charAt(location);
+            }
+            return randomCharacters;
         }
     },
 };

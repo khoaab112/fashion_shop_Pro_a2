@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
 use App\Repositories\UserStaff\UserStaffRepository;
@@ -154,7 +155,7 @@ class AuthnController extends Controller
     public function logout(Request $request)
     {
         try {
-            $staffId=Auth::user()->staff_id;
+            $staffId = Auth::user()->staff_id;
             $accountId = Auth::user()->id;
             $authorizationHeader = $request->header('Authorization');
             $token = str_replace('Bearer ', '', $authorizationHeader);
@@ -350,6 +351,44 @@ class AuthnController extends Controller
             ];
         } catch (\Exception $e) {
             return false;
+        }
+    }
+    public function resetPassword(Request $request)
+    {
+        $validation = [
+            'staff_id' => 'required|exists:staff_account,staff_id',
+            'user_name' => 'required|string|exists:staff_account,user_name',
+            'password' => 'required|min:9|string',
+        ];
+        $attribute = [
+            'staff_id' => 'Mã nhân viên',
+            'user_name' => 'Tài khoản sử dụng',
+            'password' => 'Mật khẩu ',
+        ];
+        try {
+            $validator = validationHelpers::validation($request->all(), $validation, $attribute);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                return CodeHttpHelpers::returnJson(400, false, $errors, 200);
+            }
+            $resultSearch = $this->query->search('user_name', $request->post('user_name'))->first();
+            if (!$resultSearch) {
+
+                return CodeHttpHelpers::returnJson(401, false, 'Unauthorized', 401);
+            }
+            $staffAccount = [
+                'password' => bcrypt($request->post('password')),
+                'refresh_token' => null,
+                'issued_at' => null,
+                'expired_time' => null
+            ];
+            $result = $this->query->updateByUserName($staffAccount, $request->post('user_name'));
+            if ($result) {
+                return CodeHttpHelpers::returnJson(200, true, "Đổi mật khẩu thành công", 200);
+            }
+            return CodeHttpHelpers::returnJson(500, false, "error", 200);
+        } catch (\Exception $error) {
+            return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }
     //theo dõi sự đăng nhập
