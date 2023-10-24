@@ -2,50 +2,84 @@
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100">
-        <h2 class="title-page-register">
-          QUẢN TRỊ
-        </h2>
+        <h2 class="title-page-register">QUẢN TRỊ</h2>
         <form class="login100-form validate-form">
-          <span class="login100-form-title">
-            Đăng ký tài khoản
-          </span>
+          <span class="login100-form-title"> Đăng ký tài khoản </span>
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="staffCode" placeholder="Mã nhân viên">
+            <input
+              class="input100"
+              type="text"
+              name="staffCode"
+              placeholder="Mã nhân viên"
+              v-model="dataFrom.code_staff"
+            />
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-solid fa-hashtag" />
             </span>
           </div>
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="staffName" placeholder="Tên Nhân Viên">
+            <input
+              class="input100 name"
+              type="text"
+              name="staffName"
+              placeholder="Tên Nhân Viên"
+              v-model="dataFrom.name"
+              disabled
+            />
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-solid fa-pen-nib" />
             </span>
           </div>
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="phoneNumber" placeholder="Số điện thoại">
+            <input
+              class="input100"
+              type="text"
+              name="phoneNumber"
+              placeholder="Số điện thoại"
+              v-model="dataFrom.phone_number"
+            />
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-solid fa-phone" />
             </span>
           </div>
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="email" placeholder="Email">
+            <input
+              class="input100"
+              type="text"
+              name="email"
+              placeholder="Email"
+              v-model="dataFrom.email"
+            />
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-regular fa-envelope-open" />
             </span>
           </div>
-          <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="userName" placeholder="Tài khoản" autocomplete="off">
+          <!-- <div class="wrap-input100 validate-input">
+            <input
+              class="input100"
+              type="text"
+              name="userName"
+              placeholder="Tài khoản"
+              autocomplete="off"
+            />
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-regular fa-user" />
             </span>
-          </div>
+          </div> -->
           <div class="wrap-input100 validate-input">
-            <input class="input100" :type=typePassword name="password" placeholder="Mật khẩu" autocomplete="off">
+            <input
+              class="input100"
+              :type="typePassword"
+              name="password"
+              placeholder="Mật khẩu"
+              autocomplete="off"
+              v-model="dataFrom.password"
+            />
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-solid fa-key" />
@@ -56,52 +90,97 @@
             </span>
           </div>
           <div class="wrap-input100 validate-input">
-            <input class="input100" :type=typePasswordConfirm name="passConfirm" placeholder="Xác thực lại mật khẩu" autocomplete="off">
+            <input
+              class="input100"
+              :type="typePasswordConfirm"
+              name="passConfirm"
+              placeholder="Xác thực lại mật khẩu"
+              v-model="dataFrom.passwordConfirm"
+              autocomplete="off"
+            />
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-solid fa-key" />
             </span>
             <span class="icon-eye" @click="showPassword('confirm')">
-              <font-awesome-icon icon="fa-regular fa-eye-slash" v-if="isShowPasswordConfirm" />
+              <font-awesome-icon
+                icon="fa-regular fa-eye-slash"
+                v-if="isShowPasswordConfirm"
+              />
               <font-awesome-icon icon="fa-regular fa-eye" v-else />
             </span>
           </div>
-          <div class="container-login100-form-btn">
-            <button class="login100-form-btn">
-              Gửi thông tin đăng ký
-            </button>
-          </div>
-
-          <div class="p-t-12">
-            <span class="note-create">*Thông tin của bạn sẽ được gửi tới admin để xác thực và tạo tài khoản</span>
-            <br>
-            <span class="note-create">* Thông tin tài khoản trả về sẽ được gửi qua mail</span>
-            <br>
-            <span class="note-create">* Vui lòng liên hệ chủ quản để tạo tài khoản xác thực nhanh hơn</span>
-            <br>
-            <span class="note-create" style="color: blue !important;">*Lưu ý đây là bản thử nghiệm  gmail chưa được xác thực nên bạn hãy kiểm tra tin nhắn spam</span>
-          </div>
+          <span class="err">
+            <ul v-for="item in listErrors">
+              <li>{{ item }}</li>
+            </ul>
+            <ul class="notification" v-for="item in notification">
+              <li>{{ item }}</li>
+            </ul>
+          </span>
         </form>
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn send" v-if="isValidData">
+            Gửi thông tin đăng ký
+          </button>
+          <button class="login100-form-btn" v-else @click="checkFrom()">
+            Kiểm tra thông tin
+          </button>
+        </div>
+
+        <div class="p-t-12">
+          <span class="note-create"
+            >*Thông tin của bạn sẽ được gửi tới admin để xác thực và tạo tài khoản</span
+          >
+          <br />
+          <span class="note-create"
+            >* Thông tin tài khoản trả về sẽ được gửi qua mail</span
+          >
+          <br />
+          <span class="note-create"
+            >* Vui lòng liên hệ chủ quản để tạo tài khoản xác thực nhanh hơn</span
+          >
+          <br />
+          <span class="note-create" style="color: blue !important"
+            >*Lưu ý đây là bản thử nghiệm gmail chưa được xác thực nên bạn hãy kiểm tra
+            tin nhắn spam</span
+          >
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import apiStaff from "@/js/api/admin/apiStaff.js";
+import { ElNotification } from "element-plus";
+import { ElMessage } from "element-plus";
+
 export default {
-  name: 'registerAdmin',
-  components: {
-  },
-  setup() {
-  },
-  directives: {
-  },
+  name: "registerAdmin",
+  components: {},
+  setup() {},
+  directives: {},
   data() {
     return {
       isShowPassword: false,
       isShowPasswordConfirm: false,
-      typePassword: 'password',
-      typePasswordConfirm: 'password',
+      typePassword: "password",
+      typePasswordConfirm: "password",
+      isValidData: false,
+      dataFrom: {
+        code_staff: null,
+        name: null,
+        email: null,
+        staff_id: null,
+        administration_id: 1,
+        phone_number: null,
+        password: null,
+        passwordConfirm: null,
+      },
+      systemData: null,
+      listErrors: [],
+      notification: [],
     };
   },
   created() {
@@ -113,34 +192,126 @@ export default {
   computed() {
     // được sử dụng để định nghĩa các thuộc tính tính toán
   },
-  updated() {
-
-  },
-  destroyed() {
-
-  },
+  updated() {},
+  destroyed() {},
   methods: {
     showPassword(code) {
       switch (code) {
-        case 'password':
+        case "password":
           this.isShowPassword = !this.isShowPassword;
-          this.typePassword = this.isShowPassword ? 'password' : 'text';
+          this.typePassword = this.isShowPassword ? "password" : "text";
           break;
-        case 'confirm':
+        case "confirm":
           this.isShowPasswordConfirm = !this.isShowPasswordConfirm;
-          this.typePasswordConfirm = this.isShowPasswordConfirm ? 'password' : 'text';
+          this.typePasswordConfirm = this.isShowPasswordConfirm ? "password" : "text";
           break;
         default:
           this.isShowPassword = !this.isShowPassword;
-          this.typePassword = this.isShowPassword ? 'password' : 'text';
+          this.typePassword = this.isShowPassword ? "password" : "text";
       }
     },
+    async checkFrom() {
+      this.isValidData = false;
+      this.listErrors = [];
+      if (!this.dataFrom.code_staff) {
+        this.listErrors.push("Mã nhân viên đang trống");
+      }
+      var resultCheckCode = await this.checkCode(this.dataFrom.code_staff);
+      if (!resultCheckCode) {
+        return;
+      }
+      if (!this.dataFrom.email) {
+        this.listErrors.push("Email đang bị bỏ trống");
+      }
+      if (!this.dataFrom.phone_number) {
+        this.listErrors.push("Số điện thoại đang bị bỏ trống");
+      }
+      if (!this.dataFrom.password) {
+        this.listErrors.push("Mật khẩu đang bị bỏ trống");
+      } else if (!this.dataFrom.passwordConfirm) {
+        this.listErrors.push("Mật khẩu xác thực đang bị bỏ trống");
+      } else if (this.dataFrom.email != this.systemData.email) {
+        this.listErrors.push("Mật khẩu đang nhập không hợp lệ");
+      }
+      //   if (this.listErrors.length > 0) return;
+      if (this.dataFrom.email != this.systemData.email) {
+        this.notification.push(
+          "Mail bạn đã có trên hệ thống, tôi đã chuyên về email hệ thống"
+        );
+      }
+      if (this.dataFrom.phone_number != this.systemData.phone_number) {
+        this.notification.push(
+          "Số điện thoại đã có trên hệ thống, tối đã chuyển về số điện thoại hệ thống"
+        );
+      }
+      const { code_staff, name, email, staff_id, phone_number } = this.systemData;
+      this.dataFrom = Object.assign({}, this.dataFrom, {
+        code_staff,
+        name,
+        email,
+        staff_id,
+        phone_number,
+      });
+      if (this.listErrors.length > 0) return;
+      this.isValidData = true;
+    },
+    checkCode(staffCode) {
+      let result = apiStaff
+        .checkStaffCode(staffCode)
+        .then((res) => {
+          var dataResponse = res.data;
+          if (dataResponse.result_code == 200) {
+            this.systemData = dataResponse.results;
+            ElNotification({
+              title: "Success",
+              message: "Tìm thấy thông tin nhân viên trên hệ thống",
+              type: "success",
+            });
+            return true;
+          } else throw new Error(dataResponse.results);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "Error",
+            message: error,
+            type: "error",
+          });
+          return false;
+        });
+      return result;
+    },
   },
+  sendRequire() {},
 };
 </script>
 
 <style scoped>
 /*---------------------------------------------*/
+.send {
+  background: #3872f7 !important;
+}
+
+span.err {
+  line-height: 1.5;
+  color: red;
+  font-size: 80%;
+}
+
+.notification {
+  color: blue;
+}
+
+span.err ul li {
+  list-style-type: circle;
+}
+
+.btn-check {
+  background-color: black;
+}
+
+.name {
+  background-color: #00000057 !important;
+}
 
 .limiter input {
   outline: none;
@@ -216,7 +387,6 @@ textarea:-ms-input-placeholder {
   color: #999999;
 }
 
-
 /*---------------------------------------------*/
 
 button {
@@ -232,7 +402,6 @@ button:hover {
 iframe {
   border: none !important;
 }
-
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
@@ -250,7 +419,6 @@ iframe {
   line-height: 1.5;
   color: #666666;
 }
-
 
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
@@ -292,9 +460,9 @@ iframe {
   /* flex-wrap: wrap; */
   justify-content: space-between;
   /* padding: 177px 130px 33px 95px; */
-  padding: 50px 120px 0px 120px
+  padding: 50px 120px 0px 120px;
+  width: 40rem;
 }
-
 
 /*------------------------------------------------------------------
 [  ]*/
@@ -307,12 +475,10 @@ iframe {
   max-width: 100%;
 }
 
-
 /*------------------------------------------------------------------
 [  ]*/
 
 .login100-form {
-  width: 290px;
 }
 
 .login100-form-title {
@@ -325,7 +491,6 @@ iframe {
   padding-bottom: 30px;
   padding-top: 20px;
 }
-
 
 /*---------------------------------------------*/
 
@@ -348,7 +513,6 @@ iframe {
   padding: 0 30px 0 68px;
 }
 
-
 /*------------------------------------------------------------------
 [ Focus ]*/
 
@@ -365,7 +529,7 @@ iframe {
   color: rgba(87, 184, 70, 0.8);
 }
 
-.input100:focus+.focus-input100 {
+.input100:focus + .focus-input100 {
   -webkit-animation: anim-shadow 0.5s ease-in-out forwards;
   animation: anim-shadow 0.5s ease-in-out forwards;
 }
@@ -407,11 +571,10 @@ iframe {
   transition: all 0.4s;
 }
 
-.input100:focus+.focus-input100+.symbol-input100 {
+.input100:focus + .focus-input100 + .symbol-input100 {
   color: #57b846;
   padding-left: 28px;
 }
-
 
 /*------------------------------------------------------------------
 [ Button ]*/
@@ -462,7 +625,6 @@ iframe {
   font-weight: bold;
 }
 
-
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
@@ -473,10 +635,6 @@ iframe {
 
   .login100-pic {
     width: 35%;
-  }
-
-  .login100-form {
-    width: 290px;
   }
 }
 
@@ -511,7 +669,6 @@ iframe {
     padding: 100px 15px 33px 15px;
   }
 }
-
 
 /*------------------------------------------------------------------
 [ Alert validate ]*/

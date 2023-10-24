@@ -196,4 +196,15 @@ class StaffController extends Controller
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
     }
+    public function checkStaffCode($code)
+    {
+        try {
+            if (!$code) return CodeHttpHelpers::returnJson(204, false, 'Hãy nhập mã nhân viên', 200);
+            $search = $this->staff->search('code_staff', $code)->first();
+            if (!$search) return CodeHttpHelpers::returnJson(204, false, 'Mã nhân viên không tồn tại', 200);
+            return CodeHttpHelpers::returnJson(200, true, $search, 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
+    }
 }

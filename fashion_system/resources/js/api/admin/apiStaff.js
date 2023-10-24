@@ -20,4 +20,7 @@ export default {
     editCarefully(staffData) {
         return index.put(`/edit-carefully`, (staffData));
     },
+    checkStaffCode(staffCode) {
+        return index.get(`/check-staff-code/${staffCode}`);
+    },
 }
