@@ -191,7 +191,12 @@
                                 v-model="this.dataStaff.statusChange" />
                         </el-select>
                     </div>
-                    <div class="list-btn" v-if="!showBtnEdit">
+                    <div class="list-btn" v-if="!this.dataStaff.active">
+                        <button class="action action-active mt-1" @click="activeAccount()">
+                            Kích hoạt tài khoản
+                        </button>
+                    </div>
+                    <div class="list-btn" v-else-if="!showBtnEdit">
                         <button class="action action-block mt-1" @click="lockAccount()">
                             {{ this.dataStaff.status ? "Khóa" : "Kích hoạt"
                             }}<font-awesome-icon icon="fa-solid fa-lock" class="float-end pt-1" />
@@ -218,6 +223,7 @@
                         <button class="btn edit-submit mt-2" @click="updateStaff">Lưu</button>
                         <button class="btn edit-clone mt-2" @click="offBtnEdit">Đóng</button>
                     </div>
+
                 </div>
             </section>
         </div>
@@ -392,7 +398,7 @@ export default {
                         this.getStaffDetail(this.dataStaff.account_id);
                         ElNotification({
                             title: "Success",
-                            message: "Thay đổi thành công",
+                            message: "Đã kích hoạt tài khoản thành công",
                             type: "success",
                         });
                     } else throw new Error(dataResponse.results);
@@ -622,20 +628,50 @@ export default {
             this.showPasswordNew = false;
         },
         copyPass() {
-            var data = "Tài khoản : " + this.dataStaff.user_name +"\nMật khẩu : "+this.passwordNew;
-                navigator.clipboard.writeText(data);
-                return ElNotification({
-                    title: "Success",
+            var data = "Tài khoản : " + this.dataStaff.user_name + "\nMật khẩu : " + this.passwordNew;
+            navigator.clipboard.writeText(data);
+            return ElNotification({
+                title: "Success",
                 message: 'Sao chép thành công',
                 type: "success",
             });
 
+        },
+        activeAccount() {
+            console.log(this.dataStaff.staff_id);
+            apiStaffAccount
+                .activeStaff(this.dataStaff.staff_id)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        this.getStaffDetail(this.dataStaff.account_id);
+                        ElNotification({
+                            title: "Success",
+                            message: "Thay đổi thành công",
+                            type: "success",
+                        });
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: error,
+                        type: "error",
+                    });
+                });
         }
     },
 };
 </script>
 
 <style scoped>
+.action-active {
+    background-color: #409eff;
+    height: 4rem;
+    font-size: 17px !important;
+    color: white !important;
+}
+
 .btn-copy:active {
     background-color: rgba(148, 141, 141, 0.288);
     transform: scale(1);

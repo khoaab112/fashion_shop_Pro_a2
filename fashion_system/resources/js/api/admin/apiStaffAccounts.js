@@ -4,7 +4,7 @@ import index from '../setupApi.js';
 
 export default {
     getByPage(data) {
-        return index.get(`/get-staff-accounts?page=${data.page}&record_number=${data.record_number}&count=${data.count}`);
+        return index.get(`/get-staff-accounts?page=${data.page}&record_number=${data.record_number}&count=${data.count}&active=${data.active??true}`);
     },
     getStaffDetail(id) {
         return index.get(`/staff-detail/${id}`);
@@ -17,5 +17,8 @@ export default {
     },
     editRequest(data, id) {
         return index.post(`/edit-request/${id}`, (data));
+    },
+    activeStaff(staffId) {
+        return index.put(`/active-staff/${staffId}`);
     }
 }

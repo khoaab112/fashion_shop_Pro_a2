@@ -63,6 +63,7 @@ Route::middleware(['checkURL'])->group(function () {
             Route::get('/staff-detail/{id}', [StaffAccountController::class, 'staffDetail']);
             Route::delete('/indirectly-disconnect/{id}', [StaffAccountController::class, 'indirectlyDisconnect']);
             Route::post('/edit-request/{id}', [StaffAccountController::class, 'editRequest']);
+            Route::put('/active-staff/{id}', [StaffAccountController::class, 'activeStaffAccount']);
 
             //branch
             Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);

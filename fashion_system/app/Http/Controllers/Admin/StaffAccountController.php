@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepository;
+use App\Repositories\Staff\StaffRepository;
 use App\Helpers\CodeHttpHelpers;
 use Illuminate\Support\Facades\DB;
 use App\Events\LogoutAdmin;
@@ -16,17 +17,19 @@ use Illuminate\Support\Facades\Auth;
 
 class StaffAccountController extends Controller
 {
-    protected $staffAccount;
+    protected $staffAccount, $staff;
 
-    public function __construct(StaffAccountRepository $staffAccount)
+    public function __construct(StaffAccountRepository $staffAccount, StaffRepository $staff)
     {
         $this->staffAccount = $staffAccount;
+        $this->staff = $staff;
     }
     public function getByPage(Request $request)
     {
         $recordNumber = $request->input('record_number', 10);
         $page = $request->input('page', 1);
         $count = $request->input('count') === 'true';
+        $exactAuthentication = $request->input('active', true);
         try {
             $records = DB::table('staff_account')
                 ->leftJoin(
@@ -76,14 +79,14 @@ class StaffAccountController extends Controller
                     'position.name as position_name'
                 )
                 ->where('administration.status', '=', true)
-                ->where('staff.active', '=', true)
+                ->where('staff.active', '=', $exactAuthentication)
                 ->orderByDesc('staff_account.id')
                 ->paginate($recordNumber, ['*'], 'page', $page)->items();
             if ($count) {
-                $totalRecord = $this->staffAccount->count();
+                // $totalRecord = $this->staffAccount->count();
                 $result = [
                     'page' => $records,
-                    'total_record' => $totalRecord,
+                    'total_record' => count($records),
                 ];
                 return CodeHttpHelpers::returnJson(200, true, $result, 200);
             }
@@ -118,6 +121,32 @@ class StaffAccountController extends Controller
                 $notificationController = app(NotificationController::class);
                 $notificationController->createNotificationByIdStaff($dataNotification);
             }
+            return CodeHttpHelpers::returnJson(200, true, "Thay đổi trạng thái thành công", 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
+    }
+    public function activeStaffAccount($id)
+    {
+        try {
+            $idAdmin = Auth::user()->staff_id;
+            $staff = $this->staff->getById($id)->first();
+            if (!$staff)  return CodeHttpHelpers::returnJson(204, false, 'Thông tin khách hàng không tồn tại , lỗi bất thường', 200);
+            $resultSearchAccount = $this->staffAccount->search('staff_id', $id)->first();
+            if (!$resultSearchAccount) return CodeHttpHelpers::returnJson(204, false, "Thông tin Tài khoản không tồn tại", 200);
+            $resultActive = $this->staff->updateById(['active' => true], $id);
+            $resultActive = $this->staffAccount->updateById([
+                'status' => true,
+                'active' => true
+            ], $resultSearchAccount->id);
+            if (!$resultActive) return CodeHttpHelpers::returnJson(400, false, "Thay đổi trạng thái thất bại", 200);
+            $dataNotification = [
+                'staff_id' => $idAdmin,
+                'content' => "Bạn đã xác thực tài khoản cho người dùng <strong style=\"color:red\">" . $staff->name . "</strong>",
+                'code' => 'EVENT'
+            ];
+            $notificationController = app(NotificationController::class);
+            $notificationController->createNotificationByIdStaff($dataNotification);
             return CodeHttpHelpers::returnJson(200, true, "Thay đổi trạng thái thành công", 200);
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
