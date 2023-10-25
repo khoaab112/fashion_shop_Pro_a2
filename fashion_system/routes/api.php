@@ -35,8 +35,6 @@ use App\Http\Controllers\Admin\Position;
 // });
 Route::middleware(['checkURL'])->group(function () {
     Route::middleware('checkDB')->group(function () {
-        Route::middleware('checkRole')->group(function () {
-
             Route::group([
                 // 'middleware' => 'api',
                 'middleware' => ['api', 'auth:api'],
@@ -49,8 +47,7 @@ Route::middleware(['checkURL'])->group(function () {
                 Route::post('/decodeJwt', [AuthnController::class, 'decode']);
                 Route::delete('/logout', [AuthnController::class, 'logout']);
                 Route::put('/reset-password', [AuthnController::class, 'resetPassword']);
-                //test
-                Route::post('/test-login', [AuthnController::class, 'test']);
+
 
                 //staff
                 Route::get('/staff/{id}', [StaffController::class, 'getInFoStaff']);
@@ -60,6 +57,12 @@ Route::middleware(['checkURL'])->group(function () {
                 Route::put('/edit-carefully', [StaffController::class, 'editCarefully']);
                 Route::get('/check-staff-code/{code}', [StaffController::class, 'checkStaffCode'])->withoutMiddleware(['auth:api', 'checkRole']);;
 
+
+                //role Admin
+                Route::group([
+                    // 'middleware' => 'api',
+                    'middleware' => ['checkRole:ADMIN'],
+                ], function () {
                 //staff Account
                 Route::get('/get-staff-accounts', [StaffAccountController::class, 'getByPage']);
                 Route::put('/lock-account/{id}', [StaffAccountController::class, 'lockAccount']);
@@ -67,6 +70,7 @@ Route::middleware(['checkURL'])->group(function () {
                 Route::delete('/indirectly-disconnect/{id}', [StaffAccountController::class, 'indirectlyDisconnect']);
                 Route::post('/edit-request/{id}', [StaffAccountController::class, 'editRequest']);
                 Route::put('/active-staff/{id}', [StaffAccountController::class, 'activeStaffAccount']);
+                });
 
                 //branch
                 Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
@@ -105,7 +109,6 @@ Route::middleware(['checkURL'])->group(function () {
 
                 //position
                 Route::get('/positions', [Position::class, 'getRecords']);
-            });
         });
     });
 });

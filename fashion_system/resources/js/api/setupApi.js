@@ -84,7 +84,7 @@ async function checkHttpResponse(codeHttp, response) {
                 break;
             }
             if (response.data.results == "Unauthorized" && response.data.status == 'error' && response.data.result_code == 401) {
-                await logout.logoutAdmin;
+                await logout.methods.logoutAdmin();
                 // router.push({ path: "/auth/login" });
                 break;
             }
@@ -92,7 +92,12 @@ async function checkHttpResponse(codeHttp, response) {
         case 402:
             break;
         case 403:
-            router.push({ path: "/error403" });
+            if (response.data.results == 'role not have access' && response.data.status == 'error') {
+                await logout.methods.logoutAdmin();
+                router.push({ name: "homeClient" });
+            } else {
+                router.push({ path: "/error403" });
+            }
             break;
         case 404:
             router.push({ path: "/error404" });
