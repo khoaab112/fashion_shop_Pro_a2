@@ -35,74 +35,77 @@ use App\Http\Controllers\Admin\Position;
 // });
 Route::middleware(['checkURL'])->group(function () {
     Route::middleware('checkDB')->group(function () {
-        Route::group([
-            // 'middleware' => 'api',
-            'middleware' => ['api', 'auth:api'],
-            'prefix' => 'auth'
-        ], function () {
-            //authentication administration
-            Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api']);
-            Route::post('/register', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api']);
-            Route::put('/change-password', [AuthnController::class, 'changePassword']);
-            Route::post('/decodeJwt', [AuthnController::class, 'decode']);
-            Route::delete('/logout', [AuthnController::class, 'logout']);
-            Route::put('/reset-password', [AuthnController::class, 'resetPassword']);
-            //test
-            Route::post('/test-login', [AuthnController::class, 'test']);
+        Route::middleware('checkRole')->group(function () {
 
-            //staff
-            Route::get('/staff/{id}', [StaffController::class, 'getInFoStaff']);
-            Route::put('/update-info-staff', [StaffController::class, 'updateInfo']);
-            Route::post('/avatar-staff/{id}', [StaffController::class, 'changeAvatarStaffById']);
-            Route::post('/background-staff/{id}', [StaffController::class, 'changeBackgroundStaffById']);
-            Route::put('/edit-carefully', [StaffController::class, 'editCarefully']);
-            Route::get('/check-staff-code/{code}', [StaffController::class, 'checkStaffCode'])->withoutMiddleware(['auth:api']);;
+            Route::group([
+                // 'middleware' => 'api',
+                'middleware' => ['api', 'auth:api'],
+                'prefix' => 'auth'
+            ], function () {
+                //authentication administration
+                Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api', 'checkRole']);
+                Route::post('/register', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api', 'checkRole']);
+                Route::put('/change-password', [AuthnController::class, 'changePassword']);
+                Route::post('/decodeJwt', [AuthnController::class, 'decode']);
+                Route::delete('/logout', [AuthnController::class, 'logout']);
+                Route::put('/reset-password', [AuthnController::class, 'resetPassword']);
+                //test
+                Route::post('/test-login', [AuthnController::class, 'test']);
 
-            //staff Account
-            Route::get('/get-staff-accounts', [StaffAccountController::class, 'getByPage']);
-            Route::put('/lock-account/{id}', [StaffAccountController::class, 'lockAccount']);
-            Route::get('/staff-detail/{id}', [StaffAccountController::class, 'staffDetail']);
-            Route::delete('/indirectly-disconnect/{id}', [StaffAccountController::class, 'indirectlyDisconnect']);
-            Route::post('/edit-request/{id}', [StaffAccountController::class, 'editRequest']);
-            Route::put('/active-staff/{id}', [StaffAccountController::class, 'activeStaffAccount']);
+                //staff
+                Route::get('/staff/{id}', [StaffController::class, 'getInFoStaff']);
+                Route::put('/update-info-staff', [StaffController::class, 'updateInfo']);
+                Route::post('/avatar-staff/{id}', [StaffController::class, 'changeAvatarStaffById']);
+                Route::post('/background-staff/{id}', [StaffController::class, 'changeBackgroundStaffById']);
+                Route::put('/edit-carefully', [StaffController::class, 'editCarefully']);
+                Route::get('/check-staff-code/{code}', [StaffController::class, 'checkStaffCode'])->withoutMiddleware(['auth:api', 'checkRole']);;
 
-            //branch
-            Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
-            Route::get('/branches', [BranchController::class, 'getListBranches']);
+                //staff Account
+                Route::get('/get-staff-accounts', [StaffAccountController::class, 'getByPage']);
+                Route::put('/lock-account/{id}', [StaffAccountController::class, 'lockAccount']);
+                Route::get('/staff-detail/{id}', [StaffAccountController::class, 'staffDetail']);
+                Route::delete('/indirectly-disconnect/{id}', [StaffAccountController::class, 'indirectlyDisconnect']);
+                Route::post('/edit-request/{id}', [StaffAccountController::class, 'editRequest']);
+                Route::put('/active-staff/{id}', [StaffAccountController::class, 'activeStaffAccount']);
 
-            //type-report
-            Route::post('/type-reports', [TypeReportController::class, 'createsTypeReport']);
-            Route::get('/type-reports', [TypeReportController::class, 'getRecords']);
-            Route::put('/change-type-report', [TypeReportController::class, 'changeStatus']);
-            Route::delete('/delete-type-report/{id}', [TypeReportController::class, 'deleteRecord']);
+                //branch
+                Route::get('/branch/{id}', [BranchController::class, 'getBranchById']);
+                Route::get('/branches', [BranchController::class, 'getListBranches']);
 
-            //report_source
-            Route::post('/report-source', [ReportSourceController::class, 'createsReportSource']);
-            Route::get('/report-source', [ReportSourceController::class, 'getRecords']);
-            Route::put('/change-report-source', [ReportSourceController::class, 'changeStatus']);
-            Route::delete('/delete-report-source/{id}', [ReportSourceController::class, 'deleteRecord']);
+                //type-report
+                Route::post('/type-reports', [TypeReportController::class, 'createsTypeReport']);
+                Route::get('/type-reports', [TypeReportController::class, 'getRecords']);
+                Route::put('/change-type-report', [TypeReportController::class, 'changeStatus']);
+                Route::delete('/delete-type-report/{id}', [TypeReportController::class, 'deleteRecord']);
 
-            //report
-            Route::post('/report', [ReportsController::class, 'addTicketReport']);
+                //report_source
+                Route::post('/report-source', [ReportSourceController::class, 'createsReportSource']);
+                Route::get('/report-source', [ReportSourceController::class, 'getRecords']);
+                Route::put('/change-report-source', [ReportSourceController::class, 'changeStatus']);
+                Route::delete('/delete-report-source/{id}', [ReportSourceController::class, 'deleteRecord']);
 
-            //Broadcasting
-            Route::post('/follow-account-admin', [ManagerController::class, 'followAccountAdmin']);
-            Route::delete('/delete-account-admin', [ManagerController::class, 'statusChange']);
-            Route::delete('/reset-list-account', [ManagerController::class, 'resetCache']);
-            Route::get('/get', [ManagerController::class, 'get']);
+                //report
+                Route::post('/report', [ReportsController::class, 'addTicketReport']);
 
-            //notifications administration
-            Route::get('/get-notifications', [NotificationController::class, 'getNotificationByIdStaff']);
-            Route::get('/check-notifications/{id}', [NotificationController::class, 'CheckForUnreadNotifications']);
-            Route::post('/test-no/{id}', [NotificationController::class, 'test']);
-            Route::put('/change-watched-notification/{id}', [NotificationController::class, 'changeWatchedStatus']);
-            Route::put('/change-watched-notification', [NotificationController::class, 'changeWatchedStatusByID']);
+                //Broadcasting
+                Route::post('/follow-account-admin', [ManagerController::class, 'followAccountAdmin']);
+                Route::delete('/delete-account-admin', [ManagerController::class, 'statusChange']);
+                Route::delete('/reset-list-account', [ManagerController::class, 'resetCache']);
+                Route::get('/get', [ManagerController::class, 'get']);
 
-            //administration
-            Route::get('/administrations', [Administration::class, 'getRecords']);
+                //notifications administration
+                Route::get('/get-notifications', [NotificationController::class, 'getNotificationByIdStaff']);
+                Route::get('/check-notifications/{id}', [NotificationController::class, 'CheckForUnreadNotifications']);
+                Route::post('/test-no/{id}', [NotificationController::class, 'test']);
+                Route::put('/change-watched-notification/{id}', [NotificationController::class, 'changeWatchedStatus']);
+                Route::put('/change-watched-notification', [NotificationController::class, 'changeWatchedStatusByID']);
 
-            //position
-            Route::get('/positions', [Position::class, 'getRecords']);
+                //administration
+                Route::get('/administrations', [Administration::class, 'getRecords']);
+
+                //position
+                Route::get('/positions', [Position::class, 'getRecords']);
+            });
         });
     });
 });

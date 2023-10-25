@@ -108,11 +108,13 @@ class AuthnController extends Controller
                 $user = Auth::user();
                 if (!$user['active']) return CodeHttpHelpers::returnJson(401, false, 'Tài khoản chưa được xác thực hãy quay lại sau khi quá trình xác thực thành công, thông tin xác thực sẽ được gửi về mail mà bạn đăng ký', 200);
                 if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
+                $role = $this->searchRole($user['administration_id']);
                 $addInfoUser = [
                     'user_name' => $request->user_name,
                     'rank' => 'defined',
                     'reservation' => true,
-                    'staff_id' => $user['staff_id']
+                    'staff_id' => $user['staff_id'],
+                    'role' => $role->name,
                 ];
                 $token = Auth::claims($addInfoUser)->attempt(['user_name' => $request->user_name, 'password' => $request->password]);
                 // if (!$user['status']) return CodeHttpHelpers::returnJson(403, false, 'account has been locked', 403);
@@ -121,6 +123,7 @@ class AuthnController extends Controller
                     'rank' => 'pending',
                     'id' => $user['id'],
                     'staff_id' => $user['staff_id'],
+                    'role' => $role->name,
                 ];
                 $refreshToken = $this->createJWTRefreshToken($addInfoUserRefreshToken, $request->remember_token);
                 $data = [
@@ -170,7 +173,7 @@ class AuthnController extends Controller
         }
     }
     //giải mã jwt login
-    public function decodeJwtToken($token)
+    public static function decodeJwtToken($token)
     {
         $key = new Key(env('JWT_SECRET'), 'HS256');
         try {
@@ -336,11 +339,14 @@ class AuthnController extends Controller
                     'http' => 403
                 ];
             //cấp lại access token
+            $role = AuthnController::searchRole($existRefreshToken['administration_id']);
+
             $addInfoUser = [
                 'user_name' => $existRefreshToken['user_name'],
                 'rank' => 'defined',
                 'reservation' => true,
-                'staff_id' => $existRefreshToken['staff_id']
+                'staff_id' => $existRefreshToken['staff_id'],
+                'role' => $role->name
             ];
             $reissueAccessToken = Auth::claims($addInfoUser)->fromUser($existRefreshToken);
             return [
@@ -452,5 +458,12 @@ class AuthnController extends Controller
             return;
         }
         return;
+    }
+    public static function searchRole($id)
+    {
+        $role = DB::table('administration')->select('name')->where('id', $id)->where('status', true)->first();
+        if (!$role)
+            return CodeHttpHelpers::returnJson(403, false, 'account has no permissions', 403);
+        return $role;
     }
 }
