@@ -17,6 +17,9 @@
             <span class="symbol-input100">
               <font-awesome-icon icon="fa-solid fa-hashtag" />
             </span>
+            <button class="check-info" @click.prevent="searchCode(dataFrom.code_staff)">
+              <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+            </button>
           </div>
           <div class="wrap-input100 validate-input">
             <input
@@ -120,11 +123,8 @@
           </span>
         </form>
         <div class="container-login100-form-btn">
-          <button class="login100-form-btn send" v-if="isValidData">
+          <button class="login100-form-btn send" @click="checkFrom()">
             Gửi thông tin đăng ký
-          </button>
-          <button class="login100-form-btn" v-else @click="checkFrom()">
-            Kiểm tra thông tin
           </button>
         </div>
 
@@ -167,7 +167,6 @@ export default {
       isShowPasswordConfirm: false,
       typePassword: "password",
       typePasswordConfirm: "password",
-      isValidData: false,
       dataFrom: {
         code_staff: null,
         name: null,
@@ -244,7 +243,7 @@ export default {
           "Số điện thoại đã có trên hệ thống, tối đã chuyển về số điện thoại hệ thống"
         );
       }
-      const { code_staff, name, email, staff_id, phone_number } = this.systemData;
+      let { code_staff, name, email, staff_id, phone_number } = this.systemData;
       this.dataFrom = Object.assign({}, this.dataFrom, {
         code_staff,
         name,
@@ -254,8 +253,32 @@ export default {
       });
       if (this.listErrors.length > 0) return;
       this.isValidData = true;
+      // gửi
     },
-    checkCode(staffCode) {
+    async searchCode(code) {
+      var result = await this.checkCode(code);
+      console.log(result);
+      if (result) {
+        let { code_staff, name, email, staff_id, phone_number } = this.systemData;
+        this.dataFrom = Object.assign({}, this.dataFrom, {
+          code_staff,
+          name,
+          email,
+          staff_id,
+          phone_number,
+        });
+      }
+      return;
+    },
+    async checkCode(staffCode) {
+      if (!staffCode) {
+        ElNotification({
+          title: "Warning",
+          message: "Hãy nhập mã",
+          type: "warning",
+        });
+        return false;
+      }
       let result = apiStaff
         .checkStaffCode(staffCode)
         .then((res) => {
@@ -286,7 +309,17 @@ export default {
 </script>
 
 <style scoped>
-/*---------------------------------------------*/
+/*--------------------------------------------*/
+
+button.check-info {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 15px;
+}
+button.check-info:active {
+  color: red;
+}
 .send {
   background: #3872f7 !important;
 }
@@ -462,6 +495,7 @@ iframe {
   /* padding: 177px 130px 33px 95px; */
   padding: 50px 120px 0px 120px;
   width: 40rem;
+  position: relative;
 }
 
 /*------------------------------------------------------------------
