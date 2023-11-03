@@ -1,3 +1,4 @@
+import checkPermission from '@/js/auth/middleware.js'
 const admin = [{
     path: '/admin',
     name: 'admin',
@@ -40,6 +41,8 @@ const admin = [{
         {
             path: "admin-manage",
             name: "adminManage",
+            meta: { roles: ['ADMIN', 'SUPERADMIN'] },
+            beforeEnter: checkPermission,
             exact: true,
             group: 'true',
             children: [{
@@ -61,6 +64,8 @@ const admin = [{
         {
             path: "admin-feedback",
             name: "adminFeedback",
+            meta: { roles: ['FEEDBACK'] },
+            beforeEnter: checkPermission,
             group: true,
             children: [{
                     path: "feedback-app",

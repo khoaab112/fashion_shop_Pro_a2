@@ -22,8 +22,6 @@ class CheckRole
         $bearerToken = $request->bearerToken();
         if (!$bearerToken)  return CodeHttpHelpers::returnJson(403, false, 'not have access', 403);
         $decode = AuthnController::decodeJwtToken($bearerToken);
-        // $resultQuery = DB::table('administration')->where('status', true)->get()->toArray();
-        // $arrRole = array_column($resultQuery, 'name');
         $arrRole = [
             'SUPERADMIN',
             'ADMIN',

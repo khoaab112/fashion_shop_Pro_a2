@@ -17,7 +17,7 @@ export default [{
         title: 'Admin hệ thống',
         component: '',
         icon: 'fa-solid fa-list-check',
-        role: '',
+        role: ['ADMIN'],
         children: [{
                 path: '/account-management',
                 code: 'account-management',
@@ -194,7 +194,7 @@ export default [{
         title: 'Phản hồi',
         component: '',
         icon: 'fa-solid fa-lines-leaning',
-        role: '',
+        role: ['FEEDBACK'],
         children: [{
                 path: '/denounce',
                 name: 'denounce',
