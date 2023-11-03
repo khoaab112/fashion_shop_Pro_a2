@@ -14,6 +14,9 @@ export default {
     },
     resetPassword(data) {
         return index.put(`/reset-password`, (data));
-    }
+    },
+    register(data, creator) {
+        return index.post(`/register/${creator}`, (data));
 
+    }
 }

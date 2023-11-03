@@ -37,7 +37,7 @@ Route::middleware(['checkURL'])->group(function () {
             ], function () {
                 //authentication administration
                 Route::post('/login', [AuthnController::class, 'login'])->withoutMiddleware(['auth:api', 'checkRole']);
-                Route::post('/register', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api', 'checkRole']);
+                Route::post('/register/{creator}', [AuthnController::class, 'register'])->withoutMiddleware(['auth:api', 'checkRole']);
                 Route::put('/change-password', [AuthnController::class, 'changePassword']);
                 Route::post('/decodeJwt', [AuthnController::class, 'decode']);
                 Route::delete('/logout', [AuthnController::class, 'logout']);

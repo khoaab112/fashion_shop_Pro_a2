@@ -153,8 +153,10 @@
 
 <script>
 import apiStaff from "@/js/api/admin/apiStaff.js";
-import { ElNotification } from "element-plus";
+import apiAdmin from "@/js/api/admin/apiAdmin.js";
+import { ElNotification, ElMessageBox } from "element-plus";
 import { ElMessage } from "element-plus";
+import router from "@/js/routerVue/index.js";
 
 export default {
   name: "registerAdmin",
@@ -198,15 +200,15 @@ export default {
       switch (code) {
         case "password":
           this.isShowPassword = !this.isShowPassword;
-          this.typePassword = this.isShowPassword ? "password" : "text";
+          this.typePassword = this.isShowPassword ? "text" : "password";
           break;
         case "confirm":
           this.isShowPasswordConfirm = !this.isShowPasswordConfirm;
-          this.typePasswordConfirm = this.isShowPasswordConfirm ? "password" : "text";
+          this.typePasswordConfirm = this.isShowPasswordConfirm ? "text" : "password";
           break;
         default:
           this.isShowPassword = !this.isShowPassword;
-          this.typePassword = this.isShowPassword ? "password" : "text";
+          this.typePassword = this.isShowPassword ? "text" : "password";
       }
     },
     async checkFrom() {
@@ -229,7 +231,7 @@ export default {
         this.listErrors.push("Mật khẩu đang bị bỏ trống");
       } else if (!this.dataFrom.passwordConfirm) {
         this.listErrors.push("Mật khẩu xác thực đang bị bỏ trống");
-      } else if (this.dataFrom.email != this.systemData.email) {
+      } else if (this.dataFrom.password != this.dataFrom.passwordConfirm) {
         this.listErrors.push("Mật khẩu đang nhập không hợp lệ");
       }
       //   if (this.listErrors.length > 0) return;
@@ -243,7 +245,9 @@ export default {
           "Số điện thoại đã có trên hệ thống, tối đã chuyển về số điện thoại hệ thống"
         );
       }
-      let { code_staff, name, email, staff_id, phone_number } = this.systemData;
+      console.log(this.systemData);
+      let { code_staff, name, email, phone_number } = this.systemData;
+      let staff_id = this.systemData.id;
       this.dataFrom = Object.assign({}, this.dataFrom, {
         code_staff,
         name,
@@ -252,12 +256,15 @@ export default {
         phone_number,
       });
       if (this.listErrors.length > 0) return;
+      if (this.systemData.active) {
+        return ElMessage.error("Tôi đã thấy tài khoản của bạn đã được kích hoạt");
+      }
       this.isValidData = true;
       // gửi
+      this.sendRequire();
     },
     async searchCode(code) {
       var result = await this.checkCode(code);
-      console.log(result);
       if (result) {
         let { code_staff, name, email, staff_id, phone_number } = this.systemData;
         this.dataFrom = Object.assign({}, this.dataFrom, {
@@ -285,11 +292,14 @@ export default {
           var dataResponse = res.data;
           if (dataResponse.result_code == 200) {
             this.systemData = dataResponse.results;
-            ElNotification({
-              title: "Success",
-              message: "Tìm thấy thông tin nhân viên trên hệ thống",
-              type: "success",
-            });
+            if (this.systemData.active) {
+              ElMessage.error("Tôi đã thấy tài khoản của bạn đã được kích hoạt");
+            } else
+              ElNotification({
+                title: "Success",
+                message: "Tìm thấy thông tin nhân viên trên hệ thống",
+                type: "success",
+              });
             return true;
           } else throw new Error(dataResponse.results);
         })
@@ -303,8 +313,45 @@ export default {
         });
       return result;
     },
+    sendRequire() {
+      this.listErrors = [];
+      this.dataFrom.user_name = this.dataFrom.phone_number;
+      let creator = "staff";
+      apiAdmin
+        .register(this.dataFrom, creator)
+        .then((res) => {
+          var dataResponse = res.data;
+          if (dataResponse.result_code == 200) {
+            ElMessageBox.confirm(
+              "Bạn đã đăng kí thành công, một mail sẽ gửi đến mail của bạn nếu xác thực thành công",
+              "Thông báo",
+              {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
+                type: "success",
+              }
+            );
+            router.push({ name: "login" });
+          } else {
+            for (const key in dataResponse.results) {
+              if (dataResponse.results.hasOwnProperty(key)) {
+                const errorMessages = dataResponse.results[key];
+                errorMessages.forEach((errorMessage) => {
+                  this.listErrors.push(errorMessage);
+                });
+              }
+            }
+          }
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "Error",
+            message: error,
+            type: "error",
+          });
+        });
+    },
   },
-  sendRequire() {},
 };
 </script>
 
@@ -317,9 +364,11 @@ button.check-info {
   bottom: 0;
   right: 15px;
 }
+
 button.check-info:active {
   color: red;
 }
+
 .send {
   background: #3872f7 !important;
 }

@@ -3,26 +3,21 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use App\Repositories\StaffAccount\StaffAccountRepositoryInterface;
-use App\Repositories\UserStaff\UserStaffRepository;
 use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
 use Carbon\Carbon;
-use Faker\Core\Number;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use \Firebase\JWT\Algorithm\HS256;
 use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Type\Integer;
 use App\Models\StaffAccount;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;
 use App\Events\AdminConnected;
+use App\Http\Controllers\Admin\NotificationController;
+
 
 
 class AuthnController extends Controller
@@ -40,7 +35,7 @@ class AuthnController extends Controller
     protected   $attributeNames = [
         'staff_id' => 'Mã nhân viên',
         'administration_id' => 'Mã quyền administration',
-        'user_name' => 'tên người sử dụng',
+        'user_name' => 'Tài khoản',
         'password' => 'Mật khẩu',
     ];
     public function __construct(StaffAccountRepositoryInterface $staffAccountRepository)
@@ -49,25 +44,45 @@ class AuthnController extends Controller
         // $this->middleware('auth:api');
         $this->query = $staffAccountRepository;
     }
-    public function register(Request $request)
+    public function register(Request $request, $creator)
     {
         try {
 
             $validator = validationHelpers::validation($request->all(), $this->validationRules, $this->attributeNames);
             if ($validator->fails()) {
                 $errors = $validator->errors();
-                return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+                return CodeHttpHelpers::returnJson(400, false, $errors, 200);
             }
             $search = $this->query->searchUserName($request->post('user_name'));
             if ($search)   return   CodeHttpHelpers::returnJson(200, false, 'tài khoản đã tồn tại', 400);
+            $active = true;
+            if ($creator == 'staff') {
+                $active = false;
+            }
             $staffAccount = [
                 'staff_id' => $request->post('staff_id'),
                 'administration_id' => $request->post('administration_id'),
                 'user_name' => $request->post('user_name'),
                 'password' => bcrypt($request->post('password')),
+                'active' => $active,
+                'status' => $active,
             ];
             $result = $this->query->create($staffAccount);
-            return CodeHttpHelpers::returnJson(200, true, $result, 200);
+            if ($creator == 'staff') {
+                $arrId=[];
+                $resultsSearch = $this->query->search('administration_id', '1');
+                foreach ($resultsSearch as $value) {
+                    array_push($arrId, $value->staff_id);
+                }
+                $dataNotification = [
+                    'staff_id' => $arrId,
+                    'content' => "Có tài khoản đăng ký, hãy xác thực",
+                    'code' => 'EVENT'
+                ];
+                $notificationController = app(NotificationController::class);
+                $notificationController->createNotificationByIdStaff($dataNotification);
+            }
+            // return CodeHttpHelpers::returnJson(200, true, $result, 200);
         } catch (\Exception $error) {
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }

@@ -114,16 +114,28 @@ class NotificationController extends Controller
          5|Phản hồi        |RESPONSE|6c757d|Phản hồi từ những ý kiễn phản hồi cho khách hàng
          */
         $code = $data['code'];
-        $resultCode = DB::table('type_notification')->select('id')->where('code', $code)->where('status',true)->first();
+        $resultCode = DB::table('type_notification')->select('id')->where('code', $code)->where('status', true)->first();
         try {
-            $notification = [
-                'type_notification' =>$resultCode->id,
-                'staff_id' => $data['staff_id'],
-                'content' => $data['content']
-            ];
-            $result = $this->notification->create($notification);
-            $this->sendNotificationNew($result->id);
-            return true;
+            if (is_array($data['staff_id'])) {
+                $notifications = [];
+                foreach ($data['staff_id'] as $value) {
+                    array_push($notifications, [
+                        'type_notification' => $resultCode->id,
+                        'staff_id' => $value,
+                        'content' => $data['content']
+                    ]);
+                }
+                $result = $this->notification->creates($notifications);
+            } else {
+                $notification = [
+                    'type_notification' => $resultCode->id,
+                    'staff_id' => $data['staff_id'],
+                    'content' => $data['content']
+                ];
+                $result = $this->notification->create($notification);
+                $this->sendNotificationNew($result->id);
+                return true;
+            }
         } catch (\Exception $e) {
             return false;
         }
