@@ -17,7 +17,7 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$role): Response
     {
         $bearerToken = $request->bearerToken();
         if (!$bearerToken)  return CodeHttpHelpers::returnJson(403, false, 'not have access', 403);
@@ -39,7 +39,8 @@ class CheckRole
             'FEEDBACK'
         ];
         $isExits = in_array($decode['value']->role, $arrRole);
-        if ($decode['value']->role == $role &&  $isExits) return $next($request);
+        $isLicensed = in_array($decode['value']->role, $role);
+        if ($isLicensed &&  $isExits) return $next($request);
         if ($decode['value']->role == 'SUPERADMIN') return $next($request);
         return CodeHttpHelpers::returnJson(403, false, 'role not have access', 403);
     }

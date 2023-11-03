@@ -93,7 +93,7 @@ async function checkHttpResponse(codeHttp, response) {
             break;
         case 403:
             if (response.data.results == 'role not have access' && response.data.status == 'error') {
-                await logout.methods.logoutAdmin();
+                // await logout.methods.logoutAdmin();
                 router.push({ name: "homeClient" });
             } else {
                 router.push({ path: "/error403" });

@@ -29,14 +29,9 @@ use App\Http\Controllers\Admin\Position;
 |
 */
 
-// Route::get('/test', [TypeTicketController::class, 'Text']);
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 Route::middleware(['checkURL'])->group(function () {
     Route::middleware('checkDB')->group(function () {
             Route::group([
-                // 'middleware' => 'api',
                 'middleware' => ['api', 'auth:api'],
                 'prefix' => 'auth'
             ], function () {
@@ -61,7 +56,7 @@ Route::middleware(['checkURL'])->group(function () {
                 //role Admin
                 Route::group([
                     // 'middleware' => 'api',
-                    'middleware' => ['checkRole:ADMIN'],
+                    'middleware' => ['checkRole:ADMIN,EDIT'],
                 ], function () {
                 //staff Account
                 Route::get('/get-staff-accounts', [StaffAccountController::class, 'getByPage']);
