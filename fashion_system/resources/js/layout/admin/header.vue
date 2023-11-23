@@ -15,6 +15,7 @@
                     value.path == '/admin',
                 }"
                 :to="{ path: value.path }"
+                v-show="value.meta.breadcrumb"
                 >{{ value.meta.breadcrumb }}</el-breadcrumb-item
               >
             </div>
