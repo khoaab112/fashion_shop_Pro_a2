@@ -104,6 +104,7 @@ Route::middleware(['checkURL'])->group(function () {
 
                 //position
                 Route::get('/positions', [Position::class, 'getRecords']);
+                Route::get('/test', [Position::class, 'test'])->withoutMiddleware(['auth:api', 'checkRole']);;
         });
     });
 });

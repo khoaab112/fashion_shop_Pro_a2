@@ -8,6 +8,7 @@ use App\Helpers\CodeHttpHelpers;
 use App\Helpers\validationHelpers;
 use App\Repositories\Position\PositionRepository;
 
+use Revolution\Google\Sheets\Facades\Sheets;
 
 class Position extends Controller
 {
@@ -48,5 +49,21 @@ class Position extends Controller
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
+    }
+    public function test()
+    {
+        $sheet_id = '1o0Zp3M-XaMt8H2XIYxUAsfFmnmBOs4jAzYCGgAazkJs';
+        $sheetName = 'demo';
+
+            // get data
+        $data = Sheets::spreadsheet($sheet_id)->sheet($sheetName)->all();
+        dd($data);
+        // ghi dữ liệu
+
+        // $arr = [
+        //     ['1', '2', 'kas', '32', '123', '123kha']
+        // ];
+        // $data = Sheets::spreadsheet($sheet_id)->sheet($sheetName)->update('A1', $arr);
+        // dd($data);
     }
 }
