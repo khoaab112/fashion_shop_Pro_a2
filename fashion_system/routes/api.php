@@ -15,6 +15,9 @@ use App\Http\Controllers\Admin\StaffAccountController;
 use App\Http\Controllers\Admin\Administration;
 use App\Http\Controllers\Admin\Position;
 
+
+use App\Http\Controllers\DropBoxController;
+
 //test controller
 
 
@@ -42,6 +45,8 @@ Route::middleware(['checkURL'])->group(function () {
                 Route::post('/decodeJwt', [AuthnController::class, 'decode']);
                 Route::delete('/logout', [AuthnController::class, 'logout']);
                 Route::put('/reset-password', [AuthnController::class, 'resetPassword']);
+
+                Route::get('/test-drop', [DropBoxController::class, 'indexAction'])->withoutMiddleware(['auth:api', 'checkRole']);
 
 
                 //staff
