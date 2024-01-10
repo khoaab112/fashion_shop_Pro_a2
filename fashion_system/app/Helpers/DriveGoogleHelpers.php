@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Storage;
 class DriveGoogleHelpers
 {
 
-    public function saveFile($file, $path, $fileName)
+    public static function saveFile($file, $path, $fileName)
     {
+        // $fileName = str_replace("\0", '', $fileName);
         try {
             Storage::disk('google')->putFileAs($path, $file, $fileName);
             $meta = Storage::disk("google")
@@ -18,13 +19,15 @@ class DriveGoogleHelpers
                 ->getMetadata($fileName);
             return $meta['extraMetadata']['id'];
         } catch (\Exception $e) {
+            dd($e);
             return false;
         }
     }
-    public function getFile($fileName)
+    public function getFile($fileName,$path)
     {
+        $fullPath =$path."/".$fileName;
         try {
-            $data = Gdrive::get('path/filename.png');
+            $data = Gdrive::get($fullPath);
             return $data->file;
         } catch (\Exception $e) {
             return false;
@@ -35,10 +38,10 @@ class DriveGoogleHelpers
     //     $data = Gdrive::get('path/filename.png');
 
     // }
-    public function deleteFile($fileName)
+    public static function deleteFile($fullPath)
     {
         try {
-            Gdrive::delete('path/filename.png');
+            Gdrive::delete($fullPath);
             return true;
         } catch (\Exception $e) {
             return false;
@@ -47,7 +50,7 @@ class DriveGoogleHelpers
     public function getAllFolder($path)
     {
         try{
-          return  Gdrive::all('foldername');
+          return  Gdrive::all($path);
         } catch (\Exception $e) {
             return false;
         }
