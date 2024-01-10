@@ -5,7 +5,7 @@
         <h1>KHÔNG ĐƯỢC CẤP QUYỀN</h1>
       </div>
       <div class="button-home-401">
-        <router-link :to="{ name: 'home' }" class="style-tag-a">
+        <router-link :to="{ name: 'home_default' }" class="style-tag-a">
           <button>Home</button></router-link
         >
       </div>

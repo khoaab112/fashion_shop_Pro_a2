@@ -1,9 +1,9 @@
 import checkPermission from '@/js/auth/middleware.js'
 const home = [{
     path: '/',
-    name: 'home',
+    name: 'home_default',
     components: {
-        home: () =>
+        auth: () =>
             import ('../viewsVue/admin/authentication/login.vue'),
     },
 }];

@@ -26,7 +26,7 @@
       </div>
       <div class="text-center mb-4">
         <button class="btn-home">
-          <router-link name="home" class="link_404" :to="{ name: 'home' }"
+          <router-link name="home" class="link_404" :to="{ name: 'home_default' }"
             >HOME</router-link
           >
         </button>

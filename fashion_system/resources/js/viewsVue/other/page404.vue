@@ -10,7 +10,7 @@
       <img id="planet" :src="getImage(imgPlanet)" />
       <a href="#"
         ><button class="denied__link">
-          <router-link class="link_404" :to="{ name: 'home' }">HOME</router-link>
+          <router-link class="link_404" :to="{ name: 'home_default' }">HOME</router-link>
         </button></a
       >
     </div>

@@ -5,7 +5,7 @@
         <h1>TÀI KHOẢN ĐÃ BỊ KHÓA</h1>
       </div>
       <div class="button-home-403">
-        <router-link :to="{ name: 'home' }" class="style-tag-a">
+        <router-link :to="{ name: 'home_default' }" class="style-tag-a">
           <button>Home</button></router-link
         >
       </div>
