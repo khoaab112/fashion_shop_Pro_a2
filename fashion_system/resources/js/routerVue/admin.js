@@ -1,4 +1,12 @@
 import checkPermission from '@/js/auth/middleware.js'
+const home = [{
+    path: '/',
+    name: 'home',
+    components: {
+        home: () =>
+            import ('../viewsVue/admin/authentication/login.vue'),
+    },
+}];
 const admin = [{
     path: '/admin',
     name: 'admin',
@@ -87,4 +95,4 @@ const admin = [{
 }]
 
 
-export default { admin };
+export default { admin, home };

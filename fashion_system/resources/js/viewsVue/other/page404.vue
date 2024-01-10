@@ -8,30 +8,29 @@
       <img class="astronaut" :src="getImage(imgAstronaut)" />
       <img class="astronaut clone-astronaut" :src="getImage(imgAstronaut)" />
       <img id="planet" :src="getImage(imgPlanet)" />
-      <a href="#"><button class="denied__link"><router-link class="link_404" :to=pathHome>HOME</router-link></button></a>
+      <a href="#"
+        ><button class="denied__link">
+          <router-link class="link_404" :to="{ name: 'home' }">HOME</router-link>
+        </button></a
+      >
     </div>
   </div>
 </template>
-    
+
 <script>
-import astronaut from '@/public/images/svg/page_404/astronaut.svg';
-import planet from '@/public/images/svg/page_404/planet.svg';
+import astronaut from "@/public/images/svg/page_404/astronaut.svg";
+import planet from "@/public/images/svg/page_404/planet.svg";
 import { loadFull } from "tsparticles";
-import paths from '@/js/mixins/getAddressFromRouter.js';
 
 export default {
-  name: 'page404',
-  components: {
-  },
-  setup() {
-  },
-  directives: {
-  },
+  name: "page404",
+  components: {},
+  setup() {},
+  directives: {},
   data() {
     return {
       imgAstronaut: astronaut,
       imgPlanet: planet,
-      pathHome: paths.homeClient,      
     };
   },
   created() {
@@ -46,34 +45,34 @@ export default {
             value: 160,
             density: {
               enable: true,
-              area: 800
-            }
+              area: 800,
+            },
           },
           color: {
-            value: "#ffffff"
+            value: "#ffffff",
           },
           shape: {
-            type: "circle"
+            type: "circle",
           },
           opacity: {
             value: 1,
             random: {
               enable: true,
-              minimumValue: 0.1
+              minimumValue: 0.1,
             },
             animation: {
               enable: true,
               speed: 1,
               minimumValue: 0,
-              sync: false
-            }
+              sync: false,
+            },
           },
           size: {
             value: 3,
             random: {
               enable: true,
-              minimumValue: 1
-            }
+              minimumValue: 1,
+            },
           },
           move: {
             enable: true,
@@ -82,17 +81,17 @@ export default {
             random: true,
             straight: false,
             outModes: {
-              default: "out"
+              default: "out",
             },
-          }
+          },
         },
         interactivity: {
           detectsOn: "canvas",
           events: {
-            resize: false
-          }
+            resize: false,
+          },
         },
-        detectRetina: true
+        detectRetina: true,
       };
       loadFull(tsParticles);
       tsParticles.load("tsparticles", particles);
@@ -100,23 +99,18 @@ export default {
       console.log(error);
     }
   },
-  computed() {
-  },
-  updated() {
-
-  },
-  destroyed() {
-
-  },
+  computed() {},
+  updated() {},
+  destroyed() {},
   methods: {
     getImage(path) {
-      return new URL(path, import.meta.url).href
+      return new URL(path, import.meta.url).href;
     },
   },
 };
 </script>
-    
-<style >
+
+<style>
 .particle-error,
 .permission_denied,
 #tsparticles {
@@ -295,4 +289,5 @@ a.link_404 {
   100% {
     transform: translateY(-3px);
   }
-}</style>
+}
+</style>

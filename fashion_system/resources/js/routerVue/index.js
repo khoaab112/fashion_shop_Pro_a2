@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import admin from "./admin";
-import customer from "./customer";
 import auth from "./auth";
 import other from "./other";
 import jwt from '@/js/auth/jwt.js';
@@ -9,9 +8,8 @@ import jwt from '@/js/auth/jwt.js';
 const routes = [
     ...other.error,
     ...other.error404,
-    ...customer.home,
-    ...customer.test,
     ...admin.admin,
+    ...admin.home,
     ...auth.authAdmin,
     ...auth.authCustomer,
 ];

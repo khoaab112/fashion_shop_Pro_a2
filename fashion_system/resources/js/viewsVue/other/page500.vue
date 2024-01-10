@@ -1,52 +1,49 @@
 <template>
-    <section>
-  <div :class="{ loading: isLoading }">
-    <h1>500</h1>
-    <h2>Rất tiếc về sự cố này</h2>
-    <h2>Dường như hệ thống có lỗi khi cố thao tác một hoạt động nào đó</h2>
-    <h2>Tôi sẽ khắc phục ngay khi nhận được báo cáo về sự cố !</h2>
-    <h2 style="font-size: 200%;">Chân thành cảm ơn ❤️</h2>
-    <br>
-    <div class="gears">
-      <div class="gear one">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+  <section>
+    <div :class="{ loading: isLoading }">
+      <h1>500</h1>
+      <h2>Rất tiếc về sự cố này</h2>
+      <h2>Dường như hệ thống có lỗi khi cố thao tác một hoạt động nào đó</h2>
+      <h2>Tôi sẽ khắc phục ngay khi nhận được báo cáo về sự cố !</h2>
+      <h2 style="font-size: 200%">Chân thành cảm ơn ❤️</h2>
+      <br />
+      <div class="gears">
+        <div class="gear one">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <div class="gear two">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <div class="gear three">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
       </div>
-      <div class="gear two">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
-      <div class="gear three">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+      <div class="text-center mb-4">
+        <button class="btn-home">
+          <router-link name="home" class="link_404" :to="{ name: 'home' }"
+            >HOME</router-link
+          >
+        </button>
       </div>
     </div>
-    <div class="text-center mb-4">
-      <button class="btn-home"><router-link name="home" class="link_404" :to=pathHome>HOME</router-link></button>
-    </div>
-  </div>
-</section>
+  </section>
 </template>
 
 <script>
-import paths from '@/js/mixins/getAddressFromRouter.js';
-
 export default {
-  name: 'page500',
-  components: {
-  },
-  setup() {
-  },
-  directives: {
-  },
+  name: "page500",
+  components: {},
+  setup() {},
+  directives: {},
   data() {
     return {
       isLoading: true,
-      pathHome: paths.homeClient,
-
     };
   },
   created() {
@@ -60,12 +57,8 @@ export default {
   computed() {
     // được sử dụng để định nghĩa các thuộc tính tính toán
   },
-  updated() {
-
-  },
-  destroyed() {
-
-  },
+  updated() {},
+  destroyed() {},
   methods: {
     // Các phương thức xử lý sự kiện hoặc logic khác
   },
@@ -74,11 +67,11 @@ export default {
 
 <style scoped>
 /**/
-body{
-background-color: white;
+body {
+  background-color: white;
 }
-section{
-background-color: white;
+section {
+  background-color: white;
 }
 h1 {
   margin: 100px auto 0 auto;
@@ -123,7 +116,7 @@ h2 {
   height: 120px;
   margin: 0 auto;
   border-radius: 50%;
-  background:black;
+  background: black;
 }
 
 .gear:before {
@@ -306,18 +299,18 @@ h2 {
   padding: 1rem;
   margin: 0 auto;
   margin-top: 14rem;
-  border:2px solid black;
+  border: 2px solid black;
   border-radius: 10px;
 }
 
-.btn-home a{
-color: black;
-text-decoration: none;
+.btn-home a {
+  color: black;
+  text-decoration: none;
 }
-button.btn-home:hover{
+button.btn-home:hover {
   color: red;
   border-color: red;
   cursor: pointer;
   opacity: 1;
-};
+}
 </style>
