@@ -89,7 +89,8 @@ export default {
     },
     methods: {
         handleChange(file, fileList) {
-            console.log(file.raw.type);
+            // console.log(file.raw.type);
+            console.log(file);
             this.arrFile.push(file);
             this.isErrorFile = false;
             if (!(file.raw.type == 'image/jpeg') && !(file.raw.type == 'image/png') && !(file.raw.type == 'image/gif')) {
@@ -102,15 +103,16 @@ export default {
                 this.contentError = "Hãy xóa bớt file, chỉ chấp nhận một file"
                 return;
             }
-            const reader = new FileReader();
-            reader.readAsDataURL(file.raw);
-            reader.onload = (e) => {
-                this.FileToSend = e.target.result;
-            }
+            // const reader = new FileReader();
+            // reader.readAsDataURL(file.raw);
+            // reader.onload = (e) => {
+            //     this.FileToSend = e.target.result;
+            // }
+            this.FileToSend = file;
         },
         hideUpLoad() {
             this.arrFile = [];
-            this.FileToSend = [];
+            this.FileToSend = "";
             this.isErrorFile = false;
             this.$refs.upload.clearFiles();
             this.$emit('hide-upload', this.showUploadFile = false);
@@ -119,7 +121,7 @@ export default {
             this.arrFile = [];
             this.$refs.upload.clearFiles();
             this.isErrorFile = false;
-            this.FileToSend = [];
+            this.FileToSend = "";
             this.showUploadFile = false
         },
         removeFile(file, fileList) {
@@ -142,12 +144,11 @@ export default {
             }
             if (this.arrFile.length == 1) {
                 if (this.type == 'AVT') {
-                    const file = {
-                        'file': this.FileToSend,
-                    }
+                    var  formData = new FormData();
+                    formData.append('file', this.FileToSend.raw);
                     const staffId = this.dataStaff.id;
                     apiStaff
-                        .changeAvatarStaffById(file, staffId)
+                        .changeAvatarStaffById(formData, staffId)
                         .then((res) => {
                             var dataResponse = res.data;
                             if (dataResponse.result_code == 200) {

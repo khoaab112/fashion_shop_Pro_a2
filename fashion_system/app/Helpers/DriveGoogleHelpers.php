@@ -12,7 +12,14 @@ class DriveGoogleHelpers
     public static function saveFile($file, $path, $fileName)
     {
         try {
-            Storage::disk('google')->putFileAs($path, $file, $fileName);
+            $result =  Storage::disk('google')->putFileAs($path, $file, $fileName);
+            if($result)
+            {
+                dd("thành cong");
+            }
+            else{
+                dd("thất bại");
+            }
             $meta = Storage::disk("google")
                 ->getAdapter()
                 ->getMetadata($fileName);
