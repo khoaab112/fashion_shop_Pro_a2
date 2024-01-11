@@ -24,7 +24,7 @@ class DriveGoogleHelpers
     public function getFile($fileName)
     {
         try {
-            $data = Gdrive::get('path/filename.png');
+            $data = Gdrive::get($fileName);
             return $data->file;
         } catch (\Exception $e) {
             return false;
@@ -38,7 +38,7 @@ class DriveGoogleHelpers
     public function deleteFile($fileName)
     {
         try {
-            Gdrive::delete('path/filename.png');
+            Gdrive::delete($fileName);
             return true;
         } catch (\Exception $e) {
             return false;
@@ -47,7 +47,7 @@ class DriveGoogleHelpers
     public function getAllFolder($path)
     {
         try{
-          return  Gdrive::all('foldername');
+          return  Gdrive::all($path);
         } catch (\Exception $e) {
             return false;
         }
