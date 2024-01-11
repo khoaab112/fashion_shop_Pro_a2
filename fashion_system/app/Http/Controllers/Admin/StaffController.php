@@ -71,6 +71,7 @@ class StaffController extends Controller
             if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
 
             $resultSaveFile = DriveGoogleHelpers::saveFile($image, $storagePath, $fileName);
+            dd($resultSaveFile);
 
             // $resultSaveFile =  Storage::disk('frontEnd')->put($pathFull, $imageData);
             // xóa bỏ một file từ db nếu nó đã tồn tại

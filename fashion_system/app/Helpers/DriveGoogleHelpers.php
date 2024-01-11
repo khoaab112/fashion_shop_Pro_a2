@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Exception;
 use Yaza\LaravelGoogleDriveStorage\Gdrive;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class DriveGoogleHelpers
 {
@@ -13,18 +14,16 @@ class DriveGoogleHelpers
     {
         try {
             $result =  Storage::disk('google')->putFileAs($path, $file, $fileName);
-            if($result)
-            {
-                dd("thành cong");
+            if ($result) {
+                $meta = Storage::disk("google")
+                    ->getAdapter()
+                    ->getMetadata($fileName);
+                // dd($meta['extraMetadata']['id']);
+                return $meta['extraMetadata']['id'];
             }
-            else{
-                dd("thất bại");
-            }
-            $meta = Storage::disk("google")
-                ->getAdapter()
-                ->getMetadata($fileName);
-            return $meta['extraMetadata']['id'];
+            return true;
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return false;
         }
     }
@@ -53,8 +52,8 @@ class DriveGoogleHelpers
     }
     public static function getAllFolder($path)
     {
-        try{
-          return  Gdrive::all($path);
+        try {
+            return  Gdrive::all($path);
         } catch (\Exception $e) {
             return false;
         }

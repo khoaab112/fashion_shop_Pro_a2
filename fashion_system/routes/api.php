@@ -31,7 +31,7 @@ use App\Http\Controllers\DropBoxController;
 |
 */
 
-Route::middleware(['checkURL'])->group(function () {
+Route::middleware(['checkURL','cors'])->group(function () {
     Route::middleware('checkDB')->group(function () {
             Route::group([
                 'middleware' => ['api', 'auth:api'],

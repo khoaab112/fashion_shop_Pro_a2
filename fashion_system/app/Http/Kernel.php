@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'checkDB' => \App\Http\Middleware\CheckDataBase::class,
         'checkURL'=>\App\Http\Middleware\BlockInvalidUrls::class,
         'checkRole'=>\App\Http\Middleware\CheckRole::class,
+        "cors" => \App\Http\Middleware\Cors::class,
     ];
 }
