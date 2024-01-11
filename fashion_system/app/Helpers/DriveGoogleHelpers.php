@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class DriveGoogleHelpers
 {
 
-    public function saveFile($file, $path, $fileName)
+    public static function saveFile($file, $path, $fileName)
     {
         try {
             Storage::disk('google')->putFileAs($path, $file, $fileName);
@@ -21,7 +21,7 @@ class DriveGoogleHelpers
             return false;
         }
     }
-    public function getFile($fileName)
+    public static function getFile($fileName)
     {
         try {
             $data = Gdrive::get($fileName);
@@ -35,7 +35,7 @@ class DriveGoogleHelpers
     //     $data = Gdrive::get('path/filename.png');
 
     // }
-    public function deleteFile($fileName)
+    public static function deleteFile($fileName)
     {
         try {
             Gdrive::delete($fileName);
@@ -44,7 +44,7 @@ class DriveGoogleHelpers
             return false;
         }
     }
-    public function getAllFolder($path)
+    public static function getAllFolder($path)
     {
         try{
           return  Gdrive::all($path);
