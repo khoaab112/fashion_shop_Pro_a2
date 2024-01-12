@@ -151,24 +151,15 @@ export default {
     checkImageAdmin() {
       try {
         if (this.avatar) {
-          const publicPath = window.location.origin + "/public";
-          const imagePath = `data_client/${this.avatar}`;
-          this.imagePath = new URL(imagePath, publicPath).href;
+          this.imagePath = this.avatar;
           return;
         }
         this.imagePath = new URL(avatarAdminDefault, import.meta.url).href;
         return;
       } catch (e) {
-        // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
         this.imagePath = new URL(avatarAdminDefault, import.meta.url).href;
         return;
       }
-
-      // if (this.avatar) {
-      //     return new URL(this.avatar, import.meta.url).href
-      // }
-      // // return new URL(`@/images/logo/logoAdmin.png`, import.meta.url).href
-      // return new URL(avatarAdminDefault, import.meta.url).href
     },
     //lấy id người dùng từ localStorage
     //gọi lên api
