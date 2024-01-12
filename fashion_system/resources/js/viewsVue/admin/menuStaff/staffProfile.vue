@@ -279,7 +279,6 @@ import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 import backgroundAdminDefault from "@/public/images/staff/backgroundStaff.png";
 import apiStaff from "@/js/api/admin/apiStaff.js";
 
-const pathPublic = "@public/data_client/";
 const keyHeightBackgroundAdmin = "heightAdmin";
 export default {
   name: "staffProfile",

@@ -11,7 +11,7 @@ const routes = [
     ...admin.admin,
     ...admin.home,
     ...auth.authAdmin,
-    ...auth.authCustomer,
+    // ...auth.authCustomer,
 ];
 const router = createRouter({
     history: createWebHistory(),
