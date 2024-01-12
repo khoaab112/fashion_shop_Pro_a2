@@ -337,12 +337,10 @@ export default {
     destroyed() { },
     methods: {
         checkImageAdmin(img) {
+            console.log(img);
             try {
                 if (img) {
-                    const publicPath = window.location.origin + "/public";
-                    const imagePath = `data_client/${img}`;
-                    // const urlImage = new URL(imagePath, publicPath).href
-                    this.urlAvatar = new URL(imagePath, publicPath).href;
+                    this.urlAvatar = img;
                     return;
                 }
                 this.urlAvatar = new URL(avatarAdminDefault, import.meta.url).href;
@@ -373,7 +371,7 @@ export default {
                     var dataResponse = res.data;
                     if (dataResponse.result_code == 200) {
                         this.dataStaff = dataResponse.results;
-                        this.checkImageAdmin(this.dataStaff.img);
+                        this.checkImageAdmin(this.dataStaff.img_drive_google);
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {

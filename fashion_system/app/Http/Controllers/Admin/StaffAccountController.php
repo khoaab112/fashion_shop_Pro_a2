@@ -70,6 +70,7 @@ class StaffAccountController extends Controller
                     'staff.birthday',
                     'staff.sex',
                     'staff.img',
+                    'staff.img_drive_google',
                     'staff.active',
                     'branch.name as branch_name',
                     'branch.address as branch_address',
@@ -196,6 +197,7 @@ class StaffAccountController extends Controller
                     'staff.birthday',
                     'staff.sex',
                     'staff.img',
+                    'staff.img_drive_google',
                     'staff.active',
                     'branch.name as branch_name',
                     'branch.address as branch_address',
@@ -268,6 +270,7 @@ class StaffAccountController extends Controller
                 'staff.birthday',
                 'staff.sex',
                 'staff.img',
+                'staff.img_drive_google',
                 'staff.active',
                 'position.name as position_name'
             )
