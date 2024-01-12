@@ -17,7 +17,7 @@ class DriveGoogleHelpers
             if ($result) {
                 return Storage::disk("google")
                 ->getAdapter()
-                ->getMetadata($fileName)
+                ->getMetadata($result)
                 ->extraMetadata()['id'];
             }
             return false;

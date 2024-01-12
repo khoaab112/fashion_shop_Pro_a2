@@ -13,7 +13,7 @@ import { configureEcho } from "@/js/generalSetting/configureEcho.js";
 const accessToken = localStorage.getAccessToken();
 const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/auth',
-    timeout: 5000, //  thời gian chờ tối đa cho mỗi yêu cầu
+    timeout: 30000, //  thời gian chờ tối đa cho mỗi yêu cầu
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',

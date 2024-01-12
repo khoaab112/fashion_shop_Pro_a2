@@ -21,7 +21,7 @@ class Staff extends Model
         "birthday",
         "sex",
         "img",
-        "img_id",
+        "img_drive_google",
         "background",
         "status",
         "active",

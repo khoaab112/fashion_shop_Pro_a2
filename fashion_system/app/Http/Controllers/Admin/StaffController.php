@@ -72,7 +72,7 @@ class StaffController extends Controller
             $pathFull = $storagePath . '/' . $fileName;
             $arrDataUpdate = [
                 'img' => $pathFull,
-                'img_id' => $resultSaveFile,
+                'img_drive_google' => "https://lh3.googleusercontent.com/d/".$resultSaveFile,
             ];
             $resultUpdateAvatar = $this->staff->updateById($arrDataUpdate, $id);
             if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
