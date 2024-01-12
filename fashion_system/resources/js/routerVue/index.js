@@ -20,6 +20,12 @@ const router = createRouter({
 
 //check login
 router.beforeEach((to, from, next) => {
+    console.log(to);
+    if (to.path.startsWith('/api')) {
+        next('/error404');
+    } else {
+        next();
+    }
     const isAdminRoute = to.path.startsWith('/admin') || to.path == "/";
     const isLoginAdmin = to.path === "/auth/login" || to.path == "/";
     if (isAdminRoute) {

@@ -22,6 +22,7 @@ class validationHelpers
             'confirmed' => ':attribute không khớp với giá trị cần xác nhận.',
             'unique' => ':attribute đã được sử dụng',
             'exists' => ':attribute không tồn tại',
+            'mimes' => ':attribute file không đúng định dạng',
             // 'unique' => ':attribute đã được sử dụng',
             //còn thiếu vài trường nữa , nhưng cảm thấy không cần thiết
         ];
@@ -36,11 +37,11 @@ class validationHelpers
     }
     public static function checkStrangeCharacters($string)
     {
-        $pattern = '/[^\p{L}\p{N}\s]/u';    
+        $pattern = '/[^\p{L}\p{N}\s]/u';
         if (preg_match($pattern, $string)) {
-            return true; 
+            return true;
         } else {
-            return false; 
+            return false;
         }
     }
 }

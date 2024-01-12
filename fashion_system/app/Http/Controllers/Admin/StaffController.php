@@ -11,12 +11,19 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Helpers\FormatDate;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\validationHelpers;
 
 class StaffController extends Controller
 {
     //
     protected $staff;
+    protected $validationRules = [
+        'file' => 'required|file|mimes:mimes:jpeg,png,jpg,gif,svg|max:20480',
+    ];
 
+    protected   $attributeNames = [
+        'file' => 'File',
+    ];
     public function __construct(UserStaffRepository $staff)
     {
         $this->staff = $staff;
@@ -53,6 +60,11 @@ class StaffController extends Controller
     public function changeAvatarStaffById(Request $request, $id)
     {
         $image = $request->file('file');
+        $validator = validationHelpers::validation(['file' => $image], $this->validationRules, $this->attributeNames);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+        }
         $storagePath = 'system/images/avatar';
         $staff = $this->staff->getById($id)->first();
         $pathDB = $staff->img;
