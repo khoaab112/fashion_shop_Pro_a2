@@ -15,13 +15,12 @@ class DriveGoogleHelpers
         try {
             $result =  Storage::disk('google')->putFileAs($path, $file, $fileName);
             if ($result) {
-                $meta = Storage::disk("google")
-                    ->getAdapter()
-                    ->getMetadata($fileName);
-                // dd($meta['extraMetadata']['id']);
-                return $meta['extraMetadata']['id'];
+                return Storage::disk("google")
+                ->getAdapter()
+                ->getMetadata($fileName)
+                ->extraMetadata()['id'];
             }
-            return true;
+            return false;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return false;

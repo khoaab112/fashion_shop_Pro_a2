@@ -21,6 +21,7 @@ class Staff extends Model
         "birthday",
         "sex",
         "img",
+        "img_id",
         "background",
         "status",
         "active",

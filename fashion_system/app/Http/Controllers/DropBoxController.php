@@ -15,10 +15,11 @@ class DropBoxController extends Controller
     {
         // $a =Gdrive::getMetadata('filename1.png');
         // $fileId = Storage::disk('google')->putFileAs('',  $request->file('file'), 'filename22q12.png');
-        $storagePath = 'system/images/avatar';
+        // $storagePath = 'system/images/avatar';
+        $storagePath = '';
         $fileName="123213123.jpg";
         $resultSaveFile = DriveGoogleHelpers::saveFile($request->file('file'), $storagePath, $fileName);
-
+dd($resultSaveFile);
         $meta = Storage::disk("google")
             ->getAdapter()
             ->getMetadata('filename22q12.png');

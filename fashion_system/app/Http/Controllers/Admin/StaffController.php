@@ -19,7 +19,6 @@ class StaffController extends Controller
 
     public function __construct(UserStaffRepository $staff)
     {
-
         $this->staff = $staff;
     }
 
@@ -63,23 +62,21 @@ class StaffController extends Controller
             $fileExtension = $image->extension();
             //tên file
             $fileName = $id . "_" . FormatDate::getTimestamp() . "." . $fileExtension;
+            $resultSaveFile = DriveGoogleHelpers::saveFile($image, $storagePath, $fileName);
+            if (!$resultSaveFile)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
+            // xóa bỏ một file từ db nếu nó đã tồn tại
+            if ($pathDB) {
+                DriveGoogleHelpers::deleteFile($pathDB);
+            }
+            // save db
             $pathFull = $storagePath . '/' . $fileName;
             $arrDataUpdate = [
                 'img' => $pathFull,
+                'img_id' => $resultSaveFile,
             ];
             $resultUpdateAvatar = $this->staff->updateById($arrDataUpdate, $id);
             if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
-
-            $resultSaveFile = DriveGoogleHelpers::saveFile($image, $storagePath, $fileName);
-            dd($resultSaveFile);
-
-            // $resultSaveFile =  Storage::disk('frontEnd')->put($pathFull, $imageData);
-            // xóa bỏ một file từ db nếu nó đã tồn tại
-            // if ($pathImg && Storage::disk('frontEnd')->exists($pathImg)) {
-            //     Storage::disk('frontEnd')->delete($pathImg);
-            // }
-            if ($resultSaveFile)   return CodeHttpHelpers::returnJson(200, true, 'Cập nhật ảnh đại diện thành công thành công', 200);
-            return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
+            return CodeHttpHelpers::returnJson(200, true, 'Cập nhật ảnh đại diện thành công thành công', 200);
         }
         return CodeHttpHelpers::returnJson(400, true, 'Không có ảnh nào được tải nên', 200);
     }
