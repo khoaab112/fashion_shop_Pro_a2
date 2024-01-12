@@ -12,6 +12,7 @@ class DriveGoogleHelpers
 
     public static function saveFile($file, $path, $fileName)
     {
+        // $fileName = str_replace("\0", '', $fileName);
         try {
             $result =  Storage::disk('google')->putFileAs($path, $file, $fileName);
             if ($result) {
@@ -22,14 +23,14 @@ class DriveGoogleHelpers
             }
             return false;
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             return false;
         }
     }
-    public static function getFile($fileName)
+    public function getFile($fileName)
     {
+        $fullPath =$path."/".$fileName;
         try {
-            $data = Gdrive::get($fileName);
+            $data = Gdrive::get('path/filename.png');
             return $data->file;
         } catch (\Exception $e) {
             return false;
@@ -40,10 +41,10 @@ class DriveGoogleHelpers
     //     $data = Gdrive::get('path/filename.png');
 
     // }
-    public static function deleteFile($fileName)
+    public function deleteFile($fileName)
     {
         try {
-            Gdrive::delete($fileName);
+            Gdrive::delete('path/filename.png');
             return true;
         } catch (\Exception $e) {
             return false;
@@ -51,8 +52,8 @@ class DriveGoogleHelpers
     }
     public static function getAllFolder($path)
     {
-        try {
-            return  Gdrive::all($path);
+        try{
+          return  Gdrive::all('foldername');
         } catch (\Exception $e) {
             return false;
         }
