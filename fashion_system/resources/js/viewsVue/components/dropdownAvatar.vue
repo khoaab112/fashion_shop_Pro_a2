@@ -48,7 +48,6 @@ export default {
   },
   created() {
     this.listDropdown = listDropdown;
-    console.log(this.srcAvatar);
   },
   mounted() {},
   computed() {},

@@ -4,7 +4,6 @@ var infoStaff = '';
 const getGlobalVariableInfoStaff = () => infoStaff;
 const setGlobalVariableInfoStaff = (newValue) => {
     if (!newValue) return false;
-
     infoStaff = {
         'id': newValue.id,
         'name': newValue.name,
@@ -13,13 +12,13 @@ const setGlobalVariableInfoStaff = (newValue) => {
         'position_id': newValue.position_id,
         'email': newValue.email,
         'img': newValue.img_drive_google,
+        'background': newValue.background_drive_google,
         'account': newValue.account,
         'jod_roles': '',
         'address': newValue.address,
         'phone_number': newValue.phone_number,
         'birthday': newValue.birthday,
         'sex': newValue.sex,
-        'background': newValue.background,
         "created_at": newValue.created_at,
         "updated_at": newValue.updated_at,
     }

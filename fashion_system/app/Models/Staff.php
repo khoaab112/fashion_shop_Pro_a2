@@ -22,6 +22,7 @@ class Staff extends Model
         "sex",
         "img",
         "img_drive_google",
+        "background_drive_google",
         "background",
         "status",
         "active",

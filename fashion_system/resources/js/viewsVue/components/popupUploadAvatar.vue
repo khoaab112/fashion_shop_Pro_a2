@@ -197,12 +197,11 @@ export default {
             });
         }
         if (this.type == "BG") {
-          const file = {
-            file: this.FileToSend,
-          };
+          var formData = new FormData();
+          formData.append("file", this.FileToSend.raw);
           const staffId = this.dataStaff.id;
           apiStaff
-            .changeBackgroundStaffById(file, staffId)
+            .changeBackgroundStaffById(formData, staffId)
             .then((res) => {
               var dataResponse = res.data;
               if (dataResponse.result_code == 200) {

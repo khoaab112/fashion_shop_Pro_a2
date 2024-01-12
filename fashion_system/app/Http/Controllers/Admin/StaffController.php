@@ -84,7 +84,7 @@ class StaffController extends Controller
             $pathFull = $storagePath . '/' . $fileName;
             $arrDataUpdate = [
                 'img' => $pathFull,
-                'img_drive_google' => "https://lh3.googleusercontent.com/d/".$resultSaveFile,
+                'img_drive_google' => "https://lh3.googleusercontent.com/d/" . $resultSaveFile,
             ];
             $resultUpdateAvatar = $this->staff->updateById($arrDataUpdate, $id);
             if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
@@ -94,33 +94,38 @@ class StaffController extends Controller
     }
     public function changeBackgroundStaffById(Request $request, $id)
     {
-        $image = $request->get('file');
-        $storagePath = 'images/background_staff';
+        $image = $request->file('file');
+        $validator = validationHelpers::validation(['file' => $image], $this->validationRules, $this->attributeNames);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+        }
+
+        $storagePath = 'system/images/background_user';
         $staff = $this->staff->getById($id)->first();
-        $pathImg = $staff->background;
+        $pathDB = $staff->background;
         if (!$staff)  return CodeHttpHelpers::returnJson(400, true, 'Mã nhân viên không hơp lệ', 200);
         if ($image) {
-            $base64Image = $image;
-            $data = explode(',', $base64Image);
-            $imageData = base64_decode($data[1]);
-            $formatParts = explode('/', explode(':', substr($base64Image, 0, strpos($base64Image, ';')))[1]);
             //đuôi file
-            $fileExtension = $formatParts[1];
+            $fileExtension = $image->extension();
             //tên file
-            $nameFile = $id . "_" . FormatDate::getTimestamp() . "." . $fileExtension;
-            $pathFull = $storagePath . '/' . $nameFile;
+            $fileName = $id . "_" . FormatDate::getTimestamp() . "." . $fileExtension;
+            $resultSaveFile = DriveGoogleHelpers::saveFile($image, $storagePath, $fileName);
+            if (!$resultSaveFile)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
+            // xóa bỏ một file từ db nếu nó đã tồn tại
+            if ($pathDB) {
+                DriveGoogleHelpers::deleteFile($pathDB);
+            }
+            // save db
+            $pathFull = $storagePath . '/' . $fileName;
             $arrDataUpdate = [
                 'background' => $pathFull,
+                'background_drive_google' => "https://lh3.googleusercontent.com/d/" . $resultSaveFile,
             ];
             $resultUpdateAvatar = $this->staff->updateById($arrDataUpdate, $id);
             if (!$resultUpdateAvatar)  return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
-            $resultSaveFile =  Storage::disk('frontEnd')->put($pathFull, $imageData);
-            // xóa bỏ một file từ db nếu nó đã tồn tại
-            if ($pathImg && Storage::disk('frontEnd')->exists($pathImg)) {
-                Storage::disk('frontEnd')->delete($pathImg);
-            }
-            if ($resultSaveFile)   return CodeHttpHelpers::returnJson(200, true, 'Cập nhật ảnh bìa thành công thành công', 200);
-            return CodeHttpHelpers::returnJson(400, true, 'Cập nhật thất bại', 200);
+
+            return CodeHttpHelpers::returnJson(200, true, 'Cập nhật ảnh bìa thành công thành công', 200);
         }
         return CodeHttpHelpers::returnJson(400, true, 'Không có ảnh nào được tải nên', 200);
     }

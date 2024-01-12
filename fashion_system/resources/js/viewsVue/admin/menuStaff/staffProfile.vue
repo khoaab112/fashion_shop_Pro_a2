@@ -412,7 +412,7 @@ export default {
             this.email = this.staff.email;
             this.position_id = this.staff.position_id;
             this.img = this.staff.img;
-            // this.backgroundStaff= this.staff.background;
+            this.backgroundStaff = this.staff.background;
             this.checkImageAdmin(this.img);
             this.checkBackground(this.staff.background);
             await this.getBranchById(this.staff.branch_id);
@@ -470,10 +470,10 @@ export default {
     checkBackground(background) {
       try {
         if (background) {
-          const publicPath = window.location.origin + "/public";
-          const imagePath = `data_client/${background}`;
+          //   const publicPath = window.location.origin + "/public";
+          //   const imagePath = `data_client/${background}`;
           // const urlImage = new URL(imagePath, publicPath).href
-          this.backgroundStaff = new URL(imagePath, publicPath).href;
+          this.backgroundStaff = background;
           return;
         }
         this.backgroundStaff = new URL(backgroundAdminDefault, import.meta.url).href;

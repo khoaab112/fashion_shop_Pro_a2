@@ -20,7 +20,6 @@ const router = createRouter({
 
 //check login
 router.beforeEach((to, from, next) => {
-    console.log(to);
     if (to.path.startsWith('/api')) {
         next('/error404');
     } else {
