@@ -22,6 +22,11 @@ class Customers extends Model
         "number_ban",
         "potential",
         "status",
+        "password",
+        "remember_token",
+        "refresh_token",
+        "issued_at",
+        "expired_time",
     ];
     protected $attributes = [
         'status' => 'true',
