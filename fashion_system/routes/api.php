@@ -110,7 +110,7 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             Route::get('/positions', [Position::class, 'getRecords']);
 
             //authentication customer
-            Route::post('/register/{creator}', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api', 'checkRole']);
+            Route::post('/register', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api', 'checkRole']);
             //role staff
             Route::group([
                 // 'middleware' => 'api',

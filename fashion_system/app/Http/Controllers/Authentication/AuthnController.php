@@ -83,7 +83,7 @@ class AuthnController extends Controller
                 $notificationController->createNotificationByIdStaff($dataNotification);
             }
             // return CodeHttpHelpers::returnJson(200, true, $result, 200);
-        } catch (\Exception $error) {
+        } catch (Exception $error) {
             return CodeHttpHelpers::returnJson(500, false, $error, 500);
         }
     }

@@ -29,12 +29,12 @@ class AuthenticationCustomersController extends Controller
         "email" => 'required|max:50|unique:customers,email',
         "birthday" => 'required',
         "sex" => 'required|boolean',
-        "accumulated_points" => 'numeric',
-        "number_ban" => 'numeric',
+        // "accumulated_points" => 'numeric',
+        // "number_ban" => 'numeric',
         // "potential" => 'boolean',
         // "status" => 'boolean',
         "password" => 'required|confirmed|min:9',
-        "password_confirmation" => 'required|min:9',
+        // "password_confirmation" => 'required|min:9',
         // "remember_token" => 'boolean',
     ];
     protected   $attributeNames = [
@@ -58,8 +58,17 @@ class AuthenticationCustomersController extends Controller
     {
         $this->customer = $customersRepository;
     }
-    public function register(Request $request, $creator)
+    public function register(Request $request)
     {
+        try {
+            $validator = validationHelpers::validation($request->all(), $this->validationRules, $this->attributeNames);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                return CodeHttpHelpers::returnJson(400, false, $errors, 200);
+            }
+        } catch (\Exception $exception) {
+            return CodeHttpHelpers::returnJson(500, false, $exception, 500);
+        }
     }
     public function login(Request $request)
     {
