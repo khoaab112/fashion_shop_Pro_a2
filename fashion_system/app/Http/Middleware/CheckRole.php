@@ -34,7 +34,8 @@ class CheckRole
             'WAREHOUSE',
             'WEB',
             'REPORT',
-            'FEEDBACK'
+            'FEEDBACK',
+            'CUSTOMER'
         ];
         $isExits = in_array($decode['value']->role, $arrRole);
         $isLicensed = in_array($decode['value']->role, $role);

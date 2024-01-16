@@ -23,6 +23,7 @@ class validationHelpers
             'unique' => ':attribute đã được sử dụng',
             'exists' => ':attribute không tồn tại',
             'mimes' => ':attribute file không đúng định dạng',
+            'regex' => ':attribute không đúng định dạng',
             // 'unique' => ':attribute đã được sử dụng',
             //còn thiếu vài trường nữa , nhưng cảm thấy không cần thiết
         ];
