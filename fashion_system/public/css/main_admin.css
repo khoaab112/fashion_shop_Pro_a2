@@ -66,3 +66,7 @@ body {
     font-family: "roboto-slab-regular" !important;
     background-color: #e4e9f7;
 }
+
+span.error-message-danger {
+    color: #dc3545;
+}
