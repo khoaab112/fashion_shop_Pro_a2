@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\StaffAccountController;
 use App\Http\Controllers\Admin\Administration;
 use App\Http\Controllers\Admin\Position;
 use App\Http\Controllers\Authentication\AuthenticationCustomersController;
+use App\Http\Controllers\Admin\WebController;
 
 
 
@@ -54,7 +55,7 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             Route::post('/avatar-staff/{id}', [StaffController::class, 'changeAvatarStaffById']);
             Route::post('/background-staff/{id}', [StaffController::class, 'changeBackgroundStaffById']);
             Route::put('/edit-carefully', [StaffController::class, 'editCarefully']);
-            Route::get('/check-staff-code/{code}', [StaffController::class, 'checkStaffCode'])->withoutMiddleware(['auth:api', 'checkRole']);;
+            Route::get('/check-staff-code/{code}', [StaffController::class, 'checkStaffCode'])->withoutMiddleware(['auth:api', 'checkRole']);
 
 
             //role Admin
@@ -112,6 +113,10 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             //authentication customer
             Route::post('/register', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api', 'checkRole']);
             //role staff
+
+            // web
+            Route::get('/menu', [WebController::class, 'getMenu']);
+
             Route::group([
                 // 'middleware' => 'api',
                 'middleware' => ['checkRole:CUSTOMER'],
