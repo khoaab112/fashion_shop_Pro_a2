@@ -91,6 +91,20 @@ const admin = [{
                 },
             ],
         },
+        {
+            path: "web",
+            name: "web",
+            meta: { roles: ['ADMIN', 'SUPERADMIN'] },
+            beforeEnter: checkPermission,
+            group: true,
+            children: [{
+                path: "menu",
+                name: "menu",
+                meta: { breadcrumb: 'Menu' },
+                component: () =>
+                    import ('../viewsVue/admin/web/menu.vue'),
+            }, ],
+        },
     ],
 }]
 

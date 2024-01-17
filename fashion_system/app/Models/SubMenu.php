@@ -13,7 +13,7 @@ class SubMenu extends Model
         "menu_main_id",
         "name",
         "color",
-        "sub",
+        "order",
         "status",
     ];
     protected $attributes = [

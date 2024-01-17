@@ -141,14 +141,13 @@ export default [{
         children: []
     },
     {
-        code: 'web-client',
+        code: 'web',
         title: 'WEB',
         component: '',
         icon: 'fa-brands fa-shopify',
         role: '',
         children: [{
-                // name: 'menu',
-                name: '',
+                name: 'menu',
                 title: 'Menu',
                 component: '',
                 icon: "fa-solid fa-list",

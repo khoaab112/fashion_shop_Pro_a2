@@ -12,7 +12,7 @@ class MenuMain extends Model
     protected $fillable = [
         "name",
         "color",
-        "is_sub_menu",
+        "order",
         "status",
     ];
     protected $attributes = [
