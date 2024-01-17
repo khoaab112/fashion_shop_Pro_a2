@@ -2,31 +2,23 @@
 //2 file có điểm tương đồng nhưng lười không cấu hình lại
 
 export default [{
-        'key': 'profile',
-        'name': 'Hồ sơ',
-        'path': '/admin/profile',
-        component: '',
+        'name': 'staffProfile',
+        'title': 'Hồ sơ',
         'icon': 'fa-regular fa-user',
     },
     {
-        'key': 'support',
-        'name': 'Hỗ trợ',
-        'path': '/admin/support',
-        component: '',
+        'name': 'supportForEmployees',
+        'title': 'Hỗ trợ',
         'icon': "fa-solid fa-circle-question"
     },
     {
-        'key': 'feedback',
-        'name': 'Đóng góp ý kiến',
-        'path': '/admin/feedback',
-        component: '',
+        'name': 'employeeFeedback',
+        'title': 'Đóng góp ý kiến',
         'icon': "fa-regular fa-paper-plane"
     },
     {
-        'key': 'logout',
-        'name': 'Đăng xuất',
-        'path': '',
-        component: '',
+        'name': 'logout',
+        'title': 'Đăng xuất',
         'icon': "fa-solid fa-arrow-right-from-bracket",
         'method': 'logoutAdmin',
     }

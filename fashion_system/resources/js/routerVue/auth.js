@@ -9,6 +9,14 @@ const authAdmin = [{
             },
         },
         {
+            path: 'login',
+            name: 'logout',
+            components: {
+                auth: () =>
+                    import ('../viewsVue/admin/authentication/login.vue'),
+            },
+        },
+        {
             path: 'forgotPassword',
             name: 'forgotPassword',
             components: {

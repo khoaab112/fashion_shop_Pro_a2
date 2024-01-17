@@ -20,11 +20,9 @@ const router = createRouter({
 
 //check login
 router.beforeEach((to, from, next) => {
-    if (to.path.startsWith('/api')) {
-        next('/error404');
-    } else {
-        next();
-    }
+    if (to.path.startsWith('/api'))
+        return next('/error404');
+
     const isAdminRoute = to.path.startsWith('/admin') || to.path == "/";
     const isLoginAdmin = to.path === "/auth/login" || to.path == "/";
     if (isAdminRoute) {
@@ -36,18 +34,18 @@ router.beforeEach((to, from, next) => {
         // mã tồn tại / access token cho nhớ / còn time / còn time
         if (existRefreshToken && reservation && expiryDate && expiryDateAccessToken) {
             if (to.fullPath == '/admin' || to.path == "/") {
-                return next("/admin/home");
+                return next({ name: 'home' });
             }
             return next();
         }
         //check token tồn tại , có nhớ mật khẩu , còn thời gian sử dụng
         if (existRefreshToken && isRememberMe && expiryDate) {
             if (to.fullPath == '/admin' || to.path == "/") {
-                return next("/admin/home");
+                return next({ name: 'home' });
             }
             return next();
         } else {
-            return next("/auth/login");
+            return next({ name: 'login' });
         }
     }
     if (isLoginAdmin) {
@@ -56,10 +54,10 @@ router.beforeEach((to, from, next) => {
         const isRememberMe = (jwt.decodePayloadRefreshToken().remember) === 'true';
         const expiryDateAccessToken = jwt.checkExpiryDateAccessToken();
         if (existRefreshToken && expiryDate && expiryDateAccessToken) {
-            return next('/admin/home');
+            return next({ name: 'home' });
         }
         if (existRefreshToken && expiryDate && isRememberMe) {
-            return next('/admin/home');
+            return next({ name: 'home' });
         }
     }
     return next();

@@ -3,15 +3,11 @@
     <el-dropdown>
       <el-avatar class="avatar-admin" :src="srcAvatar" />
       <template #dropdown>
-        <el-dropdown-menu v-for="value in listDropdown" :key="value.key">
-          <router-link
-            :to="value.path"
-            class="style-tag-a"
-            @click="handleDropdownClick(value.key)"
-          >
-            <el-dropdown-item>
+        <el-dropdown-menu v-for="value in listDropdown" :key="value.name">
+          <router-link :to="{ name: value.name }" class="style-tag-a">
+            <el-dropdown-item @click="handleDropdownClick(value.name)">
               <font-awesome-icon :icon="value.icon" />
-              &ensp;{{ value.name }}
+              &ensp;{{ value.title }}
             </el-dropdown-item>
           </router-link>
         </el-dropdown-menu>
@@ -27,6 +23,7 @@ import { ElNotification } from "element-plus";
 import methodDefine from "@/js/mixins/methodDefine.js";
 import paths from "@/js/mixins/getAddressFromRouter.js";
 import sessionStorage from "@/js/auth/sessionStorage.js";
+import { nextTick } from "vue";
 
 export default {
   name: "dropdownAvatar",
@@ -54,10 +51,10 @@ export default {
   updated() {},
   destroyed() {},
   methods: {
-    async handleDropdownClick(key) {
-      if (key == "logout") {
+    handleDropdownClick(name) {
+      if (name == "logout") {
         sessionStorage.clearSession();
-        const response = await this.logoutAdmin();
+        const response = this.logoutAdmin();
         if (response) {
           ElNotification({
             title: "Success",

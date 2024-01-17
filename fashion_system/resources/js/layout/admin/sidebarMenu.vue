@@ -38,10 +38,10 @@
             <div
               href="#"
               class="nav_link submenu_item show_submenu hover-icon-mainMenu"
-              @click="changeActiveSubmenu(value.name)"
+              @click="changeActiveSubmenu(value.code)"
             >
               <router-link
-                :to="value.path"
+                :to="{ name: value.name }"
                 class="style-tag-a"
                 :class="{ 'use-none': value.children.length > 0 }"
               >
@@ -66,7 +66,7 @@
                 class="nav_link sublink hover-icon-subMenu"
                 v-for="item in value.children"
               >
-                <router-link :to="value.path + item.path" class="style-tag-a">
+                <router-link :to="{ name: item.name }" class="style-tag-a">
                   <font-awesome-icon :icon="item.icon" class="icon-submenu" />
                   {{ item.title }}
                 </router-link>
@@ -144,8 +144,8 @@ export default {
       });
       return arr;
     },
-    changeActiveSubmenu(name) {
-      const value = this.dataMenuSidebar.find((item) => item.name == name);
+    changeActiveSubmenu(code) {
+      const value = this.dataMenuSidebar.find((item) => item.code == code);
       value.active ? (value.active = false) : (value.active = true);
     },
     checkImageAdmin() {
