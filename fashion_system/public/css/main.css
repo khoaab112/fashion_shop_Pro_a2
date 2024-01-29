@@ -1,3 +1,116 @@
-/* html {
-    -ms-text-size-adjust: 100%;
+@font-face {
+    font-family: "roboto-slab-bold";
+    src: url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("woff"), url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("opentype"), url("../font/Roboto_Slab/static/RobotoSlab-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "roboto-slab-regular";
+    src: url("../font/Roboto_Slab/static/RobotoSlab-Regular.ttf") format("woff"), url("../font/Roboto_Slab/static/RobotoSlab-Regular.ttf") format("opentype"), url("../font/Roboto_Slab/static/RobotoSlab-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "robo";
+    src: url("../font/banabo/Banabo.ttf") format("woff"), url("../font/banabo/Banabo.ttf") format("opentype"), url("../font/banabo/Banabo.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "roboto-italic";
+    src: url("../font/Roboto/Roboto-Italic.ttf") format("woff"), url("../font/Roboto/Roboto-Italic.ttf") format("opentype"), url("../font/Roboto/Roboto-Italic.ttf") format("truetype");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: "roboto-bold"; */
+}
+
+
+/* :root {
+    --title-menu-color: #2626116e;
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #1707c4;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --page-404-color: #24344c;
+    --text-color: #383838;
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
 } */
+
+
+/* vue3-popper */
+
+:root {
+    --light-blue-color: ##a0c49d;
+    --background-color: #e4e9f7;
+    --btn-save-color: #2c96ff;
+    --btn-cancel-color: #e9ecef;
+    --transform-scale: scale(1.03);
+    --transition-ease: ease 0.3s;
+    --font-title: "roboto-slab-bold";
+    --font-content: "roboto-slab-regular";
+    --font-size-pc: 18px;
+    --font-size-mb: 14px;
+    --text-color: black;
+}
+
+
+/* body.dark {
+    --body-color: #18191a;
+    --sidebar-color: #242526;
+    --primary-color: #bbdbe5;
+    --primary-color-light: #3a3b3c;
+    --toggle-color: #bbdbe5;
+    --text-color: #ccc;
+    --title-menu-color: #fffdfb9c;
+} */
+
+
+/* ::selection {
+    background-color: var(--primary-color);
+    color: #fff;
+} */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+title {
+    font-family: "roboto-slab-bold";
+}
+
+a.style-tag-a {
+    text-decoration: none;
+    color: black;
+}
+
+body {
+    font-family: "roboto-slab-regular" !important;
+    background-color: #e4e9f7;
+}
+
+span.error-message-danger {
+    color: #dc3545;
+}
+
+
+/* Ẩn thanh cuộn của input type number */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Ẩn mũi tên của Firefox */
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

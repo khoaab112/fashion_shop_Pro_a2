@@ -34,6 +34,12 @@ export default {
                 randomCharacters += strings.charAt(location);
             }
             return randomCharacters;
+        },
+        // check màu
+        isColorCode(text) {
+            // Sử dụng biểu thức chính quy để kiểm tra định dạng mã màu
+            var colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+            return colorRegex.test(text);
         }
     },
 };

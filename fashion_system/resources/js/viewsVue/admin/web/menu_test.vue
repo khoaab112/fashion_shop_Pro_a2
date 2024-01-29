@@ -1,6 +1,8 @@
 <template>
   <div>
     <h4 class="pt-2 text-center">Quản lý Menu</h4>
+    <button>Hiển thị dạng danh sách đóng mở</button>
+    <button>Hiển thị danh sách dạng bảng</button>
     <div class="card">
       <div>
         <label for="">Đang hoạt động</label
@@ -43,28 +45,29 @@
         <span><strong>Vị trí : </strong>độ ưu tiên hiển thị</span>
       </div>
     </div>
-    <div class="total-menu">
-      <p>
-        Menu chính : <span>{{ totalMenu.main }}</span>
-      </p>
-      <p>
-        Menu phụ : <span>{{ totalMenu.sub }}</span>
-      </p>
-    </div>
     <div v-if="dataMenu.length">
       <div class="block-content">
-        <Popper content="Lưu trạng thái hoạt động" :hover="true">
-          <button class="btn btn-status">
-            <font-awesome-icon icon="fa-brands fa-creative-commons-sampling" />
-          </button>
-        </Popper>
+        <button
+          class="btn btn-add me-3"
+          v-if="!isCreateMenuMain"
+          @click="isCreateMenuMain = !isCreateMenuMain"
+        >
+          <font-awesome-icon icon="fa-solid fa-plus" />
+        </button>
+        <button
+          class="btn btn-remove me-3"
+          v-else
+          @click="isCreateMenuMain = !isCreateMenuMain"
+        >
+          <font-awesome-icon icon="fa-solid fa-minus" />
+        </button>
+        <button class="btn-status">Thay đổi trạng thái</button>
       </div>
       <div v-for="(item, key) in dataMenu" :key="key" style="position: relative">
         <input type="checkbox" class="check-details" v-model="item.show" />
         <p class="check-details"><font-awesome-icon icon="fa-solid fa-play" /></p>
-        <details class="ps-4" :open="item.show">
+        <details class="ps-4 pb-5" :open="item.show">
           <summary>
-            <strong> {{ key }}&emsp;</strong>
             <input
               type="checkbox"
               :id="`${item.id_main}_id`"
@@ -72,40 +75,21 @@
               :checked="item.main_status"
               @change="checkAll(item)"
             />
-            <label for="" class="ms-2">Vị trí :</label
-            ><input
-              type="number"
-              class="form-control frm-custom_order"
-              v-model="item.main_order"
-              :disabled="item.disabled_edit"
-            />
-            <label for="" class="ms-2">Tên :</label
-            ><input
-              type="text"
-              class="form-control frm-custom_name"
-              v-model="item.main"
-              :disabled="item.disabled_edit"
-            />
-            <label for="" class="ms-2">Màu :</label
-            ><input
-              type="color"
-              class="form-control frm-custom_color-input"
-              v-model="item.color"
-              :disabled="item.disabled_edit"
-            />
-            <input
-              type="text"
-              class="form-control frm-custom_color"
-              v-model="item.color"
-              :disabled="item.disabled_edit"
-            />
+
+            <span><strong>Vị trí : </strong>{{ item.main_order }}</span>
+            <span><strong>Tên : </strong>{{ item.main }}</span>
+            <span
+              ><strong>Màu : </strong>{{ item.color }}
+              <input type="color" class="input-view" :value="item.color" disabled />
+            </span>
+            <span>{{ item.color ?? "trống" }}</span>
             <button
-              class="btn btn-rename"
+              class="btn btn-rename ms-5"
               @click="item.disabled_edit = !item.disabled_edit"
             >
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
-            <button class="btn btn-block">
+            <!-- <button class="btn btn-block">
               <font-awesome-icon icon="fa-solid fa-ban" />
             </button>
             <button class="btn btn-run">
@@ -113,7 +97,7 @@
             </button>
             <button class="btn btn-save">
               <font-awesome-icon icon="fa-regular fa-floppy-disk" />
-            </button>
+            </button> -->
           </summary>
           <strong
             v-for="(itemSub, keySub) in item.sub"
@@ -122,49 +106,36 @@
             class="ms-5 row"
           >
             <div class="col-7 custom-sub">
-              <strong style="color: red"> {{ keySub }}&emsp;</strong>
               <input
                 type="checkbox"
                 :id="`${itemSub.id_sub}_id`"
                 class="me-2 form-check-input"
                 :checked="item.main_status ? itemSub.sub_status : false"
               />
-              <label for="" class="ms-2">Vị trí :</label
-              ><input
-                type="number"
-                class="form-control frm-custom_sub_order"
-                v-model="itemSub.sub_order"
-                :disabled="itemSub.disabled_edit"
-              />
-              <label for="" class="ms-2">Tên :</label
-              ><input
-                type="text"
-                class="form-control frm-custom_sub_name"
-                v-model="itemSub.sub"
-                :disabled="itemSub.disabled_edit"
-              />
-              <label for="" class="ms-2">Màu :</label
-              ><input
-                type="color"
-                class="form-control frm-custom_sub_color-input"
-                v-model="itemSub.sub_color"
-                :disabled="itemSub.disabled_edit"
-              />
-              <input
-                type="text"
-                class="form-control frm-custom_sub_color"
-                v-model="itemSub.sub_color"
-                :disabled="itemSub.disabled_edit"
-              />
+              <span><strong>Vị trí </strong>{{ itemSub.sub_order }}</span>
+              <span><strong>Tên </strong>{{ itemSub.sub }}</span>
+              <span
+                ><strong>Màu </strong
+                >{{ isColorCode(itemSub.sub_color) ? itemSub.sub_color : "null" }}</span
+              >
+              <span
+                class="view-color"
+                :style="{
+                  background: isColorCode(itemSub.sub_color)
+                    ? itemSub.sub_color
+                    : colorDefault,
+                }"
+              >
+              </span>
             </div>
             <div class="col-5">
               <button
-                class="btn btn-rename"
+                class="btn btn-rename btn-child"
                 @click="itemSub.disabled_edit = !itemSub.disabled_edit"
               >
                 <font-awesome-icon icon="fa-regular fa-pen-to-square" />
               </button>
-              <button class="btn btn-block">
+              <!-- <button class="btn btn-block">
                 <font-awesome-icon icon="fa-solid fa-ban" />
               </button>
               <button class="btn btn-run">
@@ -172,7 +143,7 @@
               </button>
               <button class="btn btn-save">
                 <font-awesome-icon icon="fa-regular fa-floppy-disk" />
-              </button>
+              </button> -->
             </div>
           </strong>
           <div class="create-menu" v-show="item.is_created">
@@ -205,14 +176,14 @@
             </button>
           </div>
           <button
-            class="btn btn-add ms-5"
+            class="btn-add add-child"
             @click="item.is_created = !item.is_created"
             v-if="!item.is_created"
           >
             <font-awesome-icon icon="fa-solid fa-plus" />
           </button>
           <button
-            class="btn btn-remove ms-5"
+            class="btn-remove add-child"
             @click="item.is_created = !item.is_created"
             v-else
           >
@@ -248,24 +219,10 @@
           class="form-control frm-custom_sub_color"
           v-model="dataCreateNew.color"
         />
-        <button class="btn btn-save" @click="SubmitFormCreate()">
+        <!-- <button class="btn btn-save" @click="SubmitFormCreate()">
           <font-awesome-icon icon="fa-regular fa-floppy-disk" />
-        </button>
+        </button> -->
       </div>
-      <button
-        class="btn btn-add ms-4"
-        v-if="!isCreateMenuMain"
-        @click="isCreateMenuMain = !isCreateMenuMain"
-      >
-        <font-awesome-icon icon="fa-solid fa-plus" />
-      </button>
-      <button
-        class="btn btn-remove ms-5"
-        v-else
-        @click="isCreateMenuMain = !isCreateMenuMain"
-      >
-        <font-awesome-icon icon="fa-solid fa-minus" />
-      </button>
     </div>
     <!-- Tạo menu đầu tiên -->
     <div v-else class="ps-4">
@@ -342,11 +299,13 @@
 import apiWeb from "@/js/api/admin/apiWeb.js";
 import { ElNotification } from "element-plus";
 import Popper from "vue3-popper";
+import methodDefine from "@/js/mixins/methodDefine.js";
 export default {
   name: "Menu-Vue",
   components: {
     Popper,
   },
+  mixins: [methodDefine],
   setup() {},
   directives: {},
   data() {
@@ -356,7 +315,7 @@ export default {
         main: 0,
         sub: 0,
       },
-      colorAdd: "áddddddddd",
+      colorDefault: "#000",
       dataCreateNew: {
         name: "",
         color: "#000000",
@@ -461,13 +420,24 @@ export default {
 </script>
 
 <style scoped>
+span.view-color {
+  width: 2rem;
+  height: 2rem;
+}
 .btn-run {
   color: white;
   background-color: #52c41a;
 }
 .btn-status {
   color: white;
-  background-color: #0f9f48;
+  background-color: var(--btn-save-color);
+  border: none;
+  padding: 5px 7px;
+  border-radius: 5px;
+  transition: ease 0.3s;
+}
+.btn-status:hover {
+  transform: scale(1.07);
 }
 .total-menu {
   display: flex;
@@ -505,7 +475,13 @@ div.card {
 strong label {
   font-size: 80%;
 }
-
+details > summary span {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  margin-left: 4rem;
+}
 .check-details {
   position: absolute;
   top: 0;
@@ -541,8 +517,9 @@ summary {
 .block-content {
   display: flex;
   flex-wrap: nowrap;
-  margin-left: 1rem;
+  margin-right: 3rem;
   margin-top: 1rem;
+  justify-content: flex-end;
 }
 
 :deep(.popper) {
@@ -564,12 +541,25 @@ summary {
 
 .btn {
   border: 1px solid white;
-  border-radius: 20px;
+  border-radius: 10px;
   width: 45px;
   height: 36px;
   font-size: 16px;
+  transition: ease 0.4s;
 }
-
+.btn-child {
+  padding: 1px;
+  width: 2.2rem;
+  height: 2.3rem;
+  border-radius: 50px;
+  color: #d9d9d9;
+}
+.add-child {
+  border: none;
+  border-radius: 50px;
+  padding: 5px 10px;
+  margin-left: 3.6rem;
+}
 .btn-from {
   border: 1px solid white;
   border-radius: 20px;
@@ -581,7 +571,7 @@ summary {
 
 .btn:hover,
 .btn-from:hover {
-  transform: scale(1.1);
+  transform: scale(1.07);
 }
 
 .btn-add {
@@ -711,5 +701,6 @@ input.form-control.frm-custom_sub_color {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  padding-bottom: 0.8rem;
 }
 </style>
