@@ -46,13 +46,6 @@
       <button class="btn btn-add me-3" @click="showDrawer('', 'add')">
         <font-awesome-icon icon="fa-solid fa-plus" />
       </button>
-      <!-- <button
-        class="btn btn-remove me-3"
-        v-else
-        @click="isCreateMenuMain = !isCreateMenuMain"
-      > -->
-      <!-- <font-awesome-icon icon="fa-solid fa-minus" />
-      </button> -->
       <button class="btn-status">Thay đổi trạng thái</button>
     </div>
     <div v-for="(item, key) in dataMenu" :key="key" style="position: relative">
@@ -88,15 +81,6 @@
           <button class="btn-remove add-child" @click="showDrawer(item, 'add')" v-else>
             <font-awesome-icon icon="fa-solid fa-minus" />
           </button>
-          <!-- <button class="btn btn-block">
-            <font-awesome-icon icon="fa-solid fa-ban" />
-          </button>
-          <button class="btn btn-run">
-            <font-awesome-icon icon="fa-solid fa-person-running" />
-          </button>
-          <button class="btn btn-save">
-            <font-awesome-icon icon="fa-regular fa-floppy-disk" />
-          </button> -->
         </summary>
         <strong
           v-for="(itemSub, keySub) in item.sub"
@@ -134,46 +118,8 @@
             >
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
-            <!-- <button class="btn btn-block">
-              <font-awesome-icon icon="fa-solid fa-ban" />
-            </button>
-            <button class="btn btn-run">
-              <font-awesome-icon icon="fa-solid fa-person-running" />
-            </button>
-            <button class="btn btn-save">
-              <font-awesome-icon icon="fa-regular fa-floppy-disk" />
-            </button> -->
           </div>
         </strong>
-        <!-- <div class="create-menu" v-show="item.is_created">
-          <strong>Tạo mới</strong>
-          <label for="" class="ms-2">Vị trí :</label
-          ><input
-            type="number"
-            class="form-control frm-custom_sub_order"
-            v-model="dataCreateSub.order"
-          />
-          <label for="" class="ms-2">Tên :</label
-          ><input
-            type="text"
-            class="form-control frm-custom_sub_name"
-            v-model="dataCreateSub.name"
-          />
-          <label for="" class="ms-2">Màu :</label
-          ><input
-            type="color"
-            class="form-control frm-custom_sub_color-input"
-            v-model="dataCreateSub.color"
-          />
-          <input
-            type="text"
-            class="form-control frm-custom_sub_color"
-            v-model="dataCreateSub.color"
-          />
-          <button class="btn btn-save" @click="createSubMenu(item)">
-            <font-awesome-icon icon="fa-regular fa-floppy-disk" />
-          </button>
-        </div> -->
       </details>
     </div>
   </div>

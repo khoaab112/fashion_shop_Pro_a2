@@ -36,21 +36,25 @@
         placeholder="1"
         v-model="dataMenu.order"
       />
-      <label for="colorInput">Màu hiển thị</label>
-      <input
-        type="color"
-        class="form-control"
-        id="colorInput"
-        placeholder="Màu hiển thị"
-        v-model="dataMenu.color"
-      />
-      <input
-        type="text"
-        class="form-control"
-        id="colorInputText"
-        placeholder="Màu hiển thị"
-        v-model="dataMenu.color"
-      />
+      <div class="group-input">
+        <label for="colorInput">Màu hiển thị</label>
+        <input
+          type="color"
+          class="form-control"
+          id="colorInput"
+          placeholder="Màu"
+          v-model="dataMenu.color"
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="colorInputText"
+          placeholder="Màu"
+          v-model="dataMenu.color"
+          :style="{ color: dataMenu.color }"
+          style="font-weight: bold"
+        />
+      </div>
       <!-- </div> -->
       <div class="list-btn">
         <button class="btn btn-save">

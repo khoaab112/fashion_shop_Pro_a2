@@ -20,6 +20,7 @@
             <span>Kiểu bảng</span>
           </span>
         </template>
+        <tableMenu :data="dataMenu"></tableMenu>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -31,11 +32,13 @@ import { ElNotification } from "element-plus";
 import Popper from "vue3-popper";
 import methodDefine from "@/js/mixins/methodDefine.js";
 import listMenu from "./list.vue";
+import tableMenu from "./table.vue";
 export default {
   name: "Menu-Vue",
   components: {
     Popper,
     listMenu,
+    tableMenu,
   },
   mixins: [methodDefine],
   setup() {},

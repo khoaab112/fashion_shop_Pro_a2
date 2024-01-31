@@ -117,6 +117,10 @@ span.error-message-danger {
     color: #dc3545;
 }
 
+.icon {
+    transform: var(--transform-scale);
+}
+
 
 /* Ẩn thanh cuộn của input type number */
 
