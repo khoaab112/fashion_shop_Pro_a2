@@ -15,7 +15,7 @@ use App\Http\Controllers\Admin\StaffAccountController;
 use App\Http\Controllers\Admin\Administration;
 use App\Http\Controllers\Admin\Position;
 use App\Http\Controllers\Authentication\AuthenticationCustomersController;
-use App\Http\Controllers\Admin\WebController;
+use App\Http\Controllers\Admin\MenuController;
 
 
 
@@ -115,7 +115,7 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             //role staff
 
             // web
-            Route::get('/menu', [WebController::class, 'getMenu']);
+            Route::get('/menu', [MenuController::class, 'getMenu']);
 
             Route::group([
                 // 'middleware' => 'api',

@@ -10,7 +10,7 @@ use App\Repositories\MenuMain\MenuMainRepository;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
-class WebController extends Controller
+class MenuController extends Controller
 {
     //
     protected $subMenu, $menuMain;
@@ -36,4 +36,5 @@ class WebController extends Controller
             return CodeHttpHelpers::returnJson(500, false, "Lỗi bất thường", 500);
         }
     }
+    // public function
 }
