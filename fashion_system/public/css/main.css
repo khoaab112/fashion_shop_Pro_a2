@@ -113,6 +113,10 @@ body {
     background-color: #e4e9f7;
 }
 
+button {
+    transition: var(--transition-ease);
+}
+
 span.error-message-danger {
     color: #dc3545;
 }
@@ -137,7 +141,7 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-.btn {
+button.btn {
     border: 1px solid white !important;
     border-radius: 10px !important;
     width: 45px !important;
@@ -146,12 +150,12 @@ input[type="number"] {
     transition: ease 0.4s !important;
 }
 
-.btn-run {
+button.btn-run {
     color: white !important;
     background-color: #52c41a !important;
 }
 
-.btn-status {
+button.btn-status {
     color: white !important;
     background-color: var(--btn-save-color) !important;
     border: none !important;
@@ -160,46 +164,46 @@ input[type="number"] {
     transition: ease 0.3s !important;
 }
 
-.btn-status:hover {
+button.btn-status:hover {
     transform: scale(1.07) !important;
 }
 
-.btn:hover,
-.btn-from:hover {
+button.btn:hover,
+button.btn-from:hover {
     transform: scale(1.07) !important;
 }
 
-.btn-add {
+button.btn-add {
     color: white !important;
     background-color: var(--green-color) !important;
 }
 
-.btn-remove {
+button.btn-remove {
     color: white !important;
     background-color: red !important;
 }
 
-.btn-save {
+button.btn-save {
     color: white !important;
     background-color: #2c96ff !important;
 }
 
-.btn-block {
+button.btn-block {
     color: white !important;
     background-color: orange !important;
 }
 
-.btn-change {
+button.btn-change {
     color: white;
     background-color: #8313f3 !important;
 }
 
-.btn-rename {
+button.btn-rename {
     color: white;
     background-color: var(--info-color) !important;
 }
 
-.btn-clear {
+button.btn-clear {
     color: #fff !important;
     background-color: #d9d9d9 !important;
     border: 1px solid #d9d9d9 !important;
@@ -208,9 +212,11 @@ input[type="number"] {
 span.status-on {
     background-color: #d0f5db;
     color: #5bbb6b;
+    user-select: none;
 }
 
 span.status-off {
     background-color: #f7000333;
     color: red;
+    user-select: none;
 }

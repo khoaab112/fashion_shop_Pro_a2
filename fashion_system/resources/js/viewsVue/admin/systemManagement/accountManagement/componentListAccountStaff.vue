@@ -26,10 +26,8 @@
         <span class="col-name"> {{ data.data.value.user_name }}</span>
       </template>
       <template #cell(status)="data">
-        <span v-if="data.data.value.status"
-          >Hoạt động<strong class="float-end"> </strong
-        ></span>
-        <span v-else>Khóa<strong class="float-end"> </strong></span>
+        <span class="status-on badge" v-if="data.data.value.status">Hoạt động</span>
+        <span class="status-off badge" v-else>Khóa</span>
       </template>
       <template #cell(actions)="data">
         <!-- <button class="action action-update">Thay đổi</button> -->

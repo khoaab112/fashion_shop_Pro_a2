@@ -159,18 +159,8 @@
             {{ data.data.value.note }}
           </template>
           <template #cell(status)="data">
-            <span v-if="data.data.value.status"
-              >Hoạt động<strong class="float-end">
-                <font-awesome-icon
-                  icon="fa-solid fa-circle"
-                  style="color: #28a745" /></strong
-            ></span>
-            <span v-else
-              >Khóa<strong class="float-end">
-                <font-awesome-icon
-                  icon="fa-solid fa-circle"
-                  style="color: #dc3545" /></strong
-            ></span>
+            <span class="status-on badge" v-if="data.data.value.status">Hoạt động</span>
+            <span class="status-off badge" v-else>Khóa</span>
           </template>
           <template #cell(actions)="data">
             <button
