@@ -204,3 +204,13 @@ input[type="number"] {
     background-color: #d9d9d9 !important;
     border: 1px solid #d9d9d9 !important;
 }
+
+span.status-on {
+    background-color: #d0f5db;
+    color: #5bbb6b;
+}
+
+span.status-off {
+    background-color: #f7000333;
+    color: red;
+}
