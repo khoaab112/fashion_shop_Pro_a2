@@ -114,8 +114,12 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             Route::post('/register', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api', 'checkRole']);
             //role staff
 
-            // web
+            // web menu
             Route::get('/menu', [MenuController::class, 'getMenu']);
+            Route::post('/menu', [MenuController::class, 'createMenu']);
+            Route::post('/sub-menu', [MenuController::class, 'createSubMenu']);
+            Route::put('/lock-menu', [MenuController::class, 'lockMenu']);
+            Route::put('/update-menu', [MenuController::class, 'updateMenu']);
 
             Route::group([
                 // 'middleware' => 'api',
