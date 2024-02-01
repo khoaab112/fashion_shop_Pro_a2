@@ -1,5 +1,10 @@
 <template>
   <!-- Nội dung giao diện người dùng -->
+  <div class="block-content">
+    <button class="btn btn-add me-3" @click="showDrawer('', 'add')">
+      <font-awesome-icon icon="fa-solid fa-plus" />
+    </button>
+  </div>
   <table>
     <thead>
       <tr>
@@ -18,16 +23,17 @@
     </thead>
     <tbody class="row-table" v-for="(item, key) in dataMenu" :key="key">
       <tr>
-        <td :rowspan="item.sub.length">
+        <td :rowspan="item.sub.length<=3?3:item.sub.length">
           <div class="menu-name">
             <strong>{{ item.main }}</strong>
             <br />
-            <button class="btn btn-rename">
+            <button class="btn btn-rename" @click="showDrawer(item,'edit')">
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
           </div>
         </td>
-        <td :rowspan="getNumberRow_1(item.sub.length)">
+        <!-- hàng 1 -->
+        <td :rowspan="getNumberRow_1(item.sub.length)<1?1:getNumberRow_1(item.sub.length)">
           <div class="order-table">
             <strong>Vị trí</strong> <span>{{ item.main_order }}</span>
           </div>
@@ -59,7 +65,7 @@
             <button class="btn btn-block me-2">
               <font-awesome-icon icon="fa-solid fa-ban" />
             </button>
-            <button class="btn btn-rename">
+            <button class="btn btn-rename" @click="showDrawer({ main: item, sub: item.sub[0] },'edit')">
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
           </div>
@@ -96,14 +102,15 @@
             <button class="btn btn-block me-2">
               <font-awesome-icon icon="fa-solid fa-ban" />
             </button>
-            <button class="btn btn-rename">
+            <button class="btn btn-rename" @click="showDrawer({ main: item, sub: subItem },'edit')">
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
           </div>
         </td>
       </tr>
+      <!-- hàng 2 -->
       <tr>
-        <td :rowspan="getNumberRow_1(item.sub.length)">
+        <td :rowspan="getNumberRow_1(item.sub.length)<1?1:getNumberRow_1(item.sub.length)">
           <div class="box-list">
             <strong>
               <span>{{
@@ -116,13 +123,16 @@
           </div>
         </td>
         <td>
-          {{ item.sub[getNumberRow_1(item.sub.length)].sub ?? "" }}
+            <div v-if="item.sub.length<=1"></div>
+            <div v-else>{{ item.sub[getNumberRow_1(item.sub.length)].sub ?? "" }}</div>
         </td>
         <td class="order-sub">
-          {{ item.sub[getNumberRow_1(item.sub.length)].sub_order ?? "" }}
+            <div v-if="item.sub.length<=1"></div>
+            <div v-else> {{ item.sub[getNumberRow_1(item.sub.length)].sub_order ?? "" }}</div>
         </td>
         <td>
-          <div class="box-list">
+            <div v-if="item.sub.length<=1"></div>
+          <div class="box-list" v-else>
             <strong>
               {{
                 isColorCode(item.sub[getNumberRow_1(item.sub.length)].sub_color)
@@ -142,7 +152,7 @@
             ></span>
           </div>
         </td>
-        <td class="table-status">
+        <td class="table-status" v-if="item.sub.length>1">
           <span
             class="status-on badge"
             v-if="item.sub[getNumberRow_1(item.sub.length)].sub_status"
@@ -150,17 +160,20 @@
           >
           <span class="status-off badge" v-else>Dừng</span>
         </td>
+        <td v-else></td>
         <td class="btn-table">
-          <div class="list-btn">
+            <div v-if="item.sub.length<=1"></div>
+          <div class="list-btn" v-else>
             <button class="btn btn-block me-2">
               <font-awesome-icon icon="fa-solid fa-ban" />
             </button>
-            <button class="btn btn-rename">
+            <button class="btn btn-rename" @click="showDrawer({ main: item, sub: item.sub[getNumberRow_1(item.sub.length)] },'edit')">
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
           </div>
         </td>
       </tr>
+
       <tr
         v-for="(subItem, subKey) in item.sub.slice(
           getNumberRow_1(item.sub.length) + 1,
@@ -195,25 +208,31 @@
             <button class="btn btn-block me-2">
               <font-awesome-icon icon="fa-solid fa-ban" />
             </button>
-            <button class="btn btn-rename">
+            <button class="btn btn-rename" @click="showDrawer({ main: item, sub: subItem },'edit')">
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
           </div>
         </td>
       </tr>
+            <!-- hàng 3 -->
       <tr>
         <td :rowspan="getNumberLastRow(item.sub.length)" class="table-status">
           <span class="status-on badge" v-if="item.main_status">Hoạt động</span>
           <span class="status-off badge" v-else>Dừng</span>
         </td>
         <td>
+            <div v-if="item.sub.length<=2"></div>
+            <div v-else>
           {{ item.sub[getNumberRow_1(item.sub.length) * 2].sub ?? "" }}
+          </div>
         </td>
         <td class="order-sub">
-          {{ item.sub[getNumberRow_1(item.sub.length) * 2].sub_order ?? "" }}
+            <div v-if="item.sub.length<=2"></div>
+<div v-else>{{ item.sub[getNumberRow_1(item.sub.length) * 2].sub_order ?? "" }}</div>
         </td>
         <td>
-          <div class="box-list">
+            <div v-if="item.sub.length<=2"></div>
+          <div class="box-list" v-else>
             <strong>
               <span>{{
                 isColorCode(item.sub[getNumberRow_1(item.sub.length) * 2].sub_color)
@@ -232,7 +251,7 @@
             ></span>
           </div>
         </td>
-        <td class="table-status">
+        <td class="table-status" v-if="item.sub.length>2">
           <span
             class="status-on badge"
             v-if="item.sub[getNumberRow_1(item.sub.length) * 2].sub_status"
@@ -240,12 +259,14 @@
           >
           <span class="status-off badge" v-else>Dừng</span>
         </td>
+        <td v-else></td>
         <td class="btn-table">
-          <div class="list-btn">
+            <div v-if="item.sub.length<=2"></div>
+          <div class="list-btn" v-else>
             <button class="btn btn-block me-2">
               <font-awesome-icon icon="fa-solid fa-ban" />
             </button>
-            <button class="btn btn-rename">
+            <button class="btn btn-rename" @click="showDrawer({ main: item, sub: item.sub[getNumberRow_1(item.sub.length)] },'edit')">
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
           </div>
@@ -286,7 +307,7 @@
             <button class="btn btn-block me-2">
               <font-awesome-icon icon="fa-solid fa-ban" />
             </button>
-            <button class="btn btn-rename">
+            <button class="btn btn-rename" @click="showDrawer({ main: item, sub: subItem },'edit')">
               <font-awesome-icon icon="fa-regular fa-pen-to-square" />
             </button>
           </div>
@@ -308,14 +329,21 @@
       </tr>
     </tfoot>
   </table>
+  <DrawerMenu
+  :data="dataDrawer.data"
+  :type="dataDrawer.type"
+  :isShow="dataDrawer.show"
+  @clone="cloneDrawer"
+></DrawerMenu>
 </template>
 
 <script>
 import methodDefine from "@/js/mixins/methodDefine.js";
+import DrawerMenu from "./drawer.vue";
 
 export default {
   name: "Menu-table",
-  components: {},
+  components: {DrawerMenu},
   props: ["data"],
   setup() {},
   mixins: [methodDefine],
@@ -327,6 +355,11 @@ export default {
       colorDefault: "#000",
       totalMain: 0,
       totalSub: 0,
+      dataDrawer: {
+        data: null,
+        type: "",
+        show: false,
+      },
     };
   },
   watch: {
@@ -362,6 +395,16 @@ export default {
       data.forEach((ele) => {
         this.totalSub += ele.sub.length;
       });
+    },
+    cloneDrawer(value) {
+      this.dataDrawer.show = !value;
+    },
+    showDrawer(data, type) {
+      this.dataDrawer = {
+        data: data,
+        type: type,
+        show: true,
+      };
     },
   },
 };
@@ -465,5 +508,9 @@ tfoot tr > td > div {
 }
 tfoot tr > td > div strong:nth-child(2) {
   color: red;
+}
+.block-content {
+    float: right;
+    margin-bottom: 1rem;
 }
 </style>
