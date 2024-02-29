@@ -25,16 +25,16 @@ class AuthenticationCustomersController extends Controller
         "first_name" => 'required|max:50',
         "last_name" => 'required|max:50',
         "address" => 'required|max:200',
-        "phone_number" => 'required|max:10|unique:customers,phone_number',
-        "email" => 'required|max:50|unique:customers,email',
+        "phone_number" => 'required|numeric|regex:/^[0-9]{10}$/|unique:customers,phone_number',
+        "email" => 'required|max:50|unique:customers,email|email',
         "birthday" => 'required',
-        "sex" => 'required|boolean',
+        "sex" => 'boolean',
         // "accumulated_points" => 'numeric',
         // "number_ban" => 'numeric',
         // "potential" => 'boolean',
         // "status" => 'boolean',
-        "password" => 'required|confirmed|min:9',
-        // "password_confirmation" => 'required|min:9',
+        "password" => 'required|confirmed|min:8',
+        "password_confirmation" => 'required|min:8',
         // "remember_token" => 'boolean',
     ];
     protected   $attributeNames = [
@@ -60,12 +60,26 @@ class AuthenticationCustomersController extends Controller
     }
     public function register(Request $request)
     {
+
+        $validator = validationHelpers::validation($request->all(), $this->validationRules, $this->attributeNames);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return CodeHttpHelpers::returnJson(400, false, $errors, 200);
+        }
+        dd(1);
+        $customer = [
+            'rank_id' => $request->post('staff_id'),
+            'first_name' => $request->post('administration_id'),
+            'last_name' => $request->post('user_name'),
+            'address' => $request->post('user_name'),
+            'phone_number' => $request->post('user_name'),
+            'email' => $request->post('user_name'),
+            'potential' => $request->post('user_name'),
+            'password' => bcrypt($request->post('password')),
+            'status' => true,
+        ];
         try {
-            $validator = validationHelpers::validation($request->all(), $this->validationRules, $this->attributeNames);
-            if ($validator->fails()) {
-                $errors = $validator->errors();
-                return CodeHttpHelpers::returnJson(400, false, $errors, 200);
-            }
+            $result = $this->customer->create($customer);
         } catch (\Exception $exception) {
             return CodeHttpHelpers::returnJson(500, false, $exception, 500);
         }
