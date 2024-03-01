@@ -5,7 +5,7 @@
 -- Dumped from database version 15.3
 -- Dumped by pg_dump version 15.3
 
--- Started on 2024-03-01 11:10:23
+-- Started on 2024-03-01 11:12:29
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -41,6 +41,25 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO pg_database_owner;
+
+--
+-- TOC entry 4216 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
 
 --
 -- TOC entry 323 (class 1255 OID 17459)
@@ -81,7 +100,7 @@ CREATE TABLE public.account_admin_action (
 ALTER TABLE public.account_admin_action OWNER TO postgres;
 
 --
--- TOC entry 4216 (class 0 OID 0)
+-- TOC entry 4217 (class 0 OID 0)
 -- Dependencies: 214
 -- Name: TABLE account_admin_action; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -90,7 +109,7 @@ COMMENT ON TABLE public.account_admin_action IS 'bảng trung gian tài khoản 
 
 
 --
--- TOC entry 4217 (class 0 OID 0)
+-- TOC entry 4218 (class 0 OID 0)
 -- Dependencies: 214
 -- Name: COLUMN account_admin_action.administration_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -99,7 +118,7 @@ COMMENT ON COLUMN public.account_admin_action.administration_id IS 'mã quyền'
 
 
 --
--- TOC entry 4218 (class 0 OID 0)
+-- TOC entry 4219 (class 0 OID 0)
 -- Dependencies: 214
 -- Name: COLUMN account_admin_action.action_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -124,7 +143,7 @@ CREATE SEQUENCE public.account_admin_action_id_seq
 ALTER TABLE public.account_admin_action_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4219 (class 0 OID 0)
+-- TOC entry 4220 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: account_admin_action_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -150,7 +169,7 @@ CREATE TABLE public.action (
 ALTER TABLE public.action OWNER TO postgres;
 
 --
--- TOC entry 4220 (class 0 OID 0)
+-- TOC entry 4221 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: TABLE action; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -159,7 +178,7 @@ COMMENT ON TABLE public.action IS 'tên các quyền như thêm , sửa , xóa c
 
 
 --
--- TOC entry 4221 (class 0 OID 0)
+-- TOC entry 4222 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: COLUMN action.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -168,7 +187,7 @@ COMMENT ON COLUMN public.action.name IS 'tên quyền';
 
 
 --
--- TOC entry 4222 (class 0 OID 0)
+-- TOC entry 4223 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: COLUMN action.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -193,7 +212,7 @@ CREATE SEQUENCE public.action_id_seq
 ALTER TABLE public.action_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4223 (class 0 OID 0)
+-- TOC entry 4224 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: action_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -219,7 +238,7 @@ CREATE TABLE public.administration (
 ALTER TABLE public.administration OWNER TO postgres;
 
 --
--- TOC entry 4224 (class 0 OID 0)
+-- TOC entry 4225 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: TABLE administration; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -228,7 +247,7 @@ COMMENT ON TABLE public.administration IS 'tên cấp độ tài khoản';
 
 
 --
--- TOC entry 4225 (class 0 OID 0)
+-- TOC entry 4226 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: COLUMN administration.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -253,7 +272,7 @@ CREATE SEQUENCE public.administration_id_seq
 ALTER TABLE public.administration_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4226 (class 0 OID 0)
+-- TOC entry 4227 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: administration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -281,7 +300,7 @@ CREATE TABLE public.admins_notification (
 ALTER TABLE public.admins_notification OWNER TO postgres;
 
 --
--- TOC entry 4227 (class 0 OID 0)
+-- TOC entry 4228 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: TABLE admins_notification; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -290,7 +309,7 @@ COMMENT ON TABLE public.admins_notification IS 'thông báo cho nhân viên';
 
 
 --
--- TOC entry 4228 (class 0 OID 0)
+-- TOC entry 4229 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: COLUMN admins_notification.type_notification; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -299,7 +318,7 @@ COMMENT ON COLUMN public.admins_notification.type_notification IS 'loại thông
 
 
 --
--- TOC entry 4229 (class 0 OID 0)
+-- TOC entry 4230 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: COLUMN admins_notification.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -324,7 +343,7 @@ CREATE SEQUENCE public.admins_notification_id_seq
 ALTER TABLE public.admins_notification_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4230 (class 0 OID 0)
+-- TOC entry 4231 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: admins_notification_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -355,7 +374,7 @@ CREATE TABLE public.ads (
 ALTER TABLE public.ads OWNER TO postgres;
 
 --
--- TOC entry 4231 (class 0 OID 0)
+-- TOC entry 4232 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: TABLE ads; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -364,7 +383,7 @@ COMMENT ON TABLE public.ads IS 'quảng cáo';
 
 
 --
--- TOC entry 4232 (class 0 OID 0)
+-- TOC entry 4233 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN ads.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -373,7 +392,7 @@ COMMENT ON COLUMN public.ads.name IS 'tên quảng cáo';
 
 
 --
--- TOC entry 4233 (class 0 OID 0)
+-- TOC entry 4234 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN ads.event_ads_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -382,7 +401,7 @@ COMMENT ON COLUMN public.ads.event_ads_id IS 'id sự kiện đang chạy';
 
 
 --
--- TOC entry 4234 (class 0 OID 0)
+-- TOC entry 4235 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN ads.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -391,7 +410,7 @@ COMMENT ON COLUMN public.ads.staff_id IS 'mã nhân viên';
 
 
 --
--- TOC entry 4235 (class 0 OID 0)
+-- TOC entry 4236 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN ads.sub_menu_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -400,7 +419,7 @@ COMMENT ON COLUMN public.ads.sub_menu_id IS 'thuộc sub menu nào';
 
 
 --
--- TOC entry 4236 (class 0 OID 0)
+-- TOC entry 4237 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN ads.priority; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -425,7 +444,7 @@ CREATE SEQUENCE public.ads_id_seq
 ALTER TABLE public.ads_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4237 (class 0 OID 0)
+-- TOC entry 4238 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: ads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -454,7 +473,7 @@ CREATE TABLE public.api_weather (
 ALTER TABLE public.api_weather OWNER TO postgres;
 
 --
--- TOC entry 4238 (class 0 OID 0)
+-- TOC entry 4239 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: TABLE api_weather; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -463,7 +482,7 @@ COMMENT ON TABLE public.api_weather IS 'table api thời tiết';
 
 
 --
--- TOC entry 4239 (class 0 OID 0)
+-- TOC entry 4240 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: COLUMN api_weather.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -472,7 +491,7 @@ COMMENT ON COLUMN public.api_weather.name IS 'tên api';
 
 
 --
--- TOC entry 4240 (class 0 OID 0)
+-- TOC entry 4241 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: COLUMN api_weather.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -497,7 +516,7 @@ CREATE SEQUENCE public.api_weather_id_seq
 ALTER TABLE public.api_weather_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4241 (class 0 OID 0)
+-- TOC entry 4242 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: api_weather_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -538,7 +557,7 @@ CREATE TABLE public.bill (
 ALTER TABLE public.bill OWNER TO postgres;
 
 --
--- TOC entry 4242 (class 0 OID 0)
+-- TOC entry 4243 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: TABLE bill; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -547,7 +566,7 @@ COMMENT ON TABLE public.bill IS 'hóa đơn';
 
 
 --
--- TOC entry 4243 (class 0 OID 0)
+-- TOC entry 4244 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.code_bill; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -556,7 +575,7 @@ COMMENT ON COLUMN public.bill.code_bill IS 'mã hóa đơn hiển thị';
 
 
 --
--- TOC entry 4244 (class 0 OID 0)
+-- TOC entry 4245 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -565,7 +584,7 @@ COMMENT ON COLUMN public.bill.staff_id IS 'mã nhân viên tạo phiếu';
 
 
 --
--- TOC entry 4245 (class 0 OID 0)
+-- TOC entry 4246 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.customers_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -574,7 +593,7 @@ COMMENT ON COLUMN public.bill.customers_id IS 'phiếu của kh';
 
 
 --
--- TOC entry 4246 (class 0 OID 0)
+-- TOC entry 4247 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.branch_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -583,7 +602,7 @@ COMMENT ON COLUMN public.bill.branch_id IS 'phiệu được tạo ở chi  nhá
 
 
 --
--- TOC entry 4247 (class 0 OID 0)
+-- TOC entry 4248 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.payment_methods_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -592,7 +611,7 @@ COMMENT ON COLUMN public.bill.payment_methods_id IS 'mã phương thức thanh t
 
 
 --
--- TOC entry 4248 (class 0 OID 0)
+-- TOC entry 4249 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.shipping_method_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -601,7 +620,7 @@ COMMENT ON COLUMN public.bill.shipping_method_id IS 'mã phương thức nhận 
 
 
 --
--- TOC entry 4249 (class 0 OID 0)
+-- TOC entry 4250 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.transfer_providers_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -611,7 +630,7 @@ COMMENT ON COLUMN public.bill.transfer_providers_id IS 'nếu chọn hình thứ
 
 
 --
--- TOC entry 4250 (class 0 OID 0)
+-- TOC entry 4251 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.total_products; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -620,7 +639,7 @@ COMMENT ON COLUMN public.bill.total_products IS 'tổng số sp';
 
 
 --
--- TOC entry 4251 (class 0 OID 0)
+-- TOC entry 4252 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.initial_amount; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -629,7 +648,7 @@ COMMENT ON COLUMN public.bill.initial_amount IS 'số tiền ban đầu';
 
 
 --
--- TOC entry 4252 (class 0 OID 0)
+-- TOC entry 4253 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.actual_amount; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -638,7 +657,7 @@ COMMENT ON COLUMN public.bill.actual_amount IS 'số tiền thực tế';
 
 
 --
--- TOC entry 4253 (class 0 OID 0)
+-- TOC entry 4254 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.giftcode_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -647,7 +666,7 @@ COMMENT ON COLUMN public.bill.giftcode_id IS 'id mã giảm giá';
 
 
 --
--- TOC entry 4254 (class 0 OID 0)
+-- TOC entry 4255 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.successful_payment; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -656,7 +675,7 @@ COMMENT ON COLUMN public.bill.successful_payment IS 'đã thanh toán ?';
 
 
 --
--- TOC entry 4255 (class 0 OID 0)
+-- TOC entry 4256 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.impact_number; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -665,7 +684,7 @@ COMMENT ON COLUMN public.bill.impact_number IS 'số lần chỉnh sửa';
 
 
 --
--- TOC entry 4256 (class 0 OID 0)
+-- TOC entry 4257 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.report_ship; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -674,7 +693,7 @@ COMMENT ON COLUMN public.bill.report_ship IS 'đơn bị tố cáo , cảnh báo
 
 
 --
--- TOC entry 4257 (class 0 OID 0)
+-- TOC entry 4258 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN bill.queue_bill; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -699,7 +718,7 @@ CREATE SEQUENCE public.bill_id_seq
 ALTER TABLE public.bill_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4258 (class 0 OID 0)
+-- TOC entry 4259 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: bill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -728,7 +747,7 @@ CREATE TABLE public.branch (
 ALTER TABLE public.branch OWNER TO postgres;
 
 --
--- TOC entry 4259 (class 0 OID 0)
+-- TOC entry 4260 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: TABLE branch; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -737,7 +756,7 @@ COMMENT ON TABLE public.branch IS 'tên các chi nhánh';
 
 
 --
--- TOC entry 4260 (class 0 OID 0)
+-- TOC entry 4261 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: COLUMN branch.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -746,7 +765,7 @@ COMMENT ON COLUMN public.branch.name IS 'tên chi nhánh';
 
 
 --
--- TOC entry 4261 (class 0 OID 0)
+-- TOC entry 4262 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: COLUMN branch.address; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -755,7 +774,7 @@ COMMENT ON COLUMN public.branch.address IS 'địa chỉ';
 
 
 --
--- TOC entry 4262 (class 0 OID 0)
+-- TOC entry 4263 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: COLUMN branch.manage; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -764,7 +783,7 @@ COMMENT ON COLUMN public.branch.manage IS 'tên quản lý';
 
 
 --
--- TOC entry 4263 (class 0 OID 0)
+-- TOC entry 4264 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: COLUMN branch.working_time; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -789,7 +808,7 @@ CREATE SEQUENCE public.branch_id_seq
 ALTER TABLE public.branch_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4264 (class 0 OID 0)
+-- TOC entry 4265 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: branch_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -817,7 +836,7 @@ CREATE TABLE public.comments_news (
 ALTER TABLE public.comments_news OWNER TO postgres;
 
 --
--- TOC entry 4265 (class 0 OID 0)
+-- TOC entry 4266 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: TABLE comments_news; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -826,7 +845,7 @@ COMMENT ON TABLE public.comments_news IS 'bình luận tin tức';
 
 
 --
--- TOC entry 4266 (class 0 OID 0)
+-- TOC entry 4267 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: COLUMN comments_news.news_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -835,7 +854,7 @@ COMMENT ON COLUMN public.comments_news.news_id IS 'thuộc tin tức nào  lấy
 
 
 --
--- TOC entry 4267 (class 0 OID 0)
+-- TOC entry 4268 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: COLUMN comments_news.customers_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -844,7 +863,7 @@ COMMENT ON COLUMN public.comments_news.customers_id IS 'id kh bình luận';
 
 
 --
--- TOC entry 4268 (class 0 OID 0)
+-- TOC entry 4269 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: COLUMN comments_news.comment_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -855,7 +874,7 @@ nếu !=id chính nó thì nó là sub_comment (đang trả lời 1 comment khá
 
 
 --
--- TOC entry 4269 (class 0 OID 0)
+-- TOC entry 4270 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: COLUMN comments_news.comment; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -880,7 +899,7 @@ CREATE SEQUENCE public.comments_news_id_seq
 ALTER TABLE public.comments_news_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4270 (class 0 OID 0)
+-- TOC entry 4271 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: comments_news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -909,7 +928,7 @@ CREATE TABLE public.comments_product (
 ALTER TABLE public.comments_product OWNER TO postgres;
 
 --
--- TOC entry 4271 (class 0 OID 0)
+-- TOC entry 4272 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: TABLE comments_product; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -918,7 +937,7 @@ COMMENT ON TABLE public.comments_product IS 'bình luận về sản phẩm';
 
 
 --
--- TOC entry 4272 (class 0 OID 0)
+-- TOC entry 4273 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN comments_product.product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -927,7 +946,7 @@ COMMENT ON COLUMN public.comments_product.product_id IS 'id sản phẩm';
 
 
 --
--- TOC entry 4273 (class 0 OID 0)
+-- TOC entry 4274 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN comments_product.customers_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -936,7 +955,7 @@ COMMENT ON COLUMN public.comments_product.customers_id IS 'id kh bình luận';
 
 
 --
--- TOC entry 4274 (class 0 OID 0)
+-- TOC entry 4275 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN comments_product.comments_product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -945,7 +964,7 @@ COMMENT ON COLUMN public.comments_product.comments_product_id IS 'thuộc id c�
 
 
 --
--- TOC entry 4275 (class 0 OID 0)
+-- TOC entry 4276 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN comments_product.vote; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -954,7 +973,7 @@ COMMENT ON COLUMN public.comments_product.vote IS 'điểm vote cho sp';
 
 
 --
--- TOC entry 4276 (class 0 OID 0)
+-- TOC entry 4277 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN comments_product.comment; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -979,7 +998,7 @@ CREATE SEQUENCE public.comments_product_id_seq
 ALTER TABLE public.comments_product_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4277 (class 0 OID 0)
+-- TOC entry 4278 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: comments_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1005,7 +1024,7 @@ CREATE TABLE public.contact_support (
 ALTER TABLE public.contact_support OWNER TO postgres;
 
 --
--- TOC entry 4278 (class 0 OID 0)
+-- TOC entry 4279 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: TABLE contact_support; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1030,7 +1049,7 @@ CREATE SEQUENCE public.contact_support_id_seq
 ALTER TABLE public.contact_support_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4279 (class 0 OID 0)
+-- TOC entry 4280 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: contact_support_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1070,7 +1089,7 @@ CREATE TABLE public.customers (
 ALTER TABLE public.customers OWNER TO postgres;
 
 --
--- TOC entry 4280 (class 0 OID 0)
+-- TOC entry 4281 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: TABLE customers; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1079,7 +1098,7 @@ COMMENT ON TABLE public.customers IS 'ds kh';
 
 
 --
--- TOC entry 4281 (class 0 OID 0)
+-- TOC entry 4282 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.rank_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1088,7 +1107,7 @@ COMMENT ON COLUMN public.customers.rank_id IS 'cấp độ kh';
 
 
 --
--- TOC entry 4282 (class 0 OID 0)
+-- TOC entry 4283 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.first_name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1097,7 +1116,7 @@ COMMENT ON COLUMN public.customers.first_name IS 'tên';
 
 
 --
--- TOC entry 4283 (class 0 OID 0)
+-- TOC entry 4284 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.last_name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1106,7 +1125,7 @@ COMMENT ON COLUMN public.customers.last_name IS 'họ';
 
 
 --
--- TOC entry 4284 (class 0 OID 0)
+-- TOC entry 4285 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.address; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1115,7 +1134,7 @@ COMMENT ON COLUMN public.customers.address IS 'địa chỉ';
 
 
 --
--- TOC entry 4285 (class 0 OID 0)
+-- TOC entry 4286 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.phone_number; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1124,7 +1143,7 @@ COMMENT ON COLUMN public.customers.phone_number IS 'số điện thoại';
 
 
 --
--- TOC entry 4286 (class 0 OID 0)
+-- TOC entry 4287 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.email; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1133,7 +1152,7 @@ COMMENT ON COLUMN public.customers.email IS 'email';
 
 
 --
--- TOC entry 4287 (class 0 OID 0)
+-- TOC entry 4288 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.birthday; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1142,7 +1161,7 @@ COMMENT ON COLUMN public.customers.birthday IS 'sinh ngày';
 
 
 --
--- TOC entry 4288 (class 0 OID 0)
+-- TOC entry 4289 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.sex; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1151,7 +1170,7 @@ COMMENT ON COLUMN public.customers.sex IS 'giới tính 0 : nữ 1: nam';
 
 
 --
--- TOC entry 4289 (class 0 OID 0)
+-- TOC entry 4290 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.accumulated_points; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1160,7 +1179,7 @@ COMMENT ON COLUMN public.customers.accumulated_points IS 'số điểm tích đ�
 
 
 --
--- TOC entry 4290 (class 0 OID 0)
+-- TOC entry 4291 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.number_ban; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1169,7 +1188,7 @@ COMMENT ON COLUMN public.customers.number_ban IS 'số lần bị band';
 
 
 --
--- TOC entry 4291 (class 0 OID 0)
+-- TOC entry 4292 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.potential; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1178,7 +1197,7 @@ COMMENT ON COLUMN public.customers.potential IS 'là kh tiềm năng hay ko , n�
 
 
 --
--- TOC entry 4292 (class 0 OID 0)
+-- TOC entry 4293 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.password; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1187,7 +1206,7 @@ COMMENT ON COLUMN public.customers.password IS 'mât khẩu';
 
 
 --
--- TOC entry 4293 (class 0 OID 0)
+-- TOC entry 4294 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.remember_token; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1196,7 +1215,7 @@ COMMENT ON COLUMN public.customers.remember_token IS 'ghi nhớ mât  khẩu';
 
 
 --
--- TOC entry 4294 (class 0 OID 0)
+-- TOC entry 4295 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.refresh_token; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1205,7 +1224,7 @@ COMMENT ON COLUMN public.customers.refresh_token IS 'khóa';
 
 
 --
--- TOC entry 4295 (class 0 OID 0)
+-- TOC entry 4296 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.issued_at; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1214,7 +1233,7 @@ COMMENT ON COLUMN public.customers.issued_at IS 'thời gian phát hành khóa';
 
 
 --
--- TOC entry 4296 (class 0 OID 0)
+-- TOC entry 4297 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN customers.expired_time; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1239,7 +1258,7 @@ CREATE SEQUENCE public.customers_id_seq
 ALTER TABLE public.customers_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4297 (class 0 OID 0)
+-- TOC entry 4298 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: customers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1267,7 +1286,7 @@ CREATE TABLE public.customers_notification (
 ALTER TABLE public.customers_notification OWNER TO postgres;
 
 --
--- TOC entry 4298 (class 0 OID 0)
+-- TOC entry 4299 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: COLUMN customers_notification.type_notification; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1276,7 +1295,7 @@ COMMENT ON COLUMN public.customers_notification.type_notification IS 'loại th�
 
 
 --
--- TOC entry 4299 (class 0 OID 0)
+-- TOC entry 4300 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: COLUMN customers_notification.customer_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1301,7 +1320,7 @@ CREATE SEQUENCE public.customers_notification_id_seq
 ALTER TABLE public.customers_notification_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4300 (class 0 OID 0)
+-- TOC entry 4301 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: customers_notification_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1333,7 +1352,7 @@ CREATE TABLE public.depot_ticket (
 ALTER TABLE public.depot_ticket OWNER TO postgres;
 
 --
--- TOC entry 4301 (class 0 OID 0)
+-- TOC entry 4302 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: COLUMN depot_ticket.code_ticket; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1342,7 +1361,7 @@ COMMENT ON COLUMN public.depot_ticket.code_ticket IS 'mã phiếu';
 
 
 --
--- TOC entry 4302 (class 0 OID 0)
+-- TOC entry 4303 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: COLUMN depot_ticket.ticket_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1351,7 +1370,7 @@ COMMENT ON COLUMN public.depot_ticket.ticket_id IS 'mã loại phiếu';
 
 
 --
--- TOC entry 4303 (class 0 OID 0)
+-- TOC entry 4304 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: COLUMN depot_ticket.staff_id_export; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1360,7 +1379,7 @@ COMMENT ON COLUMN public.depot_ticket.staff_id_export IS 'nv xuất';
 
 
 --
--- TOC entry 4304 (class 0 OID 0)
+-- TOC entry 4305 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: COLUMN depot_ticket.staff_id_receive; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1369,7 +1388,7 @@ COMMENT ON COLUMN public.depot_ticket.staff_id_receive IS 'nv nhập';
 
 
 --
--- TOC entry 4305 (class 0 OID 0)
+-- TOC entry 4306 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: COLUMN depot_ticket.product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1378,7 +1397,7 @@ COMMENT ON COLUMN public.depot_ticket.product_id IS 'id sản phẩm';
 
 
 --
--- TOC entry 4306 (class 0 OID 0)
+-- TOC entry 4307 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: COLUMN depot_ticket.product_number; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1387,7 +1406,7 @@ COMMENT ON COLUMN public.depot_ticket.product_number IS 'số lượng sp / nh�
 
 
 --
--- TOC entry 4307 (class 0 OID 0)
+-- TOC entry 4308 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: COLUMN depot_ticket.total_money; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1412,7 +1431,7 @@ CREATE SEQUENCE public.depot_ticket_id_seq
 ALTER TABLE public.depot_ticket_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4308 (class 0 OID 0)
+-- TOC entry 4309 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: depot_ticket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1442,7 +1461,7 @@ CREATE TABLE public.event_ads (
 ALTER TABLE public.event_ads OWNER TO postgres;
 
 --
--- TOC entry 4309 (class 0 OID 0)
+-- TOC entry 4310 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: TABLE event_ads; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1451,7 +1470,7 @@ COMMENT ON TABLE public.event_ads IS 'tên sự kiện chạy quảng cáo';
 
 
 --
--- TOC entry 4310 (class 0 OID 0)
+-- TOC entry 4311 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: COLUMN event_ads.name_event; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1460,7 +1479,7 @@ COMMENT ON COLUMN public.event_ads.name_event IS 'tên sk';
 
 
 --
--- TOC entry 4311 (class 0 OID 0)
+-- TOC entry 4312 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: COLUMN event_ads.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1469,7 +1488,7 @@ COMMENT ON COLUMN public.event_ads.staff_id IS 'nv tạo sk';
 
 
 --
--- TOC entry 4312 (class 0 OID 0)
+-- TOC entry 4313 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: COLUMN event_ads.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1478,7 +1497,7 @@ COMMENT ON COLUMN public.event_ads.content IS 'nội dung sk';
 
 
 --
--- TOC entry 4313 (class 0 OID 0)
+-- TOC entry 4314 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: COLUMN event_ads.start_time; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1487,7 +1506,7 @@ COMMENT ON COLUMN public.event_ads.start_time IS 'time bắt đầu sk';
 
 
 --
--- TOC entry 4314 (class 0 OID 0)
+-- TOC entry 4315 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: COLUMN event_ads.end_time; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1512,7 +1531,7 @@ CREATE SEQUENCE public.event_ads_id_seq
 ALTER TABLE public.event_ads_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4315 (class 0 OID 0)
+-- TOC entry 4316 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: event_ads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1554,7 +1573,7 @@ CREATE SEQUENCE public.failed_jobs_id_seq
 ALTER TABLE public.failed_jobs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4316 (class 0 OID 0)
+-- TOC entry 4317 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: failed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1588,7 +1607,7 @@ CREATE TABLE public.giftcode (
 ALTER TABLE public.giftcode OWNER TO postgres;
 
 --
--- TOC entry 4317 (class 0 OID 0)
+-- TOC entry 4318 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: TABLE giftcode; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1597,7 +1616,7 @@ COMMENT ON TABLE public.giftcode IS 'tên các sự kiện chạy mã code';
 
 
 --
--- TOC entry 4318 (class 0 OID 0)
+-- TOC entry 4319 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1606,7 +1625,7 @@ COMMENT ON COLUMN public.giftcode.name IS 'tên sk chạy code';
 
 
 --
--- TOC entry 4319 (class 0 OID 0)
+-- TOC entry 4320 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.event_ads_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1615,7 +1634,7 @@ COMMENT ON COLUMN public.giftcode.event_ads_id IS 'chạy theo sự sk ads nào'
 
 
 --
--- TOC entry 4320 (class 0 OID 0)
+-- TOC entry 4321 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1624,7 +1643,7 @@ COMMENT ON COLUMN public.giftcode.staff_id IS 'nv tạo';
 
 
 --
--- TOC entry 4321 (class 0 OID 0)
+-- TOC entry 4322 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1633,7 +1652,7 @@ COMMENT ON COLUMN public.giftcode.content IS 'nội dung';
 
 
 --
--- TOC entry 4322 (class 0 OID 0)
+-- TOC entry 4323 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.discount; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1642,7 +1661,7 @@ COMMENT ON COLUMN public.giftcode.discount IS 'số giảm giá (% hoặc trực
 
 
 --
--- TOC entry 4323 (class 0 OID 0)
+-- TOC entry 4324 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.start_time; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1651,7 +1670,7 @@ COMMENT ON COLUMN public.giftcode.start_time IS 'thời gian bắt đầu';
 
 
 --
--- TOC entry 4324 (class 0 OID 0)
+-- TOC entry 4325 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.end_time; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1660,7 +1679,7 @@ COMMENT ON COLUMN public.giftcode.end_time IS 'thời gian kết thúc';
 
 
 --
--- TOC entry 4325 (class 0 OID 0)
+-- TOC entry 4326 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.number_of_participants; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1669,7 +1688,7 @@ COMMENT ON COLUMN public.giftcode.number_of_participants IS 'số lượt dùng'
 
 
 --
--- TOC entry 4326 (class 0 OID 0)
+-- TOC entry 4327 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN giftcode.used; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1694,7 +1713,7 @@ CREATE SEQUENCE public.giftcode_id_seq
 ALTER TABLE public.giftcode_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4327 (class 0 OID 0)
+-- TOC entry 4328 (class 0 OID 0)
 -- Dependencies: 247
 -- Name: giftcode_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1724,7 +1743,7 @@ CREATE TABLE public.history_payment (
 ALTER TABLE public.history_payment OWNER TO postgres;
 
 --
--- TOC entry 4328 (class 0 OID 0)
+-- TOC entry 4329 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: TABLE history_payment; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1733,7 +1752,7 @@ COMMENT ON TABLE public.history_payment IS 'lịch sử thanh toán';
 
 
 --
--- TOC entry 4329 (class 0 OID 0)
+-- TOC entry 4330 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: COLUMN history_payment.payment_method_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1742,7 +1761,7 @@ COMMENT ON COLUMN public.history_payment.payment_method_id IS 'phương thức t
 
 
 --
--- TOC entry 4330 (class 0 OID 0)
+-- TOC entry 4331 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: COLUMN history_payment.customers_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1751,7 +1770,7 @@ COMMENT ON COLUMN public.history_payment.customers_id IS 'mã kh';
 
 
 --
--- TOC entry 4331 (class 0 OID 0)
+-- TOC entry 4332 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: COLUMN history_payment.transfer_amount; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1760,7 +1779,7 @@ COMMENT ON COLUMN public.history_payment.transfer_amount IS 'tiền chuyển kho
 
 
 --
--- TOC entry 4332 (class 0 OID 0)
+-- TOC entry 4333 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: COLUMN history_payment.cash_amount; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1769,7 +1788,7 @@ COMMENT ON COLUMN public.history_payment.cash_amount IS 'tiền mặt';
 
 
 --
--- TOC entry 4333 (class 0 OID 0)
+-- TOC entry 4334 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: COLUMN history_payment.bill_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1794,7 +1813,7 @@ CREATE SEQUENCE public.history_payment_id_seq
 ALTER TABLE public.history_payment_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4334 (class 0 OID 0)
+-- TOC entry 4335 (class 0 OID 0)
 -- Dependencies: 249
 -- Name: history_payment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1822,7 +1841,7 @@ CREATE TABLE public.img_news (
 ALTER TABLE public.img_news OWNER TO postgres;
 
 --
--- TOC entry 4335 (class 0 OID 0)
+-- TOC entry 4336 (class 0 OID 0)
 -- Dependencies: 250
 -- Name: COLUMN img_news.name_img; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1831,7 +1850,7 @@ COMMENT ON COLUMN public.img_news.name_img IS 'tên ảnh';
 
 
 --
--- TOC entry 4336 (class 0 OID 0)
+-- TOC entry 4337 (class 0 OID 0)
 -- Dependencies: 250
 -- Name: COLUMN img_news.news_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1840,7 +1859,7 @@ COMMENT ON COLUMN public.img_news.news_id IS 'thuộc tin tức';
 
 
 --
--- TOC entry 4337 (class 0 OID 0)
+-- TOC entry 4338 (class 0 OID 0)
 -- Dependencies: 250
 -- Name: COLUMN img_news.location; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1865,7 +1884,7 @@ CREATE SEQUENCE public.img_news_id_seq
 ALTER TABLE public.img_news_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4338 (class 0 OID 0)
+-- TOC entry 4339 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: img_news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1892,7 +1911,7 @@ CREATE TABLE public.img_products (
 ALTER TABLE public.img_products OWNER TO postgres;
 
 --
--- TOC entry 4339 (class 0 OID 0)
+-- TOC entry 4340 (class 0 OID 0)
 -- Dependencies: 252
 -- Name: TABLE img_products; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1901,7 +1920,7 @@ COMMENT ON TABLE public.img_products IS 'ảnh sản phảm';
 
 
 --
--- TOC entry 4340 (class 0 OID 0)
+-- TOC entry 4341 (class 0 OID 0)
 -- Dependencies: 252
 -- Name: COLUMN img_products.product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1910,7 +1929,7 @@ COMMENT ON COLUMN public.img_products.product_id IS 'thuộc sản phẩm nào';
 
 
 --
--- TOC entry 4341 (class 0 OID 0)
+-- TOC entry 4342 (class 0 OID 0)
 -- Dependencies: 252
 -- Name: COLUMN img_products.img; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1919,7 +1938,7 @@ COMMENT ON COLUMN public.img_products.img IS 'ảnh';
 
 
 --
--- TOC entry 4342 (class 0 OID 0)
+-- TOC entry 4343 (class 0 OID 0)
 -- Dependencies: 252
 -- Name: COLUMN img_products.display_order; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1944,7 +1963,7 @@ CREATE SEQUENCE public.img_products_id_seq
 ALTER TABLE public.img_products_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4343 (class 0 OID 0)
+-- TOC entry 4344 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: img_products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1969,7 +1988,7 @@ CREATE TABLE public.intermediary_account_service (
 ALTER TABLE public.intermediary_account_service OWNER TO postgres;
 
 --
--- TOC entry 4344 (class 0 OID 0)
+-- TOC entry 4345 (class 0 OID 0)
 -- Dependencies: 254
 -- Name: TABLE intermediary_account_service; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1978,7 +1997,7 @@ COMMENT ON TABLE public.intermediary_account_service IS 'tên các bên dịch v
 
 
 --
--- TOC entry 4345 (class 0 OID 0)
+-- TOC entry 4346 (class 0 OID 0)
 -- Dependencies: 254
 -- Name: COLUMN intermediary_account_service.servive_name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2003,7 +2022,7 @@ CREATE SEQUENCE public.intermediary_account_service_id_seq
 ALTER TABLE public.intermediary_account_service_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4346 (class 0 OID 0)
+-- TOC entry 4347 (class 0 OID 0)
 -- Dependencies: 255
 -- Name: intermediary_account_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2030,7 +2049,7 @@ CREATE TABLE public.list_codes_received (
 ALTER TABLE public.list_codes_received OWNER TO postgres;
 
 --
--- TOC entry 4347 (class 0 OID 0)
+-- TOC entry 4348 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: TABLE list_codes_received; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2039,7 +2058,7 @@ COMMENT ON TABLE public.list_codes_received IS 'ds kh nhận dc những code';
 
 
 --
--- TOC entry 4348 (class 0 OID 0)
+-- TOC entry 4349 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: COLUMN list_codes_received.customers_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2048,7 +2067,7 @@ COMMENT ON COLUMN public.list_codes_received.customers_id IS 'mã kh';
 
 
 --
--- TOC entry 4349 (class 0 OID 0)
+-- TOC entry 4350 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: COLUMN list_codes_received.giftcode_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2057,7 +2076,7 @@ COMMENT ON COLUMN public.list_codes_received.giftcode_id IS 'mã code';
 
 
 --
--- TOC entry 4350 (class 0 OID 0)
+-- TOC entry 4351 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: COLUMN list_codes_received.is_expired; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2082,7 +2101,7 @@ CREATE SEQUENCE public.list_codes_received_id_seq
 ALTER TABLE public.list_codes_received_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4351 (class 0 OID 0)
+-- TOC entry 4352 (class 0 OID 0)
 -- Dependencies: 257
 -- Name: list_codes_received_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2109,7 +2128,7 @@ CREATE TABLE public.list_giftcodes (
 ALTER TABLE public.list_giftcodes OWNER TO postgres;
 
 --
--- TOC entry 4352 (class 0 OID 0)
+-- TOC entry 4353 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: COLUMN list_giftcodes.giftcode_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2118,7 +2137,7 @@ COMMENT ON COLUMN public.list_giftcodes.giftcode_id IS 'thuộc sk code nào';
 
 
 --
--- TOC entry 4353 (class 0 OID 0)
+-- TOC entry 4354 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: COLUMN list_giftcodes.code; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2127,7 +2146,7 @@ COMMENT ON COLUMN public.list_giftcodes.code IS 'mã code';
 
 
 --
--- TOC entry 4354 (class 0 OID 0)
+-- TOC entry 4355 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: COLUMN list_giftcodes.already_received; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2152,7 +2171,7 @@ CREATE SEQUENCE public.list_giftcodes_id_seq
 ALTER TABLE public.list_giftcodes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4355 (class 0 OID 0)
+-- TOC entry 4356 (class 0 OID 0)
 -- Dependencies: 259
 -- Name: list_giftcodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2180,7 +2199,7 @@ CREATE TABLE public.list_products_by_bill (
 ALTER TABLE public.list_products_by_bill OWNER TO postgres;
 
 --
--- TOC entry 4356 (class 0 OID 0)
+-- TOC entry 4357 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: TABLE list_products_by_bill; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2189,7 +2208,7 @@ COMMENT ON TABLE public.list_products_by_bill IS 'ds sản phẩm  được mua 
 
 
 --
--- TOC entry 4357 (class 0 OID 0)
+-- TOC entry 4358 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: COLUMN list_products_by_bill.bill_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2198,7 +2217,7 @@ COMMENT ON COLUMN public.list_products_by_bill.bill_id IS 'mã hóa đơn';
 
 
 --
--- TOC entry 4358 (class 0 OID 0)
+-- TOC entry 4359 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: COLUMN list_products_by_bill.products_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2207,7 +2226,7 @@ COMMENT ON COLUMN public.list_products_by_bill.products_id IS 'mã sp';
 
 
 --
--- TOC entry 4359 (class 0 OID 0)
+-- TOC entry 4360 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: COLUMN list_products_by_bill.quantity; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2216,7 +2235,7 @@ COMMENT ON COLUMN public.list_products_by_bill.quantity IS 'số lượng sản 
 
 
 --
--- TOC entry 4360 (class 0 OID 0)
+-- TOC entry 4361 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: COLUMN list_products_by_bill.amount_of_money; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2241,7 +2260,7 @@ CREATE SEQUENCE public.list_products_by_bill_id_seq
 ALTER TABLE public.list_products_by_bill_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4361 (class 0 OID 0)
+-- TOC entry 4362 (class 0 OID 0)
 -- Dependencies: 261
 -- Name: list_products_by_bill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2268,7 +2287,7 @@ CREATE TABLE public.log_deletes (
 ALTER TABLE public.log_deletes OWNER TO postgres;
 
 --
--- TOC entry 4362 (class 0 OID 0)
+-- TOC entry 4363 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: TABLE log_deletes; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2277,7 +2296,7 @@ COMMENT ON TABLE public.log_deletes IS 'lịch sử xóa';
 
 
 --
--- TOC entry 4363 (class 0 OID 0)
+-- TOC entry 4364 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: COLUMN log_deletes.type_delete_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2286,7 +2305,7 @@ COMMENT ON COLUMN public.log_deletes.type_delete_id IS 'loại xóa';
 
 
 --
--- TOC entry 4364 (class 0 OID 0)
+-- TOC entry 4365 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: COLUMN log_deletes.internal; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2311,7 +2330,7 @@ CREATE SEQUENCE public.log_deletes_id_seq
 ALTER TABLE public.log_deletes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4365 (class 0 OID 0)
+-- TOC entry 4366 (class 0 OID 0)
 -- Dependencies: 263
 -- Name: log_deletes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2355,7 +2374,7 @@ CREATE SEQUENCE public.log_login_id_seq
 ALTER TABLE public.log_login_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4366 (class 0 OID 0)
+-- TOC entry 4367 (class 0 OID 0)
 -- Dependencies: 265
 -- Name: log_login_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2398,7 +2417,7 @@ CREATE SEQUENCE public.log_updates_id_seq
 ALTER TABLE public.log_updates_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4367 (class 0 OID 0)
+-- TOC entry 4368 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: log_updates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2425,7 +2444,7 @@ CREATE TABLE public.menu_main (
 ALTER TABLE public.menu_main OWNER TO postgres;
 
 --
--- TOC entry 4368 (class 0 OID 0)
+-- TOC entry 4369 (class 0 OID 0)
 -- Dependencies: 268
 -- Name: TABLE menu_main; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2434,7 +2453,7 @@ COMMENT ON TABLE public.menu_main IS 'menu chính';
 
 
 --
--- TOC entry 4369 (class 0 OID 0)
+-- TOC entry 4370 (class 0 OID 0)
 -- Dependencies: 268
 -- Name: COLUMN menu_main."order"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2459,7 +2478,7 @@ CREATE SEQUENCE public.menu_main_id_seq
 ALTER TABLE public.menu_main_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4370 (class 0 OID 0)
+-- TOC entry 4371 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: menu_main_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2498,7 +2517,7 @@ CREATE SEQUENCE public.migrations_id_seq
 ALTER TABLE public.migrations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4371 (class 0 OID 0)
+-- TOC entry 4372 (class 0 OID 0)
 -- Dependencies: 271
 -- Name: migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2531,7 +2550,7 @@ CREATE TABLE public.news (
 ALTER TABLE public.news OWNER TO postgres;
 
 --
--- TOC entry 4372 (class 0 OID 0)
+-- TOC entry 4373 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: TABLE news; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2540,7 +2559,7 @@ COMMENT ON TABLE public.news IS 'tin tức';
 
 
 --
--- TOC entry 4373 (class 0 OID 0)
+-- TOC entry 4374 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: COLUMN news.name_news; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2549,7 +2568,7 @@ COMMENT ON COLUMN public.news.name_news IS 'tên tin';
 
 
 --
--- TOC entry 4374 (class 0 OID 0)
+-- TOC entry 4375 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: COLUMN news.sub_menu_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2558,7 +2577,7 @@ COMMENT ON COLUMN public.news.sub_menu_id IS 'thuộc tin tức nào';
 
 
 --
--- TOC entry 4375 (class 0 OID 0)
+-- TOC entry 4376 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: COLUMN news.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2567,7 +2586,7 @@ COMMENT ON COLUMN public.news.staff_id IS 'nhân viên đnăg';
 
 
 --
--- TOC entry 4376 (class 0 OID 0)
+-- TOC entry 4377 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: COLUMN news.views; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2576,7 +2595,7 @@ COMMENT ON COLUMN public.news.views IS 'lượt xem';
 
 
 --
--- TOC entry 4377 (class 0 OID 0)
+-- TOC entry 4378 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: COLUMN news.likes; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2585,7 +2604,7 @@ COMMENT ON COLUMN public.news.likes IS 'số like';
 
 
 --
--- TOC entry 4378 (class 0 OID 0)
+-- TOC entry 4379 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: COLUMN news.comments; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2610,7 +2629,7 @@ CREATE SEQUENCE public.news_id_seq
 ALTER TABLE public.news_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4379 (class 0 OID 0)
+-- TOC entry 4380 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2649,7 +2668,7 @@ CREATE TABLE public.payment_methods (
 ALTER TABLE public.payment_methods OWNER TO postgres;
 
 --
--- TOC entry 4380 (class 0 OID 0)
+-- TOC entry 4381 (class 0 OID 0)
 -- Dependencies: 275
 -- Name: TABLE payment_methods; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2674,7 +2693,7 @@ CREATE SEQUENCE public.payment_methods_id_seq
 ALTER TABLE public.payment_methods_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4381 (class 0 OID 0)
+-- TOC entry 4382 (class 0 OID 0)
 -- Dependencies: 276
 -- Name: payment_methods_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2719,7 +2738,7 @@ CREATE SEQUENCE public.personal_access_tokens_id_seq
 ALTER TABLE public.personal_access_tokens_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4382 (class 0 OID 0)
+-- TOC entry 4383 (class 0 OID 0)
 -- Dependencies: 278
 -- Name: personal_access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2747,7 +2766,7 @@ CREATE TABLE public.policy (
 ALTER TABLE public.policy OWNER TO postgres;
 
 --
--- TOC entry 4383 (class 0 OID 0)
+-- TOC entry 4384 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: TABLE policy; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2756,7 +2775,7 @@ COMMENT ON TABLE public.policy IS 'tên các dịch vụ , đặc quyền  cho s
 
 
 --
--- TOC entry 4384 (class 0 OID 0)
+-- TOC entry 4385 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: COLUMN policy.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2765,7 +2784,7 @@ COMMENT ON COLUMN public.policy.staff_id IS 'nv tạo dịch vụ';
 
 
 --
--- TOC entry 4385 (class 0 OID 0)
+-- TOC entry 4386 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: COLUMN policy.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2774,7 +2793,7 @@ COMMENT ON COLUMN public.policy.name IS 'tên dv';
 
 
 --
--- TOC entry 4386 (class 0 OID 0)
+-- TOC entry 4387 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: COLUMN policy.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2799,7 +2818,7 @@ CREATE SEQUENCE public.policy_id_seq
 ALTER TABLE public.policy_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4387 (class 0 OID 0)
+-- TOC entry 4388 (class 0 OID 0)
 -- Dependencies: 280
 -- Name: policy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2825,7 +2844,7 @@ CREATE TABLE public."position" (
 ALTER TABLE public."position" OWNER TO postgres;
 
 --
--- TOC entry 4388 (class 0 OID 0)
+-- TOC entry 4389 (class 0 OID 0)
 -- Dependencies: 281
 -- Name: TABLE "position"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2834,7 +2853,7 @@ COMMENT ON TABLE public."position" IS 'chức vụ nhân viên';
 
 
 --
--- TOC entry 4389 (class 0 OID 0)
+-- TOC entry 4390 (class 0 OID 0)
 -- Dependencies: 281
 -- Name: COLUMN "position".name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2859,7 +2878,7 @@ CREATE SEQUENCE public.position_id_seq
 ALTER TABLE public.position_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4390 (class 0 OID 0)
+-- TOC entry 4391 (class 0 OID 0)
 -- Dependencies: 282
 -- Name: position_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2887,7 +2906,7 @@ CREATE TABLE public.price_difference (
 ALTER TABLE public.price_difference OWNER TO postgres;
 
 --
--- TOC entry 4391 (class 0 OID 0)
+-- TOC entry 4392 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: TABLE price_difference; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2896,7 +2915,7 @@ COMMENT ON TABLE public.price_difference IS 'bảng lưu sự chênh lệnh giá
 
 
 --
--- TOC entry 4392 (class 0 OID 0)
+-- TOC entry 4393 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: COLUMN price_difference.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2905,7 +2924,7 @@ COMMENT ON COLUMN public.price_difference.staff_id IS 'nhân viên tác động'
 
 
 --
--- TOC entry 4393 (class 0 OID 0)
+-- TOC entry 4394 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: COLUMN price_difference.product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2914,7 +2933,7 @@ COMMENT ON COLUMN public.price_difference.product_id IS 'sảm phẩm';
 
 
 --
--- TOC entry 4394 (class 0 OID 0)
+-- TOC entry 4395 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: COLUMN price_difference.import_price; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2923,7 +2942,7 @@ COMMENT ON COLUMN public.price_difference.import_price IS 'số tiền nhập';
 
 
 --
--- TOC entry 4395 (class 0 OID 0)
+-- TOC entry 4396 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: COLUMN price_difference.export_price; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2948,7 +2967,7 @@ CREATE SEQUENCE public.price_difference_id_seq
 ALTER TABLE public.price_difference_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4396 (class 0 OID 0)
+-- TOC entry 4397 (class 0 OID 0)
 -- Dependencies: 284
 -- Name: price_difference_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2985,7 +3004,7 @@ CREATE TABLE public.products (
 ALTER TABLE public.products OWNER TO postgres;
 
 --
--- TOC entry 4397 (class 0 OID 0)
+-- TOC entry 4398 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: TABLE products; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -2994,7 +3013,7 @@ COMMENT ON TABLE public.products IS 'ds sp';
 
 
 --
--- TOC entry 4398 (class 0 OID 0)
+-- TOC entry 4399 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.sub_menu_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3003,7 +3022,7 @@ COMMENT ON COLUMN public.products.sub_menu_id IS 'thuộc submenu nào';
 
 
 --
--- TOC entry 4399 (class 0 OID 0)
+-- TOC entry 4400 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.code_products; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3012,7 +3031,7 @@ COMMENT ON COLUMN public.products.code_products IS 'mã sp';
 
 
 --
--- TOC entry 4400 (class 0 OID 0)
+-- TOC entry 4401 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3021,7 +3040,7 @@ COMMENT ON COLUMN public.products.name IS 'tên sp';
 
 
 --
--- TOC entry 4401 (class 0 OID 0)
+-- TOC entry 4402 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.origin; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3030,7 +3049,7 @@ COMMENT ON COLUMN public.products.origin IS 'nguồn gôc sp';
 
 
 --
--- TOC entry 4402 (class 0 OID 0)
+-- TOC entry 4403 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.color; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3039,7 +3058,7 @@ COMMENT ON COLUMN public.products.color IS 'màu sắc sp';
 
 
 --
--- TOC entry 4403 (class 0 OID 0)
+-- TOC entry 4404 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.size; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3048,7 +3067,7 @@ COMMENT ON COLUMN public.products.size IS 'các cỡ sp';
 
 
 --
--- TOC entry 4404 (class 0 OID 0)
+-- TOC entry 4405 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.into_money; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3057,7 +3076,7 @@ COMMENT ON COLUMN public.products.into_money IS 'tiền cho sp';
 
 
 --
--- TOC entry 4405 (class 0 OID 0)
+-- TOC entry 4406 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.vote; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3066,7 +3085,7 @@ COMMENT ON COLUMN public.products.vote IS 'lượt vote';
 
 
 --
--- TOC entry 4406 (class 0 OID 0)
+-- TOC entry 4407 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.number_of_products_sold; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3075,7 +3094,7 @@ COMMENT ON COLUMN public.products.number_of_products_sold IS 'số lượng sả
 
 
 --
--- TOC entry 4407 (class 0 OID 0)
+-- TOC entry 4408 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.remaining_products; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3084,7 +3103,7 @@ COMMENT ON COLUMN public.products.remaining_products IS 'sản phẩm còn lại
 
 
 --
--- TOC entry 4408 (class 0 OID 0)
+-- TOC entry 4409 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: COLUMN products.is_promotion; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3109,7 +3128,7 @@ CREATE SEQUENCE public.products_id_seq
 ALTER TABLE public.products_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4409 (class 0 OID 0)
+-- TOC entry 4410 (class 0 OID 0)
 -- Dependencies: 286
 -- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3138,7 +3157,7 @@ CREATE TABLE public.products_in_stock (
 ALTER TABLE public.products_in_stock OWNER TO postgres;
 
 --
--- TOC entry 4410 (class 0 OID 0)
+-- TOC entry 4411 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: TABLE products_in_stock; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3147,7 +3166,7 @@ COMMENT ON TABLE public.products_in_stock IS 'sản phẩmtrong kho';
 
 
 --
--- TOC entry 4411 (class 0 OID 0)
+-- TOC entry 4412 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: COLUMN products_in_stock.product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3156,7 +3175,7 @@ COMMENT ON COLUMN public.products_in_stock.product_id IS 'tên sp';
 
 
 --
--- TOC entry 4412 (class 0 OID 0)
+-- TOC entry 4413 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: COLUMN products_in_stock.warehouse_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3165,7 +3184,7 @@ COMMENT ON COLUMN public.products_in_stock.warehouse_id IS 'thuộc kho';
 
 
 --
--- TOC entry 4413 (class 0 OID 0)
+-- TOC entry 4414 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: COLUMN products_in_stock.remaining; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3174,7 +3193,7 @@ COMMENT ON COLUMN public.products_in_stock.remaining IS 'số sản phẩm còn'
 
 
 --
--- TOC entry 4414 (class 0 OID 0)
+-- TOC entry 4415 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: COLUMN products_in_stock.import_price; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3183,7 +3202,7 @@ COMMENT ON COLUMN public.products_in_stock.import_price IS 'giá nhập';
 
 
 --
--- TOC entry 4415 (class 0 OID 0)
+-- TOC entry 4416 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: COLUMN products_in_stock.export_price; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3208,7 +3227,7 @@ CREATE SEQUENCE public.products_in_stock_id_seq
 ALTER TABLE public.products_in_stock_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4416 (class 0 OID 0)
+-- TOC entry 4417 (class 0 OID 0)
 -- Dependencies: 288
 -- Name: products_in_stock_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3236,7 +3255,7 @@ CREATE TABLE public.promotion (
 ALTER TABLE public.promotion OWNER TO postgres;
 
 --
--- TOC entry 4417 (class 0 OID 0)
+-- TOC entry 4418 (class 0 OID 0)
 -- Dependencies: 289
 -- Name: TABLE promotion; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3246,7 +3265,7 @@ vd : mua 1 tăng 1 , giảm 20% ,...';
 
 
 --
--- TOC entry 4418 (class 0 OID 0)
+-- TOC entry 4419 (class 0 OID 0)
 -- Dependencies: 289
 -- Name: COLUMN promotion.product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3255,7 +3274,7 @@ COMMENT ON COLUMN public.promotion.product_id IS 'sản phẩm dc dùng';
 
 
 --
--- TOC entry 4419 (class 0 OID 0)
+-- TOC entry 4420 (class 0 OID 0)
 -- Dependencies: 289
 -- Name: COLUMN promotion.type_promotion_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3264,7 +3283,7 @@ COMMENT ON COLUMN public.promotion.type_promotion_id IS 'loại km';
 
 
 --
--- TOC entry 4420 (class 0 OID 0)
+-- TOC entry 4421 (class 0 OID 0)
 -- Dependencies: 289
 -- Name: COLUMN promotion.endtime; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3273,7 +3292,7 @@ COMMENT ON COLUMN public.promotion.endtime IS 'thời gian kết thúc';
 
 
 --
--- TOC entry 4421 (class 0 OID 0)
+-- TOC entry 4422 (class 0 OID 0)
 -- Dependencies: 289
 -- Name: COLUMN promotion.starttime; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3298,7 +3317,7 @@ CREATE SEQUENCE public.promotion_id_seq
 ALTER TABLE public.promotion_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4422 (class 0 OID 0)
+-- TOC entry 4423 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: promotion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3326,7 +3345,7 @@ CREATE TABLE public.rank (
 ALTER TABLE public.rank OWNER TO postgres;
 
 --
--- TOC entry 4423 (class 0 OID 0)
+-- TOC entry 4424 (class 0 OID 0)
 -- Dependencies: 291
 -- Name: TABLE rank; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3335,7 +3354,7 @@ COMMENT ON TABLE public.rank IS 'tên các cấp rank';
 
 
 --
--- TOC entry 4424 (class 0 OID 0)
+-- TOC entry 4425 (class 0 OID 0)
 -- Dependencies: 291
 -- Name: COLUMN rank.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3344,7 +3363,7 @@ COMMENT ON COLUMN public.rank.name IS 'tên';
 
 
 --
--- TOC entry 4425 (class 0 OID 0)
+-- TOC entry 4426 (class 0 OID 0)
 -- Dependencies: 291
 -- Name: COLUMN rank.detail; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3353,7 +3372,7 @@ COMMENT ON COLUMN public.rank.detail IS 'chi tiết';
 
 
 --
--- TOC entry 4426 (class 0 OID 0)
+-- TOC entry 4427 (class 0 OID 0)
 -- Dependencies: 291
 -- Name: COLUMN rank.score; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3378,7 +3397,7 @@ CREATE SEQUENCE public.rank_id_seq
 ALTER TABLE public.rank_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4427 (class 0 OID 0)
+-- TOC entry 4428 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: rank_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3404,7 +3423,7 @@ CREATE TABLE public.report_source (
 ALTER TABLE public.report_source OWNER TO postgres;
 
 --
--- TOC entry 4428 (class 0 OID 0)
+-- TOC entry 4429 (class 0 OID 0)
 -- Dependencies: 293
 -- Name: TABLE report_source; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3413,7 +3432,7 @@ COMMENT ON TABLE public.report_source IS 'tên nguồn tố cáo';
 
 
 --
--- TOC entry 4429 (class 0 OID 0)
+-- TOC entry 4430 (class 0 OID 0)
 -- Dependencies: 293
 -- Name: COLUMN report_source.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3438,7 +3457,7 @@ CREATE SEQUENCE public.report_source_id_seq
 ALTER TABLE public.report_source_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4430 (class 0 OID 0)
+-- TOC entry 4431 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: report_source_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3471,7 +3490,7 @@ CREATE TABLE public.reports (
 ALTER TABLE public.reports OWNER TO postgres;
 
 --
--- TOC entry 4431 (class 0 OID 0)
+-- TOC entry 4432 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: TABLE reports; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3480,7 +3499,7 @@ COMMENT ON TABLE public.reports IS 'các phiếu tố cáo';
 
 
 --
--- TOC entry 4432 (class 0 OID 0)
+-- TOC entry 4433 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.customers_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3489,7 +3508,7 @@ COMMENT ON COLUMN public.reports.customers_id IS 'kh tố';
 
 
 --
--- TOC entry 4433 (class 0 OID 0)
+-- TOC entry 4434 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.staff_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3498,7 +3517,7 @@ COMMENT ON COLUMN public.reports.staff_id IS 'nhân viên nhận vào phản h�
 
 
 --
--- TOC entry 4434 (class 0 OID 0)
+-- TOC entry 4435 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.sub_report; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3507,7 +3526,7 @@ COMMENT ON COLUMN public.reports.sub_report IS 'là sub reporrt ko';
 
 
 --
--- TOC entry 4435 (class 0 OID 0)
+-- TOC entry 4436 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.type_report_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3516,7 +3535,7 @@ COMMENT ON COLUMN public.reports.type_report_id IS 'loại tố cáo';
 
 
 --
--- TOC entry 4436 (class 0 OID 0)
+-- TOC entry 4437 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.is_processed; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3525,7 +3544,7 @@ COMMENT ON COLUMN public.reports.is_processed IS 'đã dc giải quyêt xong ch�
 
 
 --
--- TOC entry 4437 (class 0 OID 0)
+-- TOC entry 4438 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.report_source_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3534,7 +3553,7 @@ COMMENT ON COLUMN public.reports.report_source_id IS 'mã nguồn tố cáo';
 
 
 --
--- TOC entry 4438 (class 0 OID 0)
+-- TOC entry 4439 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3543,7 +3562,7 @@ COMMENT ON COLUMN public.reports.content IS 'nội dung kh';
 
 
 --
--- TOC entry 4439 (class 0 OID 0)
+-- TOC entry 4440 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.feed_back_content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3552,7 +3571,7 @@ COMMENT ON COLUMN public.reports.feed_back_content IS 'nội dung nv';
 
 
 --
--- TOC entry 4440 (class 0 OID 0)
+-- TOC entry 4441 (class 0 OID 0)
 -- Dependencies: 295
 -- Name: COLUMN reports.sub; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3577,7 +3596,7 @@ CREATE SEQUENCE public.reports_id_seq
 ALTER TABLE public.reports_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4441 (class 0 OID 0)
+-- TOC entry 4442 (class 0 OID 0)
 -- Dependencies: 296
 -- Name: reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3603,7 +3622,7 @@ CREATE TABLE public.service_by_product (
 ALTER TABLE public.service_by_product OWNER TO postgres;
 
 --
--- TOC entry 4442 (class 0 OID 0)
+-- TOC entry 4443 (class 0 OID 0)
 -- Dependencies: 297
 -- Name: TABLE service_by_product; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3612,7 +3631,7 @@ COMMENT ON TABLE public.service_by_product IS 'các sản phảm được hưở
 
 
 --
--- TOC entry 4443 (class 0 OID 0)
+-- TOC entry 4444 (class 0 OID 0)
 -- Dependencies: 297
 -- Name: COLUMN service_by_product.product_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3621,7 +3640,7 @@ COMMENT ON COLUMN public.service_by_product.product_id IS 'tên sp';
 
 
 --
--- TOC entry 4444 (class 0 OID 0)
+-- TOC entry 4445 (class 0 OID 0)
 -- Dependencies: 297
 -- Name: COLUMN service_by_product.policy_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3646,7 +3665,7 @@ CREATE SEQUENCE public.service_by_product_id_seq
 ALTER TABLE public.service_by_product_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4445 (class 0 OID 0)
+-- TOC entry 4446 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: service_by_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3671,7 +3690,7 @@ CREATE TABLE public.shipping_method (
 ALTER TABLE public.shipping_method OWNER TO postgres;
 
 --
--- TOC entry 4446 (class 0 OID 0)
+-- TOC entry 4447 (class 0 OID 0)
 -- Dependencies: 299
 -- Name: TABLE shipping_method; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3696,7 +3715,7 @@ CREATE SEQUENCE public.shipping_method_id_seq
 ALTER TABLE public.shipping_method_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4447 (class 0 OID 0)
+-- TOC entry 4448 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: shipping_method_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3734,7 +3753,7 @@ CREATE TABLE public.staff (
 ALTER TABLE public.staff OWNER TO postgres;
 
 --
--- TOC entry 4448 (class 0 OID 0)
+-- TOC entry 4449 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: TABLE staff; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3743,7 +3762,7 @@ COMMENT ON TABLE public.staff IS 'ds nhân viên';
 
 
 --
--- TOC entry 4449 (class 0 OID 0)
+-- TOC entry 4450 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.code_staff; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3752,7 +3771,7 @@ COMMENT ON COLUMN public.staff.code_staff IS 'mã đinh danh nhân viên';
 
 
 --
--- TOC entry 4450 (class 0 OID 0)
+-- TOC entry 4451 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.position_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3761,7 +3780,7 @@ COMMENT ON COLUMN public.staff.position_id IS 'id chức vụ';
 
 
 --
--- TOC entry 4451 (class 0 OID 0)
+-- TOC entry 4452 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.branch_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3770,7 +3789,7 @@ COMMENT ON COLUMN public.staff.branch_id IS 'id chi nhánh';
 
 
 --
--- TOC entry 4452 (class 0 OID 0)
+-- TOC entry 4453 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3779,7 +3798,7 @@ COMMENT ON COLUMN public.staff.name IS 'tên nhân viên';
 
 
 --
--- TOC entry 4453 (class 0 OID 0)
+-- TOC entry 4454 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.address; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3788,7 +3807,7 @@ COMMENT ON COLUMN public.staff.address IS 'địa chỉ nhân viên';
 
 
 --
--- TOC entry 4454 (class 0 OID 0)
+-- TOC entry 4455 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.phone_number; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3797,7 +3816,7 @@ COMMENT ON COLUMN public.staff.phone_number IS 'sdt';
 
 
 --
--- TOC entry 4455 (class 0 OID 0)
+-- TOC entry 4456 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.sex; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3806,7 +3825,7 @@ COMMENT ON COLUMN public.staff.sex IS 'giới tính 0 : nữ 1: nam';
 
 
 --
--- TOC entry 4456 (class 0 OID 0)
+-- TOC entry 4457 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: COLUMN staff.active; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3839,7 +3858,7 @@ CREATE TABLE public.staff_account (
 ALTER TABLE public.staff_account OWNER TO postgres;
 
 --
--- TOC entry 4457 (class 0 OID 0)
+-- TOC entry 4458 (class 0 OID 0)
 -- Dependencies: 302
 -- Name: TABLE staff_account; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3848,7 +3867,7 @@ COMMENT ON TABLE public.staff_account IS 'tk nhân viên';
 
 
 --
--- TOC entry 4458 (class 0 OID 0)
+-- TOC entry 4459 (class 0 OID 0)
 -- Dependencies: 302
 -- Name: COLUMN staff_account.refresh_token; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3857,7 +3876,7 @@ COMMENT ON COLUMN public.staff_account.refresh_token IS 'mã refresh tonken';
 
 
 --
--- TOC entry 4459 (class 0 OID 0)
+-- TOC entry 4460 (class 0 OID 0)
 -- Dependencies: 302
 -- Name: COLUMN staff_account.issued_at; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3866,7 +3885,7 @@ COMMENT ON COLUMN public.staff_account.issued_at IS 'thời gian phát hành';
 
 
 --
--- TOC entry 4460 (class 0 OID 0)
+-- TOC entry 4461 (class 0 OID 0)
 -- Dependencies: 302
 -- Name: COLUMN staff_account.expired_time; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3891,7 +3910,7 @@ CREATE SEQUENCE public.staff_account_id_seq
 ALTER TABLE public.staff_account_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4461 (class 0 OID 0)
+-- TOC entry 4462 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: staff_account_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3916,7 +3935,7 @@ CREATE SEQUENCE public.staff_id_seq
 ALTER TABLE public.staff_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4462 (class 0 OID 0)
+-- TOC entry 4463 (class 0 OID 0)
 -- Dependencies: 304
 -- Name: staff_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3944,7 +3963,7 @@ CREATE TABLE public.sub_menu (
 ALTER TABLE public.sub_menu OWNER TO postgres;
 
 --
--- TOC entry 4463 (class 0 OID 0)
+-- TOC entry 4464 (class 0 OID 0)
 -- Dependencies: 305
 -- Name: TABLE sub_menu; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3953,7 +3972,7 @@ COMMENT ON TABLE public.sub_menu IS 'ds submenu';
 
 
 --
--- TOC entry 4464 (class 0 OID 0)
+-- TOC entry 4465 (class 0 OID 0)
 -- Dependencies: 305
 -- Name: COLUMN sub_menu.menu_main_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3962,7 +3981,7 @@ COMMENT ON COLUMN public.sub_menu.menu_main_id IS 'thuộc menu nào';
 
 
 --
--- TOC entry 4465 (class 0 OID 0)
+-- TOC entry 4466 (class 0 OID 0)
 -- Dependencies: 305
 -- Name: COLUMN sub_menu."order"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -3987,7 +4006,7 @@ CREATE SEQUENCE public.sub_menu_id_seq
 ALTER TABLE public.sub_menu_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4466 (class 0 OID 0)
+-- TOC entry 4467 (class 0 OID 0)
 -- Dependencies: 306
 -- Name: sub_menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4013,7 +4032,7 @@ CREATE TABLE public.transfer_providers (
 ALTER TABLE public.transfer_providers OWNER TO postgres;
 
 --
--- TOC entry 4467 (class 0 OID 0)
+-- TOC entry 4468 (class 0 OID 0)
 -- Dependencies: 307
 -- Name: TABLE transfer_providers; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4038,7 +4057,7 @@ CREATE SEQUENCE public.transfer_providers_id_seq
 ALTER TABLE public.transfer_providers_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4468 (class 0 OID 0)
+-- TOC entry 4469 (class 0 OID 0)
 -- Dependencies: 308
 -- Name: transfer_providers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4082,7 +4101,7 @@ CREATE SEQUENCE public.type_notification_id_seq
 ALTER TABLE public.type_notification_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4469 (class 0 OID 0)
+-- TOC entry 4470 (class 0 OID 0)
 -- Dependencies: 310
 -- Name: type_notification_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4110,7 +4129,7 @@ CREATE TABLE public.type_promotion (
 ALTER TABLE public.type_promotion OWNER TO postgres;
 
 --
--- TOC entry 4470 (class 0 OID 0)
+-- TOC entry 4471 (class 0 OID 0)
 -- Dependencies: 311
 -- Name: TABLE type_promotion; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4120,7 +4139,7 @@ vd : mua 1 tăng 1 , giảm 20% ,...';
 
 
 --
--- TOC entry 4471 (class 0 OID 0)
+-- TOC entry 4472 (class 0 OID 0)
 -- Dependencies: 311
 -- Name: COLUMN type_promotion.name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4129,7 +4148,7 @@ COMMENT ON COLUMN public.type_promotion.name IS 'tên kh';
 
 
 --
--- TOC entry 4472 (class 0 OID 0)
+-- TOC entry 4473 (class 0 OID 0)
 -- Dependencies: 311
 -- Name: COLUMN type_promotion.content; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4138,7 +4157,7 @@ COMMENT ON COLUMN public.type_promotion.content IS 'nội dung km';
 
 
 --
--- TOC entry 4473 (class 0 OID 0)
+-- TOC entry 4474 (class 0 OID 0)
 -- Dependencies: 311
 -- Name: COLUMN type_promotion.code_hide; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4163,7 +4182,7 @@ CREATE SEQUENCE public.type_promotion_id_seq
 ALTER TABLE public.type_promotion_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4474 (class 0 OID 0)
+-- TOC entry 4475 (class 0 OID 0)
 -- Dependencies: 312
 -- Name: type_promotion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4190,7 +4209,7 @@ CREATE TABLE public.type_report (
 ALTER TABLE public.type_report OWNER TO postgres;
 
 --
--- TOC entry 4475 (class 0 OID 0)
+-- TOC entry 4476 (class 0 OID 0)
 -- Dependencies: 313
 -- Name: TABLE type_report; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4215,7 +4234,7 @@ CREATE SEQUENCE public.type_report_id_seq
 ALTER TABLE public.type_report_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4476 (class 0 OID 0)
+-- TOC entry 4477 (class 0 OID 0)
 -- Dependencies: 314
 -- Name: type_report_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4242,7 +4261,7 @@ CREATE TABLE public.type_ticket (
 ALTER TABLE public.type_ticket OWNER TO postgres;
 
 --
--- TOC entry 4477 (class 0 OID 0)
+-- TOC entry 4478 (class 0 OID 0)
 -- Dependencies: 315
 -- Name: TABLE type_ticket; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4267,7 +4286,7 @@ CREATE SEQUENCE public.type_ticket_id_seq
 ALTER TABLE public.type_ticket_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4478 (class 0 OID 0)
+-- TOC entry 4479 (class 0 OID 0)
 -- Dependencies: 316
 -- Name: type_ticket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4294,7 +4313,7 @@ CREATE TABLE public.type_update (
 ALTER TABLE public.type_update OWNER TO postgres;
 
 --
--- TOC entry 4479 (class 0 OID 0)
+-- TOC entry 4480 (class 0 OID 0)
 -- Dependencies: 317
 -- Name: TABLE type_update; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4319,7 +4338,7 @@ CREATE SEQUENCE public.type_update_id_seq
 ALTER TABLE public.type_update_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4480 (class 0 OID 0)
+-- TOC entry 4481 (class 0 OID 0)
 -- Dependencies: 318
 -- Name: type_update_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4348,7 +4367,7 @@ CREATE TABLE public.warehouse (
 ALTER TABLE public.warehouse OWNER TO postgres;
 
 --
--- TOC entry 4481 (class 0 OID 0)
+-- TOC entry 4482 (class 0 OID 0)
 -- Dependencies: 319
 -- Name: TABLE warehouse; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4357,7 +4376,7 @@ COMMENT ON TABLE public.warehouse IS 'tên các kho';
 
 
 --
--- TOC entry 4482 (class 0 OID 0)
+-- TOC entry 4483 (class 0 OID 0)
 -- Dependencies: 319
 -- Name: COLUMN warehouse.branch_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -4382,7 +4401,7 @@ CREATE SEQUENCE public.warehouse_id_seq
 ALTER TABLE public.warehouse_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4483 (class 0 OID 0)
+-- TOC entry 4484 (class 0 OID 0)
 -- Dependencies: 320
 -- Name: warehouse_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4425,7 +4444,7 @@ CREATE SEQUENCE public.websockets_statistics_entries_id_seq
 ALTER TABLE public.websockets_statistics_entries_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4484 (class 0 OID 0)
+-- TOC entry 4485 (class 0 OID 0)
 -- Dependencies: 322
 -- Name: websockets_statistics_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4887,7 +4906,7 @@ ALTER TABLE ONLY public.websockets_statistics_entries ALTER COLUMN id SET DEFAUL
 -- Data for Name: administration; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.administration (id, name, status, created_at, updated_at, code) VALUES (1, 'SUPERADMIN', true, '2023-07-18 13:53:42.333383', '2024-01-11 21:17:10.063413', NULL);
+INSERT INTO public.administration VALUES (1, 'SUPERADMIN', true, '2023-07-18 13:53:42.333383', '2024-01-11 21:17:10.063413', NULL);
 
 
 --
@@ -4896,7 +4915,7 @@ INSERT INTO public.administration (id, name, status, created_at, updated_at, cod
 -- Data for Name: admins_notification; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.admins_notification (id, type_notification, staff_id, content, watched, status, created_at, updated_at) VALUES (104, 9, 29, 'Tài khoản của bạn đã bị khóa bởi <strong style="color:red">Nguyễn Khoa</strong> (giám đốc)', false, true, '2023-10-23 23:08:57', '2023-10-23 23:08:57');
+INSERT INTO public.admins_notification VALUES (104, 9, 29, 'Tài khoản của bạn đã bị khóa bởi <strong style="color:red">Nguyễn Khoa</strong> (giám đốc)', false, true, '2023-10-23 23:08:57', '2023-10-23 23:08:57');
 
 
 --
@@ -4913,7 +4932,7 @@ INSERT INTO public.admins_notification (id, type_notification, staff_id, content
 -- Data for Name: api_weather; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.api_weather (id, name, city, longitude, latityde, content, status, created_at, updated_at) VALUES (7, 'get weatherHà Nội', 'Hà Nội', '105.7864', '21.0303', '{"weather":{"id":502,"main":"Rain","description":"mưa cường độ nặng","icon":"10d"},"main":{"temp":31.05,"feels_like":33.99,"temp_min":31.05,"temp_max":31.05,"pressure":1000,"humidity":56,"sea_level":1000,"grnd_level":999}}', true, '2023-07-31 14:07:17.104696', '2023-07-31 15:16:05.150639');
+INSERT INTO public.api_weather VALUES (7, 'get weatherHà Nội', 'Hà Nội', '105.7864', '21.0303', '{"weather":{"id":502,"main":"Rain","description":"mưa cường độ nặng","icon":"10d"},"main":{"temp":31.05,"feels_like":33.99,"temp_min":31.05,"temp_max":31.05,"pressure":1000,"humidity":56,"sea_level":1000,"grnd_level":999}}', true, '2023-07-31 14:07:17.104696', '2023-07-31 15:16:05.150639');
 
 
 --
@@ -4930,17 +4949,17 @@ INSERT INTO public.api_weather (id, name, city, longitude, latityde, content, st
 -- Data for Name: branch; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (1, 'nhà 1', 'viet nam', '0849328210', 'KHoa', '11-12', true, '2023-07-18 13:44:09.440164', '2023-07-18 13:44:09.440164');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (2, 'Nguyen Branch', '123 Nguyen Street, Hanoi', '0123456789', 'Nguyen Van A', '08:00 - 17:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (3, 'Tran Branch', '456 Tran Street, Ho Chi Minh City', '0987654321', 'Tran Thi B', '09:00 - 18:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (4, 'Le Branch', '789 Le Street, Da Nang', '0765432198', 'Le Van C', '07:30 - 16:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (5, 'Pham Branch', '321 Pham Street, Hue', '0321654987', 'Pham Thi D', '08:30 - 17:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (6, 'Vo Branch', '654 Vo Street, Can Tho', '0549873216', 'Vo Van E', '09:30 - 18:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (7, 'Ho Branch', '987 Ho Street, Nha Trang', '0987321654', 'Ho Thi F', '08:00 - 17:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (8, 'Truong Branch', '456 Truong Street, Hai Phong', '0543219876', 'Truong Van G', '09:00 - 18:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (9, 'Ngo Branch', '321 Ngo Street, Quang Ninh', '0987654321', 'Ngo Van I', '08:30 - 17:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (10, 'Do Branch 4', '789 Do Street, Vung Tau', '0321987654', 'Do Thi H', '07:30 - 16:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
-INSERT INTO public.branch (id, name, address, hotline, manage, working_time, status, created_at, updated_at) VALUES (11, 'Dinh Branch', '654 Dinh Street, Dak Lak', '0123456789', 'Dinh Thi Jd', '09:30 - 18:30', true, '2023-06-17 19:00:12.583995', '2023-07-15 23:05:14.699774');
+INSERT INTO public.branch VALUES (1, 'nhà 1', 'viet nam', '0849328210', 'KHoa', '11-12', true, '2023-07-18 13:44:09.440164', '2023-07-18 13:44:09.440164');
+INSERT INTO public.branch VALUES (2, 'Nguyen Branch', '123 Nguyen Street, Hanoi', '0123456789', 'Nguyen Van A', '08:00 - 17:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (3, 'Tran Branch', '456 Tran Street, Ho Chi Minh City', '0987654321', 'Tran Thi B', '09:00 - 18:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (4, 'Le Branch', '789 Le Street, Da Nang', '0765432198', 'Le Van C', '07:30 - 16:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (5, 'Pham Branch', '321 Pham Street, Hue', '0321654987', 'Pham Thi D', '08:30 - 17:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (6, 'Vo Branch', '654 Vo Street, Can Tho', '0549873216', 'Vo Van E', '09:30 - 18:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (7, 'Ho Branch', '987 Ho Street, Nha Trang', '0987321654', 'Ho Thi F', '08:00 - 17:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (8, 'Truong Branch', '456 Truong Street, Hai Phong', '0543219876', 'Truong Van G', '09:00 - 18:00', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (9, 'Ngo Branch', '321 Ngo Street, Quang Ninh', '0987654321', 'Ngo Van I', '08:30 - 17:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (10, 'Do Branch 4', '789 Do Street, Vung Tau', '0321987654', 'Do Thi H', '07:30 - 16:30', true, '2023-06-17 19:00:12.583995', '2023-06-17 19:00:12.583995');
+INSERT INTO public.branch VALUES (11, 'Dinh Branch', '654 Dinh Street, Dak Lak', '0123456789', 'Dinh Thi Jd', '09:30 - 18:30', true, '2023-06-17 19:00:12.583995', '2023-07-15 23:05:14.699774');
 
 
 --
@@ -5101,7 +5120,7 @@ INSERT INTO public.branch (id, name, address, hotline, manage, working_time, sta
 -- Data for Name: menu_main; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.menu_main (id, name, color, status, created_at, updated_at, "order") VALUES (1, 'menu_1', 'red', true, '2024-01-17 22:09:52.337586', '2024-01-17 22:12:53.282939', 1);
+INSERT INTO public.menu_main VALUES (1, 'menu_1', 'red', true, '2024-01-17 22:09:52.337586', '2024-01-17 22:12:53.282939', 1);
 
 
 --
@@ -5110,15 +5129,15 @@ INSERT INTO public.menu_main (id, name, color, status, created_at, updated_at, "
 -- Data for Name: migrations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.migrations (id, migration, batch) VALUES (4, '0000_00_00_000000_create_websockets_statistics_entries_table', 1);
-INSERT INTO public.migrations (id, migration, batch) VALUES (5, '2014_10_12_100000_create_password_reset_tokens_table', 1);
-INSERT INTO public.migrations (id, migration, batch) VALUES (6, '2019_08_19_000000_create_failed_jobs_table', 1);
-INSERT INTO public.migrations (id, migration, batch) VALUES (7, '2019_12_14_000001_create_personal_access_tokens_table', 1);
-INSERT INTO public.migrations (id, migration, batch) VALUES (8, '2016_06_01_000001_create_oauth_auth_codes_table', 2);
-INSERT INTO public.migrations (id, migration, batch) VALUES (9, '2016_06_01_000002_create_oauth_access_tokens_table', 2);
-INSERT INTO public.migrations (id, migration, batch) VALUES (10, '2016_06_01_000003_create_oauth_refresh_tokens_table', 2);
-INSERT INTO public.migrations (id, migration, batch) VALUES (11, '2016_06_01_000004_create_oauth_clients_table', 2);
-INSERT INTO public.migrations (id, migration, batch) VALUES (12, '2016_06_01_000005_create_oauth_personal_access_clients_table', 2);
+INSERT INTO public.migrations VALUES (4, '0000_00_00_000000_create_websockets_statistics_entries_table', 1);
+INSERT INTO public.migrations VALUES (5, '2014_10_12_100000_create_password_reset_tokens_table', 1);
+INSERT INTO public.migrations VALUES (6, '2019_08_19_000000_create_failed_jobs_table', 1);
+INSERT INTO public.migrations VALUES (7, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+INSERT INTO public.migrations VALUES (8, '2016_06_01_000001_create_oauth_auth_codes_table', 2);
+INSERT INTO public.migrations VALUES (9, '2016_06_01_000002_create_oauth_access_tokens_table', 2);
+INSERT INTO public.migrations VALUES (10, '2016_06_01_000003_create_oauth_refresh_tokens_table', 2);
+INSERT INTO public.migrations VALUES (11, '2016_06_01_000004_create_oauth_clients_table', 2);
+INSERT INTO public.migrations VALUES (12, '2016_06_01_000005_create_oauth_personal_access_clients_table', 2);
 
 
 --
@@ -5167,13 +5186,13 @@ INSERT INTO public.migrations (id, migration, batch) VALUES (12, '2016_06_01_000
 -- Data for Name: position; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."position" (id, name, content, status, created_at, updated_at) VALUES (3, 'nhân viên', 'mô ra', true, '2023-07-18 13:45:30.159174', '2023-07-18 13:45:30.159174');
-INSERT INTO public."position" (id, name, content, status, created_at, updated_at) VALUES (4, 'giám đốc', 'giám đốc', true, '2023-07-18 13:48:08.159012', '2023-07-18 13:48:08.159012');
-INSERT INTO public."position" (id, name, content, status, created_at, updated_at) VALUES (5, 'Quản lý tổng', 'điều hàng chung cho cả hệ thống', true, '2023-06-17 21:46:20.133627', '2023-06-17 21:46:20.133627');
-INSERT INTO public."position" (id, name, content, status, created_at, updated_at) VALUES (6, 'Quant lý chi nhánh', 'quản lý chung cho các chi nhánh', true, '2023-06-17 21:46:57.019189', '2023-06-17 21:46:57.019189');
-INSERT INTO public."position" (id, name, content, status, created_at, updated_at) VALUES (7, 'Quản lý nhân viên', 'Điều hành nhân viên', true, '2023-06-17 21:48:45.775187', '2023-06-17 21:48:45.775187');
-INSERT INTO public."position" (id, name, content, status, created_at, updated_at) VALUES (8, 'Nhân viên bán hàng', 'Nhân viên kho', true, '2023-06-17 21:49:06.094128', '2023-06-17 21:49:06.094128');
-INSERT INTO public."position" (id, name, content, status, created_at, updated_at) VALUES (9, 'Nhân viên kho', 'nv kho', true, '2023-06-17 21:49:30.67476', '2023-06-17 21:49:30.67476');
+INSERT INTO public."position" VALUES (3, 'nhân viên', 'mô ra', true, '2023-07-18 13:45:30.159174', '2023-07-18 13:45:30.159174');
+INSERT INTO public."position" VALUES (4, 'giám đốc', 'giám đốc', true, '2023-07-18 13:48:08.159012', '2023-07-18 13:48:08.159012');
+INSERT INTO public."position" VALUES (5, 'Quản lý tổng', 'điều hàng chung cho cả hệ thống', true, '2023-06-17 21:46:20.133627', '2023-06-17 21:46:20.133627');
+INSERT INTO public."position" VALUES (6, 'Quant lý chi nhánh', 'quản lý chung cho các chi nhánh', true, '2023-06-17 21:46:57.019189', '2023-06-17 21:46:57.019189');
+INSERT INTO public."position" VALUES (7, 'Quản lý nhân viên', 'Điều hành nhân viên', true, '2023-06-17 21:48:45.775187', '2023-06-17 21:48:45.775187');
+INSERT INTO public."position" VALUES (8, 'Nhân viên bán hàng', 'Nhân viên kho', true, '2023-06-17 21:49:06.094128', '2023-06-17 21:49:06.094128');
+INSERT INTO public."position" VALUES (9, 'Nhân viên kho', 'nv kho', true, '2023-06-17 21:49:30.67476', '2023-06-17 21:49:30.67476');
 
 
 --
@@ -5214,7 +5233,7 @@ INSERT INTO public."position" (id, name, content, status, created_at, updated_at
 -- Data for Name: rank; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.rank (id, name, detail, icon, status, created_at, updated_at, score) VALUES (1, 'Đồng', 'cấp độ sơ khai', 'q', true, '2023-08-28 22:34:16.686788', '2023-08-28 22:34:16.686788', 100);
+INSERT INTO public.rank VALUES (1, 'Đồng', 'cấp độ sơ khai', 'q', true, '2023-08-28 22:34:16.686788', '2023-08-28 22:34:16.686788', 100);
 
 
 --
@@ -5223,10 +5242,10 @@ INSERT INTO public.rank (id, name, detail, icon, status, created_at, updated_at,
 -- Data for Name: report_source; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.report_source (id, name, note, status, created_at, updated_at) VALUES (4, 'người dùng hệ thống admin', 'Trống', true, '2023-09-09 14:31:16.973351', '2023-09-09 14:31:16.973351');
-INSERT INTO public.report_source (id, name, note, status, created_at, updated_at) VALUES (6, 'hệ thống zalo', 'Trống', false, '2023-09-09 14:33:40.089917', '2023-09-09 14:33:40.089917');
-INSERT INTO public.report_source (id, name, note, status, created_at, updated_at) VALUES (7, 'Qua hệ thống cửa hàng', 'Trống', false, '2023-09-09 14:34:44.380985', '2023-09-09 14:34:44.380985');
-INSERT INTO public.report_source (id, name, note, status, created_at, updated_at) VALUES (5, 'người dùng hệ thống custommer', 'Trống', false, '2023-09-09 14:31:16.973351', '2024-02-01 20:46:45.384123');
+INSERT INTO public.report_source VALUES (4, 'người dùng hệ thống admin', 'Trống', true, '2023-09-09 14:31:16.973351', '2023-09-09 14:31:16.973351');
+INSERT INTO public.report_source VALUES (6, 'hệ thống zalo', 'Trống', false, '2023-09-09 14:33:40.089917', '2023-09-09 14:33:40.089917');
+INSERT INTO public.report_source VALUES (7, 'Qua hệ thống cửa hàng', 'Trống', false, '2023-09-09 14:34:44.380985', '2023-09-09 14:34:44.380985');
+INSERT INTO public.report_source VALUES (5, 'người dùng hệ thống custommer', 'Trống', false, '2023-09-09 14:31:16.973351', '2024-02-01 20:46:45.384123');
 
 
 --
@@ -5259,7 +5278,7 @@ INSERT INTO public.report_source (id, name, note, status, created_at, updated_at
 -- Data for Name: staff; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.staff (id, code_staff, position_id, branch_id, name, address, phone_number, email, birthday, sex, img, status, created_at, updated_at, background, active, img_drive_google, background_drive_google) VALUES (29, '0234234', 4, 11, 'Nguyễn Khoa', 'Hà Nộidsffgdfg', '0849322810', 'khoazzz334455@gmai.com', '2001-01-01', true, 'system/images/avatar/29_1706791087.jpg', true, '2023-10-04 22:28:05.871347', '2024-02-01 19:38:36.040346', 'system/images/background_user/29_1706791109.jpg', true, 'https://lh3.googleusercontent.com/d/1JneUGAMB6AjieJMJi_7L5j-n4N3uS28K', 'https://lh3.googleusercontent.com/d/17bsIOWyRxFgjKSInh0jDW3atXF9fOULl');
+INSERT INTO public.staff VALUES (29, '0234234', 4, 11, 'Nguyễn Khoa', 'Hà Nộidsffgdfg', '0849322810', 'khoazzz334455@gmai.com', '2001-01-01', true, 'system/images/avatar/29_1706791087.jpg', true, '2023-10-04 22:28:05.871347', '2024-02-01 19:38:36.040346', 'system/images/background_user/29_1706791109.jpg', true, 'https://lh3.googleusercontent.com/d/1JneUGAMB6AjieJMJi_7L5j-n4N3uS28K', 'https://lh3.googleusercontent.com/d/17bsIOWyRxFgjKSInh0jDW3atXF9fOULl');
 
 
 --
@@ -5268,7 +5287,7 @@ INSERT INTO public.staff (id, code_staff, position_id, branch_id, name, address,
 -- Data for Name: staff_account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.staff_account (id, staff_id, administration_id, user_name, password, remember_token, status, created_at, updated_at, refresh_token, issued_at, expired_time, active) VALUES (11, 29, 1, '0849322810', '$2y$10$1UwQPxCV99PNLmSgGVoiI.Ye/9vA4kVApAtaGOV6XFtw0Q0MrYbM2', NULL, true, '2023-10-04 22:28:44', '2024-02-29 22:28:05.057286', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiaWF0IjoxNzA5MjIwNDg1LCJleHAiOjE3MTA5NDg0ODUsIm5iZiI6MTcwOTIyMDQ4NSwidXNlcl9uYW1lIjoiMDg0OTMyMjgxMCIsInJhbmsiOiJwZW5kaW5nIiwiaWQiOjExLCJzdGFmZl9pZCI6MjksInJlbWVtYmVyIjpudWxsfQ.TVoVcBc-NgXxC6FIyVPH3KbSuRGlfWVYx4uAwnXaDdc', '2024-02-29 22:28:05', '2024-03-20 22:28:05', true);
+INSERT INTO public.staff_account VALUES (11, 29, 1, '0849322810', '$2y$10$1UwQPxCV99PNLmSgGVoiI.Ye/9vA4kVApAtaGOV6XFtw0Q0MrYbM2', NULL, true, '2023-10-04 22:28:44', '2024-02-29 22:28:05.057286', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiaWF0IjoxNzA5MjIwNDg1LCJleHAiOjE3MTA5NDg0ODUsIm5iZiI6MTcwOTIyMDQ4NSwidXNlcl9uYW1lIjoiMDg0OTMyMjgxMCIsInJhbmsiOiJwZW5kaW5nIiwiaWQiOjExLCJzdGFmZl9pZCI6MjksInJlbWVtYmVyIjpudWxsfQ.TVoVcBc-NgXxC6FIyVPH3KbSuRGlfWVYx4uAwnXaDdc', '2024-02-29 22:28:05', '2024-03-20 22:28:05', true);
 
 
 --
@@ -5277,7 +5296,7 @@ INSERT INTO public.staff_account (id, staff_id, administration_id, user_name, pa
 -- Data for Name: sub_menu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.sub_menu (id, menu_main_id, name, color, status, created_at, updated_at, "order") VALUES (4, 1, 'qưe', '#fff', true, '2024-01-17 22:18:15.341629', '2024-02-01 19:52:57.407443', NULL);
+INSERT INTO public.sub_menu VALUES (4, 1, 'qưe', '#fff', true, '2024-01-17 22:18:15.341629', '2024-02-01 19:52:57.407443', NULL);
 
 
 --
@@ -5294,12 +5313,12 @@ INSERT INTO public.sub_menu (id, menu_main_id, name, color, status, created_at, 
 -- Data for Name: type_notification; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.type_notification (id, name, note, status, created_at, updated_at, color, code) VALUES (8, 'Hệ thống báo lỗi', 'hệ thống gửi thông báo lỗi dành cho người dùng', true, '2023-09-23 22:18:15.891562', '2023-10-04 22:49:45.843923', 'ff0000', 'SYSTEM');
-INSERT INTO public.type_notification (id, name, note, status, created_at, updated_at, color, code) VALUES (9, 'Thông báo', 'Hệ thống gửi thông báo lỗi dành cho người dùng', true, '2023-09-23 22:16:33.68393', '2023-10-04 22:49:45.860041', 'F4E869', 'EVENT');
-INSERT INTO public.type_notification (id, name, note, status, created_at, updated_at, color, code) VALUES (10, 'Người dùng', 'Thông báo từ người dùng , người dùng gửi thông báo đến người dùng', true, '2023-09-23 22:19:06.398984', '2023-10-04 22:49:45.860989', '3085C3', 'CUSTOMER');
-INSERT INTO public.type_notification (id, name, note, status, created_at, updated_at, color, code) VALUES (11, 'Phản hồi ', 'Phản hồi từ những ý kiễn phản hồi cho khách hàng', true, '2023-09-23 22:19:57.710001', '2023-10-04 22:49:45.861501', '6c757d', 'RESPONSE');
-INSERT INTO public.type_notification (id, name, note, status, created_at, updated_at, color, code) VALUES (12, 'Gửi', 'gửi tin nhắn , phản hồi cho khách hàng thành công', true, '2023-09-23 22:20:34.3712', '2023-10-04 22:49:45.861972', '28a745', 'SEND');
-INSERT INTO public.type_notification (id, name, note, status, created_at, updated_at, color, code) VALUES (13, 'Cảnh báo ', 'gửi cảnh báo cho người dùng', true, '2023-09-23 22:21:07.651394', '2023-10-04 22:49:45.86269', 'E9B824', 'WARNING');
+INSERT INTO public.type_notification VALUES (8, 'Hệ thống báo lỗi', 'hệ thống gửi thông báo lỗi dành cho người dùng', true, '2023-09-23 22:18:15.891562', '2023-10-04 22:49:45.843923', 'ff0000', 'SYSTEM');
+INSERT INTO public.type_notification VALUES (9, 'Thông báo', 'Hệ thống gửi thông báo lỗi dành cho người dùng', true, '2023-09-23 22:16:33.68393', '2023-10-04 22:49:45.860041', 'F4E869', 'EVENT');
+INSERT INTO public.type_notification VALUES (10, 'Người dùng', 'Thông báo từ người dùng , người dùng gửi thông báo đến người dùng', true, '2023-09-23 22:19:06.398984', '2023-10-04 22:49:45.860989', '3085C3', 'CUSTOMER');
+INSERT INTO public.type_notification VALUES (11, 'Phản hồi ', 'Phản hồi từ những ý kiễn phản hồi cho khách hàng', true, '2023-09-23 22:19:57.710001', '2023-10-04 22:49:45.861501', '6c757d', 'RESPONSE');
+INSERT INTO public.type_notification VALUES (12, 'Gửi', 'gửi tin nhắn , phản hồi cho khách hàng thành công', true, '2023-09-23 22:20:34.3712', '2023-10-04 22:49:45.861972', '28a745', 'SEND');
+INSERT INTO public.type_notification VALUES (13, 'Cảnh báo ', 'gửi cảnh báo cho người dùng', true, '2023-09-23 22:21:07.651394', '2023-10-04 22:49:45.86269', 'E9B824', 'WARNING');
 
 
 --
@@ -5316,14 +5335,14 @@ INSERT INTO public.type_notification (id, name, note, status, created_at, update
 -- Data for Name: type_report; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (84, 'Yêu cầu hỗ trợ từ người dùng (admin))', 'các yêu cầu hỗ trợ từ phía người dùng từ hệ thống quản lý', true, '2023-08-28 20:59:04.371602', '2023-08-28 20:59:04.371602', NULL);
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (86, 'Đóng góp ý kiến cho sản phẩm', 'Trống', false, '2023-08-28 21:06:19.720643', '2023-09-08 23:41:38.860708', NULL);
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (87, 'Tố cáo nhân viên', 'Trống', false, '2023-08-28 21:10:10.994355', '2023-09-09 14:16:24.822346', NULL);
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (88, 'Đóng góp ý kiến cho ứng dụng', 'Trống', false, '2023-08-28 21:04:42.076702', '2023-09-09 14:16:26.081107', NULL);
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (89, 'Phản hồi về sản phẩm', 'Trống', false, '2023-08-28 21:06:19.720643', '2023-09-09 14:58:29.313634', NULL);
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (90, 'phản hồi về ứng dụng customer', 'Trống', false, '2023-09-09 18:14:46.258185', '2023-09-09 18:14:46.258185', NULL);
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (91, 'Phản hồi về ứng dụng admin', 'phản hồi chung của người dùng  & người test về phần mềm', true, '2023-08-28 20:56:41.455928', '2023-09-09 18:14:53.15048', NULL);
-INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, code) VALUES (85, 'Phản hồi về nhân viên', 'phản  hồi thái độ nhân viên', false, '2023-08-28 21:09:24.518622', '2023-10-04 22:29:17.363573', NULL);
+INSERT INTO public.type_report VALUES (84, 'Yêu cầu hỗ trợ từ người dùng (admin))', 'các yêu cầu hỗ trợ từ phía người dùng từ hệ thống quản lý', true, '2023-08-28 20:59:04.371602', '2023-08-28 20:59:04.371602', NULL);
+INSERT INTO public.type_report VALUES (86, 'Đóng góp ý kiến cho sản phẩm', 'Trống', false, '2023-08-28 21:06:19.720643', '2023-09-08 23:41:38.860708', NULL);
+INSERT INTO public.type_report VALUES (87, 'Tố cáo nhân viên', 'Trống', false, '2023-08-28 21:10:10.994355', '2023-09-09 14:16:24.822346', NULL);
+INSERT INTO public.type_report VALUES (88, 'Đóng góp ý kiến cho ứng dụng', 'Trống', false, '2023-08-28 21:04:42.076702', '2023-09-09 14:16:26.081107', NULL);
+INSERT INTO public.type_report VALUES (89, 'Phản hồi về sản phẩm', 'Trống', false, '2023-08-28 21:06:19.720643', '2023-09-09 14:58:29.313634', NULL);
+INSERT INTO public.type_report VALUES (90, 'phản hồi về ứng dụng customer', 'Trống', false, '2023-09-09 18:14:46.258185', '2023-09-09 18:14:46.258185', NULL);
+INSERT INTO public.type_report VALUES (91, 'Phản hồi về ứng dụng admin', 'phản hồi chung của người dùng  & người test về phần mềm', true, '2023-08-28 20:56:41.455928', '2023-09-09 18:14:53.15048', NULL);
+INSERT INTO public.type_report VALUES (85, 'Phản hồi về nhân viên', 'phản  hồi thái độ nhân viên', false, '2023-08-28 21:09:24.518622', '2023-10-04 22:29:17.363573', NULL);
 
 
 --
@@ -5332,8 +5351,8 @@ INSERT INTO public.type_report (id, name, note, status, created_at, updated_at, 
 -- Data for Name: type_ticket; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.type_ticket (id, name, note, status, created_at, updated_at, code) VALUES (3, 'Phiếu thu', NULL, true, '2023-10-04 22:44:53.452815', '2023-10-04 22:44:53.452815', 'IMPORT');
-INSERT INTO public.type_ticket (id, name, note, status, created_at, updated_at, code) VALUES (4, 'Phiếu xuất', NULL, true, '2023-10-04 22:44:53.464115', '2023-10-04 22:44:53.464115', 'EXPORT');
+INSERT INTO public.type_ticket VALUES (3, 'Phiếu thu', NULL, true, '2023-10-04 22:44:53.452815', '2023-10-04 22:44:53.452815', 'IMPORT');
+INSERT INTO public.type_ticket VALUES (4, 'Phiếu xuất', NULL, true, '2023-10-04 22:44:53.464115', '2023-10-04 22:44:53.464115', 'EXPORT');
 
 
 --
@@ -5361,7 +5380,7 @@ INSERT INTO public.type_ticket (id, name, note, status, created_at, updated_at, 
 
 
 --
--- TOC entry 4485 (class 0 OID 0)
+-- TOC entry 4486 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: account_admin_action_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5370,7 +5389,7 @@ SELECT pg_catalog.setval('public.account_admin_action_id_seq', 1, false);
 
 
 --
--- TOC entry 4486 (class 0 OID 0)
+-- TOC entry 4487 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: action_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5379,7 +5398,7 @@ SELECT pg_catalog.setval('public.action_id_seq', 1, false);
 
 
 --
--- TOC entry 4487 (class 0 OID 0)
+-- TOC entry 4488 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: administration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5388,7 +5407,7 @@ SELECT pg_catalog.setval('public.administration_id_seq', 1, true);
 
 
 --
--- TOC entry 4488 (class 0 OID 0)
+-- TOC entry 4489 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: admins_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5397,7 +5416,7 @@ SELECT pg_catalog.setval('public.admins_notification_id_seq', 104, true);
 
 
 --
--- TOC entry 4489 (class 0 OID 0)
+-- TOC entry 4490 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: ads_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5406,7 +5425,7 @@ SELECT pg_catalog.setval('public.ads_id_seq', 1, false);
 
 
 --
--- TOC entry 4490 (class 0 OID 0)
+-- TOC entry 4491 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: api_weather_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5415,7 +5434,7 @@ SELECT pg_catalog.setval('public.api_weather_id_seq', 11, true);
 
 
 --
--- TOC entry 4491 (class 0 OID 0)
+-- TOC entry 4492 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: bill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5424,7 +5443,7 @@ SELECT pg_catalog.setval('public.bill_id_seq', 1, false);
 
 
 --
--- TOC entry 4492 (class 0 OID 0)
+-- TOC entry 4493 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: branch_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5433,7 +5452,7 @@ SELECT pg_catalog.setval('public.branch_id_seq', 11, true);
 
 
 --
--- TOC entry 4493 (class 0 OID 0)
+-- TOC entry 4494 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: comments_news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5442,7 +5461,7 @@ SELECT pg_catalog.setval('public.comments_news_id_seq', 1, false);
 
 
 --
--- TOC entry 4494 (class 0 OID 0)
+-- TOC entry 4495 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: comments_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5451,7 +5470,7 @@ SELECT pg_catalog.setval('public.comments_product_id_seq', 1, false);
 
 
 --
--- TOC entry 4495 (class 0 OID 0)
+-- TOC entry 4496 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: contact_support_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5460,7 +5479,7 @@ SELECT pg_catalog.setval('public.contact_support_id_seq', 1, false);
 
 
 --
--- TOC entry 4496 (class 0 OID 0)
+-- TOC entry 4497 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: customers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5469,7 +5488,7 @@ SELECT pg_catalog.setval('public.customers_id_seq', 1, false);
 
 
 --
--- TOC entry 4497 (class 0 OID 0)
+-- TOC entry 4498 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: customers_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5478,7 +5497,7 @@ SELECT pg_catalog.setval('public.customers_notification_id_seq', 1, false);
 
 
 --
--- TOC entry 4498 (class 0 OID 0)
+-- TOC entry 4499 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: depot_ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5487,7 +5506,7 @@ SELECT pg_catalog.setval('public.depot_ticket_id_seq', 1, false);
 
 
 --
--- TOC entry 4499 (class 0 OID 0)
+-- TOC entry 4500 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: event_ads_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5496,7 +5515,7 @@ SELECT pg_catalog.setval('public.event_ads_id_seq', 1, false);
 
 
 --
--- TOC entry 4500 (class 0 OID 0)
+-- TOC entry 4501 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: failed_jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5505,7 +5524,7 @@ SELECT pg_catalog.setval('public.failed_jobs_id_seq', 1, false);
 
 
 --
--- TOC entry 4501 (class 0 OID 0)
+-- TOC entry 4502 (class 0 OID 0)
 -- Dependencies: 247
 -- Name: giftcode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5514,7 +5533,7 @@ SELECT pg_catalog.setval('public.giftcode_id_seq', 1, false);
 
 
 --
--- TOC entry 4502 (class 0 OID 0)
+-- TOC entry 4503 (class 0 OID 0)
 -- Dependencies: 249
 -- Name: history_payment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5523,7 +5542,7 @@ SELECT pg_catalog.setval('public.history_payment_id_seq', 1, false);
 
 
 --
--- TOC entry 4503 (class 0 OID 0)
+-- TOC entry 4504 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: img_news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5532,7 +5551,7 @@ SELECT pg_catalog.setval('public.img_news_id_seq', 1, false);
 
 
 --
--- TOC entry 4504 (class 0 OID 0)
+-- TOC entry 4505 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: img_products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5541,7 +5560,7 @@ SELECT pg_catalog.setval('public.img_products_id_seq', 1, false);
 
 
 --
--- TOC entry 4505 (class 0 OID 0)
+-- TOC entry 4506 (class 0 OID 0)
 -- Dependencies: 255
 -- Name: intermediary_account_service_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5550,7 +5569,7 @@ SELECT pg_catalog.setval('public.intermediary_account_service_id_seq', 1, false)
 
 
 --
--- TOC entry 4506 (class 0 OID 0)
+-- TOC entry 4507 (class 0 OID 0)
 -- Dependencies: 257
 -- Name: list_codes_received_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5559,7 +5578,7 @@ SELECT pg_catalog.setval('public.list_codes_received_id_seq', 1, false);
 
 
 --
--- TOC entry 4507 (class 0 OID 0)
+-- TOC entry 4508 (class 0 OID 0)
 -- Dependencies: 259
 -- Name: list_giftcodes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5568,7 +5587,7 @@ SELECT pg_catalog.setval('public.list_giftcodes_id_seq', 1, false);
 
 
 --
--- TOC entry 4508 (class 0 OID 0)
+-- TOC entry 4509 (class 0 OID 0)
 -- Dependencies: 261
 -- Name: list_products_by_bill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5577,7 +5596,7 @@ SELECT pg_catalog.setval('public.list_products_by_bill_id_seq', 1, false);
 
 
 --
--- TOC entry 4509 (class 0 OID 0)
+-- TOC entry 4510 (class 0 OID 0)
 -- Dependencies: 263
 -- Name: log_deletes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5586,7 +5605,7 @@ SELECT pg_catalog.setval('public.log_deletes_id_seq', 1, false);
 
 
 --
--- TOC entry 4510 (class 0 OID 0)
+-- TOC entry 4511 (class 0 OID 0)
 -- Dependencies: 265
 -- Name: log_login_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5595,7 +5614,7 @@ SELECT pg_catalog.setval('public.log_login_id_seq', 1, false);
 
 
 --
--- TOC entry 4511 (class 0 OID 0)
+-- TOC entry 4512 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: log_updates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5604,7 +5623,7 @@ SELECT pg_catalog.setval('public.log_updates_id_seq', 1, false);
 
 
 --
--- TOC entry 4512 (class 0 OID 0)
+-- TOC entry 4513 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: menu_main_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5613,7 +5632,7 @@ SELECT pg_catalog.setval('public.menu_main_id_seq', 1, true);
 
 
 --
--- TOC entry 4513 (class 0 OID 0)
+-- TOC entry 4514 (class 0 OID 0)
 -- Dependencies: 271
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5622,7 +5641,7 @@ SELECT pg_catalog.setval('public.migrations_id_seq', 12, true);
 
 
 --
--- TOC entry 4514 (class 0 OID 0)
+-- TOC entry 4515 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5631,7 +5650,7 @@ SELECT pg_catalog.setval('public.news_id_seq', 1, false);
 
 
 --
--- TOC entry 4515 (class 0 OID 0)
+-- TOC entry 4516 (class 0 OID 0)
 -- Dependencies: 276
 -- Name: payment_methods_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5640,7 +5659,7 @@ SELECT pg_catalog.setval('public.payment_methods_id_seq', 1, false);
 
 
 --
--- TOC entry 4516 (class 0 OID 0)
+-- TOC entry 4517 (class 0 OID 0)
 -- Dependencies: 278
 -- Name: personal_access_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5649,7 +5668,7 @@ SELECT pg_catalog.setval('public.personal_access_tokens_id_seq', 1, false);
 
 
 --
--- TOC entry 4517 (class 0 OID 0)
+-- TOC entry 4518 (class 0 OID 0)
 -- Dependencies: 280
 -- Name: policy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5658,7 +5677,7 @@ SELECT pg_catalog.setval('public.policy_id_seq', 1, false);
 
 
 --
--- TOC entry 4518 (class 0 OID 0)
+-- TOC entry 4519 (class 0 OID 0)
 -- Dependencies: 282
 -- Name: position_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5667,7 +5686,7 @@ SELECT pg_catalog.setval('public.position_id_seq', 9, true);
 
 
 --
--- TOC entry 4519 (class 0 OID 0)
+-- TOC entry 4520 (class 0 OID 0)
 -- Dependencies: 284
 -- Name: price_difference_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5676,7 +5695,7 @@ SELECT pg_catalog.setval('public.price_difference_id_seq', 1, false);
 
 
 --
--- TOC entry 4520 (class 0 OID 0)
+-- TOC entry 4521 (class 0 OID 0)
 -- Dependencies: 286
 -- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5685,7 +5704,7 @@ SELECT pg_catalog.setval('public.products_id_seq', 1, false);
 
 
 --
--- TOC entry 4521 (class 0 OID 0)
+-- TOC entry 4522 (class 0 OID 0)
 -- Dependencies: 288
 -- Name: products_in_stock_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5694,7 +5713,7 @@ SELECT pg_catalog.setval('public.products_in_stock_id_seq', 1, false);
 
 
 --
--- TOC entry 4522 (class 0 OID 0)
+-- TOC entry 4523 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: promotion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5703,7 +5722,7 @@ SELECT pg_catalog.setval('public.promotion_id_seq', 1, false);
 
 
 --
--- TOC entry 4523 (class 0 OID 0)
+-- TOC entry 4524 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: rank_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5712,7 +5731,7 @@ SELECT pg_catalog.setval('public.rank_id_seq', 1, true);
 
 
 --
--- TOC entry 4524 (class 0 OID 0)
+-- TOC entry 4525 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: report_source_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5721,7 +5740,7 @@ SELECT pg_catalog.setval('public.report_source_id_seq', 7, true);
 
 
 --
--- TOC entry 4525 (class 0 OID 0)
+-- TOC entry 4526 (class 0 OID 0)
 -- Dependencies: 296
 -- Name: reports_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5730,7 +5749,7 @@ SELECT pg_catalog.setval('public.reports_id_seq', 1, false);
 
 
 --
--- TOC entry 4526 (class 0 OID 0)
+-- TOC entry 4527 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: service_by_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5739,7 +5758,7 @@ SELECT pg_catalog.setval('public.service_by_product_id_seq', 1, false);
 
 
 --
--- TOC entry 4527 (class 0 OID 0)
+-- TOC entry 4528 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: shipping_method_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5748,7 +5767,7 @@ SELECT pg_catalog.setval('public.shipping_method_id_seq', 1, false);
 
 
 --
--- TOC entry 4528 (class 0 OID 0)
+-- TOC entry 4529 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: staff_account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5757,7 +5776,7 @@ SELECT pg_catalog.setval('public.staff_account_id_seq', 11, true);
 
 
 --
--- TOC entry 4529 (class 0 OID 0)
+-- TOC entry 4530 (class 0 OID 0)
 -- Dependencies: 304
 -- Name: staff_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5766,7 +5785,7 @@ SELECT pg_catalog.setval('public.staff_id_seq', 30, true);
 
 
 --
--- TOC entry 4530 (class 0 OID 0)
+-- TOC entry 4531 (class 0 OID 0)
 -- Dependencies: 306
 -- Name: sub_menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5775,7 +5794,7 @@ SELECT pg_catalog.setval('public.sub_menu_id_seq', 4, true);
 
 
 --
--- TOC entry 4531 (class 0 OID 0)
+-- TOC entry 4532 (class 0 OID 0)
 -- Dependencies: 308
 -- Name: transfer_providers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5784,7 +5803,7 @@ SELECT pg_catalog.setval('public.transfer_providers_id_seq', 1, false);
 
 
 --
--- TOC entry 4532 (class 0 OID 0)
+-- TOC entry 4533 (class 0 OID 0)
 -- Dependencies: 310
 -- Name: type_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5793,7 +5812,7 @@ SELECT pg_catalog.setval('public.type_notification_id_seq', 13, true);
 
 
 --
--- TOC entry 4533 (class 0 OID 0)
+-- TOC entry 4534 (class 0 OID 0)
 -- Dependencies: 312
 -- Name: type_promotion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5802,7 +5821,7 @@ SELECT pg_catalog.setval('public.type_promotion_id_seq', 1, false);
 
 
 --
--- TOC entry 4534 (class 0 OID 0)
+-- TOC entry 4535 (class 0 OID 0)
 -- Dependencies: 314
 -- Name: type_report_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5811,7 +5830,7 @@ SELECT pg_catalog.setval('public.type_report_id_seq', 91, true);
 
 
 --
--- TOC entry 4535 (class 0 OID 0)
+-- TOC entry 4536 (class 0 OID 0)
 -- Dependencies: 316
 -- Name: type_ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5820,7 +5839,7 @@ SELECT pg_catalog.setval('public.type_ticket_id_seq', 4, true);
 
 
 --
--- TOC entry 4536 (class 0 OID 0)
+-- TOC entry 4537 (class 0 OID 0)
 -- Dependencies: 318
 -- Name: type_update_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5829,7 +5848,7 @@ SELECT pg_catalog.setval('public.type_update_id_seq', 1, false);
 
 
 --
--- TOC entry 4537 (class 0 OID 0)
+-- TOC entry 4538 (class 0 OID 0)
 -- Dependencies: 320
 -- Name: warehouse_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5838,7 +5857,7 @@ SELECT pg_catalog.setval('public.warehouse_id_seq', 1, false);
 
 
 --
--- TOC entry 4538 (class 0 OID 0)
+-- TOC entry 4539 (class 0 OID 0)
 -- Dependencies: 322
 -- Name: websockets_statistics_entries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -7599,7 +7618,7 @@ ALTER TABLE ONLY public.customers_notification
     ADD CONSTRAINT customers_notification_fk_1 FOREIGN KEY (customer_id) REFERENCES public.customers(id) ON UPDATE CASCADE;
 
 
--- Completed on 2024-03-01 11:10:24
+-- Completed on 2024-03-01 11:12:29
 
 --
 -- PostgreSQL database dump complete
