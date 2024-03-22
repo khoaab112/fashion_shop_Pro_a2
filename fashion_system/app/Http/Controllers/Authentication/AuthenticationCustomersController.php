@@ -93,7 +93,7 @@ class AuthenticationCustomersController extends Controller
                 }
             } else
                 return CodeHttpHelpers::returnJson(400, false, $errors, 200);
-                if(!$flagExist) return CodeHttpHelpers::returnJson(400, false, "Tài khoản đã được sử dụng", 200);
+            if (!$flagExist) return CodeHttpHelpers::returnJson(400, false, "Tài khoản đã được sử dụng", 200);
         }
         $token = $this->createJWTRefreshToken($request->post('email'));
         if (!$flagExist) {
@@ -117,13 +117,39 @@ class AuthenticationCustomersController extends Controller
                 $message = "Yêu cầu đã được tạo, bạn hãy kiểm tra email";
             } else {
                 $result = $this->customer->updateById($customer, $search->first()->id);
-                $message ="Hệ thống nhận thấy trước đó bạn đã đăng ký mà chưa được xác thực. Chúng tôi đã gửi lại thư xác thực, vui lòng kiểm tra email";
+                $message = "Hệ thống nhận thấy trước đó bạn đã đăng ký mà chưa được xác thực. Chúng tôi đã gửi lại thư xác thực, vui lòng kiểm tra email";
             }
             Mail::to($request->post('email'))->send(new templateVerificationEmail($request->post('email'), $token));
             return CodeHttpHelpers::returnJson(200, true, $message, 200);
         } catch (\Exception $exception) {
             return CodeHttpHelpers::returnJson(500, false, $exception, 500);
         }
+    }
+    public function createPassword(Request $request)
+    {
+
+        $rules = [
+            "data" => 'required',
+            "password" => 'required|confirmed|min:8',
+            "password_confirmation" => 'required|min:8',
+        ];
+        $ruleName = [
+            "data" => "Dữ liệu",
+            "password" => "Mật khẩu",
+            "password_confirmation" => "Xác thực mật khẩu",
+        ];
+        $validator = validationHelpers::validation($request->all(), $rules, $ruleName);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        $data = [
+            'status' => true,
+            "active" => true,
+            "password" => bcrypt($request->input('password')),
+        ];
+        $id = json_decode($request->input('data'))->id;
+        $result = $this->customer->updateById($data, $id);
+        return view('templates.confirmPassword', ['status' => true, 'data' => "", 'message' => 'Tạo thành công']);
     }
     public function login(Request $request)
     {
@@ -135,14 +161,25 @@ class AuthenticationCustomersController extends Controller
     {
         $email = $request->input('email');
         $token = $request->input('token');
+        if (empty($email) || empty($token))
+            return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => "Đường dẫn bị thay đổi"]);
         $tokenDecode = $this->decodeJwtToken($token);
-dd($tokenDecode);
+        if (!$tokenDecode['status']) return view('templates.confirmPassword', ['status' => $tokenDecode['status'], 'data' => "", 'message' => "Đường dẫ đã hết hạn (giới hạn 5 phút) hoặc bị thay đổi."]);
+        $emailToken = $tokenDecode['value']->email;
+        if ($emailToken != $email)   return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Thông tin bi can thiệp, hãy sử dụng đúng đường dẫn']);
+        $search = $this->customer->search('email', $emailToken)->first();
+        if ($search->email_token != $token)
+            return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Mã xác thực không chính xác']);
+        if ($search->active && $search->status) {
+            return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Tài khoản đã được tạo trước đó']);
+        }
+        return view('templates.confirmPassword', ['status' => true, 'data' => $search, 'message' => 'Xác thưc thành công']);
     }
     public function createJWTRefreshToken($email)
     {
 
         $algorithm = 'HS256';
-        $expiration = 300;
+        $expiration = 3000; //5ph
         $issuedAt = time();
         $secretKey = env('JWT_SECRET');
         $expirationTime = $issuedAt + $expiration;
@@ -166,9 +203,9 @@ dd($tokenDecode);
 
             return ['status' => true, 'value' => $decodedToken];
         } catch (\Firebase\JWT\ExpiredException $e) {
-            return ['status' => false, 'value' => null];
+            return ['status' => false, 'value' => $e->getMessage()];
         } catch (\Exception $error) {
-            return CodeHttpHelpers::returnJson(500, false, $error, 500);
+            return ['status' => false, 'value' => "Bất thường"];
         }
     }
 }

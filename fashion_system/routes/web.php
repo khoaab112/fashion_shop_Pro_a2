@@ -20,6 +20,7 @@ Route::get('/welcome', function () {
 })->name('welcome');
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/verification', [AuthenticationCustomersController::class, 'pathValidation'])->name('active');
+    Route::post('/verification', [AuthenticationCustomersController::class, 'createPassword'])->name('createPassword');
 });
 // Route::get('/forgot-password', function () {
 //     return view('templates.confirmPassword');
