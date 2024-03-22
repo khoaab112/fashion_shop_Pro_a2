@@ -11,9 +11,6 @@
 </head>
 
 <body>
-    {{-- @php
-        dd($status);
-    @endphp --}}
     @if ($status && $data)
         <section id="confirm-password">
             <div class="container">
@@ -30,7 +27,10 @@
                         <input type="password" class="form-control" id="password" name="password"
                             placeholder="name@example.com">
                         <label for="password">Mật khẩu</label>
-                        <span class="icon-eye"><i class="fa-solid fa-eye"></i></span>
+                        <span class="password icon-eye on" onclick="clickIcon(event,'password')"><i
+                                class="fa-solid fa-eye"></i></span>
+                        <span class="password icon-eye off none-icon" onclick="clickIcon(event,'password')"><i
+                                class="fa-regular fa-eye-slash"></i></i></span>
                     </div>
                     @if ($errors->any())
                         <strong class="text-danger mb-2">{{ $errors->first('password') }}</strong>
@@ -39,11 +39,14 @@
                         <input type="password" class="form-control" id="password_confirmation"
                             name="password_confirmation" placeholder="Password">
                         <label for="password_confirmation">Xác nhận</label>
-                        <span class="icon-eye"><i class="fa-solid fa-eye"></i></span>
+                        <span class="confirmation icon-eye on" onclick="clickIcon(event,'confirmation')"><i
+                                class="fa-solid fa-eye"></i></span>
+                        <span class="confirmation icon-eye off none-icon" onclick="clickIcon(event,'confirmation')"><i
+                                class="fa-regular fa-eye-slash"></i></i></span>
                     </div>
                     @if ($errors->any())
-                    <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
-                @endif
+                        <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
+                    @endif
                     <div class="text-center"> <button class="btn-submit" type="submit">Xác nhận</button></div>
                 </form>
             </div>
@@ -67,6 +70,43 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+</script>
+<script>
+    function clickIcon(event, key) {
+        var clickedElement = event.currentTarget;
+        var hasOnClass = clickedElement.classList.contains('on');
+        var spanOn , spanOff;
+        var elPassword = document.getElementById("password");
+        var elConfirm = document.getElementById("password_confirmation");
+        switch (key) {
+            case 'password':
+                 spanOn = document.querySelector('.password.icon-eye.on');
+                 spanOff = document.querySelector('.password.icon-eye.off');
+                if (hasOnClass) {
+                    spanOn.classList.add('none-icon');
+                    spanOff.classList.remove('none-icon');
+                    elPassword.type="text";
+                } else {
+                    spanOn.classList.remove('none-icon');
+                    spanOff.classList.add('none-icon');
+                    elPassword.type="password";
+                }
+                break;
+            case 'confirmation':
+                 spanOn = document.querySelector('.confirmation.icon-eye.on');
+                 spanOff = document.querySelector('.confirmation.icon-eye.off');
+                if (hasOnClass) {
+                    spanOn.classList.add('none-icon');
+                    spanOff.classList.remove('none-icon');
+                    elConfirm.type="text";
+                } else {
+                    spanOn.classList.remove('none-icon');
+                    spanOff.classList.add('none-icon');
+                    elConfirm.type="password";
+                }
+                break;
+        }
+    }
 </script>
 
 </html>
