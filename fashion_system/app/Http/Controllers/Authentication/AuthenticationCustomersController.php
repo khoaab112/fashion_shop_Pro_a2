@@ -131,11 +131,12 @@ class AuthenticationCustomersController extends Controller
     public function logout(Request $request)
     {
     }
-    public function sendVerificationEmail()
+    public function pathValidation(Request $request)
     {
-        $toEmail = 'khoazzz334455@gmail.com';
-        $token = "123123";
-        Mail::to($toEmail)->send(new templateVerificationEmail($toEmail, $token));
+        $email = $request->input('email');
+        $token = $request->input('token');
+        $tokenDecode = $this->decodeJwtToken($token);
+dd($tokenDecode);
     }
     public function createJWTRefreshToken($email)
     {

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Authentication\AuthenticationCustomersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/welcome', function () {
     return view('templates.verificationEmail');
 })->name('welcome');
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('/verification', [AuthenticationCustomersController::class, 'pathValidation'])->name('active');
+});
+// Route::get('/forgot-password', function () {
+//     return view('templates.confirmPassword');
+// })->name('forgotPassword');
 
 Route::get('/{any}', function () {
     return view('app');
 })->where('any', '^(?!api\/)[\/\w\.-]*');
-
-
