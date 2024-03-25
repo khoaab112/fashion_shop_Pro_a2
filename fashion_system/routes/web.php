@@ -16,7 +16,7 @@ use App\Http\Controllers\Authentication\AuthenticationCustomersController;
 
 // Route::view('/{any}', 'app')->where('any', '.*');
 Route::get('/welcome', function () {
-    return view('templates.verificationEmail');
+    return view('templates.reissuePassword');
 })->name('welcome');
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/verification', [AuthenticationCustomersController::class, 'pathValidation'])->name('active');
