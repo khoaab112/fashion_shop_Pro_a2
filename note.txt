@@ -1,1 +1,2 @@
-composer install --ignore-platform-reqs
+composer install --ignore-platform-reqs : chạy mà bỏ qua hết etenxion
+ khi cày đặt hãy bỏ comment của đoạn sau ;extension=pdo_pgsql
