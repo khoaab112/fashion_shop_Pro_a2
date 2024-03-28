@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             StaffAccountSeeder::class,
             // AdministrationSeeder::class,
             // StaffSeeder::class,
+            // TypeNotificationSeeder::class,
+            // RankSeeder::class,
         ]);
     }
 }
