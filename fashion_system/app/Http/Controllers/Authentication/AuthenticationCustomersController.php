@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use  App\Mail\templateVerificationEmail;
+use  App\Mail\templateResetPassword;
 
 class AuthenticationCustomersController extends Controller
 {
@@ -149,7 +150,7 @@ class AuthenticationCustomersController extends Controller
         ];
         $id = json_decode($request->input('data'))->id;
         $result = $this->customer->updateById($data, $id);
-        return view('templates.confirmPassword', ['status' => true, 'data' => "", 'message' => 'Tạo thành công']);
+        return view('authCustomer.confirmPassword', ['status' => true, 'data' => "", 'message' => 'Tạo thành công']);
     }
     public function login(Request $request)
     {
@@ -174,6 +175,34 @@ class AuthenticationCustomersController extends Controller
             return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Tài khoản đã được tạo trước đó']);
         }
         return view('templates.confirmPassword', ['status' => true, 'data' => $search, 'message' => 'Xác thưc thành công']);
+    }
+    public function reissuePassword(Request $request)
+    {
+        $ip = $request->ip();
+        $browser = $request->header('User-Agent');
+        $email = $request->post('email');
+        if (!$email) {
+            return CodeHttpHelpers::returnJson(400, false, "Hiễn tại chưa hỗ trợ đăng ký bằng số điện thoại, hãy chọn hình thức đăng ký bằng email", 200);
+        }
+        $account = $this->customer->search('email', $email)->first();
+        if (!$account)
+            return CodeHttpHelpers::returnJson(400, false, "Tài khoản chưa được đăng ký", 200);
+        if (!$account->active)
+            return CodeHttpHelpers::returnJson(400, false, "Tài khoản chưa được kích hoạt", 200);
+        if (!$account->status)
+            return CodeHttpHelpers::returnJson(400, false, "Tài khoản bị khóa", 200);
+        $token = $this->createJWTRefreshToken($email);
+        $href = env('APP_URL')."/reissuePassword?token=" . $token;
+        $customer = [
+            "email_token" => $token,
+        ];
+        $this->customer->updateById($customer, $account->id);
+        Mail::to($request->post('email'))->send(new templateResetPassword($account, $token, $ip, $browser,$href));
+        return CodeHttpHelpers::returnJson(200, true, "Yêu cầu cấp lại mật khẩu thành công, hãy kiểm tra email", 200);
+    }
+    public function authenticatePasswordChange(Request $request)
+    {
+
     }
     public function createJWTRefreshToken($email)
     {

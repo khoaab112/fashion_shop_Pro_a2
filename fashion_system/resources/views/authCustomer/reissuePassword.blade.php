@@ -11,6 +11,7 @@
 </head>
 
 <body id="reissue-password">
+    <div class="bg-full"></div>
     <section id="confirm-password">
         <div class="container">
             <div class="text-center">

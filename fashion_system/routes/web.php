@@ -15,12 +15,16 @@ use App\Http\Controllers\Authentication\AuthenticationCustomersController;
 */
 
 // Route::view('/{any}', 'app')->where('any', '.*');
-Route::get('/welcome', function () {
-    return view('templates.reissuePassword');
-})->name('welcome');
+// Route::get('/welcome', function () {
+//     return view('templates.resetPassword');
+// })->name('welcome');
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/verification', [AuthenticationCustomersController::class, 'pathValidation'])->name('active');
     Route::post('/verification', [AuthenticationCustomersController::class, 'createPassword'])->name('createPassword');
+
+    Route::get('/reissuePassword', [AuthenticationCustomersController::class, 'pathValidation'])->name('reissuePassword');
+    Route::post('/reissuePassword', [AuthenticationCustomersController::class, 'authenticatePasswordChange'])->name('changeThePassword');
+
 });
 // Route::get('/forgot-password', function () {
 //     return view('templates.confirmPassword');

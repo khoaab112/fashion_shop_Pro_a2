@@ -9,18 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class templateVerificationEmail extends Mailable
+class templateResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public $email,$token ;
-    public function __construct($email,$token)
+    public $account,$token,$ip,$browser,$href ;
+
+    public function __construct($account,$token,$ip,$browser,$href )
     {
-        $this->email = $email;
+        $this->account = $account;
         $this->token = $token;
+        $this->ip = $ip;
+        $this->browser = $browser;
+        $this->href = $href;
     }
 
     /**
@@ -29,7 +33,7 @@ class templateVerificationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Yêu cầu tạo mật khẩu',
+            subject: 'Cấp lại mật khẩu',
         );
     }
 
@@ -39,10 +43,13 @@ class templateVerificationEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'templates.verificationEmail',
+            view: 'templates.resetPassword',
             with: [
-                'email' => $this->email ,
+                'email' => $this->account ,
                 'token' => $this->token,
+                'ip' => $this->ip,
+                'browser' => $this->browser,
+                'href' => $this->href,
             ],
         );
     }

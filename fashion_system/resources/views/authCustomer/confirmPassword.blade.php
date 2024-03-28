@@ -10,7 +10,7 @@
 </head>
 </head>
 
-<body>
+<body id="cf-pw">
     @if ($status && $data)
         <section id="confirm-password">
             <div class="container">
