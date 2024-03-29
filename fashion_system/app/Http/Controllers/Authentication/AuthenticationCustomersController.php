@@ -129,6 +129,7 @@ class AuthenticationCustomersController extends Controller
     public function createPassword(Request $request)
     {
 
+        $segment = $request->segment(2);
         $rules = [
             "data" => 'required',
             "password" => 'required|confirmed|min:8',
@@ -143,14 +144,26 @@ class AuthenticationCustomersController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
+
+        $id = json_decode($request->input('data'))->id;
+        if ($segment == 'verification') {
+            $data = [
+                'status' => true,
+                "active" => true,
+                "password" => bcrypt($request->input('password')),
+            ];
+            $this->customer->updateById($data, $id);
+            return view('authCustomer.confirmPassword', ['status' => true, 'data' => "", 'message' => 'Tạo thành công']);
+        }
+        if ($segment == 'reissuePassword')
         $data = [
             'status' => true,
             "active" => true,
+            "email_token" => "",
             "password" => bcrypt($request->input('password')),
         ];
-        $id = json_decode($request->input('data'))->id;
-        $result = $this->customer->updateById($data, $id);
-        return view('authCustomer.confirmPassword', ['status' => true, 'data' => "", 'message' => 'Tạo thành công']);
+        $this->customer->updateById($data, $id);
+            return view('authCustomer.reissuePassword', ['status' => true, 'data' => "", 'message' => 'Thay đổi thành công']);
     }
     public function login(Request $request)
     {
@@ -163,18 +176,18 @@ class AuthenticationCustomersController extends Controller
         $email = $request->input('email');
         $token = $request->input('token');
         if (empty($email) || empty($token))
-            return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => "Đường dẫn bị thay đổi"]);
+            return view('authCustomer.confirmPassword', ['status' => false, 'data' => "", 'message' => "Đường dẫn bị thay đổi"]);
         $tokenDecode = $this->decodeJwtToken($token);
-        if (!$tokenDecode['status']) return view('templates.confirmPassword', ['status' => $tokenDecode['status'], 'data' => "", 'message' => "Đường dẫ đã hết hạn (giới hạn 5 phút) hoặc bị thay đổi."]);
+        if (!$tokenDecode['status']) return view('authCustomer.confirmPassword', ['status' => $tokenDecode['status'], 'data' => "", 'message' => "Đường dẫ đã hết hạn (giới hạn 5 phút) hoặc bị thay đổi."]);
         $emailToken = $tokenDecode['value']->email;
-        if ($emailToken != $email)   return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Thông tin bi can thiệp, hãy sử dụng đúng đường dẫn']);
+        if ($emailToken != $email)   return view('authCustomer.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Thông tin bi can thiệp, hãy sử dụng đúng đường dẫn']);
         $search = $this->customer->search('email', $emailToken)->first();
         if ($search->email_token != $token)
-            return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Mã xác thực không chính xác']);
+            return view('authCustomer.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Mã xác thực không chính xác']);
         if ($search->active && $search->status) {
-            return view('templates.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Tài khoản đã được tạo trước đó']);
+            return view('authCustomer.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Tài khoản đã được tạo trước đó']);
         }
-        return view('templates.confirmPassword', ['status' => true, 'data' => $search, 'message' => 'Xác thưc thành công']);
+        return view('authCustomer.confirmPassword', ['status' => true, 'data' => $search, 'message' => 'Xác thưc thành công']);
     }
     public function reissuePassword(Request $request)
     {
@@ -192,17 +205,32 @@ class AuthenticationCustomersController extends Controller
         if (!$account->status)
             return CodeHttpHelpers::returnJson(400, false, "Tài khoản bị khóa", 200);
         $token = $this->createJWTRefreshToken($email);
-        $href = env('APP_URL')."/reissuePassword?token=" . $token;
+        $href = env('APP_URL') . "/auth/reissuePassword?token=" . $token;
         $customer = [
             "email_token" => $token,
         ];
         $this->customer->updateById($customer, $account->id);
-        Mail::to($request->post('email'))->send(new templateResetPassword($account, $token, $ip, $browser,$href));
+        Mail::to($request->post('email'))->send(new templateResetPassword($account, $token, $ip, $browser, $href));
         return CodeHttpHelpers::returnJson(200, true, "Yêu cầu cấp lại mật khẩu thành công, hãy kiểm tra email", 200);
     }
-    public function authenticatePasswordChange(Request $request)
+    public function passwordChangePage(Request $request)
     {
-
+        $token = $request->input('token');
+        if (empty($token))
+            return view('authCustomer.reissuePassword', ['status' => false, 'data' => "", 'message' => "Đường dẫn bị thay đổi"]);
+        $tokenDecode = $this->decodeJwtToken($token);
+        if (!$tokenDecode['status']) return view('authCustomer.reissuePassword', ['status' => $tokenDecode['status'], 'data' => "", 'message' => "Đường dẫ đã hết hạn (giới hạn 5 phút) hoặc bị thay đổi."]);
+        $emailToken = $tokenDecode['value']->email;
+        $search = $this->customer->search('email', $emailToken)->first();
+        if ($search->email_token != $token)
+            return view('authCustomer.reissuePassword', ['status' => false, 'data' => "", 'message' => 'Mã xác thực không chính xác']);
+        if (!$search->active) {
+            return view('authCustomer.reissuePassword', ['status' => false, 'data' => "", 'message' => 'Tài khoản chưa được kích hoạt']);
+        }
+        if (!$search->status) {
+            return view('authCustomer.reissuePassword', ['status' => false, 'data' => "", 'message' => 'Tài khoản đã bị khóa']);
+        }
+        return view('authCustomer.reissuePassword', ['status' => true, 'data' => $search, 'message' => 'Xác thưc thành công']);
     }
     public function createJWTRefreshToken($email)
     {

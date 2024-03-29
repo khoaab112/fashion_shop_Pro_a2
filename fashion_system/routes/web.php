@@ -22,8 +22,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/verification', [AuthenticationCustomersController::class, 'pathValidation'])->name('active');
     Route::post('/verification', [AuthenticationCustomersController::class, 'createPassword'])->name('createPassword');
 
-    Route::get('/reissuePassword', [AuthenticationCustomersController::class, 'pathValidation'])->name('reissuePassword');
-    Route::post('/reissuePassword', [AuthenticationCustomersController::class, 'authenticatePasswordChange'])->name('changeThePassword');
+    Route::get('/reissuePassword', [AuthenticationCustomersController::class, 'passwordChangePage'])->name('reissuePassword');
+    Route::post('/reissuePassword', [AuthenticationCustomersController::class, 'createPassword'])->name('changeThePassword');
 
 });
 // Route::get('/forgot-password', function () {

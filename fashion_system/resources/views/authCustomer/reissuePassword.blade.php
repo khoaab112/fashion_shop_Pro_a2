@@ -12,45 +12,60 @@
 
 <body id="reissue-password">
     <div class="bg-full"></div>
-    <section id="confirm-password">
-        <div class="container">
-            <div class="text-center">
-                <h1 class="title">Thay đổi mật khẩu</h1>
-                <p>Email : <strong>example@gmail.com</strong></p>
-                <p class="idea">Chúng tôi nhận được yêu cầu cấp lại mật khẩu <br>Nếu không phải bạn hãy bỏ qua hoặc thay đổi lại thông tin truy cấp nếu cần thiết !</p>
+    @if ($status && $data)
+        <section id="confirm-password">
+            <div class="container">
+                <div class="text-center">
+                    <h1 class="title">Thay đổi mật khẩu</h1>
+                    <p>Email : <strong>{{ $data->email }}</strong></p>
+                    <p class="idea">Chúng tôi nhận được yêu cầu cấp lại mật khẩu <br>Nếu không phải bạn hãy bỏ qua
+                        hoặc thay đổi lại thông tin truy cấp nếu cần thiết !</p>
+                </div>
+                <hr>
+                <form action="{{ route('changeThePassword') }}" id="frm-comfirm-password" method="post">
+                    <input type="text" name="data" id="data" value={{ $data }} hidden>
+                    @csrf
+                    <div class="form-floating mt-3">
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="name@example.com">
+                        <label for="password">Mật khẩu</label>
+                        <span class="password icon-eye on" onclick="clickIcon(event,'password')"><i
+                                class="fa-solid fa-eye"></i></span>
+                        <span class="password icon-eye off none-icon" onclick="clickIcon(event,'password')"><i
+                                class="fa-regular fa-eye-slash"></i></i></span>
+                    </div>
+                    @if ($errors->any())
+                        <strong class="text-danger mb-2">{{ $errors->first('password') }}</strong>
+                    @endif
+                    <div class="form-floating mt-3">
+                        <input type="password" class="form-control" id="password_confirmation"
+                            name="password_confirmation" placeholder="Password">
+                        <label for="password_confirmation">Xác nhận</label>
+                        <span class="confirmation icon-eye on" onclick="clickIcon(event,'confirmation')"><i
+                                class="fa-solid fa-eye"></i></span>
+                        <span class="confirmation icon-eye off none-icon" onclick="clickIcon(event,'confirmation')"><i
+                                class="fa-regular fa-eye-slash"></i></i></span>
+                    </div>
+                    @if ($errors->any())
+                        <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
+                    @endif
+                    <div class="text-center"> <button class="btn-submit" type="submit">Xác nhận</button></div>
+                </form>
             </div>
-            <hr>
-            <form action="{{ route('createPassword') }}" id="frm-comfirm-password" method="post">
-                {{-- <input type="text" name="data" id="data" value={{ $data }} hidden> --}}
-                @csrf
-                <div class="form-floating mt-3">
-                    <input type="password" class="form-control" id="password" name="password"
-                        placeholder="name@example.com">
-                    <label for="password">Mật khẩu</label>
-                    <span class="password icon-eye on" onclick="clickIcon(event,'password')"><i
-                            class="fa-solid fa-eye"></i></span>
-                    <span class="password icon-eye off none-icon" onclick="clickIcon(event,'password')"><i
-                            class="fa-regular fa-eye-slash"></i></i></span>
-                </div>
-                @if ($errors->any())
-                    <strong class="text-danger mb-2">{{ $errors->first('password') }}</strong>
-                @endif
-                <div class="form-floating mt-3">
-                    <input type="password" class="form-control" id="password_confirmation"
-                        name="password_confirmation" placeholder="Password">
-                    <label for="password_confirmation">Xác nhận</label>
-                    <span class="confirmation icon-eye on" onclick="clickIcon(event,'confirmation')"><i
-                            class="fa-solid fa-eye"></i></span>
-                    <span class="confirmation icon-eye off none-icon" onclick="clickIcon(event,'confirmation')"><i
-                            class="fa-regular fa-eye-slash"></i></i></span>
-                </div>
-                @if ($errors->any())
-                    <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
-                @endif
-                <div class="text-center"> <button class="btn-submit" type="submit">Xác nhận</button></div>
-            </form>
-        </div>
-    </section>
+        </section>
+    @elseif ($status && !$data)
+        <section id="message-error">
+            <div class="text-center mt-5">
+                <div class="card">{{$message }}</div>
+            </div>
+        </section>
+    @else
+        <section id="message-error">
+            <div class="text-center mt-5">
+                <div class="card">{{ $message }}</div>
+            </div>
+        </section>
+    @endif
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
@@ -62,42 +77,45 @@
     function clickIcon(event, key) {
         var clickedElement = event.currentTarget;
         var hasOnClass = clickedElement.classList.contains('on');
-        var spanOn , spanOff;
+        var spanOn, spanOff;
         var elPassword = document.getElementById("password");
         var elConfirm = document.getElementById("password_confirmation");
         switch (key) {
             case 'password':
-                 spanOn = document.querySelector('.password.icon-eye.on');
-                 spanOff = document.querySelector('.password.icon-eye.off');
+                spanOn = document.querySelector('.password.icon-eye.on');
+                spanOff = document.querySelector('.password.icon-eye.off');
                 if (hasOnClass) {
                     spanOn.classList.add('none-icon');
                     spanOff.classList.remove('none-icon');
-                    elPassword.type="text";
+                    elPassword.type = "text";
                 } else {
                     spanOn.classList.remove('none-icon');
                     spanOff.classList.add('none-icon');
-                    elPassword.type="password";
+                    elPassword.type = "password";
                 }
                 break;
             case 'confirmation':
-                 spanOn = document.querySelector('.confirmation.icon-eye.on');
-                 spanOff = document.querySelector('.confirmation.icon-eye.off');
+                spanOn = document.querySelector('.confirmation.icon-eye.on');
+                spanOff = document.querySelector('.confirmation.icon-eye.off');
                 if (hasOnClass) {
                     spanOn.classList.add('none-icon');
                     spanOff.classList.remove('none-icon');
-                    elConfirm.type="text";
+                    elConfirm.type = "text";
                 } else {
                     spanOn.classList.remove('none-icon');
                     spanOff.classList.add('none-icon');
-                    elConfirm.type="password";
+                    elConfirm.type = "password";
                 }
                 break;
         }
     };
-    const submit =() => {
-       var bg = document.querySelector('#reissue-password');
-       bg.classList.add('add-su');
-    };
+    const status = {!! json_encode($status) !!};
+    const data = {!! json_encode($data) !!};
+    console.log(data);
+    if (status && data=="") {
+        var bg = document.querySelector('.bg-full');
+        bg.classList.add('add-su');
+    }
 </script>
 
 </html>
