@@ -121,13 +121,14 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             Route::put('/lock-menu', [MenuController::class, 'lockMenu']);
             Route::put('/update-menu', [MenuController::class, 'updateMenu']);
 
-            Route::group([
-                // 'middleware' => 'api',
-                'middleware' => ['checkRole:CUSTOMER'],
-            ], function () {
-                //staff Account
-
-            });
+        });
+        Route::group([
+            'prefix' => 'web'
+        ], function () {
+            //staff Account
+            Route::post('/login', [AuthenticationCustomersController::class, 'login'])->withoutMiddleware(['auth:api']);
+            Route::post('/register', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api']);
+            Route::post('/reissue-password', [AuthenticationCustomersController::class, 'reissuePassword'])->withoutMiddleware(['auth:api']);
         });
     });
 });

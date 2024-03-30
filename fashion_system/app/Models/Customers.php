@@ -27,6 +27,8 @@ class Customers extends Model
         "refresh_token",
         "issued_at",
         "expired_time",
+        "email_token",
+        "active",
     ];
     protected $attributes = [
         'status' => 'true',

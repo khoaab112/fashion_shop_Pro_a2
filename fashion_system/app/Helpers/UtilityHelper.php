@@ -16,4 +16,6 @@ class UtilityHelper
         $notificationController = app(NotificationController::class);
         $notificationController->createNotificationByIdStaff($dataNotification);
     }
+    // public static function sendEmail($to , $sub, )
+
 }
