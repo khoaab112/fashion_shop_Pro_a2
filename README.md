@@ -82,6 +82,10 @@
 -The database system is developed by the owner (file sql).
 **And the tools as described above**
  ```
+ ```javascript
+For running applications locally, you can use XAMPP.
+_In the php.ini file, uncomment the following section: ;extension=pdo_pgsql 
+ ```
 ## Project Execution Steps:
 ```Step 1  :```
 <span>
