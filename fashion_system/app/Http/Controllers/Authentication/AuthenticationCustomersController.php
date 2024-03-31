@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use  App\Mail\templateVerificationEmail;
 use  App\Mail\templateResetPassword;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthenticationCustomersController extends Controller
 {
@@ -156,20 +157,79 @@ class AuthenticationCustomersController extends Controller
             return view('authCustomer.confirmPassword', ['status' => true, 'data' => "", 'message' => 'Tạo thành công']);
         }
         if ($segment == 'reissuePassword')
-        $data = [
-            'status' => true,
-            "active" => true,
-            "email_token" => "",
-            "password" => bcrypt($request->input('password')),
-        ];
+            $data = [
+                'status' => true,
+                "active" => true,
+                "email_token" => "",
+                "password" => bcrypt($request->input('password')),
+            ];
         $this->customer->updateById($data, $id);
-            return view('authCustomer.reissuePassword', ['status' => true, 'data' => "", 'message' => 'Thay đổi thành công']);
+        return view('authCustomer.reissuePassword', ['status' => true, 'data' => "", 'message' => 'Thay đổi thành công']);
     }
     public function login(Request $request)
     {
+        $cookie = $request->cookie(env('WEB_REFRESH_TOKEN'));
+        if ($cookie) {
+            $decodeJwtToken = $this->decodeJwtToken($cookie);
+            $remember = $decodeJwtToken['value']->remember;
+            if ($remember && $decodeJwtToken['status']) {
+                return CodeHttpHelpers::returnJson(200, true, null, 200);
+            }
+            return CodeHttpHelpers::returnJson(200, false, "failure", 401);
+        }
+        $validateLogin = [
+            'user_name' => 'required|string',
+            'password' => 'required|min:8|string',
+        ];
+        $attributeLogin = [
+            "user_name" => "Tài khoản",
+            "password" => "Mật khẩu",
+        ];
+        $validator = validationHelpers::validation($request->all(), $validateLogin, $attributeLogin);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return CodeHttpHelpers::returnJson(400, false, $errors, 200);
+        }
+        $authCustomer = Auth::guard('customers');
+        $successfulAuthentication = false;
+        $successfulAuthentication = $authCustomer->attempt(['email' => $request->user_name, 'password' => $request->password]);
+        if (!$successfulAuthentication) {
+            $successfulAuthentication = $authCustomer->attempt(['phone_number' => $request->user_name, 'password' => $request->password]);
+        }
+        if (!$successfulAuthentication)
+            return CodeHttpHelpers::returnJson(401, false, "Tài khoản hoặc mật khẩu không chính xác", 200);
+        $customer = $authCustomer->user();
+        if (!$customer['active']) return CodeHttpHelpers::returnJson(401, false, 'Tài khoản chưa được xác thực hãy quay lại sau khi quá trình xác thực thành công, thông tin xác thực sẽ được gửi về mail mà bạn đăng ký', 200);
+        if (!$customer['status']) return CodeHttpHelpers::returnJson(403, false, 'Tài khoản đã bị khóa, hãy liên hệ với bộ phận chăm sóc khách hàng', 403);
+        $token = JWTAuth::fromUser($customer);
+        $refreshToken = $this->createJWTRefreshToken($request->user_name);
+        $data = [
+            "type" => "bearer",
+            "token" => $token,
+            "refresh_token" => $refreshToken,
+            "remember_token" => $request->remember_token
+        ];
+        $this->customer->updateById(
+            [
+                'remember_token' => $request->remember_token,
+                'refresh_token' => $refreshToken,
+                'issued_at' => Carbon::now(),
+                'expired_time' => $this->calculateLifeTimeOfToken()
+            ],
+            $customer['id']
+        );
+        return CodeHttpHelpers::returnJson(200, true, $data, 200);
     }
     public function logout(Request $request)
     {
+        $customer = Auth::user();
+        $authorizationHeader = $request->header('Authorization');
+        $token = str_replace('Bearer ', '', $authorizationHeader);
+        //xóa access token
+        Auth::setToken($token)->invalidate();
+        Auth::logout();
+        $this->customer->removeRefreshToken($customer['id']);
+        return CodeHttpHelpers::returnJson(200, true, 'Đăng xuất thành công', 200);
     }
     public function pathValidation(Request $request)
     {
@@ -245,7 +305,7 @@ class AuthenticationCustomersController extends Controller
             'iat' => $issuedAt,
             'exp' => $expirationTime,
             'nbf' => $issuedAt,
-            'email' => $email,
+            'user_name' => $email,
         ];
         $jwt = JWT::encode($payload, $secretKey, $algorithm);
         return $jwt;
@@ -264,5 +324,12 @@ class AuthenticationCustomersController extends Controller
         } catch (\Exception $error) {
             return ['status' => false, 'value' => "Bất thường"];
         }
+    }
+    public function calculateLifeTimeOfToken()
+    {
+        $timeLiveRF = env('LIVE_TIME_REFRESH_TOKEN');
+        $carbon = Carbon::now();
+        $days = $carbon->diffInDays($carbon->copy()->addSeconds($timeLiveRF));
+        return $carbon->addDays($days);
     }
 }

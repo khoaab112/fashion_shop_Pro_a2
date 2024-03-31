@@ -10,11 +10,13 @@ class CustomersRepository extends BaseRepositories implements CustomersRepositor
 
     protected Customers $customers;
     public function __construct(Customers $customers)
-    { 
+    {
+        $this->customers = $customers;
         parent::__construct($customers);
     }
-
-
- 
+    public function removeRefreshToken($id)
+    {
+        return $this->customers->where('id', $id)->update(['refresh_token'=>null,'issued_at'=>null,'expired_time'=>null]);
+    }
 
 }
