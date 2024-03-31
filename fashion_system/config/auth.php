@@ -37,20 +37,24 @@ return [
 
     'guards' => [
         // 'web' => [
-        //     'driver' => 'session',
-        //     'provider' => 'users',
+        //     'driver' => 'jwt',
+        //     'provider' => 'customers',
         // ],
         'api' => [
             'driver' => 'jwt',
             'provider' => 'staff_account',
         ],
+        'api_web' => [
+            'driver' => 'jwt',
+            'provider' => 'customers',
+        ],
         'staff_account' => [
             'driver' => 'session',
             'provider' => 'staff_account',
         ],
-        'account_customers' => [
+        'customers' => [
             'driver' => 'session',
-            'provider' => 'account_customers',
+            'provider' => 'customers',
         ],
     ],
 
@@ -81,10 +85,10 @@ return [
             'model' => App\Models\StaffAccount::class,
             'table' => 'staff_account',
         ],
-        'account_customers' => [
+        'customers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\AccountCustomers::class,
-            'table' => 'account_customers',
+            'model' => App\Models\Customers::class,
+            'table' => 'customers',
         ],
     ],
 
