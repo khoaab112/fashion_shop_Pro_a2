@@ -129,8 +129,8 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             //staff Account
             Route::post('/login', [AuthenticationCustomersController::class, 'login'])->withoutMiddleware(['auth:api_web']);
             Route::post('/register', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api']);
-            Route::post('/reissue-password', [AuthenticationCustomersController::class, 'reissuePassword'])->withoutMiddleware(['auth:api']);
-            Route::post('/logout', [AuthenticationCustomersController::class, 'logout']);
+            Route::put('/reissue-password', [AuthenticationCustomersController::class, 'reissuePassword'])->withoutMiddleware(['auth:api']);
+            Route::delete('/logout', [AuthenticationCustomersController::class, 'logout']);
         });
     });
 });
