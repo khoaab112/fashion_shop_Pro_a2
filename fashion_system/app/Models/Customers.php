@@ -35,6 +35,7 @@ class Customers extends Authenticatable implements JWTSubject
         "expired_time",
         "email_token",
         "active",
+        "account_service_id",
     ];
     protected $attributes = [
         'status' => 'true',
