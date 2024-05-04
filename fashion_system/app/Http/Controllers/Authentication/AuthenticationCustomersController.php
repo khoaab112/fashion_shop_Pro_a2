@@ -239,7 +239,7 @@ class AuthenticationCustomersController extends Controller
             return view('authCustomer.confirmPassword', ['status' => false, 'data' => "", 'message' => "Đường dẫn bị thay đổi"]);
         $tokenDecode = $this->decodeJwtToken($token);
         if (!$tokenDecode['status']) return view('authCustomer.confirmPassword', ['status' => $tokenDecode['status'], 'data' => "", 'message' => "Đường dẫ đã hết hạn (giới hạn 5 phút) hoặc bị thay đổi."]);
-        $emailToken = $tokenDecode['value']->email;
+        $emailToken = $tokenDecode['value']->user_name;
         if ($emailToken != $email)   return view('authCustomer.confirmPassword', ['status' => false, 'data' => "", 'message' => 'Thông tin bi can thiệp, hãy sử dụng đúng đường dẫn']);
         $search = $this->customer->search('email', $emailToken)->first();
         if ($search->email_token != $token)
@@ -280,7 +280,7 @@ class AuthenticationCustomersController extends Controller
             return view('authCustomer.reissuePassword', ['status' => false, 'data' => "", 'message' => "Đường dẫn bị thay đổi"]);
         $tokenDecode = $this->decodeJwtToken($token);
         if (!$tokenDecode['status']) return view('authCustomer.reissuePassword', ['status' => $tokenDecode['status'], 'data' => "", 'message' => "Đường dẫ đã hết hạn (giới hạn 5 phút) hoặc bị thay đổi."]);
-        $emailToken = $tokenDecode['value']->email;
+        $emailToken = $tokenDecode['value']->user_name;
         $search = $this->customer->search('email', $emailToken)->first();
         if ($search->email_token != $token)
             return view('authCustomer.reissuePassword', ['status' => false, 'data' => "", 'message' => 'Mã xác thực không chính xác']);
