@@ -97,7 +97,7 @@ class AuthenticationCustomersController extends Controller
                 return CodeHttpHelpers::returnJson(400, false, $errors, 200);
             if (!$flagExist) return CodeHttpHelpers::returnJson(400, false, "Tài khoản đã được sử dụng", 200);
         }
-        $token = $this->createJWTRefreshToken($request->post('email'),false);
+        $token = $this->createJWTRefreshToken($request->post('email'), false);
         if (!$flagExist) {
             $customer = [
                 'rank_id' => 1,
@@ -264,7 +264,15 @@ class AuthenticationCustomersController extends Controller
             return CodeHttpHelpers::returnJson(400, false, "Tài khoản chưa được kích hoạt", 200);
         if (!$account->status)
             return CodeHttpHelpers::returnJson(400, false, "Tài khoản bị khóa", 200);
-        $token = $this->createJWTRefreshToken($email , false);
+        $tokenValue = $this->decodeJwtToken($account->email_token)["value"];
+        $iat = $tokenValue->iat;
+        $exp = $tokenValue->exp;
+        $current_time = time();
+        $time_passed = round(($current_time - $iat) / 60);
+        if ($time_passed <= 5) {
+            return CodeHttpHelpers::returnJson(400, false, "Hãy chờ thêm thời gian để thực thi, bạn vừa gửi yêu cầu vào ".$time_passed." phút trước (".($current_time - $iat)."s trước)", 200);
+        }
+        $token = $this->createJWTRefreshToken($email, false);
         $href = env('APP_URL') . "/auth/reissuePassword?token=" . $token;
         $customer = [
             "email_token" => $token,
@@ -292,7 +300,7 @@ class AuthenticationCustomersController extends Controller
         }
         return view('authCustomer.reissuePassword', ['status' => true, 'data' => $search, 'message' => 'Xác thưc thành công']);
     }
-    public function createJWTRefreshToken($email ,$remember)
+    public function createJWTRefreshToken($email, $remember)
     {
 
         $algorithm = 'HS256';

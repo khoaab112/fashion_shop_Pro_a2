@@ -24,8 +24,8 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
         ], function () {
             //staff Account
             Route::post('/login', [AuthenticationCustomersController::class, 'login'])->withoutMiddleware(['auth:api_web']);
-            Route::post('/register', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api']);
-            Route::put('/reissue-password', [AuthenticationCustomersController::class, 'reissuePassword'])->withoutMiddleware(['auth:api']);
+            Route::post('/register', [AuthenticationCustomersController::class, 'register'])->withoutMiddleware(['auth:api_web']);
+            Route::put('/reissue-password', [AuthenticationCustomersController::class, 'reissuePassword'])->withoutMiddleware(['auth:api_web']);
             Route::delete('/logout', [AuthenticationCustomersController::class, 'logout']);
         });
     });
