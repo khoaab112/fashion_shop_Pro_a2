@@ -97,7 +97,7 @@ class AuthenticationCustomersController extends Controller
                 return CodeHttpHelpers::returnJson(400, false, $errors, 200);
             if (!$flagExist) return CodeHttpHelpers::returnJson(400, false, "Tài khoản đã được sử dụng", 200);
         }
-        $token = $this->createJWTRefreshToken($request->post('email'), false);
+        $token = $this->createJWTRefreshToken($request->post('email'), null, false);
         if (!$flagExist) {
             $customer = [
                 'rank_id' => 1,
@@ -202,7 +202,7 @@ class AuthenticationCustomersController extends Controller
         if (!$customer['active']) return CodeHttpHelpers::returnJson(401, false, 'Tài khoản chưa được xác thực hãy quay lại sau khi quá trình xác thực thành công, thông tin xác thực sẽ được gửi về mail mà bạn đăng ký', 200);
         if (!$customer['status']) return CodeHttpHelpers::returnJson(403, false, 'Tài khoản đã bị khóa, hãy liên hệ với bộ phận chăm sóc khách hàng', 403);
         $token = JWTAuth::fromUser($customer);
-        $refreshToken = $this->createJWTRefreshToken($request->user_name, $request->remember_token);
+        $refreshToken = $this->createJWTRefreshToken($customer->email, $customer->id, $request->remember_token);
         $data = [
             "type" => "bearer",
             "token" => $token,
@@ -270,9 +270,9 @@ class AuthenticationCustomersController extends Controller
         $current_time = time();
         $time_passed = round(($current_time - $iat) / 60);
         if ($time_passed <= 5) {
-            return CodeHttpHelpers::returnJson(400, false, "Hãy chờ thêm thời gian để thực thi, bạn vừa gửi yêu cầu vào ".$time_passed." phút trước (".($current_time - $iat)."s trước)", 200);
+            return CodeHttpHelpers::returnJson(400, false, "Hãy chờ thêm thời gian để thực thi, bạn vừa gửi yêu cầu vào " . $time_passed . " phút trước (" . ($current_time - $iat) . "s trước)", 200);
         }
-        $token = $this->createJWTRefreshToken($email, false);
+        $token = $this->createJWTRefreshToken($email, "null", false);
         $href = env('APP_URL') . "/auth/reissuePassword?token=" . $token;
         $customer = [
             "email_token" => $token,
@@ -300,7 +300,7 @@ class AuthenticationCustomersController extends Controller
         }
         return view('authCustomer.reissuePassword', ['status' => true, 'data' => $search, 'message' => 'Xác thưc thành công']);
     }
-    public function createJWTRefreshToken($email, $remember)
+    public function createJWTRefreshToken($email, $id, $remember)
     {
 
         $algorithm = 'HS256';
@@ -313,6 +313,7 @@ class AuthenticationCustomersController extends Controller
             'iat' => $issuedAt,
             'exp' => $expirationTime,
             'nbf' => $issuedAt,
+            'id' => $id,
             'user_name' => $email,
             'remember' => $remember,
         ];
