@@ -29,6 +29,9 @@ export default {
         items: Array
     },
     watch: {
+        items(val){
+           this.itemsTables=val;
+        }
     },
     setup() {
     },
@@ -37,6 +40,7 @@ export default {
     data() {
         return {
             arrTitle: this.titles,
+            itemsTables: this.items
         };
     },
     created() {

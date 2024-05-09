@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Administration;
 use App\Http\Controllers\Admin\Position;
 use App\Http\Controllers\Authentication\AuthenticationCustomersController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Customer\CustomerController;
 
 
 /*
@@ -114,6 +115,9 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             Route::post('/sub-menu', [MenuController::class, 'createSubMenu']);
             Route::put('/lock-menu', [MenuController::class, 'lockMenu']);
             Route::put('/update-menu', [MenuController::class, 'updateMenu']);
+
+            // customer
+            Route::get('/customers', [CustomerController::class, 'getCustomers']);
 
         });
     });
