@@ -18,12 +18,13 @@
                   <template #cell(first_name)="data">
                     <span class="col-name"> {{data.data.value}}</span>
                   </template>
-                  <template #cell(rank_id)="data">
+                  <template #cell(rank_name)="data">
                     <span class="col-name"> {{data.data.value}}</span>
                   </template>
                   <template #cell(status)="data">
-                    <span class="col-name"> {{data.data.value}}</span>
+                    <span class="col-name"> {{data.data.value?"Hoạt động":"Khóa"}}</span>
                   </template>
+
             </tableClient>
         </div>
     </div>
@@ -58,7 +59,7 @@ export default {
                     { key: "email", label: "Email", text: "start" },
                     { key: "phone_number", label: "SDT", text: "start", color: "black" },
                     { key: "first_name", label: "Tên", text: "start" },
-                    { key: "rank", label: "Rank", text: "center" },
+                    { key: "rank_name", label: "Rank", text: "center" },
                     { key: "status", label: "Trạng thái", text: "center" },
                     { key: "actions", label: "Thao tác", text: "start" },
                 ],

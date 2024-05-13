@@ -3,6 +3,7 @@ import localStorage from "@/js/auth/localStorage";
 import logout from "@/js/auth/logout.js";
 import jwt from "@/js/auth/jwt.js";
 import router from "@/js/routerVue/index.js";
+import ENV from "@/js/generalSetting/filterEnv.js";
 //broadcasting
 import { configureEcho } from "@/js/generalSetting/configureEcho.js";
 
@@ -10,9 +11,10 @@ import { configureEcho } from "@/js/generalSetting/configureEcho.js";
 // sửa lại tên file là setting_api
 //localStorage => accessToken
 //cookie => refreshToken
+console.log(ENV.APP_URL)
 const accessToken = localStorage.getAccessToken();
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/auth',
+    baseURL: `${ENV.APP_URL}/api/auth`,
     timeout: 30000, //  thời gian chờ tối đa cho mỗi yêu cầu
     headers: {
         'Accept': 'application/json',
