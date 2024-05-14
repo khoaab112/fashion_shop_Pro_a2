@@ -8,29 +8,38 @@
         <tbody>
             <tr v-for="(record, key) of  items " :key="key">
 
-                <td v-for="(valTitles, indexTitles) in  titles " :key="indexTitles">
+                <td v-for="(valTitles, indexTitles) in titles " :key="indexTitles">
                     <template v-if="searchCellName(record, valTitles.key)">
-                        <slot :name="`cell(${valTitles.key})`" :data="{ value: record[valTitles.key] }"></slot>
+                        <slot :name="`cell(${valTitles.key})`" :data="{ value: record[valTitles.key] ,row: record}"></slot>
                     </template>
                 </td>
             </tr>
         </tbody>
     </table>
+    <div class="loading-data text-center" v-if="loading">
+        <loadingStyleTwirl></loadingStyleTwirl>
+        <h5 class="pt-3 ps-3">Đang tải.....</h5>
+      </div>
 </template>
 
 <script scoped>
+import loadingStyleTwirl from "./loading/loadingStyleTwirl.vue";
+
 export default {
     name: 'tableClient',
     components: {
+        loadingStyleTwirl
     },
     props: {
         //  titles = key , label
         titles: Array,
-        items: Array
+        items: Array,
+        loading: Boolean,
+
     },
     watch: {
-        items(val){
-           this.itemsTables=val;
+        items(val) {
+            this.itemsTables = val;
         }
     },
     setup() {

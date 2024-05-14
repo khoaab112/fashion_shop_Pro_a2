@@ -33,7 +33,7 @@
         <!-- <button class="action action-update">Thay đổi</button> -->
         <button
           class="action"
-          :class="[data.data.value.status ? 'action-live' : 'action-block']"
+          :class="[!data.data.value.status ? 'action-live' : 'action-block']"
           @click="lockAccount(data.data.value)"
         >
           {{ data.data.value.status ? "Khóa" : "Hoạt Động" }}
@@ -172,37 +172,7 @@ export default {
 </script>
 
 <style scoped>
-button.action-block {
-  background-color: red;
-  color: #fff;
-  font-weight: bolder;
-}
 
-button.action-live {
-  background-color: #28a745;
-  color: #fff;
-  font-weight: bolder;
-}
-
-button.action-update {
-  background-color: #40a0ffa1;
-  color: #fff;
-  font-weight: bolder;
-}
-
-button.action:hover {
-  background-color: #007bff;
-  transform: scale(1.1);
-}
-
-button.action {
-  font-size: 80%;
-  margin: 0.2rem;
-  padding: 0.2rem 0.5rem;
-  border: none;
-  border-radius: 15px;
-  user-select: none;
-}
 
 .btn-add {
   float: right;

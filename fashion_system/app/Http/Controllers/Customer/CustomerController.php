@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Repositories\Customers\CustomersRepository;
 use App\Repositories\Rank\RankRepository;
 use App\Helpers\CodeHttpHelpers;
+use App\Events\LogoutAdmin;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -43,5 +45,36 @@ class CustomerController extends Controller
             return CodeHttpHelpers::returnJson(200, true, $result, 200);
         }
         return CodeHttpHelpers::returnJson(200, true, ['page' => $records], 200);
+    }
+    public function changeAccount(Request $request, $id)
+    {
+        $status = $request->status;
+        try {
+            $staff = $this->customer->getById($id)->first();
+            if (!$staff)  return CodeHttpHelpers::returnJson(204, false, 'Tài khoản không tồn tại , lỗi bất thường', 200);
+            if ($staff->status === $status) {
+                return CodeHttpHelpers::returnJson(204, false, 'Trạng thái đã bị đổi trước đó, hãy làm mới trang', 200);
+            }
+            $result = $this->customer->statusChange($id, $status);
+            if (!$result) return CodeHttpHelpers::returnJson(400, false, "Thay đổi trạng thái thất bại", 200);
+            // if ($status) {
+            //     $user = ['id' => $request->idStaff, 'status' => $status];
+            //     event(new LogoutAdmin($user));
+            //     $idAdmin = Auth::user()->id;
+            //     $resultStaffDetail = $this->staffDetail($idAdmin);
+            //     $admin = json_decode($resultStaffDetail->getContent())->results;
+            //     $dataNotification = [
+            //         'type_notification' => 2,
+            //         'staff_id' => $request->idStaff,
+            //         'content' => "Tài khoản của bạn đã bị khóa bởi <strong style=\"color:red\">" . $admin->staff_name . "</strong> (" . $admin->position_name . ")",
+            //         'code' => 'EVENT'
+            //     ];
+            //     $notificationController = app(NotificationController::class);
+            //     $notificationController->createNotificationByIdStaff($dataNotification);
+            // }
+            return CodeHttpHelpers::returnJson(200, true, "Thay đổi trạng thái thành công", 200);
+        } catch (\Exception $e) {
+            return CodeHttpHelpers::returnJson(500, false, $e, 500);
+        }
     }
 }

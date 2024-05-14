@@ -5,35 +5,51 @@
             <h4>Danh sách tài khoản</h4>
         </div>
         <div class="table-customer">
-            <tableClient :titles="titlesTable" :items="itemsTable">
+            <tableClient
+            :titles="titlesTable"
+            :items="itemsTable"
+            :loading="loadingTable"
+             >
                 <template #cell(id)="data">
-                    {{data.data.value}}
-                  </template>
+                    {{ data.data.value }}
+                </template>
                 <template #cell(email)="data">
-                    <span class="col-name"> {{data.data.value}}</span>
-                  </template>
-                  <template #cell(phone_number)="data">
-                    <span class="col-name"> {{data.data.value}}</span>
-                  </template>
-                  <template #cell(first_name)="data">
-                    <span class="col-name"> {{data.data.value}}</span>
-                  </template>
-                  <template #cell(rank_name)="data">
-                    <span class="col-name"> {{data.data.value}}</span>
-                  </template>
-                  <template #cell(status)="data">
-                    <span class="col-name"> {{data.data.value?"Hoạt động":"Khóa"}}</span>
-                  </template>
-
+                    <span class="col-name"> {{ data.data.value }}</span>
+                </template>
+                <template #cell(phone_number)="data">
+                    <span class="col-name"> {{ data.data.value }}</span>
+                </template>
+                <template #cell(first_name)="data">
+                    <span class="col-name"> {{ data.data.value }}</span>
+                </template>
+                <template #cell(rank_name)="data">
+                    <span class="col-name"> {{ data.data.value }}</span>
+                </template>
+                <template #cell(status)="data">
+                    <span class="status-on badge" v-if="data.data.value">Hoạt động</span>
+                    <span class="status-off badge" v-else>Khóa</span>
+                </template>
+                <template #cell(actions)="data">
+                    <!-- <button class="action action-update">Thay đổi</button> -->
+                    <button class="action" :class="[!data.data.row.status ? 'action-live' : 'action-block']"
+                        @click="lockAccount(data.data.row.status)">
+                        {{ data.data.row.status ? "Khóa" : "Hoạt Động" }}
+                    </button>
+                </template>
             </tableClient>
+            <section class="text-end me-5 pb-1">
+                <pagination-Button :total="rowDefault" :currentPage="currentPageDefault"
+                    @page-return="returnResultFromPagination">
+                </pagination-Button>
+            </section>
         </div>
     </div>
 </template>
 
 <script>
 import apiCustomer from "@/js/api/admin/apiCustomer.js";
-import paginationButton from "../../../components/paginationButton.vue";
 import tableClient from "../../../components/tableClient.vue";
+import paginationButton from "../../../components/paginationButton.vue";
 import { ElNotification } from "element-plus";
 
 export default {
@@ -61,7 +77,7 @@ export default {
                     { key: "first_name", label: "Tên", text: "start" },
                     { key: "rank_name", label: "Rank", text: "center" },
                     { key: "status", label: "Trạng thái", text: "center" },
-                    { key: "actions", label: "Thao tác", text: "start" },
+                    { key: "actions", label: "", text: "start" },
                 ],
             itemsTable: [],
             //phân trang
@@ -72,6 +88,7 @@ export default {
             rowDefault: 5,
             currentPageDefault: 1,
             pageReturn: null,
+            loadingTable: true,
             //   end
         };
     },
@@ -79,7 +96,11 @@ export default {
         call(val) {
             if (val)
                 this.getCustomers();
-        }
+        },
+        pageReturn(val) {
+            this.currentPageDefault = val;
+            this.getCustomers();
+        },
     },
     created() {
     },
@@ -97,7 +118,7 @@ export default {
     },
     methods: {
         getCustomers() {
-            // this.loadingTable = true;
+            this.loadingTable = true;
             const data = {
                 page: this.currentPageDefault,
                 record_number: this.visibleRecordCount,
@@ -111,7 +132,7 @@ export default {
                         console.log(dataResponse.results);
                         this.rowDefault = dataResponse.results.total_record;
                         this.itemsTable = Object.values(dataResponse.results.page);
-                        // this.loadingTable = false;
+                        this.loadingTable = false;
                     } else throw new Error(dataResponse.results);
                 })
                 .catch((error) => {
@@ -121,13 +142,40 @@ export default {
                         type: "error",
                     });
                 });
-        }
+        },
+        lockAccount() {
+
+        },
+        returnResultFromPagination(value) {
+            this.pageReturn = value;
+        },
     },
 };
 </script>
 
 <style scoped>
-.table-customer{
+.table-customer {
     padding: 0 1.5rem;
+}
+
+.btn-add {
+    float: right;
+    border-radius: 5px;
+    border: none;
+    margin: 5px 1rem 1rem 0;
+    width: 4rem;
+    height: 2rem;
+    background-color: #409eff;
+    position: relative;
+    z-index: 999;
+}
+
+.btn-add:hover {
+    background-color: #40a0ffa1 !important;
+}
+
+.btn-add:active {
+    box-shadow: 0 0 20px #ccc;
+    transform: scale(1.1);
 }
 </style>

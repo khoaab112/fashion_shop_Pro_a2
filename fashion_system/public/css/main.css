@@ -220,3 +220,35 @@ span.status-off {
     color: red;
     user-select: none;
 }
+
+button.action-block {
+    background-color: red;
+    color: #fff;
+    font-weight: bolder;
+}
+
+button.action-live {
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bolder;
+}
+
+button.action-update {
+    background-color: #40a0ffa1;
+    color: #fff;
+    font-weight: bolder;
+}
+
+button.action:hover {
+    background-color: #007bff;
+    transform: scale(1.1);
+}
+
+button.action {
+    font-size: 80%;
+    margin: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    border: none;
+    border-radius: 15px;
+    user-select: none;
+}
