@@ -9,6 +9,9 @@ use App\Repositories\Rank\RankRepository;
 use App\Helpers\CodeHttpHelpers;
 use App\Events\LogoutAdmin;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\validationHelpers;
+use Illuminate\Support\Facades\DB;
+
 
 class CustomerController extends Controller
 {
@@ -28,7 +31,7 @@ class CustomerController extends Controller
         $dataRank = $this->rank->getAll();
         $records = $this->customer->getRecordByPage($recordNumber, $page);
         foreach ($records as &$record) {
-            $record['full_name'] = $record['last_name']." ".$record["first_name"];
+            $record['full_name'] = $record['last_name'] . " " . $record["first_name"];
             foreach ($dataRank as $rank) {
                 if ($rank['id'] === $record['rank_id']) {
                     $record['rank_name'] = $rank['name'];
@@ -76,5 +79,33 @@ class CustomerController extends Controller
         } catch (\Exception $e) {
             return CodeHttpHelpers::returnJson(500, false, $e, 500);
         }
+    }
+    public function getCustomer(Request $request, $id)
+    {
+
+        $checkExist = $this->customer->findById($id);
+        if(!$checkExist)   return CodeHttpHelpers::returnJson(204, false, 'ID người dùng không tông tại', 200);
+        $record = DB::table('customers')
+        ->leftJoin('rank', 'rank.id', '=','customers.rank_id')
+        ->select(
+            'rank.name as rank_name',
+            'customers.first_name',
+            'customers.last_name',
+            'customers.address',
+            "customers.phone_number",
+            "customers.email",
+            "customers.birthday",
+            "customers.sex",
+            "customers.accumulated_points",
+            "customers.number_ban",
+            "customers.potential",
+            "customers.status",
+            "customers.active",
+            "customers.account_service_id"
+            )
+        ->where('customers.id', '=', $id)
+        ->first();
+        return CodeHttpHelpers::returnJson(200, true, $record, 200);
+
     }
 }

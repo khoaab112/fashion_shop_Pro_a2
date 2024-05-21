@@ -40,7 +40,7 @@ abstract class BaseRepositories implements RepositoryInterface
     }
     public function findById(int $id)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->find($id);
     }
     public function statusChange($id, $status)
     {
