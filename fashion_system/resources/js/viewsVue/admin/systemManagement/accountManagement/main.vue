@@ -36,7 +36,7 @@
             </el-tabs>
         </section>
         <section id="customer-show" v-show="!switchShow">
-            <ListAccountCustomer :call="callApiCustomer" @call="callApiCustomer">
+            <ListAccountCustomer :call="callApiCustomer" >
             </ListAccountCustomer>
         </section>
         <div class="space"></div>

@@ -1,15 +1,11 @@
 <template>
     <div>
-        <button class="btn-add">Thêm</button>
+        <button class="btn-add" @click="activeDialog = !activeDialog">Thêm</button>
         <div class="text-center">
             <h4>Danh sách tài khoản</h4>
         </div>
         <div class="table-customer">
-            <tableClient
-            :titles="titlesTable"
-            :items="itemsTable"
-            :loading="loadingTable"
-             >
+            <tableClient :titles="titlesTable" :items="itemsTable" :loading="loadingTable">
                 <template #cell(id)="data">
                     {{ data.data.value }}
                 </template>
@@ -32,7 +28,7 @@
                 <template #cell(actions)="data">
                     <!-- <button class="action action-update">Thay đổi</button> -->
                     <button class="action" :class="[!data.data.row.status ? 'action-live' : 'action-block']"
-                        @click="lockAccount(data.data.row.status)">
+                        @click="lockAccount(data.data.row)">
                         {{ data.data.row.status ? "Khóa" : "Hoạt Động" }}
                     </button>
                 </template>
@@ -44,12 +40,14 @@
             </section>
         </div>
     </div>
+    <dialogCreateCustomer :active="activeDialog"  @close-dialog="returnEmit"></dialogCreateCustomer>
 </template>
 
 <script>
 import apiCustomer from "@/js/api/admin/apiCustomer.js";
 import tableClient from "../../../components/tableClient.vue";
 import paginationButton from "../../../components/paginationButton.vue";
+import dialogCreateCustomer from "../../../components/customer/dialogCreateCustomer.vue";
 import { ElNotification } from "element-plus";
 
 export default {
@@ -57,6 +55,7 @@ export default {
     components: {
         paginationButton,
         tableClient,
+        dialogCreateCustomer
     },
     props: {
         call: {
@@ -90,6 +89,7 @@ export default {
             pageReturn: null,
             loadingTable: true,
             //   end
+            activeDialog:false,
         };
     },
     watch: {
@@ -143,12 +143,38 @@ export default {
                     });
                 });
         },
-        lockAccount() {
-
+        lockAccount(user) {
+            const data = {
+                id: user.id,
+                status: !user.status,
+            };
+            apiCustomer
+                .changeStatus(data)
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        this.getCustomers();
+                        ElNotification({
+                            title: "Success",
+                            message: "Thay đổi thành công",
+                            type: "success",
+                        });
+                    } else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: error,
+                        type: "error",
+                    });
+                });
         },
         returnResultFromPagination(value) {
             this.pageReturn = value;
         },
+        returnEmit(val){
+            this.activeDialog=val;
+        }
     },
 };
 </script>

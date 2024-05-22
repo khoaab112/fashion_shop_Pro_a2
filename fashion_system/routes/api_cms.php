@@ -120,6 +120,7 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             Route::get('/customers', [CustomerController::class, 'getCustomers']);
             Route::put('/customers/change-status/{id}', [CustomerController::class, 'changeAccount']);
             Route::get('/customer/{id}', [CustomerController::class, 'getCustomer']);
+            Route::post('/customer', [CustomerController::class, 'createCustomer']);
 
         });
     });
