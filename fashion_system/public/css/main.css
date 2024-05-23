@@ -252,3 +252,8 @@ button.action {
     border-radius: 15px;
     user-select: none;
 }
+
+span.error-msg {
+    font-size: 95%;
+    color: var(--red-color);
+}

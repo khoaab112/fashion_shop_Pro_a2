@@ -113,7 +113,7 @@ class CustomerController extends Controller
             "first_name" => "required|string",
             "last_name" => "required|string",
             "address" => "string",
-            "phone_number" => "string|max:10|min:10",
+            "phone_number" => "max:10|min:10|unique:customers,phone_number",
             "email" => "required|email|unique:customers,email",
         ];
 
@@ -127,7 +127,7 @@ class CustomerController extends Controller
         $validator = validationHelpers::validation($data, $validationRules, $attributeNames);
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return CodeHttpHelpers::returnJson(200, false, $errors, 400);
+            return CodeHttpHelpers::returnJson(400, false, $errors, 200);
         }
         $data["rank_id"] = "1";
         $data["status"] = true;
