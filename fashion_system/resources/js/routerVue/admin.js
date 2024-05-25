@@ -60,13 +60,22 @@ const admin = [{
                 component: () =>
                     import ('../viewsVue/admin/systemManagement/accountManagement/main.vue'),
                 children: [{
-                    path: "detail-staf",
-                    name: "detailStaff",
-                    meta: { breadcrumb: 'Chi tiết nhân viên' },
-                    props: true,
-                    component: () =>
-                        import ('../viewsVue/admin/systemManagement/accountManagement/pageDetailStaff.vue'),
-                }, ],
+                        path: "detail-staf",
+                        name: "detailStaff",
+                        meta: { breadcrumb: 'Chi tiết nhân viên' },
+                        props: true,
+                        component: () =>
+                            import ('../viewsVue/admin/systemManagement/accountManagement/pageDetailStaff.vue'),
+                    },
+                    {
+                        path: "customer-detail/:id",
+                        name: "customerDetails",
+                        meta: { breadcrumb: 'Chi tiết khách hàng' },
+                        props: true,
+                        component: () =>
+                            import ('../viewsVue/components/customer/customerDetails.vue'),
+                    },
+                ],
             }, ],
         },
         {

@@ -1,7 +1,7 @@
 <template>
   <!-- Nội dung giao diện người dùng -->
   <div>
-    <button class="btn-add">Thêm</button>
+    <!-- <button class="btn-add">Thêm</button> -->
     <div class="text-center">
       <h4>Danh sách tài khoản chưa được xác thực</h4>
     </div>

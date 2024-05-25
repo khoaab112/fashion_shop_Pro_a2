@@ -36,6 +36,8 @@ class Customers extends Authenticatable implements JWTSubject
         "email_token",
         "active",
         "account_service_id",
+        "img",
+        "image_drive_google",
     ];
     protected $attributes = [
         'status' => 'true',
