@@ -108,9 +108,19 @@ a.style-tag-a {
     color: black;
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
     font-family: "roboto-slab-regular" !important;
-    background-color: #e4e9f7;
+    background: #e4e9f7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 button {
