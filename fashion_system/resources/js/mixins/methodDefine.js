@@ -40,6 +40,13 @@ export default {
             // Sử dụng biểu thức chính quy để kiểm tra định dạng mã màu
             var colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
             return colorRegex.test(text);
+        },
+        isVietnamesePhoneNumberValid(number) {
+            return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(number);
+        },
+        isValidateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
         }
     },
 };

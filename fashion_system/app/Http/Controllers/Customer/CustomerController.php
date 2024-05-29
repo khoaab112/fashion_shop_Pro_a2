@@ -83,7 +83,7 @@ class CustomerController extends Controller
     public function getCustomer(Request $request, $id)
     {
         $checkExist = $this->customer->findById($id);
-        if (!$checkExist)   return CodeHttpHelpers::returnJson(204, false, 'ID người dùng không tông tại', 200);
+        if (!$checkExist)   return CodeHttpHelpers::returnJson(204, false, 'ID người dùng không tồn tại', 200);
         $record = DB::table('customers')
             ->leftJoin('rank', 'rank.id', '=', 'customers.rank_id')
             ->select(

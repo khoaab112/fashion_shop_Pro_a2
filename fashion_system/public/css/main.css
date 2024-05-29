@@ -117,7 +117,7 @@ body {
 
 body {
     font-family: "roboto-slab-regular" !important;
-    background: #e4e9f7;
+    background: #e4e9f7 !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

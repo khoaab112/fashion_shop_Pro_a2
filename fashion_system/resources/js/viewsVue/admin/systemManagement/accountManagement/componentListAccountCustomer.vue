@@ -10,7 +10,11 @@
                     {{ data.data.value }}
                 </template>
                 <template #cell(email)="data">
-                    <span class="col-name"> {{ data.data.value }}</span>
+                    <span class="col-name">
+                        <router-link :to="{ name: 'customerDetails', params: { id: data.data.row.id }}">
+                            {{ data.data.value }}
+                        </router-link>
+                    </span>
                 </template>
                 <template #cell(phone_number)="data">
                     <span class="col-name"> {{ data.data.value }}</span>
