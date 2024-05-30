@@ -177,6 +177,14 @@ export default [{
                 icon: 'fa-solid fa-gift',
                 role: '',
             },
+            {
+                // name: 'gift',
+                name: 'rank',
+                title: 'Rank',
+                component: '',
+                icon: 'fa-solid fa-ranking-star',
+                role: '',
+            },
         ]
     },
     {

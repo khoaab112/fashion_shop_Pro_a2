@@ -109,10 +109,7 @@
                     <div class="container">
                         <div class="form-floating mb-3">
                             <select class="form-select" id="rank" aria-label="rank" :disabled="!isEdit">
-                                <option selected>Chọn</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option v-for="item in rank">{{item.name}}</option>
                             </select>
                             <label for="rank">Rank</label>
                         </div>
@@ -162,6 +159,8 @@
 
 <script>
 import apiCustomer from "@/js/api/admin/apiCustomer.js";
+import apiRank from "@/js/api/admin/apiRank.js";
+
 import { ElNotification } from "element-plus";
 import avatarAdminDefault from "@/public/images/staff/staffDefault.png";
 import methodDefine from "@/js/mixins/methodDefine.js";
@@ -175,6 +174,7 @@ export default {
     mixins: [methodDefine],
     data() {
         return {
+            rank: [],
             isEdit: false,
             params_id: this.$route.params.id,
             customer: {
@@ -202,6 +202,7 @@ export default {
         };
     },
     created() {
+        this.getRanks();
         this.getCustomerById(this.params_id);
         this.urlAvatarDefault = new URL(avatarAdminDefault, import.meta.url).href;
     },
@@ -255,6 +256,26 @@ export default {
             }
             if(!flag) return;
             console.log(this.customer);
+        },
+        getRanks() {
+            apiRank
+                .rank()
+                .then((res) => {
+                    var dataResponse = res.data;
+                    if (dataResponse.result_code == 200) {
+                        console.log(22,dataResponse.results.page);
+                        this.rank = dataResponse.results.page;
+
+                    }
+                    else throw new Error(dataResponse.results);
+                })
+                .catch((error) => {
+                    ElNotification({
+                        title: "Error",
+                        message: "Có lỗi bất thường",
+                        type: "error",
+                    });
+                });
         }
     },
 };

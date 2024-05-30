@@ -107,12 +107,21 @@ const admin = [{
             beforeEnter: checkPermission,
             group: true,
             children: [{
-                path: "menu",
-                name: "menu",
-                meta: { breadcrumb: 'Menu' },
-                component: () =>
-                    import ('../viewsVue/admin/web/menu/index.vue'),
-            }, ],
+                    path: "menu",
+                    name: "menu",
+                    meta: { breadcrumb: 'Menu' },
+                    component: () =>
+                        import ('../viewsVue/admin/web/menu/index.vue'),
+                },
+                {
+                    path: "rank",
+                    name: "rank",
+                    meta: { breadcrumb: 'Rank' },
+                    component: () =>
+                        import ('../viewsVue/admin/rank/rank.vue'),
+                },
+            ],
+
         },
     ],
 }]

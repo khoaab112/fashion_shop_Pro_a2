@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Position;
 use App\Http\Controllers\Authentication\AuthenticationCustomersController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Admin\RankController;
 
 
 /*
@@ -122,6 +123,16 @@ Route::middleware(['checkURL', 'cors'])->group(function () {
             Route::get('/customer/{id}', [CustomerController::class, 'getCustomer']);
             Route::post('/customer', [CustomerController::class, 'createCustomer']);
 
+            // rank
+            Route::group([
+                'prefix' => 'rank'
+            ], function () {
+                Route::get('/', [RankController::class, 'index']);
+                Route::post('/', [RankController::class, 'create']);
+                Route::put('/status/{id}', [RankController::class, 'statusChange']);
+                Route::put('/update/{id}', [RankController::class, 'update']);
+                Route::delete('/remove/{id}', [RankController::class, 'remove']);
+            });
         });
     });
 });

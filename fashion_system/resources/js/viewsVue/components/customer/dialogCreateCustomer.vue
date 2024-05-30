@@ -157,7 +157,7 @@ export default {
         },
     },
     created() {
-        // Logic khi component được khởi tạo
+
     },
     mounted() {
         // Logic sau khi component được gắn kết (render) vào DOM
@@ -208,7 +208,7 @@ export default {
                         type: "error",
                     });
                 });
-        }
+        },
     },
 };
 </script>
