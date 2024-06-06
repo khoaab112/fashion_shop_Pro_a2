@@ -16,7 +16,7 @@
         <tr
           v-for="(record, key) of items"
           :key="key"
-          :class="record.status ? 'color-status' : ''"
+          :class="!record.status ? 'color-status' : ''"
         >
           <td
             v-for="(valTitles, indexTitles) in titles"
@@ -183,6 +183,9 @@ table th.c {
 table td.r,
 table th.r {
   text-align: center;
+}
+table tbody tr:last-child {
+  border-bottom: 1px solid #d9d9d9;
 }
 
 @media screen and (max-width: 35.5em) {
