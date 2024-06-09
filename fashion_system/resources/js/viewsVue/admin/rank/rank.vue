@@ -46,6 +46,7 @@
         </template>
       </table-admin>
     </div>
+    <addRank></addRank>
   </div>
 </template>
 
@@ -53,11 +54,13 @@
 import tableAdmin from "../../components/tableAdmin.vue";
 import apiRank from "@/js/api/admin/apiRank.js";
 import { ElNotification } from "element-plus";
+import addRank from "./components/addRank.vue";
 
 export default {
   name: "HtpShiftDetail",
   components: {
     tableAdmin,
+    addRank,
   },
   setup() {},
   directives: {},
